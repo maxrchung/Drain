@@ -1,0 +1,36 @@
+﻿  Color.cpp
+  Easing.cpp
+  Layer.cpp
+  Matrix.cpp
+  MusicAnalysis.cpp
+c:\users\alex liu\desktop\drain\drain\s2rybruh\musicanalysis.cpp(33): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\musicanalysis.cpp(34): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\musicanalysis.cpp(43): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\musicanalysis.cpp(189): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\musicanalysis.cpp(191): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  MusicAnalysisData.cpp
+  Origin.cpp
+  Sprite.cpp
+c:\users\alex liu\desktop\drain\drain\s2rybruh\sprite.cpp(32): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\sprite.cpp(33): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\sprite.cpp(47): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\sprite.cpp(48): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\sprite.cpp(115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\sprite.cpp(122): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Storyboard.cpp
+  Time.cpp
+  Vector2.cpp
+  Vector3.cpp
+  Vector4.cpp
+  Wav.cpp
+  Generating Code...
+  kiss_fft.c
+c:\users\alex liu\desktop\drain\drain\s2rybruh\kiss_fft.c(119): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\kiss_fft.c(120): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  kiss_fftr.c
+c:\users\alex liu\desktop\drain\drain\s2rybruh\kiss_fftr.c(116): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\kiss_fftr.c(117): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\kiss_fftr.c(118): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\alex liu\desktop\drain\drain\s2rybruh\kiss_fftr.c(119): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
+  S2RYBRUH.vcxproj -> C:\Users\Alex Liu\Desktop\Drain\Drain\Debug\S2RYBRUH.lib
