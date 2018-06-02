@@ -18,5 +18,13 @@
     <ClCompile Include="Drain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Raindrop.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Raindrop.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
