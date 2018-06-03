@@ -125,6 +125,7 @@
     <ClCompile Include="CharacterConfig.cpp" />
     <ClCompile Include="Drain.cpp" />
     <ClCompile Include="Lyric.cpp" />
+    <ClCompile Include="Path.cpp" />
     <ClCompile Include="Raindrop.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +133,7 @@
     <ClInclude Include="Character.hpp" />
     <ClInclude Include="CharacterConfig.hpp" />
     <ClInclude Include="Lyric.hpp" />
+    <ClInclude Include="Path.hpp" />
     <ClInclude Include="Raindrop.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

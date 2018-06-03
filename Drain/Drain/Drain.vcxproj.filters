@@ -39,6 +39,9 @@
     <ClCompile Include="a.cpp">
       <Filter>Source Files\Lyric</Filter>
     </ClCompile>
+    <ClCompile Include="Path.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raindrop.hpp">
@@ -55,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="CharacterConfig.hpp">
       <Filter>Header Files\Lyric</Filter>
+    </ClInclude>
+    <ClInclude Include="Path.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
