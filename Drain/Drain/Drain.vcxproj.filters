@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Lyric">
+      <UniqueIdentifier>{15371023-0224-40bb-a0aa-6e58ab8a9755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lyric">
+      <UniqueIdentifier>{8e5da06d-dc76-4f08-a7f6-76da631fbf33}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Drain.cpp">
@@ -21,10 +27,34 @@
     <ClCompile Include="Raindrop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Lyric.cpp">
+      <Filter>Source Files\Lyric</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files\Lyric</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterConfig.cpp">
+      <Filter>Source Files\Lyric</Filter>
+    </ClCompile>
+    <ClCompile Include="a.cpp">
+      <Filter>Source Files\Lyric</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raindrop.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Lyric.hpp">
+      <Filter>Header Files\Lyric</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.hpp">
+      <Filter>Header Files\Lyric</Filter>
+    </ClInclude>
+    <ClInclude Include="a.hpp">
+      <Filter>Header Files\Lyric</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterConfig.hpp">
+      <Filter>Header Files\Lyric</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
