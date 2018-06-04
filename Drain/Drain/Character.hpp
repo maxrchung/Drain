@@ -10,4 +10,6 @@ public:
 	virtual float getWidth() const { return 1.0f; }
 	// Size of sprite images in pixels
 	static const int imageSize = 100;
+	// Thickness of Character stroke
+	static constexpr float thickness = 0.1f * imageSize;
 };

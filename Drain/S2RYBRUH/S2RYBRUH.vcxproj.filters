@@ -31,9 +31,6 @@
     <Filter Include="Source Files\MusicAnalysis">
       <UniqueIdentifier>{f5e322e6-fd1a-4318-8bba-70dbf059ef4d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Enums">
-      <UniqueIdentifier>{fcccf266-9028-40ee-b5d1-df25b0f46ec8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Storyboard">
       <UniqueIdentifier>{c603ab30-3338-42f8-80c0-f34cf63a60b3}</UniqueIdentifier>
     </Filter>
@@ -57,15 +54,6 @@
     <ClCompile Include="Wav.cpp">
       <Filter>Source Files\MusicAnalysis</Filter>
     </ClCompile>
-    <ClCompile Include="Easing.cpp">
-      <Filter>Source Files\Enums</Filter>
-    </ClCompile>
-    <ClCompile Include="Layer.cpp">
-      <Filter>Source Files\Enums</Filter>
-    </ClCompile>
-    <ClCompile Include="Origin.cpp">
-      <Filter>Source Files\Enums</Filter>
-    </ClCompile>
     <ClCompile Include="Matrix.cpp">
       <Filter>Source Files\Vector</Filter>
     </ClCompile>
@@ -85,6 +73,9 @@
       <Filter>Source Files\Storyboard</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
+      <Filter>Source Files\Storyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="Bezier.cpp">
       <Filter>Source Files\Storyboard</Filter>
     </ClCompile>
   </ItemGroup>
@@ -141,6 +132,9 @@
       <Filter>Header Files\Storyboard</Filter>
     </ClInclude>
     <ClInclude Include="Time.hpp">
+      <Filter>Header Files\Storyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Bezier.hpp">
       <Filter>Header Files\Storyboard</Filter>
     </ClInclude>
   </ItemGroup>
