@@ -21,7 +21,7 @@ Vector2 Bezier::binomialPosition(const float time) {
 	auto position = Vector2::Zero;
 	const auto size = transitions.size();
 	const auto row = getBinomial(size);
-	for (int i = 0; i < size; i++) {
+	for (auto i = 0; i < size; i++) {
 		const auto point = transitions[i];
 		const auto binomial = row[i];
 		if (binomial < 1) {
