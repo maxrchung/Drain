@@ -1,7 +1,6 @@
 #pragma once
 #include "Color.hpp"
-class CharacterConfig {
-public:
+struct CharacterConfig {
 	explicit CharacterConfig(const float scale,
 							 const int start,
 							 const int end,

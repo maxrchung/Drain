@@ -2,5 +2,6 @@
 #include "Stroke.hpp"
 class LineStroke : public Stroke {
 public:
-	explicit LineStroke(const Vector2& startPoint, const Vector2& endPoint);
+	explicit LineStroke(const Vector2& start, const Vector2& end);
+	float calculateLength() const;
 };

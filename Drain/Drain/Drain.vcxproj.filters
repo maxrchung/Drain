@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Lyric">
       <UniqueIdentifier>{8e5da06d-dc76-4f08-a7f6-76da631fbf33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Lyric\Stroke">
+      <UniqueIdentifier>{521ec273-fff4-430d-9094-a925ff0ff630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Lyric\Stroke">
+      <UniqueIdentifier>{e1787740-0242-4e1a-894a-a904a17be3ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Drain.cpp">
@@ -36,11 +42,20 @@
     <ClCompile Include="CharacterConfig.cpp">
       <Filter>Source Files\Lyric</Filter>
     </ClCompile>
-    <ClCompile Include="a.cpp">
-      <Filter>Source Files\Lyric</Filter>
-    </ClCompile>
     <ClCompile Include="Path.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LineStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
+    <ClCompile Include="Stroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
+    <ClCompile Include="CircularStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
+    <ClCompile Include="PointStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,14 +68,23 @@
     <ClInclude Include="Character.hpp">
       <Filter>Header Files\Lyric</Filter>
     </ClInclude>
-    <ClInclude Include="a.hpp">
-      <Filter>Header Files\Lyric</Filter>
-    </ClInclude>
     <ClInclude Include="CharacterConfig.hpp">
       <Filter>Header Files\Lyric</Filter>
     </ClInclude>
     <ClInclude Include="Path.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Stroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
+    </ClInclude>
+    <ClInclude Include="LineStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
+    </ClInclude>
+    <ClInclude Include="CircularStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
+    </ClInclude>
+    <ClInclude Include="PointStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

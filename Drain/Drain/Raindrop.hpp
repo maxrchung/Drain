@@ -21,5 +21,5 @@ private:
 	float min_speed;
 	float max_speed;
 	float min_size;
-	float max_speed;
+	//float max_speed;
 };

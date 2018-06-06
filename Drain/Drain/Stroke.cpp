@@ -1,4 +1,4 @@
 #include "Stroke.hpp"
-Stroke::Stroke(const Vector2& startPoint, const Vector2& endPoint)
-	: startPoint{ startPoint }, endPoint{ endPoint } {
+Stroke::Stroke(const Vector2& start, const Vector2& end)
+	: start{ start }, end{ end } {
 }

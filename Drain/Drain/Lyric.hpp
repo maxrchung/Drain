@@ -8,11 +8,11 @@
 #include <vector>
 class Lyric {
 public:
-	explicit Lyric(const std::string& lyric, const CharacterConfig& config, const Vector2& center = Vector2::Zero);
+	explicit Lyric(const std::string& lyric, const Vector2& center, const CharacterConfig& config);
 private:
-	std::vector<std::unique_ptr<Character>> getCharacters(const std::string& lyric) const;
-	float calculateSize(const std::vector<std::unique_ptr<Character>>& characters, float scale) const;
-	void draw(const std::vector<std::unique_ptr<Character>>& characters, const CharacterConfig& config, const Vector2& center) const;
+	std::vector<Character> createCharacters(const std::string& lyric) const;
+	float calculateWidth(const std::vector<Character>& characters, float scale) const;
+	void draw(const std::vector<Character>& characters, const Vector2& center, const CharacterConfig& config) const;
 	// Space between characters represented as a factor of scale
 	static constexpr float kerning = 0.25f;
 };

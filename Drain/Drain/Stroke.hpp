@@ -2,9 +2,9 @@
 #include "Vector2.hpp"
 class Stroke {
 public:
-	explicit Stroke(const Vector2& startPoint, const Vector2& endPoint);
-	virtual void getLength() = 0;
-private:
-	const Vector2 startPoint;
-	const Vector2 endPoint;
+	explicit Stroke(const Vector2& start, const Vector2& end);
+	virtual float calculateLength() const = 0;
+protected:
+	const Vector2 start;
+	const Vector2 end;
 };
