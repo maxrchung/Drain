@@ -9,7 +9,7 @@ float CircularStroke::calculateLength() const {
 	const auto length = angleBetween * end.Magnitude();
 	return length;
 }
-float CircularStroke::createSprites() {
+void CircularStroke::createSprites() {
 }
 void CircularStroke::draw(const Vector2& position, const CharacterConfig& config) {
 }

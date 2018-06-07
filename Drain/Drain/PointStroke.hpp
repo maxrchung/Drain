@@ -3,7 +3,7 @@
 class PointStroke : public Stroke {
 public:
 	explicit PointStroke(const Vector2& start);
-	void draw(const Vector2& position, const CharacterConfig& config);
 	float calculateLength() const;
-	float createSprites();
+	void createSprites();
+	void draw(const Vector2& position, const CharacterConfig& config);
 };
