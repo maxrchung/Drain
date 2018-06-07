@@ -93,6 +93,7 @@ int main(int argc, char** argv)
 			}
 		}
 	}
+	/*
 	int m;
 	for (k = 1; k < 180 - 1; k++) {		// theta
 		for (m = 1; m < 129360 - 1; m++) {	// rho, no need for merging
@@ -113,7 +114,7 @@ int main(int argc, char** argv)
 			}
 		}
 	}
-
+	*/
 	if (!(fp = fopen("image-b.ras", "wb")))
 	{
 		fprintf(stderr, "error: could not open %s\n", filename);
@@ -122,7 +123,7 @@ int main(int argc, char** argv)
 	fwrite(head, 4, 8, fp);
 	for (i = 0; i < ROWS; i++) fwrite(bimage[i], 1, COLS, fp);
 	fclose(fp);
-
+	/*
 	if (!(fp = fopen("image-h.ras", "wb")))
 	{
 		fprintf(stderr, "error: could not open %s\n", filename);
@@ -135,6 +136,7 @@ int main(int argc, char** argv)
 	printf("Press any key to exit: ");
 	gets(&ch);
 	return 0;
+	*/
 }
 
 void clear(unsigned char image[][COLS])
