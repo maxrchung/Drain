@@ -4,21 +4,21 @@ Lyric::Lyric(const std::string& lyric, const Vector2& center, const CharacterCon
 	const auto characters = createCharacters(lyric);
 	draw(characters, center, config);
 }
+float Lyric::calculateWidth(const std::vector<Character>& characters, float scale) const {
+	auto width = 0.0f;
+	for (const auto& character : characters) {
+		width += character.calculateWidth() * scale;
+	}
+	const auto totalKerning = (characters.size() - 1) * kerning * scale;
+	width += totalKerning;
+	return width;
+}
 std::vector<Character> Lyric::createCharacters(const std::string& lyric) const {
 	std::vector<Character> characters;
 	for (const auto& letter : lyric) {
 		characters.push_back(Character(letter));
 	}
 	return characters;
-}
-float Lyric::calculateWidth(const std::vector<Character>& characters, float scale) const {
-	float size = 0.0f;
-	for (const auto& character : characters) {
-		size += character.calculateWidth() * scale;
-	}
-	const auto totalKerning = (characters.size() - 1) * kerning * scale;
-	size += totalKerning;
-	return size;
 }
 void Lyric::draw(const std::vector<Character>& characters, const Vector2& center, const CharacterConfig& config) const {
 	const auto lyricWidth = calculateWidth(characters, config.scale);

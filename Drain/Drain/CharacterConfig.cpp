@@ -1,8 +1,8 @@
 #include "CharacterConfig.hpp"
-CharacterConfig::CharacterConfig(const float scale,
-								 const int start,
+CharacterConfig::CharacterConfig(const int start,
 								 const int end,
 								 const int drawSpeed,
 								 const Color& foreground,
-								 const Color& background)
-	: scale{ scale }, start{ start }, end{ end }, drawSpeed{ drawSpeed }, foreground{ foreground }, background{ background } {}
+								 const Color& background,
+								 const float scale)
+	: start{ start }, end{ end }, drawSpeed{ drawSpeed }, foreground{ foreground }, background{ background }, scale{ scale } {}

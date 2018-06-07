@@ -3,7 +3,7 @@
 #include "Storyboard.hpp"
 #include <iostream>
 int main() {
-	const auto config = CharacterConfig(100.0f, 0, 10000, 2000, Color(255), Color(0));
+	const auto config = CharacterConfig(0, 10000, 2000, Color(255), Color(0), 100.0f);
 	Lyric("a", Vector2::Zero, config);
 	// Gets rid of beatmap background
 	Storyboard::CreateSprite("36592_serial_experiments_lain.jpg", Vector2::Zero, Layer::Background);
