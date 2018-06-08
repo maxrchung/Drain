@@ -39,9 +39,6 @@
     <ClCompile Include="Character.cpp">
       <Filter>Source Files\Lyric</Filter>
     </ClCompile>
-    <ClCompile Include="CharacterConfig.cpp">
-      <Filter>Source Files\Lyric</Filter>
-    </ClCompile>
     <ClCompile Include="Path.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -66,9 +63,6 @@
       <Filter>Header Files\Lyric</Filter>
     </ClInclude>
     <ClInclude Include="Character.hpp">
-      <Filter>Header Files\Lyric</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterConfig.hpp">
       <Filter>Header Files\Lyric</Filter>
     </ClInclude>
     <ClInclude Include="Path.hpp">

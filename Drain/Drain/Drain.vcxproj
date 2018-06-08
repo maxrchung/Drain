@@ -121,7 +121,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
-    <ClCompile Include="CharacterConfig.cpp" />
     <ClCompile Include="CircularStroke.cpp" />
     <ClCompile Include="Drain.cpp" />
     <ClCompile Include="LineStroke.cpp" />
@@ -133,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.hpp" />
-    <ClInclude Include="CharacterConfig.hpp" />
     <ClInclude Include="LineStroke.hpp" />
     <ClInclude Include="Lyric.hpp" />
     <ClInclude Include="Path.hpp" />

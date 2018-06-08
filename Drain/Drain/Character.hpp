@@ -1,5 +1,4 @@
 #pragma once
-#include "CharacterConfig.hpp"
 #include "Color.hpp"
 #include "Stroke.hpp"
 #include "Vector2.hpp"
@@ -7,12 +6,17 @@
 class Character {
 public:
 	explicit Character(const char character);
-	float calculateWidth() const;
-	virtual void draw(const Vector2& position, const CharacterConfig& config) const;
+	float calculateWidth(const float scale) const;
+	virtual void draw(const Vector2& position, 
+					  const int start,
+					  const int end,
+					  const int drawSpeed,
+					  const Color& foreground,
+					  const Color& background,
+					  const float scale) const;
 protected:
-	// Size of sprite images in pixels
-	static const int imageSize = 100;
-	// Thickness of Character stroke
-	static constexpr float thickness = 0.1f * imageSize;
+	std::vector<std::unique_ptr<Stroke>> createStrokes(const char character) const;
 	std::vector<std::unique_ptr<Stroke>> strokes;
+private:
+	float calculateLength() const;
 };
