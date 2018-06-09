@@ -13,14 +13,14 @@ float Character::calculateWidth(const float scale) const {
 	auto left = std::numeric_limits<float>::max();
 	auto right = std::numeric_limits<float>::min();
 	for (const auto& stroke : strokes) {
-		auto startX = stroke->start.x * scale;
+		auto startX = stroke->startPosition.x * scale;
 		if (startX < left) {
 			left = startX;
 		}
 		if (startX > right) {
 			right = startX;
 		}
-		auto endX = stroke->end.x * scale;
+		auto endX = stroke->endPosition.x * scale;
 		if (endX < left) {
 			left = endX;
 		}
@@ -32,14 +32,14 @@ float Character::calculateWidth(const float scale) const {
 	const auto width = right - left + Stroke::thickness * scale;
 	return width;
 }
-float Character::calculateLength() {
+float Character::calculateLength() const {
 	auto length = 0.0f;
 	for (const auto& stroke : strokes) {
 		length += stroke->calculateLength();
 	}
 	return length;
 }
-std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char character) const {
+std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char character) {
 	std::vector<std::unique_ptr<Stroke>> strokes;
 	switch (character) {
 		case 'a':
@@ -55,28 +55,24 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 	return strokes;
 }
 void Character::draw(const Vector2& position,
-					 const int start,
-					 const int end,
+					 const int startTime,
+					 const int endTime,
 					 const int drawSpeed,
 					 const Color& foreground,
 					 const Color& background,
 					 const float scale) const {
-	// Create sprites backwards so they stack in order
-	for (int i = strokes.size() - 1; i >= 0; --i) {
-		strokes[i]->createSprites(position, scale);
-	}
-	const auto totalTime = end - start;
+	const auto totalTime = endTime - startTime;
 	const auto totalLength = calculateLength();
 	// For more accurate time measurements, setting this to float
-	auto time = static_cast<float>(start);
+	auto time = static_cast<float>(startTime);
 	for (auto& stroke : strokes) {
 		const auto partialLength = stroke->calculateLength();
 		const auto lengthFraction = partialLength / totalLength;
 		const auto timeFraction = lengthFraction / totalTime;
 		// Definitely possible to get float rounding errors here, but few enough strokes should not make this too bad
-		const auto strokeStart = static_cast<int>(time);
+		const auto startStroke = static_cast<int>(time);
 		time += timeFraction;
-		const auto strokeEnd = static_cast<int>(time);
-		stroke->draw(position, strokeStart, strokeEnd, drawSpeed, foreground, background, scale);
+		const auto endStroke = static_cast<int>(time);
+		stroke->draw(position, startStroke, endStroke, drawSpeed, foreground, background, scale);
 	}
 }

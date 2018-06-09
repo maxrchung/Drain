@@ -2,8 +2,8 @@
 #include <exception>
 Lyric::Lyric(const std::string& lyric,
 			 const Vector2& center,
-			 const int start,
-			 const int end,
+			 const int startTime,
+			 const int endTime,
 			 const int drawSpeed,
 			 const Color& foreground,
 			 const Color& background,
@@ -14,11 +14,11 @@ Lyric::Lyric(const std::string& lyric,
 	for (const auto& character : characters) {
 		const auto characterWidth = character.calculateWidth(scale);
 		const auto position = Vector2(left.x + (characterWidth / 2.0f), left.y);
-		character.draw(position, start, end, drawSpeed, foreground, background, scale);
+		character.draw(position, startTime, endTime, drawSpeed, foreground, background, scale);
 		left.x += (characterWidth * scale) + (kerning * scale);
 	}
 }
-float Lyric::calculateWidth(const std::vector<Character>& characters, const float scale) const {
+float Lyric::calculateWidth(const std::vector<Character>& characters, const float scale) {
 	auto width = 0.0f;
 	for (const auto& character : characters) {
 		width += character.calculateWidth(scale) * scale;
@@ -27,7 +27,7 @@ float Lyric::calculateWidth(const std::vector<Character>& characters, const floa
 	width += totalKerning;
 	return width;
 }
-std::vector<Character> Lyric::createCharacters(const std::string& lyric) const {
+std::vector<Character> Lyric::createCharacters(const std::string& lyric) {
 	std::vector<Character> characters;
 	for (const auto& letter : lyric) {
 		characters.push_back(Character(letter));

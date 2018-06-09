@@ -34,6 +34,9 @@
     <Filter Include="Source Files\Storyboard">
       <UniqueIdentifier>{c603ab30-3338-42f8-80c0-f34cf63a60b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Enums">
+      <UniqueIdentifier>{93d4fea0-fb19-4e9a-8b64-f11d541d8baa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="kiss_fftr.c">

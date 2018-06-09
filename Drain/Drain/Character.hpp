@@ -15,7 +15,7 @@ public:
 					  const Color& background,
 					  const float scale) const;
 protected:
-	std::vector<std::unique_ptr<Stroke>> createStrokes(const char character) const;
+	static std::vector<std::unique_ptr<Stroke>> createStrokes(const char character);
 	std::vector<std::unique_ptr<Stroke>> strokes;
 private:
 	float calculateLength() const;
