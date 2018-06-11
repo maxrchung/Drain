@@ -21,7 +21,7 @@ Lyric::Lyric(const std::string& lyric,
 float Lyric::calculateWidth(const std::vector<Character>& characters, const float scale) {
 	auto width = 0.0f;
 	for (const auto& character : characters) {
-		width += character.calculateWidth(scale) * scale;
+		width += character.calculateWidth(scale);
 	}
 	const auto totalKerning = (characters.size() - 1) * kerning * scale;
 	width += totalKerning;

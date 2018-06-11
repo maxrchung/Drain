@@ -80,5 +80,8 @@
     <ClInclude Include="PointStroke.hpp">
       <Filter>Header Files\Lyric\Stroke</Filter>
     </ClInclude>
+    <ClInclude Include="Timing.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

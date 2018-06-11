@@ -5,6 +5,8 @@ std::string getPath(Path path) {
 			return "c";
 		case Path::Pixel:
 			return "p";
+		case Path::Quarter:
+			return "q";
 		case Path::Square:
 			return "s";
 	}
