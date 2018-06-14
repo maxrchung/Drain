@@ -7,19 +7,11 @@ public:
 	explicit Stroke(const Vector2& startPosition, const Vector2& endPosition);
 	virtual float calculateLength() const = 0;
 	virtual void createSprites(const Vector2& position, const float scale) = 0;
-	// Fading out stroke
-	virtual void drain(const Vector2& position,
-					   const int startStroke,
-					   const int endStroke,
-					   const int endTime,
-					   const int drawSpeed,
-					   const Color& foreground,
-					   const Color& background,
-					   const float scale) const = 0;
-	// Draw in stroke
 	virtual void draw(const Vector2& position,
-					  const int startStroke,
-					  const int endStroke,
+					  const int startDraw,
+					  const int endDraw,
+					  const int startDrain,
+					  const int endDrain,
 					  const int endTime,
 					  const int drawSpeed,
 					  const Color& foreground,

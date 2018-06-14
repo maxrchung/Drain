@@ -61,48 +61,7 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 	}
 	return strokes;
 }
-void Character::drain(const Vector2& position,
-					  const int endTime,
-					  const int drawSpeed,
-					  const Color& foreground,
-					  const Color& background,
-					  const float scale) const {
-	const auto totalLength = calculateLength();
-	// For more accurate time measurements, setting this to float
-	auto time = static_cast<float>(endTime);
-	for (auto& stroke : strokes) {
-		const auto strokeLength = stroke->calculateLength();
-		const auto lengthFraction = strokeLength / totalLength;
-		const auto timeFraction = lengthFraction * drawSpeed;
-		// Definitely possible to get float rounding errors here, but few enough strokes should not make this too bad
-		const auto startStroke = static_cast<int>(time);
-		time += timeFraction;
-		const auto endStroke = static_cast<int>(time);
-		stroke->drain(position, startStroke, endStroke, endTime, drawSpeed, foreground, background, scale);
-	}
-}
 void Character::draw(const Vector2& position,
-					 const int startTime,
-					 const int endTime,
-					 const int drawSpeed,
-					 const Color& foreground,
-					 const Color& background,
-					 const float scale) const {
-	const auto totalLength = calculateLength();
-	// For more accurate time measurements, setting this to float
-	auto time = static_cast<float>(startTime);
-	for (auto& stroke : strokes) {
-		const auto strokeLength = stroke->calculateLength();
-		const auto lengthFraction = strokeLength / totalLength;
-		const auto timeFraction = lengthFraction * drawSpeed;
-		// Definitely possible to get float rounding errors here, but few enough strokes should not make this too bad
-		const auto startStroke = static_cast<int>(time);
-		time += timeFraction;
-		const auto endStroke = static_cast<int>(time);
-		stroke->draw(position, startStroke, endStroke, endTime, drawSpeed, foreground, background, scale);
-	}
-}
-void Character::render(const Vector2& position,
 					   const int startTime,
 					   const int endTime,
 					   const int drawSpeed,
@@ -110,6 +69,17 @@ void Character::render(const Vector2& position,
 					   const Color& background,
 					   const float scale) const {
 	createSprites(position, scale);
-	draw(position, startTime, endTime, drawSpeed, foreground, background, scale);
-	drain(position, endTime, drawSpeed, foreground, background, scale);
+	const auto totalLength = calculateLength();
+	// For more accurate time measurements, setting this to float
+	for (int i = 0; i < strokes.size(); ++i) {
+		const auto strokeLength = strokes[i]->calculateLength();
+		const auto lengthFraction = strokeLength / totalLength;
+		const auto timeFraction = lengthFraction * drawSpeed;
+		// Definitely possible to get float rounding errors here, but few enough strokes should not make this too bad
+		const auto startDraw = static_cast<int>(startTime + i * timeFraction);
+		const auto endDraw = static_cast<int>(startTime + (i + 1) * timeFraction);
+		const auto startDrain = static_cast<int>(endTime + i * timeFraction);
+		const auto endDrain = static_cast<int>(endTime + (i + 1) * timeFraction);
+		strokes[i]->draw(position, startDraw, endDraw, startDrain, endDrain, endTime, drawSpeed, foreground, background, scale);
+	}
 }
