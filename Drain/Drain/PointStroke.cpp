@@ -9,6 +9,15 @@ float PointStroke::calculateLength() const {
 void PointStroke::createSprites(const Vector2& position, const float scale) {
 
 }
+void PointStroke::drain(const Vector2& position,
+						const int startStroke,
+						const int endStroke,
+						const int endTime,
+						const int drawSpeed,
+						const Color& foreground,
+						const Color& background,
+						const float scale) const {
+}
 void PointStroke::draw(const Vector2& position,
 					   const int startStroke,
 					   const int endStroke,
@@ -16,5 +25,5 @@ void PointStroke::draw(const Vector2& position,
 					   const int drawSpeed,
 					   const Color& foreground,
 					   const Color& background,
-					   const float scale) {
+					   const float scale) const {
 }

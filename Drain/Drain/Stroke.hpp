@@ -7,6 +7,16 @@ public:
 	explicit Stroke(const Vector2& startPosition, const Vector2& endPosition);
 	virtual float calculateLength() const = 0;
 	virtual void createSprites(const Vector2& position, const float scale) = 0;
+	// Fading out stroke
+	virtual void drain(const Vector2& position,
+					   const int startStroke,
+					   const int endStroke,
+					   const int endTime,
+					   const int drawSpeed,
+					   const Color& foreground,
+					   const Color& background,
+					   const float scale) const = 0;
+	// Draw in stroke
 	virtual void draw(const Vector2& position,
 					  const int startStroke,
 					  const int endStroke,
@@ -14,9 +24,9 @@ public:
 					  const int drawSpeed,
 					  const Color& foreground,
 					  const Color& background,
-					  const float scale) = 0;
+					  const float scale) const = 0;
 	// Thickness of Character stroke represented as a factor of scale
-	static constexpr float thickness = 0.1f;
+	static constexpr float thickness = 0.15f;
 	const Vector2 startPosition;
 	const Vector2 endPosition;
 protected:

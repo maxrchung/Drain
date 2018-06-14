@@ -3,7 +3,7 @@
 #include "LineStroke.hpp"
 #include "PointStroke.hpp"
 #include <exception>
-Character::Character(const char character) 
+Character::Character(const char character)
 	: strokes{ createStrokes(character) } {
 }
 float Character::calculateWidth(const float scale) const {
@@ -40,6 +40,12 @@ float Character::calculateLength() const {
 	}
 	return length;
 }
+void Character::createSprites(const Vector2& position, const float scale) const {
+	// Create sprites backwards so strokes do not overlap
+	for (auto stroke = strokes.rbegin(); stroke != strokes.rend(); ++stroke) {
+		stroke->get()->createSprites(position, scale);
+	}
+}
 std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char character) {
 	std::vector<std::unique_ptr<Stroke>> strokes;
 	switch (character) {
@@ -55,6 +61,26 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 	}
 	return strokes;
 }
+void Character::drain(const Vector2& position,
+					  const int endTime,
+					  const int drawSpeed,
+					  const Color& foreground,
+					  const Color& background,
+					  const float scale) const {
+	const auto totalLength = calculateLength();
+	// For more accurate time measurements, setting this to float
+	auto time = static_cast<float>(endTime);
+	for (auto& stroke : strokes) {
+		const auto strokeLength = stroke->calculateLength();
+		const auto lengthFraction = strokeLength / totalLength;
+		const auto timeFraction = lengthFraction * drawSpeed;
+		// Definitely possible to get float rounding errors here, but few enough strokes should not make this too bad
+		const auto startStroke = static_cast<int>(time);
+		time += timeFraction;
+		const auto endStroke = static_cast<int>(time);
+		stroke->drain(position, startStroke, endStroke, endTime, drawSpeed, foreground, background, scale);
+	}
+}
 void Character::draw(const Vector2& position,
 					 const int startTime,
 					 const int endTime,
@@ -62,22 +88,28 @@ void Character::draw(const Vector2& position,
 					 const Color& foreground,
 					 const Color& background,
 					 const float scale) const {
-	// Create sprites backwards so strokes do not overlap
-	for (auto stroke = strokes.rbegin(); stroke != strokes.rend(); ++stroke) {
-		stroke->get()->createSprites(position, scale);
-	}
-	const auto totalTime = startTime + drawSpeed;
 	const auto totalLength = calculateLength();
 	// For more accurate time measurements, setting this to float
 	auto time = static_cast<float>(startTime);
 	for (auto& stroke : strokes) {
 		const auto strokeLength = stroke->calculateLength();
 		const auto lengthFraction = strokeLength / totalLength;
-		const auto timeFraction = lengthFraction * totalTime;
+		const auto timeFraction = lengthFraction * drawSpeed;
 		// Definitely possible to get float rounding errors here, but few enough strokes should not make this too bad
 		const auto startStroke = static_cast<int>(time);
 		time += timeFraction;
 		const auto endStroke = static_cast<int>(time);
 		stroke->draw(position, startStroke, endStroke, endTime, drawSpeed, foreground, background, scale);
 	}
+}
+void Character::render(const Vector2& position,
+					   const int startTime,
+					   const int endTime,
+					   const int drawSpeed,
+					   const Color& foreground,
+					   const Color& background,
+					   const float scale) const {
+	createSprites(position, scale);
+	draw(position, startTime, endTime, drawSpeed, foreground, background, scale);
+	drain(position, endTime, drawSpeed, foreground, background, scale);
 }

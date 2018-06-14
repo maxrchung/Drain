@@ -9,7 +9,7 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	background->Color(0, Time("06:37:848").ms, Color(150), Color(150), Easing::Linear, 0);
 	//Lyric testing
-	Lyric("a", Vector2::Zero, 0, 10000, 2000, Color(0, 255, 0), Color(0, 0, 255), 100.0f);
+	Lyric("a", Vector2::Zero, Time("00:05:584").ms, Time("00:06:999").ms, 1000, Color(0, 255, 0), Color(0, 0, 255), 100.0f);
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
 	auto storyboardInputPath = std::ifstream("StoryboardInputPath.txt");

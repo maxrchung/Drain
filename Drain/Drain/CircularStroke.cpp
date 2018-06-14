@@ -20,6 +20,15 @@ void CircularStroke::createSprites(const Vector2& position, const float scale) {
 	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + startPosition * scale, Layer::Background);
 	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), startPoint->position, Layer::Background);
 }
+void CircularStroke::drain(const Vector2& position,
+						   const int startStroke,
+						   const int endStroke,
+						   const int endTime,
+						   const int drawSpeed,
+						   const Color& foreground,
+						   const Color& background,
+						   const float scale) const {
+}
 void CircularStroke::draw(const Vector2& position,
 						  const int startStroke,
 						  const int endStroke,
@@ -27,7 +36,7 @@ void CircularStroke::draw(const Vector2& position,
 						  const int drawSpeed,
 						  const Color& foreground,
 						  const Color& background,
-						  const float scale) {
+						  const float scale) const {
 	auto outerScale = (startPosition - center).Magnitude() * scale / imageSize + thickness * 0.5f * scale / imageSize;
 	outer->Scale(startStroke, startStroke, outerScale, outerScale);
 	auto innerScale = (startPosition - center).Magnitude() * scale / imageSize - thickness * 0.5f * scale / imageSize;
