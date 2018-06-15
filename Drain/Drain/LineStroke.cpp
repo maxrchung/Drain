@@ -24,6 +24,9 @@ void LineStroke::draw(const Vector2& position,
 					  const Color& foreground,
 					  const Color& background,
 					  const float scale) const {
+	line->Color(startDraw, startDraw, foreground, foreground);
+	startPoint->Color(startDraw, startDraw, foreground, foreground);
+	endPoint->Color(startDraw, startDraw, foreground, foreground);
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition - startPosition);
 	line->Rotate(startDraw, startDraw, rotation, rotation);
 	const auto length = (endPosition - startPosition).Magnitude();

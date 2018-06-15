@@ -51,10 +51,10 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 	switch (character) {
 		case 'a':
 			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
-			strokes.push_back(std::make_unique<CircularStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
-			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
-			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
-			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, -0.5f)));
+			//strokes.push_back(std::make_unique<CircularStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			//strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			//strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
+			//strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, -0.5f)));
 			break;
 		default:
 			throw new std::exception("Unsupported lyric character: " + character);
@@ -78,8 +78,9 @@ void Character::draw(const Vector2& position,
 		// Definitely possible to get float rounding errors here, but few enough strokes should not make this too bad
 		const auto startDraw = static_cast<int>(startTime + i * timeFraction);
 		const auto endDraw = static_cast<int>(startTime + (i + 1) * timeFraction);
-		const auto startDrain = static_cast<int>(endTime + i * timeFraction);
-		const auto endDrain = static_cast<int>(endTime + (i + 1) * timeFraction);
+		// Drain from reverse
+		const auto startDrain = static_cast<int>(endTime + (strokes.size() - 1 - i) * timeFraction);
+		const auto endDrain = static_cast<int>(endTime + (strokes.size() - i) * timeFraction);
 		strokes[i]->draw(position, startDraw, endDraw, startDrain, endDrain, endTime, drawSpeed, foreground, background, scale);
 	}
 }

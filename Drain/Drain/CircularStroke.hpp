@@ -19,7 +19,8 @@ private:
 	const Vector2 center;
 	Sprite* outer;
 	Sprite* inner;
-	Sprite* cover;
+	Sprite* horizontalCover;
+	Sprite* verticalCover;
 	Sprite* startPoint;
 	Sprite* endPoint;
 };
