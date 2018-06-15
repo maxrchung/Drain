@@ -1,20 +1,19 @@
 #include "Lyric.hpp"
 #include <exception>
-Lyric::Lyric(const std::string& lyric,
-			 const Vector2& center,
-			 const int startTime,
-			 const int endTime,
-			 const int drawSpeed,
-			 const Color& foreground,
-			 const Color& background,
-			 const float scale) {
+void Lyric::draw(const std::string& lyric,
+				 const Vector2& center,
+				 const int startTime,
+				 const int endTime,
+				 const Color& background,
+				 const Color& foreground,
+				 const float scale) {
 	const auto characters = createCharacters(lyric);
 	const auto lyricWidth = calculateWidth(characters, scale);
 	auto left = Vector2(center.x - (lyricWidth / 2.0f), center.y);
 	for (const auto& character : characters) {
 		const auto characterWidth = character.calculateWidth(scale);
 		const auto position = Vector2(left.x + (characterWidth / 2.0f), left.y);
-		character.draw(position, startTime, endTime, drawSpeed, foreground, background, scale);
+		character.draw(position, startTime, endTime, background, foreground, scale);
 		left.x += (characterWidth * scale) + (kerning * scale);
 	}
 }

@@ -10,10 +10,8 @@ public:
 			  const int endDraw,
 			  const int startDrain,
 			  const int endDrain,
-			  const int endTime,
-			  const int drawSpeed,
-			  const Color& foreground,
 			  const Color& background,
+			  const Color& foreground,
 			  const float scale) const;
 private:
 	const Vector2 center;

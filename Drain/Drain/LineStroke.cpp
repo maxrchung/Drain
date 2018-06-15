@@ -19,14 +19,9 @@ void LineStroke::draw(const Vector2& position,
 					  const int endDraw,
 					  const int startDrain,
 					  const int endDrain,
-					  const int endTime,
-					  const int drawSpeed,
-					  const Color& foreground,
 					  const Color& background,
+					  const Color& foreground,
 					  const float scale) const {
-	line->Color(startDraw, startDraw, foreground, foreground);
-	startPoint->Color(startDraw, startDraw, foreground, foreground);
-	endPoint->Color(startDraw, startDraw, foreground, foreground);
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition - startPosition);
 	line->Rotate(startDraw, startDraw, rotation, rotation);
 	const auto length = (endPosition - startPosition).Magnitude();
@@ -34,13 +29,16 @@ void LineStroke::draw(const Vector2& position,
 	const auto startLineScaleVector = Vector2(0, thicknessScale);
 	const auto endLineScaleVector = Vector2(length * scale / imageSize, thicknessScale);
 	line->ScaleVector(startDraw, endDraw, startLineScaleVector, endLineScaleVector);
-	startPoint->Scale(startDraw - spawnTime, startDraw, 0, thicknessScale);
 	startPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
-	endPoint->Scale(startDraw - spawnTime, startDraw, 0, thicknessScale);
 	endPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
 	endPoint->Move(startDraw, endDraw, startPoint->position, position + endPosition * scale);
-	line->ScaleVector(startDrain, endDrain, endLineScaleVector, startLineScaleVector);
-	startPoint->Scale(endDrain, endDrain + spawnTime, thicknessScale, 0);
-	endPoint->Scale(endDrain, endDrain + spawnTime, thicknessScale, 0);
-	endPoint->Move(startDrain, endDrain, endPoint->position, startPoint->position);
+	line->Color(startDraw, startDraw, foreground, foreground);
+	startPoint->Color(startDraw, startDraw, foreground, foreground);
+	endPoint->Color(startDraw, startDraw, foreground, foreground);
+	line->Color(startDrain, endDrain, foreground, background);
+	startPoint->Color(startDrain, endDrain, foreground, background);
+	endPoint->Color(startDrain, endDrain, foreground, background);
+	line->Color(startDrain, endDrain, foreground, background);
+	startPoint->Color(startDrain, endDrain, foreground, background);
+	endPoint->Color(startDrain, endDrain, foreground, background);
 }

@@ -14,9 +14,7 @@ void PointStroke::draw(const Vector2& position,
 					   const int endDraw,
 					   const int startDrain,
 					   const int endDrain,
-					   const int endTime,
-					   const int drawSpeed,
-					   const Color& foreground,
 					   const Color& background,
+					   const Color& foreground,
 					   const float scale) const {
 }

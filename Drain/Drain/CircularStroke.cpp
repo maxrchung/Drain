@@ -26,17 +26,9 @@ void CircularStroke::draw(const Vector2& position,
 						  const int endDraw,
 						  const int startDrain,
 						  const int endDrain,
-						  const int endTime,
-						  const int drawSpeed,
-						  const Color& foreground,
 						  const Color& background,
+						  const Color& foreground,
 						  const float scale) const {
-	outer->Color(startDraw, endDrain, foreground, foreground);
-	inner->Color(startDraw, endDrain, background, background);
-	horizontalCover->Color(startDraw, endDrain, background, background);
-	verticalCover->Color(startDraw, endDrain, background, background);
-	startPoint->Color(startDraw, startDraw, foreground, foreground);
-	endPoint->Color(startDraw, startDraw, foreground, foreground);
 	auto outerScale = (startPosition - center).Magnitude() * scale / imageSize + thickness * 0.5f * scale / imageSize;
 	outer->Scale(startDraw, startDraw, outerScale, outerScale);
 	auto innerScale = (startPosition - center).Magnitude() * scale / imageSize - thickness * 0.5f * scale / imageSize;
@@ -51,25 +43,19 @@ void CircularStroke::draw(const Vector2& position,
 		rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition);
 		horizontalCover->ScaleVector(startDraw, endDraw, Vector2(0, horizontalCoverScale), Vector2(horizontalCoverScale, horizontalCoverScale), Easing::SineOut);
 		verticalCover->ScaleVector(startDraw, endDraw, Vector2(verticalCoverScale, 0), Vector2(verticalCoverScale, verticalCoverScale), Easing::SineOut);
-		horizontalCover->ScaleVector(startDrain, endDrain, Vector2(horizontalCoverScale, horizontalCoverScale), Vector2(0, horizontalCoverScale), Easing::SineOut);
-		verticalCover->ScaleVector(startDrain, endDrain, Vector2(verticalCoverScale, verticalCoverScale), Vector2(verticalCoverScale, 0), Easing::SineOut);
 	}
 	// CCW
 	else {
 		rotation = Vector2(1.0f, 0.0f).AngleBetween(startPosition);
 		horizontalCover->ScaleVector(startDraw, endDraw, Vector2(horizontalCoverScale, horizontalCoverScale), Vector2(0, horizontalCoverScale), Easing::SineIn);
 		verticalCover->ScaleVector(startDraw, endDraw, Vector2(verticalCoverScale, verticalCoverScale), Vector2(verticalCoverScale, 0), Easing::SineOut);
-		horizontalCover->ScaleVector(startDrain, endDrain, Vector2(0, horizontalCoverScale), Vector2(horizontalCoverScale, horizontalCoverScale), Easing::SineOut);
-		verticalCover->ScaleVector(startDrain, endDrain, Vector2(verticalCoverScale, 0), Vector2(verticalCoverScale, verticalCoverScale), Easing::SineIn);
 	}
 	outer->Rotate(startDraw, startDraw, rotation, rotation);
 	inner->Rotate(startDraw, startDraw, rotation, rotation);
 	horizontalCover->Rotate(startDraw, startDraw, rotation, rotation);
 	verticalCover->Rotate(startDraw, startDraw, rotation, rotation);
 	const auto thicknessScale = thickness * scale / imageSize;
-	startPoint->Scale(startDraw - spawnTime, startDraw, 0, thicknessScale);
 	startPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
-	endPoint->Scale(startDraw - spawnTime, startDraw, 0, thicknessScale);
 	endPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
 	const auto endMove = position + endPosition * scale;
 	const auto originalPosition = startPoint->position;
@@ -78,16 +64,19 @@ void CircularStroke::draw(const Vector2& position,
 		startPosition.x < endPosition.x && startPosition.y < endPosition.y) {
 		endPoint->MoveX(startDraw, endDraw, originalPosition.x, endMove.x, Easing::SineOut);
 		endPoint->MoveY(startDraw, endDraw, originalPosition.y, endMove.y, Easing::SineIn);
-		endPoint->MoveX(startDrain, endDrain, endMove.x, originalPosition.x, Easing::SineIn);
-		endPoint->MoveY(startDrain, endDrain, endMove.y, originalPosition.y, Easing::SineOut);
 	}
 	else if (startPosition.x < endPosition.x && startPosition.y > endPosition.y ||
 			 startPosition.x > endPosition.x && startPosition.y < endPosition.y) {
 		endPoint->MoveX(startDraw, endDraw, originalPosition.x, endMove.x, Easing::SineIn);
 		endPoint->MoveY(startDraw, endDraw, originalPosition.y, endMove.y, Easing::SineOut);
-		endPoint->MoveX(startDrain, endDrain, endMove.x, originalPosition.x, Easing::SineOut);
-		endPoint->MoveY(startDrain, endDrain, endMove.y, originalPosition.y, Easing::SineIn);
 	}
-	startPoint->Scale(endDrain, endDrain + spawnTime, thicknessScale, 0);
-	endPoint->Scale(endDrain, endDrain + spawnTime, thicknessScale, 0);
+	outer->Color(startDraw, startDraw, foreground, foreground);
+	inner->Color(startDraw, endDrain, background, background);
+	horizontalCover->Color(startDraw, startDraw, background, background);
+	verticalCover->Color(startDraw, startDraw, background, background);
+	startPoint->Color(startDraw, startDraw, foreground, foreground);
+	endPoint->Color(startDraw, startDraw, foreground, foreground);
+	outer->Color(startDrain, endDrain, foreground, background);
+	startPoint->Color(startDrain, endDrain, foreground, background);
+	endPoint->Color(startDrain, endDrain, foreground, background);
 }

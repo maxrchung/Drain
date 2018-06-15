@@ -12,10 +12,8 @@ public:
 					  const int endDraw,
 					  const int startDrain,
 					  const int endDrain,
-					  const int endTime,
-					  const int drawSpeed,
-					  const Color& foreground,
 					  const Color& background,
+					  const Color& foreground,
 					  const float scale) const = 0;
 	// Thickness of Character stroke represented as a factor of scale
 	static constexpr float thickness = 0.15f;
@@ -24,6 +22,5 @@ public:
 protected:
 	// Size of sprite images in pixels
 	static const int imageSize = 100;
-	static const int spawnTime = static_cast<int>(Timing::quarter);
 	std::vector<Sprite*> sprites;
 };

@@ -51,10 +51,10 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 	switch (character) {
 		case 'a':
 			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
-			//strokes.push_back(std::make_unique<CircularStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
-			//strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
-			//strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
-			//strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, -0.5f)));
+			strokes.push_back(std::make_unique<CircularStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, -0.5f)));
 			break;
 		default:
 			throw new std::exception("Unsupported lyric character: " + character);
@@ -62,25 +62,24 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 	return strokes;
 }
 void Character::draw(const Vector2& position,
-					   const int startTime,
-					   const int endTime,
-					   const int drawSpeed,
-					   const Color& foreground,
-					   const Color& background,
-					   const float scale) const {
+					 const int startTime,
+					 const int endTime,
+					 const Color& background,
+					 const Color& foreground,
+					 const float scale) const {
 	createSprites(position, scale);
+	const auto totalTime = endTime - startTime - drawBuffer;
 	const auto totalLength = calculateLength();
+	auto partialLength = 0.0f;
 	// For more accurate time measurements, setting this to float
-	for (int i = 0; i < strokes.size(); ++i) {
-		const auto strokeLength = strokes[i]->calculateLength();
+	for (const auto& stroke : strokes) {
+		const auto strokeLength = stroke->calculateLength();
 		const auto lengthFraction = strokeLength / totalLength;
-		const auto timeFraction = lengthFraction * drawSpeed;
+		const auto drawFraction = lengthFraction * totalTime;
 		// Definitely possible to get float rounding errors here, but few enough strokes should not make this too bad
-		const auto startDraw = static_cast<int>(startTime + i * timeFraction);
-		const auto endDraw = static_cast<int>(startTime + (i + 1) * timeFraction);
-		// Drain from reverse
-		const auto startDrain = static_cast<int>(endTime + (strokes.size() - 1 - i) * timeFraction);
-		const auto endDrain = static_cast<int>(endTime + (strokes.size() - i) * timeFraction);
-		strokes[i]->draw(position, startDraw, endDraw, startDrain, endDrain, endTime, drawSpeed, foreground, background, scale);
+		const auto startDraw = static_cast<int>(startTime + partialLength);
+		const auto endDraw = static_cast<int>(startTime + partialLength + drawFraction);
+		stroke->draw(position, startDraw, endDraw, endTime, endTime + drainTime, background, foreground, scale);
+		partialLength += drawFraction;
 	}
 }

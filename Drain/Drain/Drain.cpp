@@ -1,15 +1,17 @@
 #include "Lyric.hpp"
 #include "Path.hpp"
 #include "Storyboard.hpp"
+#include "Swatch.hpp"
 #include <iostream>
 int main() {
 	// Gets rid of beatmap background
 	Storyboard::CreateSprite("36592_serial_experiments_lain.jpg", Vector2::Zero, Layer::Background);
+	// Solid color background
 	auto const background = Storyboard::CreateSprite(getPath(Path::Pixel), Vector2::Zero, Layer::Background);
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
-	background->Color(0, Time("06:37:848").ms, Color(150), Color(150), Easing::Linear, 0);
+	background->Color(0, Time("06:37:848").ms, Color(0), Color(0), Easing::Linear, 0);
 	//Lyric testing
-	Lyric("a", Vector2::Zero, Time("00:05:584").ms, Time("00:06:999").ms, Timing::whole * 2, Color(0, 255, 0), Color(0, 0, 255), 100.0f);
+	Lyric::draw("a", Vector2::Zero, Time("00:05:584").ms, Time("00:07:282").ms, Swatch::offwhite, Swatch::water, 100.0f);
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
 	auto storyboardInputPath = std::ifstream("StoryboardInputPath.txt");

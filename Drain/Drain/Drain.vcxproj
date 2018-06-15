@@ -129,9 +129,11 @@
     <ClCompile Include="PointStroke.cpp" />
     <ClCompile Include="Raindrop.cpp" />
     <ClCompile Include="Stroke.cpp" />
+    <ClCompile Include="Swatch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Character.hpp" />
+    <ClInclude Include="Swatch.hpp" />
     <ClInclude Include="LineStroke.hpp" />
     <ClInclude Include="Lyric.hpp" />
     <ClInclude Include="Path.hpp" />

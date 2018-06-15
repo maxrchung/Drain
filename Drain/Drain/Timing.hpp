@@ -1,7 +1,6 @@
 #pragma once
-
-class Timing {
-public:
+// Beatmap timing info
+struct Timing {
 	static constexpr float bpm = 106.0f;
 	// ~566 ms
 	static constexpr float whole = 60.0f * 1000.0f / bpm;

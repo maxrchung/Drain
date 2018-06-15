@@ -25,12 +25,15 @@
     <Filter Include="Source Files\Lyric\Stroke">
       <UniqueIdentifier>{e1787740-0242-4e1a-894a-a904a17be3ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utility">
+      <UniqueIdentifier>{bfc6c404-a866-471c-9aca-8e1546cabe8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{448796c4-f102-4b1b-b7f3-92b7e289433f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Drain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Raindrop.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Lyric.cpp">
@@ -38,9 +41,6 @@
     </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>Source Files\Lyric</Filter>
-    </ClCompile>
-    <ClCompile Include="Path.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LineStroke.cpp">
       <Filter>Source Files\Lyric\Stroke</Filter>
@@ -54,6 +54,15 @@
     <ClCompile Include="PointStroke.cpp">
       <Filter>Source Files\Lyric\Stroke</Filter>
     </ClCompile>
+    <ClCompile Include="Path.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Swatch.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Raindrop.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raindrop.hpp">
@@ -64,9 +73,6 @@
     </ClInclude>
     <ClInclude Include="Character.hpp">
       <Filter>Header Files\Lyric</Filter>
-    </ClInclude>
-    <ClInclude Include="Path.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Stroke.hpp">
       <Filter>Header Files\Lyric\Stroke</Filter>
@@ -80,8 +86,14 @@
     <ClInclude Include="PointStroke.hpp">
       <Filter>Header Files\Lyric\Stroke</Filter>
     </ClInclude>
+    <ClInclude Include="Swatch.hpp">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Path.hpp">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
     <ClInclude Include="Timing.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
