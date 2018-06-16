@@ -14,6 +14,7 @@ public:
 			  const Color& foreground,
 			  const float scale) const;
 private:
+	bool isClockwiseRotation() const;
 	const Vector2 center;
 	Sprite* outer;
 	Sprite* inner;

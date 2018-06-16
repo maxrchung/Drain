@@ -12,13 +12,25 @@ float CircularStroke::calculateLength() const {
 	const auto length = fabsf(angleBetween) * endPosition.Magnitude() + thickness;
 	return length;
 }
+bool CircularStroke::isClockwiseRotation() const {
+	const auto angleBetween = startPosition.AngleBetween(endPosition);
+	const auto isClockwise = angleBetween > 0;
+	return isClockwise;
+}
 void CircularStroke::createSprites(const Vector2& position, const float scale) {
 	const auto centerPosition = position + center * scale;
 	outer = Storyboard::CreateSprite(getPath(Path::Quarter), centerPosition, Layer::Background, Origin::BottomLeft);
 	inner = Storyboard::CreateSprite(getPath(Path::Quarter), centerPosition, Layer::Background, Origin::BottomLeft);
 	const auto coverPosition = endPosition.Normalize() * (endPosition.Magnitude() + thickness * 0.5f) * scale;
-	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::TopLeft);
-	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::TopLeft);
+	Origin origin;
+	if (isClockwiseRotation()) {
+		origin = Origin::BottomRight;
+	}
+	else {
+		origin = Origin::TopLeft;
+	}
+	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, origin);
+	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, origin);
 	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + startPosition * scale, Layer::Background);
 	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), startPoint->position, Layer::Background);
 }
@@ -34,43 +46,48 @@ void CircularStroke::draw(const Vector2& position,
 	outer->Scale(startDraw, startDraw, outerScale, outerScale);
 	auto innerScale = (startPosition - center).Magnitude() * scale / imageSize - thickness * 0.5f * scale / imageSize;
 	inner->Scale(startDraw, startDraw, innerScale, innerScale);
-	auto verticalCoverScale = outerScale * imageSize;
-	auto horizontalCoverScale = innerScale * imageSize;
-	const auto angleBetween = startPosition.AngleBetween(endPosition);
-	// Set rotation and cover scale based on cw or ccw rotation
+	float verticalCoverScale = outerScale * imageSize;
+	float horizontalCoverScale = innerScale * imageSize;
+	// Set based on cw or ccw rotation
 	float rotation;
-	// CW
-	if (angleBetween > 0) {
+	Easing easing;
+	Easing easingReverse;
+	if (isClockwiseRotation()) {
 		rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition);
-		horizontalCover->ScaleVector(startDraw, endDraw, Vector2(0, horizontalCoverScale), Vector2(horizontalCoverScale, horizontalCoverScale), Easing::SineIn);
-		verticalCover->ScaleVector(startDraw, endDraw, Vector2(verticalCoverScale, 0), Vector2(verticalCoverScale, verticalCoverScale), Easing::SineIn);
+		easing = Easing::SineOut;
+		easingReverse = Easing::SineIn;
+		horizontalCoverScale = outerScale * imageSize;
+		verticalCoverScale = innerScale * imageSize;
 	}
-	// CCW
 	else {
 		rotation = Vector2(1.0f, 0.0f).AngleBetween(startPosition);
-		horizontalCover->ScaleVector(startDraw, endDraw, Vector2(horizontalCoverScale, horizontalCoverScale), Vector2(0, horizontalCoverScale), Easing::SineIn);
-		verticalCover->ScaleVector(startDraw, endDraw, Vector2(verticalCoverScale, verticalCoverScale), Vector2(verticalCoverScale, 0), Easing::SineOut);
+		easing = Easing::SineIn;
+		easingReverse = Easing::SineOut;
+		verticalCoverScale = outerScale * imageSize;
+		horizontalCoverScale = innerScale * imageSize;
 	}
 	outer->Rotate(startDraw, startDraw, rotation, rotation);
 	inner->Rotate(startDraw, startDraw, rotation, rotation);
 	horizontalCover->Rotate(startDraw, startDraw, rotation, rotation);
 	verticalCover->Rotate(startDraw, startDraw, rotation, rotation);
-	const auto thicknessScale = thickness * scale / imageSize;
-	startPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
-	endPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
 	const auto endMove = position + endPosition * scale;
 	const auto originalPosition = startPoint->position;
 	// Set easing based on how point is moving
 	if (startPosition.x > endPosition.x && startPosition.y > endPosition.y ||
 		startPosition.x < endPosition.x && startPosition.y < endPosition.y) {
-		endPoint->MoveX(startDraw, endDraw, originalPosition.x, endMove.x, Easing::SineOut);
-		endPoint->MoveY(startDraw, endDraw, originalPosition.y, endMove.y, Easing::SineIn);
+		endPoint->MoveX(startDraw, endDraw, originalPosition.x, endMove.x, easingReverse);
+		endPoint->MoveY(startDraw, endDraw, originalPosition.y, endMove.y, easing);
 	}
 	else if (startPosition.x < endPosition.x && startPosition.y > endPosition.y ||
 			 startPosition.x > endPosition.x && startPosition.y < endPosition.y) {
-		endPoint->MoveX(startDraw, endDraw, originalPosition.x, endMove.x, Easing::SineIn);
-		endPoint->MoveY(startDraw, endDraw, originalPosition.y, endMove.y, Easing::SineOut);
+		endPoint->MoveX(startDraw, endDraw, originalPosition.x, endMove.x, easing);
+		endPoint->MoveY(startDraw, endDraw, originalPosition.y, endMove.y, easingReverse);
 	}
+	horizontalCover->ScaleVector(startDraw, endDraw, Vector2(horizontalCoverScale, horizontalCoverScale), Vector2(0, horizontalCoverScale), easing);
+	verticalCover->ScaleVector(startDraw, endDraw, Vector2(verticalCoverScale, verticalCoverScale), Vector2(verticalCoverScale, 0), easingReverse);
+	const auto thicknessScale = thickness * scale / imageSize;
+	startPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
+	endPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
 	inner->Color(startDraw, endDrain, background, background);
 	horizontalCover->Color(startDraw, startDraw, background, background);
 	verticalCover->Color(startDraw, startDraw, background, background);

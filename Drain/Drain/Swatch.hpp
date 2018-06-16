@@ -3,6 +3,10 @@
 // Place colors that you plan on using into here
 // In my original outline, I only planned for 4 main colors: white, blue, red, black, but this is always subject to change
 struct Swatch {
+	// Pure white
+	static const Color white;
+	// Pure black
+	static const Color black;
 	// Hysteresis album cover white
 	static const Color offwhite;
 	// Hysteresis album color blue/green;

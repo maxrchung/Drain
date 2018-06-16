@@ -56,6 +56,13 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
 			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, -0.5f)));
 			break;
+		case 'b':
+			//strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 1.0f), Vector2(-0.5f, -0.5f)));
+			strokes.push_back(std::make_unique<CircularStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
+			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, 0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, -0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
+			break;
 		default:
 			throw new std::exception("Unsupported lyric character: " + character);
 	}
