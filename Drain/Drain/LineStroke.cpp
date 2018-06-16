@@ -32,12 +32,6 @@ void LineStroke::draw(const Vector2& position,
 	startPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
 	endPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
 	endPoint->Move(startDraw, endDraw, startPoint->position, position + endPosition * scale);
-	line->Color(startDraw, startDraw, foreground, foreground);
-	startPoint->Color(startDraw, startDraw, foreground, foreground);
-	endPoint->Color(startDraw, startDraw, foreground, foreground);
-	line->Color(startDrain, endDrain, foreground, background);
-	startPoint->Color(startDrain, endDrain, foreground, background);
-	endPoint->Color(startDrain, endDrain, foreground, background);
 	line->Color(startDrain, endDrain, foreground, background);
 	startPoint->Color(startDrain, endDrain, foreground, background);
 	endPoint->Color(startDrain, endDrain, foreground, background);

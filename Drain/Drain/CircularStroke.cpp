@@ -13,12 +13,13 @@ float CircularStroke::calculateLength() const {
 	return length;
 }
 void CircularStroke::createSprites(const Vector2& position, const float scale) {
-	outer = Storyboard::CreateSprite(getPath(Path::Quarter), position + center * scale, Layer::Background, Origin::BottomLeft);
-	inner = Storyboard::CreateSprite(getPath(Path::Quarter), position + center * scale, Layer::Background, Origin::BottomLeft);
-	const auto coverPosition = position + endPosition.Normalize() * ((endPosition.Magnitude() + thickness * 0.5f) * scale);
+	const auto centerPosition = position + center * scale;
+	outer = Storyboard::CreateSprite(getPath(Path::Quarter), centerPosition, Layer::Background, Origin::BottomLeft);
+	inner = Storyboard::CreateSprite(getPath(Path::Quarter), centerPosition, Layer::Background, Origin::BottomLeft);
+	const auto coverPosition = endPosition.Normalize() * (endPosition.Magnitude() + thickness * 0.5f) * scale;
 	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::TopLeft);
 	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::TopLeft);
-	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + startPosition * scale, Layer::Background);
+	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + startPosition * scale, Layer::Background);
 	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), startPoint->position, Layer::Background);
 }
 void CircularStroke::draw(const Vector2& position,
@@ -41,8 +42,8 @@ void CircularStroke::draw(const Vector2& position,
 	// CW
 	if (angleBetween > 0) {
 		rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition);
-		horizontalCover->ScaleVector(startDraw, endDraw, Vector2(0, horizontalCoverScale), Vector2(horizontalCoverScale, horizontalCoverScale), Easing::SineOut);
-		verticalCover->ScaleVector(startDraw, endDraw, Vector2(verticalCoverScale, 0), Vector2(verticalCoverScale, verticalCoverScale), Easing::SineOut);
+		horizontalCover->ScaleVector(startDraw, endDraw, Vector2(0, horizontalCoverScale), Vector2(horizontalCoverScale, horizontalCoverScale), Easing::SineIn);
+		verticalCover->ScaleVector(startDraw, endDraw, Vector2(verticalCoverScale, 0), Vector2(verticalCoverScale, verticalCoverScale), Easing::SineIn);
 	}
 	// CCW
 	else {
@@ -70,12 +71,9 @@ void CircularStroke::draw(const Vector2& position,
 		endPoint->MoveX(startDraw, endDraw, originalPosition.x, endMove.x, Easing::SineIn);
 		endPoint->MoveY(startDraw, endDraw, originalPosition.y, endMove.y, Easing::SineOut);
 	}
-	outer->Color(startDraw, startDraw, foreground, foreground);
 	inner->Color(startDraw, endDrain, background, background);
 	horizontalCover->Color(startDraw, startDraw, background, background);
 	verticalCover->Color(startDraw, startDraw, background, background);
-	startPoint->Color(startDraw, startDraw, foreground, foreground);
-	endPoint->Color(startDraw, startDraw, foreground, foreground);
 	outer->Color(startDrain, endDrain, foreground, background);
 	startPoint->Color(startDrain, endDrain, foreground, background);
 	endPoint->Color(startDrain, endDrain, foreground, background);
