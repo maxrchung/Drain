@@ -17,8 +17,6 @@ std::string getPath(Path path) {
 			return "f";
 		case Path::Blank:
 			return "g";
-		case Path::TwoThirds:
-			return "h";
 		default:
 			throw new std::exception("Unsupported path");
 	}

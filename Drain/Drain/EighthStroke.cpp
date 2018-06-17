@@ -17,17 +17,14 @@ void EighthStroke::createSprites(const Vector2& position, const float scale) {
 	std::string outerPath;
 	std::string quarterPath;
 	std::string startPath;
-	std::string endPath;
 	if (startOffset) {
 		outerPath = getPath(Path::EighthTop);
 		startPath = getPath(Path::Blank);
-		endPath = getPath(Path::Circle);
 		quarterPath = getPath(Path::EighthBottom);
 	}
 	else {
 		outerPath = getPath(Path::EighthBottom);
 		startPath = getPath(Path::Circle);
-		endPath = getPath(Path::Blank);
 		quarterPath = getPath(Path::EighthTop);
 	}
 	const auto centerPosition = position + center * scale;
@@ -44,7 +41,7 @@ void EighthStroke::createSprites(const Vector2& position, const float scale) {
 	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, origin);
 	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, origin);
 	startPoint = Storyboard::CreateSprite(startPath, centerPosition + startPosition * scale, Layer::Background);
-	endPoint = Storyboard::CreateSprite(endPath, startPoint->position, Layer::Background);
+	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), startPoint->position, Layer::Background);
 	// Additional covers to hide unneeded QuarterStroke sections
 	quarterCover = Storyboard::CreateSprite(quarterPath, centerPosition, Layer::Background, Origin::BottomLeft);
 	pointCover = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + offsetPosition * scale, Layer::Background);
@@ -76,18 +73,21 @@ void EighthStroke::draw(const Vector2& position,
 						background,
 						foreground,
 						scale);
+	int quarterTime;
 	int pointTime;
 	if (startOffset) {
+		quarterTime = startTime;
 		pointTime = startDraw;
 		// To get rid of endPoint when it starts drawing
 		endPoint->Color(startDraw, startDraw, background, foreground);
 	}
 	else {
+		quarterTime = endDraw;
 		pointTime = endDraw;
 	}
-	quarterCover->Rotate(startTime, startTime, outer->rotation, outer->rotation);
-	quarterCover->Scale(startTime, startTime, outer->scale, outer->scale);
-	quarterCover->Color(startTime, endDrain, background, background);
+	quarterCover->Rotate(quarterTime, quarterTime, outer->rotation, outer->rotation);
+	quarterCover->Scale(quarterTime, quarterTime, outer->scale, outer->scale);
+	quarterCover->Color(quarterTime, endDrain, background, background);
 	pointCover->Scale(pointTime, pointTime, startPoint->scale, startPoint->scale);
 	pointCover->Color(startDrain, endDrain, foreground, background);
 }

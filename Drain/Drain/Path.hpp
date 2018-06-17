@@ -9,7 +9,6 @@ enum class Path {
 	EighthBottom,
 	EighthTop,
 	Blank,
-	TwoThirds
 };
 // Function for converting the Path enumeration to actual file name
 // Example usage: std::string stringPath = getPath(Path::Circle);
