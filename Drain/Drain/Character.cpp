@@ -66,10 +66,10 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(0.0f, -0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
 			break;
 		case 'c':
-			strokes.push_back(std::make_unique<EighthStroke>(Vector2(Math::squareRootOf2 * 0.25f, Math::squareRootOf2 * 0.25f), Vector2(0.0f, 0.5f), Vector2::Zero));
-			//strokes.push_back(std::make_unique<QuarterStroke>(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
-			//strokes.push_back(std::make_unique<QuarterStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
-			//strokes.push_back(std::make_unique<EighthStroke>(Vector2(-squareRootOf2 * 0.25f, -squareRootOf2 * 0.25f), Vector2(squareRootOf2 * 0.25f, -squareRootOf2 * 0.25f), Vector2::Zero));
+			strokes.push_back(std::make_unique<EighthStroke>(Vector2(Math::sqrt2 * 0.25f, Math::sqrt2 * 0.25f), Vector2(0.0f, 0.5f), Vector2::Zero));
+			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			strokes.push_back(std::make_unique<EighthStroke>(Vector2(0.0f, -0.5f), Vector2(Math::sqrt2 * 0.25f, -Math::sqrt2 * 0.25f), Vector2::Zero));
 			break;
 		default:
 			throw new std::exception("Unsupported lyric character: " + character);

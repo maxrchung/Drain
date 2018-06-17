@@ -1,4 +1,5 @@
 #include "Path.hpp"
+#include <exception>
 // Be careful not to overlap file names
 std::string getPath(Path path) {
 	switch (path) {
@@ -10,7 +11,15 @@ std::string getPath(Path path) {
 			return "c";
 		case Path::Square:
 			return "d";
-		case Path::Eighth:
+		case Path::EighthBottom:
 			return "e";
+		case Path::EighthTop:
+			return "f";
+		case Path::Blank:
+			return "g";
+		case Path::TwoThirds:
+			return "h";
+		default:
+			throw new std::exception("Unsupported path");
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "QuarterStroke.hpp"
+// Hacks a QuarterStroke to be an eighth stroke
 class EighthStroke : public QuarterStroke {
 public:
 	explicit EighthStroke(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center);
@@ -15,10 +16,14 @@ public:
 			  const float scale) const;
 private:
 	static bool setStartOffset(const Vector2& startPosition, const Vector2& center);
+	static Vector2 setOffsetPosition(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center);
 	static Vector2 setStartPosition(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center);
 	static Vector2 setEndPosition(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center);
 	// Flag for denoting offset
 	// If true then start needs to be offset
 	// If false then end needs to be  offset
 	const bool startOffset;
+	const Vector2 offsetPosition;
+	Sprite* quarterCover;
+	Sprite* pointCover;
 };
