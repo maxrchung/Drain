@@ -67,8 +67,8 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 			break;
 		case 'c':
 			strokes.push_back(std::make_unique<EighthStroke>(Vector2(Math::sqrt2 * 0.25f, Math::sqrt2 * 0.25f), Vector2(0.0f, 0.5f), Vector2::Zero));
-			//strokes.push_back(std::make_unique<QuarterStroke>(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
-			//strokes.push_back(std::make_unique<QuarterStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
 			strokes.push_back(std::make_unique<EighthStroke>(Vector2(0.0f, -0.5f), Vector2(Math::sqrt2 * 0.25f, -Math::sqrt2 * 0.25f), Vector2::Zero));
 			break;
 		default:

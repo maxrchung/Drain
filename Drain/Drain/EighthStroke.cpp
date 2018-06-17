@@ -15,21 +15,24 @@ float EighthStroke::calculateLength() const {
 }
 void EighthStroke::createSprites(const Vector2& position, const float scale) {
 	std::string outerPath;
+	std::string innerPath;
 	std::string quarterPath;
 	std::string startPath;
 	if (startOffset) {
-		outerPath = getPath(Path::EighthTop);
+		outerPath = getPath(Path::EighthTopOuter);
+		innerPath = getPath(Path::EighthTopInner);
 		startPath = getPath(Path::Blank);
-		quarterPath = getPath(Path::EighthBottom);
+		quarterPath = getPath(Path::EighthBottomInner);
 	}
 	else {
-		outerPath = getPath(Path::EighthBottom);
+		outerPath = getPath(Path::EighthBottomOuter);
+		innerPath = getPath(Path::EighthBottomInner);
 		startPath = getPath(Path::Circle);
-		quarterPath = getPath(Path::EighthTop);
+		quarterPath = getPath(Path::EighthTopInner);
 	}
 	const auto centerPosition = position + center * scale;
 	outer = Storyboard::CreateSprite(outerPath, centerPosition, Layer::Background, Origin::BottomLeft);
-	inner = Storyboard::CreateSprite(outerPath, centerPosition, Layer::Background, Origin::BottomLeft);
+	inner = Storyboard::CreateSprite(innerPath, centerPosition, Layer::Background, Origin::BottomLeft);
 	const auto coverPosition = endPosition.Normalize() * (endPosition.Magnitude() + thickness * 0.5f) * scale;
 	Origin origin;
 	if (clockwise) {

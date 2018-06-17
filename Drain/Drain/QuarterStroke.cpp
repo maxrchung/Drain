@@ -14,8 +14,8 @@ float QuarterStroke::calculateLength() const {
 }
 void QuarterStroke::createSprites(const Vector2& position, const float scale) {
 	const auto centerPosition = position + center * scale;
-	outer = Storyboard::CreateSprite(getPath(Path::Quarter), centerPosition, Layer::Background, Origin::BottomLeft);
-	inner = Storyboard::CreateSprite(getPath(Path::Quarter), centerPosition, Layer::Background, Origin::BottomLeft);
+	outer = Storyboard::CreateSprite(getPath(Path::QuarterOuter), centerPosition, Layer::Background, Origin::BottomLeft);
+	inner = Storyboard::CreateSprite(getPath(Path::QuarterInner), centerPosition, Layer::Background, Origin::BottomLeft);
 	const auto coverPosition = endPosition.Normalize() * (endPosition.Magnitude() + thickness * 0.5f) * scale;
 	Origin origin;
 	if (clockwise) {
