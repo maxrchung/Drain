@@ -1,10 +1,10 @@
-#include "CircularStroke.hpp"
+#include "QuarterStroke.hpp"
 #include "Path.hpp"
 #include "Storyboard.hpp"
-CircularStroke::CircularStroke(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center)
-	: Stroke{ startPosition, endPosition }, center{ center } {
+QuarterStroke::QuarterStroke(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center)
+	: Stroke{ startPosition, endPosition }, center{ center }, clockwise{ setClockwise(startPosition, endPosition) } {
 }
-float CircularStroke::calculateLength() const {
+float QuarterStroke::calculateLength() const {
 	const auto startFromCenter = startPosition - center;
 	const auto endFromCenter = endPosition - center;
 	const auto angleBetween = startFromCenter.AngleBetween(endFromCenter);
@@ -12,18 +12,13 @@ float CircularStroke::calculateLength() const {
 	const auto length = fabsf(angleBetween) * endPosition.Magnitude() + thickness;
 	return length;
 }
-bool CircularStroke::isClockwiseRotation() const {
-	const auto angleBetween = startPosition.AngleBetween(endPosition);
-	const auto isClockwise = angleBetween > 0;
-	return isClockwise;
-}
-void CircularStroke::createSprites(const Vector2& position, const float scale) {
+void QuarterStroke::createSprites(const Vector2& position, const float scale) {
 	const auto centerPosition = position + center * scale;
 	outer = Storyboard::CreateSprite(getPath(Path::Quarter), centerPosition, Layer::Background, Origin::BottomLeft);
 	inner = Storyboard::CreateSprite(getPath(Path::Quarter), centerPosition, Layer::Background, Origin::BottomLeft);
 	const auto coverPosition = endPosition.Normalize() * (endPosition.Magnitude() + thickness * 0.5f) * scale;
 	Origin origin;
-	if (isClockwiseRotation()) {
+	if (clockwise) {
 		origin = Origin::BottomRight;
 	}
 	else {
@@ -34,7 +29,7 @@ void CircularStroke::createSprites(const Vector2& position, const float scale) {
 	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + startPosition * scale, Layer::Background);
 	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), startPoint->position, Layer::Background);
 }
-void CircularStroke::draw(const Vector2& position,
+void QuarterStroke::draw(const Vector2& position,
 						  const int startDraw,
 						  const int endDraw,
 						  const int startDrain,
@@ -52,7 +47,7 @@ void CircularStroke::draw(const Vector2& position,
 	float rotation;
 	Easing easing;
 	Easing easingReverse;
-	if (isClockwiseRotation()) {
+	if (clockwise) {
 		rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition);
 		easing = Easing::SineOut;
 		easingReverse = Easing::SineIn;
@@ -94,4 +89,9 @@ void CircularStroke::draw(const Vector2& position,
 	outer->Color(startDrain, endDrain, foreground, background);
 	startPoint->Color(startDrain, endDrain, foreground, background);
 	endPoint->Color(startDrain, endDrain, foreground, background);
+}
+bool QuarterStroke::setClockwise(const Vector2& startPosition, const Vector2& endPosition) {
+	const auto angleBetween = startPosition.AngleBetween(endPosition);
+	const auto clockwise = angleBetween > 0;
+	return clockwise;
 }

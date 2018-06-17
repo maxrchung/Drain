@@ -48,9 +48,6 @@
     <ClCompile Include="Stroke.cpp">
       <Filter>Source Files\Lyric\Stroke</Filter>
     </ClCompile>
-    <ClCompile Include="CircularStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
-    </ClCompile>
     <ClCompile Include="PointStroke.cpp">
       <Filter>Source Files\Lyric\Stroke</Filter>
     </ClCompile>
@@ -61,6 +58,15 @@
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Raindrop.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="EighthStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
+    <ClCompile Include="QuarterStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,9 +86,6 @@
     <ClInclude Include="LineStroke.hpp">
       <Filter>Header Files\Lyric\Stroke</Filter>
     </ClInclude>
-    <ClInclude Include="CircularStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
-    </ClInclude>
     <ClInclude Include="PointStroke.hpp">
       <Filter>Header Files\Lyric\Stroke</Filter>
     </ClInclude>
@@ -93,6 +96,15 @@
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Timing.hpp">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="EighthStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
+    </ClInclude>
+    <ClInclude Include="QuarterStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.hpp">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>

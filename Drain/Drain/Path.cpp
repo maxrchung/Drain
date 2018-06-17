@@ -3,12 +3,14 @@
 std::string getPath(Path path) {
 	switch (path) {
 		case Path::Circle:
-			return "c";
+			return "a";
 		case Path::Pixel:
-			return "p";
+			return "b";
 		case Path::Quarter:
-			return "q";
+			return "c";
 		case Path::Square:
-			return "s";
+			return "d";
+		case Path::Eighth:
+			return "e";
 	}
 }

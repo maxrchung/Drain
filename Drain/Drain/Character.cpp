@@ -1,6 +1,8 @@
 #include "Character.hpp"
-#include "CircularStroke.hpp"
+#include "QuarterStroke.hpp"
+#include "EighthStroke.hpp"
 #include "LineStroke.hpp"
+#include "Math.hpp"
 #include "PointStroke.hpp"
 #include <exception>
 Character::Character(const char character)
@@ -38,7 +40,7 @@ float Character::calculateLength() const {
 		// Always account for thickness so PointStroke has actual thickness
 		length += stroke->calculateLength();
 	}
-	return length;
+	return length;	
 }
 void Character::createSprites(const Vector2& position, const float scale) const {
 	// Create sprites backwards so strokes do not overlap
@@ -50,18 +52,24 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 	std::vector<std::unique_ptr<Stroke>> strokes;
 	switch (character) {
 		case 'a':
-			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
-			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
-			strokes.push_back(std::make_unique<CircularStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
-			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
+			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
 			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, -0.5f)));
 			break;
 		case 'b':
-			//strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 1.0f), Vector2(-0.5f, -0.5f)));
-			strokes.push_back(std::make_unique<CircularStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
-			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, 0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
-			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
-			strokes.push_back(std::make_unique<CircularStroke>(Vector2(0.0f, -0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 1.0f), Vector2(-0.5f, -0.5f)));
+			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
+			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(0.0f, 0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			strokes.push_back(std::make_unique<QuarterStroke>(Vector2(0.0f, -0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
+			break;
+		case 'c':
+			strokes.push_back(std::make_unique<EighthStroke>(Vector2(Math::squareRootOf2 * 0.25f, Math::squareRootOf2 * 0.25f), Vector2(0.0f, 0.5f), Vector2::Zero));
+			//strokes.push_back(std::make_unique<QuarterStroke>(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
+			//strokes.push_back(std::make_unique<QuarterStroke>(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			//strokes.push_back(std::make_unique<EighthStroke>(Vector2(-squareRootOf2 * 0.25f, -squareRootOf2 * 0.25f), Vector2(squareRootOf2 * 0.25f, -squareRootOf2 * 0.25f), Vector2::Zero));
 			break;
 		default:
 			throw new std::exception("Unsupported lyric character: " + character);
