@@ -11,7 +11,7 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	background->Color(0, Time("06:37:848").ms, Swatch::offwhite, Swatch::offwhite, Easing::Linear, 0);
 	//Lyric testing
-	Lyric::draw("abcc", Vector2(-50.0f, -50.0f), Time("00:05:584").ms, Time("00:07:282").ms, Swatch::offwhite, Swatch::water, 80.0f);
+	Lyric::draw("ab", Vector2(-50.0f, -50.0f), Time("00:05:584").ms, Time("00:07:282").ms, Swatch::offwhite, Swatch::water, 80.0f);
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
 	auto storyboardInputPath = std::ifstream("StoryboardInputPath.txt");

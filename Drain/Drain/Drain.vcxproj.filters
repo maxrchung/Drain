@@ -69,6 +69,15 @@
     <ClCompile Include="Math.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="CircularStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
+    <ClCompile Include="CWQuarterStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
+    <ClCompile Include="CCWQuarterStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raindrop.hpp">
@@ -106,6 +115,15 @@
     </ClInclude>
     <ClInclude Include="Math.hpp">
       <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CircularStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
+    </ClInclude>
+    <ClInclude Include="CWQuarterStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
+    </ClInclude>
+    <ClInclude Include="CCWQuarterStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
