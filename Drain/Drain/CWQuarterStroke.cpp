@@ -22,12 +22,12 @@ void CWQuarterStroke::draw(const Vector2& position,
 						   const Color& background,
 						   const Color& foreground,
 						   const float scale) const {
-	auto outerScale = (startPosition - center).Magnitude() * scale / imageSize + thickness * 0.5f * scale / imageSize;
+	const auto outerScale = (startPosition - center).Magnitude() * scale / imageSize + thickness * 0.5f * scale / imageSize;
 	outer->Scale(startDraw, startDraw, outerScale, outerScale);
-	auto innerScale = (startPosition - center).Magnitude() * scale / imageSize - thickness * 0.5f * scale / imageSize;
+	const auto innerScale = (startPosition - center).Magnitude() * scale / imageSize - thickness * 0.5f * scale / imageSize;
 	inner->Scale(startDraw, startDraw, innerScale, innerScale);
-	float verticalCoverScale = innerScale * imageSize;
-	float horizontalCoverScale = outerScale * imageSize;
+	const auto verticalCoverScale = innerScale * imageSize;
+	const auto horizontalCoverScale = outerScale * imageSize;
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition);
 	outer->Rotate(startDraw, startDraw, rotation, rotation);
 	inner->Rotate(startDraw, startDraw, rotation, rotation);

@@ -120,14 +120,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CCWEndEighthStroke.cpp" />
     <ClCompile Include="CCWQuarterStroke.cpp" />
+    <ClCompile Include="CCWStartEighthStroke.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CircularStroke.cpp" />
     <ClCompile Include="CWQuarterStroke.cpp" />
     <ClCompile Include="Math.cpp" />
-    <ClCompile Include="QuarterStroke.cpp" />
     <ClCompile Include="Drain.cpp" />
-    <ClCompile Include="EighthStroke.cpp" />
     <ClCompile Include="LineStroke.cpp" />
     <ClCompile Include="Lyric.cpp" />
     <ClCompile Include="Path.cpp" />
@@ -137,17 +137,17 @@
     <ClCompile Include="Swatch.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CCWEndEighthStroke.hpp" />
     <ClInclude Include="CCWQuarterStroke.hpp" />
+    <ClInclude Include="CCWStartEighthStroke.hpp" />
     <ClInclude Include="Character.hpp" />
     <ClInclude Include="CircularStroke.hpp" />
     <ClInclude Include="CWQuarterStroke.hpp" />
-    <ClInclude Include="EighthStroke.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="Swatch.hpp" />
     <ClInclude Include="LineStroke.hpp" />
     <ClInclude Include="Lyric.hpp" />
     <ClInclude Include="Path.hpp" />
-    <ClInclude Include="QuarterStroke.hpp" />
     <ClInclude Include="PointStroke.hpp" />
     <ClInclude Include="Raindrop.hpp" />
     <ClInclude Include="Stroke.hpp" />

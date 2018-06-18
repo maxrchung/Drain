@@ -60,12 +60,6 @@
     <ClCompile Include="Raindrop.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="EighthStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
-    </ClCompile>
-    <ClCompile Include="QuarterStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
-    </ClCompile>
     <ClCompile Include="Math.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
@@ -76,6 +70,12 @@
       <Filter>Source Files\Lyric\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="CCWQuarterStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
+    <ClCompile Include="CCWEndEighthStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
+    <ClCompile Include="CCWStartEighthStroke.cpp">
       <Filter>Source Files\Lyric\Stroke</Filter>
     </ClCompile>
   </ItemGroup>
@@ -107,12 +107,6 @@
     <ClInclude Include="Timing.hpp">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="EighthStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
-    </ClInclude>
-    <ClInclude Include="QuarterStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
-    </ClInclude>
     <ClInclude Include="Math.hpp">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
@@ -123,6 +117,12 @@
       <Filter>Header Files\Lyric\Stroke</Filter>
     </ClInclude>
     <ClInclude Include="CCWQuarterStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
+    </ClInclude>
+    <ClInclude Include="CCWStartEighthStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
+    </ClInclude>
+    <ClInclude Include="CCWEndEighthStroke.hpp">
       <Filter>Header Files\Lyric\Stroke</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,5 +1,7 @@
 #include "CircularStroke.hpp"
+#include "CCWEndEighthStroke.hpp"
 #include "CCWQuarterStroke.hpp"
+#include "CCWStartEighthStroke.hpp"
 #include "CWQuarterStroke.hpp"
 CircularStroke::CircularStroke(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center)
 	: Stroke{ startPosition, endPosition }, center{ center } {
@@ -17,10 +19,12 @@ std::unique_ptr<CircularStroke> CircularStroke::create(const Vector2& startPosit
 	else if (startOffset && !endOffset && clockwise) {
 	}
 	else if (startOffset && !endOffset && !clockwise) {
+		return std::make_unique<CCWStartEighthStroke>(startPosition, endPosition, center);
 	}
 	else if (!startOffset && endOffset && clockwise) {
 	}
 	else if (!startOffset && endOffset && !clockwise) {
+		return std::make_unique<CCWEndEighthStroke>(startPosition, endPosition, center);
 	}
 }
 float CircularStroke::calculateLength() const {

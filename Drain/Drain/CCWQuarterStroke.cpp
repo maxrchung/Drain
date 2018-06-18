@@ -22,14 +22,14 @@ void CCWQuarterStroke::draw(const Vector2& position,
 							const Color& background,
 							const Color& foreground,
 							const float scale) const {
-	auto outerScale = (startPosition - center).Magnitude() * scale / imageSize + thickness * 0.5f * scale / imageSize;
+	const auto outerScale = (startPosition - center).Magnitude() * scale / imageSize + thickness * 0.5f * scale / imageSize;
 	outer->Scale(startDraw, startDraw, outerScale, outerScale);
-	auto innerScale = (startPosition - center).Magnitude() * scale / imageSize - thickness * 0.5f * scale / imageSize;
+	const auto innerScale = (startPosition - center).Magnitude() * scale / imageSize - thickness * 0.5f * scale / imageSize;
 	inner->Scale(startDraw, startDraw, innerScale, innerScale);
-	float verticalCoverScale = outerScale * imageSize;
-	float horizontalCoverScale = innerScale * imageSize;
+	const auto verticalCoverScale = outerScale * imageSize;
+	const auto horizontalCoverScale = innerScale * imageSize;
 	// Set based on cw or ccw rotation
-	float rotation = Vector2(1.0f, 0.0f).AngleBetween(startPosition);
+	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(startPosition);
 	outer->Rotate(startDraw, startDraw, rotation, rotation);
 	inner->Rotate(startDraw, startDraw, rotation, rotation);
 	horizontalCover->Rotate(startDraw, startDraw, rotation, rotation);
