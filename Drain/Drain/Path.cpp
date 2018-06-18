@@ -7,18 +7,22 @@ std::string getPath(Path path) {
 			return "a";
 		case Path::Pixel:
 			return "b";
-		case Path::Quarter:
+		case Path::QuarterInner:
 			return "c";
 		case Path::Square:
 			return "d";
-		case Path::EighthBottom:
+		case Path::EighthBottomInner:
 			return "e";
-		case Path::EighthTop:
+		case Path::EighthTopInner:
 			return "f";
 		case Path::Blank:
 			return "g";
-		case Path::TwoThirds:
+		case Path::QuarterOuter:
 			return "h";
+		case Path::EighthBottomOuter:
+			return "i";
+		case Path::EighthTopOuter:
+			return "j";
 		default:
 			throw new std::exception("Unsupported path");
 	}
