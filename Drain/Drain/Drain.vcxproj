@@ -89,7 +89,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(SolutionDir)S2RYBRUH;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OmitFramePointers>false</OmitFramePointers>
     </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(SolutionDir)Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>S2RYBRUH.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -133,6 +139,7 @@
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="PointStroke.cpp" />
     <ClCompile Include="Raindrop.cpp" />
+    <ClCompile Include="RainGenerator.cpp" />
     <ClCompile Include="SpriteCollection.cpp" />
     <ClCompile Include="Stroke.cpp" />
     <ClCompile Include="Swatch.cpp" />
@@ -145,6 +152,7 @@
     <ClInclude Include="CircularStroke.hpp" />
     <ClInclude Include="CWQuarterStroke.hpp" />
     <ClInclude Include="Math.hpp" />
+    <ClInclude Include="RainGenerator.hpp" />
     <ClInclude Include="SpriteCollection.hpp" />
     <ClInclude Include="Swatch.hpp" />
     <ClInclude Include="LineStroke.hpp" />
