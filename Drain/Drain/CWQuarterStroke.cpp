@@ -22,12 +22,17 @@ void CWQuarterStroke::draw(const Vector2& position,
 						   const Color& background,
 						   const Color& foreground,
 						   const float scale) const {
-	const auto outerScale = (startPosition - center).Magnitude() * scale / imageSize + thickness * 0.5f * scale / imageSize;
+	const auto outerScale = roundf((startPosition - center).Magnitude() * scale) / imageSize + roundf(thickness * 0.5f * scale) / imageSize;
 	outer->Scale(startDraw, startDraw, outerScale, outerScale);
-	const auto innerScale = (startPosition - center).Magnitude() * scale / imageSize - thickness * 0.5f * scale / imageSize;
+	const auto innerScale = roundf((startPosition - center).Magnitude() * scale) / imageSize - roundf(thickness * 0.5f * scale) / imageSize;
 	inner->Scale(startDraw, startDraw, innerScale, innerScale);
 	const auto verticalCoverScale = innerScale * imageSize;
 	const auto horizontalCoverScale = outerScale * imageSize;
+	horizontalCover->ScaleVector(startDraw, endDraw, Vector2(horizontalCoverScale, horizontalCoverScale), Vector2(0, horizontalCoverScale), Easing::SineOut);
+	verticalCover->ScaleVector(startDraw, endDraw, Vector2(verticalCoverScale, verticalCoverScale), Vector2(verticalCoverScale, 0), Easing::SineIn);
+	const auto thicknessScale = thickness * scale / imageSize;
+	startPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
+	endPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition);
 	outer->Rotate(startDraw, startDraw, rotation, rotation);
 	inner->Rotate(startDraw, startDraw, rotation, rotation);
@@ -46,11 +51,6 @@ void CWQuarterStroke::draw(const Vector2& position,
 		endPoint->MoveX(startDraw, endDraw, originalPosition.x, endMove.x, Easing::SineOut);
 		endPoint->MoveY(startDraw, endDraw, originalPosition.y, endMove.y, Easing::SineIn);
 	}
-	horizontalCover->ScaleVector(startDraw, endDraw, Vector2(horizontalCoverScale, horizontalCoverScale), Vector2(0, horizontalCoverScale), Easing::SineOut);
-	verticalCover->ScaleVector(startDraw, endDraw, Vector2(verticalCoverScale, verticalCoverScale), Vector2(verticalCoverScale, 0), Easing::SineIn);
-	const auto thicknessScale = thickness * scale / imageSize;
-	startPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
-	endPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
 	inner->Color(startDraw, endDrain, background, background);
 	horizontalCover->Color(startDraw, startDraw, background, background);
 	verticalCover->Color(startDraw, startDraw, background, background);

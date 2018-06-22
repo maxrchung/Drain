@@ -35,7 +35,7 @@ void Storyboard::Write(const std::string& destinationPath) {
 		outputFile << "//Storyboard Layer " << i << " (" << Layers()[i] << ")" << std::endl;
 		for (const auto& sprite : sprites[i]) {
 			// Sprite,<layer>,<origin>,"<filepath>",<x>,<y>
-			outputFile << "Sprite," << Layers()[static_cast<int>(sprite->layer)] << "," << Origins()[static_cast<int>(sprite->origin)] << ",\"" << sprite->filePath << "\"," << sprite->startPosition.x << "," << sprite->startPosition.y << std::endl;
+			outputFile << "Sprite," << Layers()[static_cast<int>(sprite->layer)] << "," << Origins()[static_cast<int>(sprite->origin)] << ",\"" << sprite->filePath << "\"," << roundf(sprite->startPosition.x) << "," << roundf(sprite->startPosition.y) << std::endl;
 			for (const auto& command : sprite->commands) {
 				outputFile << command << std::endl;
 			}

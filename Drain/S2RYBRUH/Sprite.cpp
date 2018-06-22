@@ -29,11 +29,11 @@ void Sprite::MoveX(int startTime, int endTime, float startX, float endX, Easing 
 	}
 
 	position.x = endX;
-	int offsetStart = Vector2::Midpoint.x + startX;
-	int offsetEnd = Vector2::Midpoint.x + endX;
+	const auto offsetStart = Vector2::Midpoint.x + startX;
+	const auto offsetEnd = Vector2::Midpoint.x + endX;
 
 	std::ostringstream command;
-	command << "_MX," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << offsetStart << "," << offsetEnd;
+	command << "_MX," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << roundf(offsetStart) << "," << roundf(offsetEnd);
 	commands.push_back(command.str());
 }
 
@@ -44,11 +44,11 @@ void Sprite::MoveY(int startTime, int endTime, float startY, float endY, Easing 
 	}
 
 	position.y = endY;
-	int offsetStart = Vector2::Midpoint.y - startY;
-	int offsetEnd = Vector2::Midpoint.y - endY;
+	const auto offsetStart = Vector2::Midpoint.y - startY;
+	const auto offsetEnd = Vector2::Midpoint.y - endY;
 
 	std::ostringstream command;
-	command << "_MY," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << offsetStart << "," << offsetEnd;
+	command << "_MY," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << roundf(offsetStart) << "," << roundf(offsetEnd);
 	commands.push_back(command.str());
 }
 
