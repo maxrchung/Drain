@@ -78,11 +78,11 @@
     <ClCompile Include="CCWStartEighthStroke.cpp">
       <Filter>Source Files\Lyric\Stroke</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteCollection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RainGenerator.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteCollection.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,11 +131,11 @@
     <ClInclude Include="CCWEndEighthStroke.hpp">
       <Filter>Header Files\Lyric\Stroke</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteCollection.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RainGenerator.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteCollection.hpp">
+      <Filter>Header Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
