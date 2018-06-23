@@ -15,7 +15,7 @@ void Lyric::draw(const std::string& lyric,
 		const auto center = character.calculateCenter(scale);
 		const auto position = Vector2(left.x + center, left.y);
 		character.draw(position, startTime, endTime, background, foreground, scale);
-		left.x += (characterWidth)+(kerning * scale);
+		left.x += characterWidth + (kerning * scale);
 	}
 }
 float Lyric::calculateWidth(const std::vector<Character>& characters, const float scale) {

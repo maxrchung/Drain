@@ -72,7 +72,7 @@ void Sprite::Rotate(int startTime, int endTime, float startRotate, float endRota
 
 	rotation = endRotate;
 	std::ostringstream command;
-	command << std::setprecision(precision) << std::fixed << "_R," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << startRotate << "," << endRotate;
+	command << std::setprecision(precision) << "_R," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << startRotate << "," << endRotate;
 	commands.push_back(command.str());
 }
 
@@ -84,7 +84,7 @@ void Sprite::Scale(int startTime, int endTime, float startScale, float endScale,
 
 	scale = endScale;
 	std::ostringstream command;
-	command << std::setprecision(precision) << std::fixed << "_S," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << startScale << "," << endScale;
+	command << std::setprecision(precision) << "_S," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << startScale << "," << endScale;
 	commands.push_back(command.str());
 }
 
@@ -98,7 +98,7 @@ void Sprite::ScaleVector(int startTime, int endTime, float startX, float startY,
 	scaleVector.y = endY;
 
 	std::ostringstream command;
-	command << std::setprecision(precision) << std::fixed << "_V," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << startX << "," << startY << "," << endX << "," << endY;
+	command << std::setprecision(precision) << "_V," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << startX << "," << startY << "," << endX << "," << endY;
 	commands.push_back(command.str());
 }
 
@@ -114,7 +114,7 @@ void Sprite::Color(int startTime, int endTime, int startR, int startG, int start
 
 	color = Color::Color(endR, endG, endB);
 	std::ostringstream command;
-	command << std::setprecision(precision) << std::fixed << "_C," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << startR << "," << startG << "," << startB << "," << endR << "," << endG << "," << endB;
+	command << std::setprecision(precision) << "_C," << static_cast<int>(easing) << "," << startTime << "," << endTime << "," << startR << "," << startG << "," << startB << "," << endR << "," << endG << "," << endB;
 	commands.push_back(command.str());
 }
 

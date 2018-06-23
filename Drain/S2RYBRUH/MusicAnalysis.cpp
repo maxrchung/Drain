@@ -68,15 +68,15 @@ MusicAnalysisData MusicAnalysis::TakeSnapshots(int snapshotRate, const std::vect
 	float progressRate = song.sampleRate / snapshotsPerSec;
 
 	// Debug info
-	//std::cout << snapshotsPerSec << std::endl;
-	//std::cout << progressRate << std::endl;
-	//std::cout << song << std::endl;
+	//std::cout << snapshotsPerSec << '\n';
+	//std::cout << progressRate << '\n';
+	//std::cout << song << '\n';
 	
 	// Find start and end points we take samples from
 	// Need to account for window sizes, so we start and end with a bit of buffer space
 	for (float p = progressRate; p < song.size - progressRate; p += progressRate) {
 		// Displays progress at so and so seconds
-		std::cout << "Processing sample at: " << (int) (p / song.sampleRate) << " seconds" << std::endl;
+		std::cout << "Processing sample at: " << (int) (p / song.sampleRate) << " seconds" << '\n';
 
 		// Grab WINSIZE amount of samples and apply Hann function to them
 		float* input = (float*)malloc(WINSIZE * sizeof(float));
@@ -197,22 +197,22 @@ std::vector<int> MusicAnalysis::CalculateFrequencyBands(int freqBandStart, int f
 
 void MusicAnalysis::SaveData(MusicAnalysisData& data, const std::string& destinationPath) {
 	std::ofstream output(destinationPath);
-	output << data.snapshotRate << std::endl;
+	output << data.snapshotRate << '\n';
 
 	// For easier time loading back in, prints number of bars
 	data.bandCount = data.scaleData.size();
-	output << data.bandCount << std::endl;
+	output << data.bandCount << '\n';
 
 	// And prints number of values per bar
 	data.scaleCount = data.scaleData[0].size();
-	output << data.scaleCount << std::endl;
+	output << data.scaleCount << '\n';
 
 	data.songLength = data.scaleCount * data.snapshotRate;
-	output << data.songLength << std::endl;
+	output << data.songLength << '\n';
 
 	for (int i = 0; i < data.bandCount; ++i) {
 		for (int j = 0; j < data.scaleCount; ++j) {
-			output << data.scaleData[i][j] << std::endl;
+			output << data.scaleData[i][j] << '\n';
 		}
 	}
 
