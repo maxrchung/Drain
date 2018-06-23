@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Enums">
       <UniqueIdentifier>{93d4fea0-fb19-4e9a-8b64-f11d541d8baa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utility">
+      <UniqueIdentifier>{98f4d892-1ddb-45a0-9c23-486337f3b98b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{42a9907f-2ac4-4b96-a743-14d1528bed1a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="kiss_fftr.c">
@@ -66,9 +72,6 @@
     <ClCompile Include="MusicAnalysisData.cpp">
       <Filter>Source Files\MusicAnalysis</Filter>
     </ClCompile>
-    <ClCompile Include="Color.cpp">
-      <Filter>Source Files\Storyboard</Filter>
-    </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Source Files\Storyboard</Filter>
     </ClCompile>
@@ -76,10 +79,16 @@
       <Filter>Source Files\Storyboard</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
-      <Filter>Source Files\Storyboard</Filter>
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Bezier.cpp">
-      <Filter>Source Files\Storyboard</Filter>
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="SpritePool.cpp">
+      <Filter>Source Files\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,14 +140,17 @@
     <ClInclude Include="Sprite.hpp">
       <Filter>Header Files\Storyboard</Filter>
     </ClInclude>
-    <ClInclude Include="Color.hpp">
-      <Filter>Header Files\Storyboard</Filter>
-    </ClInclude>
     <ClInclude Include="Time.hpp">
-      <Filter>Header Files\Storyboard</Filter>
+      <Filter>Header Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Bezier.hpp">
-      <Filter>Header Files\Storyboard</Filter>
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.hpp">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="SpritePool.hpp">
+      <Filter>Header Files\Utility</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

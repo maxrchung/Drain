@@ -27,6 +27,7 @@
     <ClCompile Include="MusicAnalysis.cpp" />
     <ClCompile Include="MusicAnalysisData.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpritePool.cpp" />
     <ClCompile Include="Storyboard.cpp" />
     <ClCompile Include="Time.cpp" />
     <ClCompile Include="Vector2.cpp" />
@@ -47,6 +48,7 @@
     <ClInclude Include="MusicAnalysisData.hpp" />
     <ClInclude Include="Origin.hpp" />
     <ClInclude Include="Sprite.hpp" />
+    <ClInclude Include="SpritePool.hpp" />
     <ClInclude Include="Storyboard.hpp" />
     <ClInclude Include="Time.hpp" />
     <ClInclude Include="Vector2.hpp" />

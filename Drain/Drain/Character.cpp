@@ -7,6 +7,24 @@
 Character::Character(const char character)
 	: strokes{ createStrokes(character) } {
 }
+float Character::calculateCenter(const float scale) const {
+	if (strokes.size() <= 1) {
+		return 0;
+	}
+	auto left = std::numeric_limits<float>::max();
+	for (const auto& stroke : strokes) {
+		auto startX = stroke->startPosition.x * scale;
+		if (startX < left) {
+			left = startX;
+		}
+		auto endX = stroke->endPosition.x * scale;
+		if (endX < left) {
+			left = endX;
+		}
+	}
+	const auto centerWidth = fabsf(left);
+	return centerWidth;
+}
 float Character::calculateWidth(const float scale) const {
 	if (strokes.size() <= 1) {
 		return 0;

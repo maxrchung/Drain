@@ -6,6 +6,8 @@
 class Character {
 public:
 	explicit Character(const char character);
+	// Cannot assume that center will always be width / 2, e.g. c character
+	float calculateCenter(const float scale) const;
 	float calculateWidth(const float scale) const;
 	void draw(const Vector2& position,
 			  const int startTime,

@@ -16,7 +16,7 @@ public:
 					  const Color& foreground,
 					  const float scale) const = 0;
 	// Thickness of Character stroke represented as a factor of scale
-	static constexpr float thickness = 0.1f;
+	static constexpr float thickness = 0.15f;
 	const Vector2 startPosition;
 	const Vector2 endPosition;
 protected:
