@@ -19,7 +19,7 @@ public:
 					 const float scale);
 private:
 	// Space between characters represented as a factor of scale
-	static constexpr float kerning = 0.15f;
+	static constexpr float kerning = 0.1f;
 	static float calculateWidth(const std::vector<Character>& characters, const float scale);
 	static std::vector<Character> createCharacters(const std::string& lyric);
 };

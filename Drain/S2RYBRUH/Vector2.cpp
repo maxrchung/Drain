@@ -104,6 +104,10 @@ Vector2 Vector2::Rotate(float rotation) const {
 	return RotateAround(Zero, rotation);
 }
 
+Vector2 Vector2::Round() const {
+	return Vector2(roundf(x), roundf(y));
+}
+
 Vector2 Vector2::operator-() const {
 	return Vector2(-x, -y);
 }

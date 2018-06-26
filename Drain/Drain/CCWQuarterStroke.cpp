@@ -23,9 +23,9 @@ void CCWQuarterStroke::draw(const Vector2& position,
 							const Color& foreground,
 							const float scale) const {
 	// Round so that the scalings match the rounded positions
-	const auto outerScale = roundf((startPosition - center).Magnitude() * scale) / imageSize + roundf(thickness * 0.5f * scale) / imageSize;
+	const auto outerScale = ((startPosition - center).Magnitude() * scale) / imageSize + (thickness * 0.5f * scale) / imageSize;
 	outer->Scale(startDraw, startDraw, outerScale, outerScale);
-	const auto innerScale = roundf((startPosition - center).Magnitude() * scale) / imageSize - roundf(thickness * 0.5f * scale) / imageSize;
+	const auto innerScale = ((startPosition - center).Magnitude() * scale) / imageSize - (thickness * 0.5f * scale) / imageSize;
 	inner->Scale(startDraw, startDraw, innerScale, innerScale);
 	const auto verticalCoverScale = outerScale * imageSize;
 	const auto horizontalCoverScale = innerScale * imageSize;

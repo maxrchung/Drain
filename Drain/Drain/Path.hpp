@@ -4,11 +4,10 @@
 enum class Path {
 	Circle,
 	Pixel,
-	QuarterInner,
 	Square,
+	QuarterInner,
 	EighthBottomInner,
 	EighthTopInner,
-	Blank,
 	QuarterOuter,
 	EighthBottomOuter,
 	EighthTopOuter

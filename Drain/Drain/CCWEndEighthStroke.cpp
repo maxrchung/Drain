@@ -29,9 +29,9 @@ void CCWEndEighthStroke::draw(const Vector2& position,
 	const auto drawTime = endDraw - startDraw;
 	const auto startTime = startDraw;
 	const auto endTime = endDraw + drawTime;
-	const auto outerScale = roundf((startPosition - center).Magnitude() * scale) / imageSize + roundf(thickness * 0.5f * scale) / imageSize;
+	const auto outerScale = ((startPosition - center).Magnitude() * scale) / imageSize + (thickness * 0.5f * scale) / imageSize;
 	outer->Scale(startTime, startTime, outerScale, outerScale);
-	const auto innerScale = roundf((startPosition - center).Magnitude() * scale) / imageSize - roundf(thickness * 0.5f * scale) / imageSize;
+	const auto innerScale = ((startPosition - center).Magnitude() * scale) / imageSize - (thickness * 0.5f * scale) / imageSize;
 	inner->Scale(startTime, startTime, innerScale, innerScale); 
 	const auto verticalCoverScale = outerScale * imageSize;
 	const auto horizontalCoverScale = innerScale * imageSize;

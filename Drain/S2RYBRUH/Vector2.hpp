@@ -23,6 +23,8 @@ public:
 	Vector2 RotateAround(Vector2 origin, float rotation) const;
 	// Calls the above with Midpoint
 	Vector2 Rotate(float rotation) const;
+	// Returns a Vector with rounded x and y
+	Vector2 Round() const;
 
 	Vector2 operator-() const;
 	Vector2 operator+(Vector2 v) const;

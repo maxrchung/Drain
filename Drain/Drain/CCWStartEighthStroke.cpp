@@ -28,9 +28,9 @@ void CCWStartEighthStroke::draw(const Vector2& position,
 	const auto drawTime = endDraw - startDraw;
 	const auto startTime = startDraw - drawTime;
 	const auto endTime = endDraw;
-	auto outerScale = roundf((offsetPosition - center).Magnitude() * scale) / imageSize + roundf(thickness * 0.5f * scale) / imageSize;
+	auto outerScale = ((offsetPosition - center).Magnitude() * scale) / imageSize + (thickness * 0.5f * scale) / imageSize;
 	outer->Scale(startTime, startTime, outerScale, outerScale);
-	auto innerScale = roundf((offsetPosition - center).Magnitude() * scale) / imageSize - roundf(thickness * 0.5f * scale) / imageSize;
+	auto innerScale = ((offsetPosition - center).Magnitude() * scale) / imageSize - (thickness * 0.5f * scale) / imageSize;
 	inner->Scale(startTime, startTime, innerScale, innerScale);
 	float verticalCoverScale = outerScale * imageSize;
 	float horizontalCoverScale = innerScale * imageSize;
