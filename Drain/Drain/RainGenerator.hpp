@@ -1,10 +1,11 @@
 #pragma once
 #include <vector>
 #include "Sprite.hpp"
+#include "Time.hpp"
 
 class RainGenerator {
 public:
-	RainGenerator(int rainCount);
+	RainGenerator(int rainCount, int dropCount, Time startTime, Time endTime);
 	std::vector<Sprite*> sprites;
 
 };
