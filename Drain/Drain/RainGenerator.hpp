@@ -4,7 +4,7 @@
 
 class RainGenerator {
 public:
-	RainGenerator(int count);
+	RainGenerator(int rainCount);
 	std::vector<Sprite*> sprites;
 
 };
