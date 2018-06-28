@@ -21,7 +21,7 @@ int main() {
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
 	
 	//RainGenerator testing
-	RainGenerator::RainGenerator(5, 10, Time("00:00:00").ms, Time("00:30:00").ms, true);
+	RainGenerator::RainGenerator(5, 10, Time("00:14:00").ms, Time("00:54:00").ms, 1.2f);
 
 	auto storyboardInputPath = std::ifstream("StoryboardInputPath.txt");
 	std::string path;
