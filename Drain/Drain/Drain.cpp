@@ -4,6 +4,7 @@
 #include "SpriteCollection.hpp"
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
+#include "RainGenerator.hpp"
 #include <iostream>
 
 int main() {
@@ -19,6 +20,9 @@ int main() {
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
 	
+	//RainGenerator testing
+	RainGenerator::RainGenerator(5, 10, Time("00:00:00").ms, Time("00:30:00").ms, true);
+
 	auto storyboardInputPath = std::ifstream("StoryboardInputPath.txt");
 	std::string path;
 	std::getline(storyboardInputPath, path);
