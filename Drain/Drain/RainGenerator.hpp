@@ -5,8 +5,15 @@
 
 class RainGenerator {
 public:
-	RainGenerator(int rainCount, int dropCount, Time startTime, Time endTime, float acceleration = 1.0f);
+	//Parameters shouldn't be used for RainGenerator, use RainGenerator(); to call function.
+	RainGenerator(int rainCount = 5,
+				  int dropCount = 10, 
+				  Time startTime = Time("00:14:00").ms, 
+				  Time endTime = Time("00:54:00").ms,
+		          float acceleration = 1.2f);
+
 	void VelocityController();
+	void DrawRain();
 	std::vector<Sprite*> sprites;
 
 private:
@@ -21,4 +28,6 @@ private:
 	float dropTotalTime;
 	int totalTime;
 	float rainSpacing;
+	int dropStartTime;
+	int dropEndTime;
 };
