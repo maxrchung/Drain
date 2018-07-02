@@ -1,15 +1,16 @@
 #include "RandomRange.hpp"
 #include <stdlib.h>
-RandomRange::RandomRange(const int start, const int end)
-	: start{ start }, end{ end } {
+RandomRange::RandomRange(const int start, const int end, const float divisor)
+	: start{ start }, end{ end }, divisor{ divisor } {
 }
-int RandomRange::calculate(const int start, const int end) {
+float RandomRange::calculate(const int start, const int end, const float divisor) {
 	const auto total = end - start;
 	const auto variance = rand() % (total + 1);
 	const auto value = start + variance;
-	return value;
+	const auto divided = value / divisor;
+	return divided;
 }
-int RandomRange::calculate() {
-	const auto value = calculate(start, end);
+float RandomRange::calculate() const {
+	const auto value = calculate(start, end, divisor);
 	return value;
 }

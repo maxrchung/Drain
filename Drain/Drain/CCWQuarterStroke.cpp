@@ -4,6 +4,11 @@
 CCWQuarterStroke::CCWQuarterStroke(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center)
 	: CircularStroke{ startPosition, endPosition, center } {
 }
+void CCWQuarterStroke::createPoints(const Vector2& position, const float scale) {
+	const auto centerPosition = position + center * scale;
+	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + startPosition * scale, Layer::Background);
+	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), startPoint->position, Layer::Background);
+}
 void CCWQuarterStroke::createSprites(const Vector2& position, const float scale) {
 	const auto centerPosition = position + center * scale;
 	outer = Storyboard::CreateSprite(getPath(Path::QuarterOuter), centerPosition, Layer::Background, Origin::BottomLeft);
@@ -11,34 +16,25 @@ void CCWQuarterStroke::createSprites(const Vector2& position, const float scale)
 	const auto coverPosition = endPosition.Normalize() * (endPosition.Magnitude() + thickness * 0.5f) * scale;
 	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::TopLeft);
 	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::TopLeft);
-	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + startPosition * scale, Layer::Background);
-	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), startPoint->position, Layer::Background);
 }
 void CCWQuarterStroke::draw(const Vector2& position,
 							const int startDraw,
 							const int endDraw,
 							const int startDrain,
 							const int endDrain,
-							const Color& background,
-							const Color& foreground,
 							const float scale) const {
-	// Round so that the scalings match the rounded positions
-	const auto outerScale = ((startPosition - center).Magnitude() * scale) / imageSize + (thickness * 0.5f * scale) / imageSize;
-	outer->Scale(startDraw, startDraw, outerScale, outerScale);
-	const auto innerScale = ((startPosition - center).Magnitude() * scale) / imageSize - (thickness * 0.5f * scale) / imageSize;
-	inner->Scale(startDraw, startDraw, innerScale, innerScale);
-	const auto verticalCoverScale = outerScale * imageSize;
-	const auto horizontalCoverScale = innerScale * imageSize;
+	scaleInner({ inner }, startDraw, startPosition, center, scale);
+	scaleOuter({ outer }, startDraw, startPosition, center, scale);
+	scalePoints({ startPoint, endPoint }, startDraw, scale);
+	colorBgSprites({ horizontalCover, verticalCover }, startDraw, startDraw);
+	colorBgSprites({ inner }, startDraw, endDrain);
+	fadeSprites({ outer, startPoint, endPoint }, startDrain, endDrain);
+	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(startPosition);
+	rotateSprites({ outer, inner, horizontalCover, verticalCover }, startDraw, rotation);
+	const auto verticalCoverScale = outer->scale * imageSize;
+	const auto horizontalCoverScale = inner->scale * imageSize;
 	horizontalCover->ScaleVector(startDraw, endDraw, Vector2(horizontalCoverScale, horizontalCoverScale), Vector2(0, horizontalCoverScale), Easing::SineIn);
 	verticalCover->ScaleVector(startDraw, endDraw, Vector2(verticalCoverScale, verticalCoverScale), Vector2(verticalCoverScale, 0), Easing::SineOut);
-	const auto thicknessScale = thickness * scale / imageSize;
-	startPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
-	endPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
-	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(startPosition);
-	outer->Rotate(startDraw, startDraw, rotation, rotation);
-	inner->Rotate(startDraw, startDraw, rotation, rotation);
-	horizontalCover->Rotate(startDraw, startDraw, rotation, rotation);
-	verticalCover->Rotate(startDraw, startDraw, rotation, rotation);
 	const auto endMove = position + endPosition * scale;
 	const auto originalPosition = startPoint->position;
 	// Set easing based on how point is moving
@@ -52,10 +48,4 @@ void CCWQuarterStroke::draw(const Vector2& position,
 		endPoint->MoveX(startDraw, endDraw, originalPosition.x, endMove.x, Easing::SineIn);
 		endPoint->MoveY(startDraw, endDraw, originalPosition.y, endMove.y, Easing::SineOut);
 	}
-	inner->Color(startDraw, endDrain, background, background);
-	horizontalCover->Color(startDraw, startDraw, background, background);
-	verticalCover->Color(startDraw, startDraw, background, background);
-	outer->Color(startDrain, endDrain, foreground, background);
-	startPoint->Color(startDrain, endDrain, foreground, background);
-	endPoint->Color(startDrain, endDrain, foreground, background);
 }

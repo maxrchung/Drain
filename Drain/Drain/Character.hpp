@@ -12,13 +12,12 @@ public:
 	void draw(const Vector2& position,
 			  const int startTime,
 			  const int endTime,
-			  const Color& background,
-			  const Color& foreground,
 			  const float scale) const;
 private:
 	static std::vector<std::unique_ptr<Stroke>> createStrokes(const char character);
 	static const int drawBuffer = Timing::half;
 	static const int drainTime = Timing::half;
+	void createPoints(const Vector2& position, const float scale) const;
 	void createSprites(const Vector2& position, const float scale) const;
 	std::vector<std::unique_ptr<Stroke>> strokes;
 	float calculateLength() const;

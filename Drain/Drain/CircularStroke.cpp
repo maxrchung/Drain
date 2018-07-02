@@ -4,7 +4,7 @@
 #include "CCWStartEighthStroke.hpp"
 #include "CWQuarterStroke.hpp"
 CircularStroke::CircularStroke(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center)
-	: Stroke{ startPosition, endPosition }, center{ center } {
+	: startPosition{ startPosition }, endPosition{ endPosition }, center{ center } {
 }
 std::unique_ptr<CircularStroke> CircularStroke::create(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center) {
 	const auto startOffset = isStartOffset(startPosition, center);
@@ -34,6 +34,12 @@ float CircularStroke::calculateLength() const {
 	// Add thickness so PointStroke has length
 	const auto length = fabsf(angleBetween) * endPosition.Magnitude() + thickness;
 	return length;
+}
+Vector2 CircularStroke::getEndPosition() const {
+	return endPosition;
+}
+Vector2 CircularStroke::getStartPosition() const {
+	return startPosition;
 }
 bool CircularStroke::isClockwise(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center) {
 	const auto angleBetween = (startPosition - center).AngleBetween(endPosition - center);

@@ -14,8 +14,6 @@ public:
 					 const Vector2& center,
 					 const int startTime,
 					 const int endTime,
-					 const Color& background,
-					 const Color& foreground,
 					 const float scale);
 private:
 	// Space between characters represented as a factor of scale
