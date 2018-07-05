@@ -98,7 +98,62 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
 			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
 			strokes.push_back(CircularStroke::create(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
-			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 1.0f), Vector2(0.5f, -1.0f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 1.0f), Vector2(0.5f, -0.5f)));
+			break;
+		case 'e':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.0f), Vector2(0.5f, 0.0f)));
+			strokes.push_back(CircularStroke::create(Vector2(0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, -0.5f), Vector2(Math::sqrt2 * 0.25f, -Math::sqrt2 * 0.25f), Vector2::Zero));
+			break;
+		case 'f':
+			strokes.push_back(CircularStroke::create(Vector2(0.5f, 0.75f), Vector2(0.25f, 1.0f), Vector2(0.25f, 0.75f)));
+			strokes.push_back(CircularStroke::create(Vector2(0.25f, 1.0f), Vector2(0.0f, 0.75f), Vector2(0.25f, 0.75f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.0f, 0.75f), Vector2(0.0f, -0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.25f), Vector2(0.5f, 0.25f)));
+			break;
+		case 'g':
+			break;
+		case 'h':
+			break;
+		case 'i':
+			break;
+		case 'j':
+			break;
+		case 'k':
+			break;
+		case 'l':
+			break;
+		case 'm':
+			break;
+		case 'n':
+			break;
+		case 'o':
+			break;
+		case 'p':
+			break;
+		case 'q':
+			break;
+		case 'r':
+			break;
+		case 's':
+			break;
+		case 't':
+			break;
+		case 'u':
+			break;
+		case 'v':
+			break;
+		case 'w':
+			break;
+		case 'x':
+			break;
+		case 'y':
+			break;
+		case 'z':
+			break;
+		case ' ':
 			break;
 		default:
 			throw new std::exception("Unsupported lyric character: " + character);

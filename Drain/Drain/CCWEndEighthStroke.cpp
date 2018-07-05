@@ -6,6 +6,10 @@ CCWEndEighthStroke::CCWEndEighthStroke(const Vector2& startPosition, const Vecto
 	: CircularStroke{ startPosition, endPosition, center }, offsetPosition{ startPosition.RotateAround(center, -Math::pi / 2.0f) } {
 }
 void CCWEndEighthStroke::createPoints(const Vector2& position, const float scale) {
+	const auto centerPosition = position + center * scale;
+	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + startPosition * scale, Layer::Background);
+	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), startPoint->position, Layer::Background);
+	pointCover = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + endPosition * scale, Layer::Background);
 }
 void CCWEndEighthStroke::createSprites(const Vector2& position, const float scale) {
 	const auto centerPosition = position + center * scale;
@@ -16,9 +20,6 @@ void CCWEndEighthStroke::createSprites(const Vector2& position, const float scal
 	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::TopLeft);
 	// Additional covers to hide unneeded QuarterStroke sections
 	quarterCover = Storyboard::CreateSprite(getPath(Path::EighthTopInner), centerPosition, Layer::Background, Origin::BottomLeft);
-	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + startPosition * scale, Layer::Background);
-	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), startPoint->position, Layer::Background);
-	pointCover = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + endPosition * scale, Layer::Background);
 }
 void CCWEndEighthStroke::draw(const Vector2& position,
 						const int startDraw,
@@ -32,7 +33,7 @@ void CCWEndEighthStroke::draw(const Vector2& position,
 	scaleInner({ inner }, startTime, startPosition, center, scale);
 	scaleOuter({ outer, quarterCover }, startTime, startPosition, center, scale);
 	scalePoints({ startPoint, endPoint }, startTime, scale);
-	scalePoints({ pointCover }, endDraw, scale);
+	pointCover->Scale(endDraw, endDraw, endPoint->scale, endPoint->scale);
 	colorBgSprites({ horizontalCover, verticalCover }, startTime, startTime);
 	colorBgSprites({ inner, quarterCover }, startTime, endDrain);
 	colorFgSprites({ pointCover }, endDraw, endDraw);

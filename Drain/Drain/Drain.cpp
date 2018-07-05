@@ -18,7 +18,8 @@ int main() {
 	background->Color(0, Time("06:37:848").ms, Swatch::offwhite, Swatch::offwhite, Easing::Linear, 0);
 	
 	//Lyric testing
-	Lyric::draw("abcabc", Vector2(50.0f, 50.0f), Time("00:05:584").ms, Time("00:15:282").ms, 80.0f);
+	//Lyric::draw("abcde", Vector2(0.0f, 100.0f), Time("00:05:584").ms, Time("00:15:282").ms, 80.0f);
+	Lyric::draw("f", Vector2(0.0f, -100.0f), Time("00:05:584").ms, Time("00:15:282").ms, 80.0f);
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
