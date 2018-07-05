@@ -20,11 +20,11 @@ void CCWStartEighthStroke::createSprites(const Vector2& position, const float sc
 	quarterCover = Storyboard::CreateSprite(getPath(Path::EighthBottomInner), centerPosition, Layer::Background, Origin::BottomLeft);
 }
 void CCWStartEighthStroke::draw(const Vector2& position,
-						const int startDraw,
-						const int endDraw,
-						const int startDrain,
-						const int endDrain,
-						const float scale) const {
+								const int startDraw,
+								const int endDraw,
+								const int startDrain,
+								const int endDrain,
+								const float scale) const {
 	const auto drawTime = endDraw - startDraw;
 	const auto startTime = startDraw - drawTime;
 	const auto endTime = endDraw;
@@ -35,7 +35,7 @@ void CCWStartEighthStroke::draw(const Vector2& position,
 	colorBgSprites({ inner, quarterCover }, startTime, endDrain);
 	colorFgSprites({ startPoint, endPoint }, startDraw, startDraw);
 	fadeSprites({ outer, startPoint, endPoint }, startDrain, endDrain);
-	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(offsetPosition);
+	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(offsetPosition - center);
 	rotateSprites({ outer, inner, horizontalCover, verticalCover, quarterCover }, startTime, rotation);
 	float verticalCoverScale = outer->scale * imageSize;
 	float horizontalCoverScale = inner->scale * imageSize;

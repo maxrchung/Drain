@@ -13,8 +13,8 @@ void CWQuarterStroke::createSprites(const Vector2& position, const float scale) 
 	outer = Storyboard::CreateSprite(getPath(Path::QuarterOuter), centerPosition, Layer::Background, Origin::BottomLeft);
 	inner = Storyboard::CreateSprite(getPath(Path::QuarterInner), centerPosition, Layer::Background, Origin::BottomLeft);
 	const auto coverPosition = (endPosition - center).Normalize() * ((endPosition - center).Magnitude() + thickness * 0.5f) * scale;
-	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::BottomRight);
-	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::BottomRight);
+	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), centerPosition + coverPosition, Layer::Background, Origin::BottomRight);
+	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), centerPosition + coverPosition, Layer::Background, Origin::BottomRight);
 }
 void CWQuarterStroke::draw(const Vector2& position,
 						   const int startDraw,
@@ -28,7 +28,7 @@ void CWQuarterStroke::draw(const Vector2& position,
 	colorBgSprites({ inner }, startDraw, endDrain);
 	colorBgSprites({ horizontalCover, verticalCover }, startDraw, startDraw);
 	fadeSprites({ outer, startPoint, endPoint }, startDrain, endDrain);
-	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition);
+	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition - center);
 	rotateSprites({ outer, inner, horizontalCover, verticalCover }, startDraw, rotation);
 	const auto verticalCoverScale = inner->scale * imageSize;
 	const auto horizontalCoverScale = outer->scale * imageSize;

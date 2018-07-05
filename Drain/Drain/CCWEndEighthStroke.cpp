@@ -15,8 +15,8 @@ void CCWEndEighthStroke::createSprites(const Vector2& position, const float scal
 	outer = Storyboard::CreateSprite(getPath(Path::EighthBottomOuter), centerPosition, Layer::Background, Origin::BottomLeft);
 	inner = Storyboard::CreateSprite(getPath(Path::EighthBottomInner), centerPosition, Layer::Background, Origin::BottomLeft);
 	const auto coverPosition = offsetPosition.Normalize() * (offsetPosition.Magnitude() + thickness * 0.5f) * scale;
-	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::TopLeft);
-	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::TopLeft);
+	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), centerPosition + coverPosition, Layer::Background, Origin::TopLeft);
+	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), centerPosition + coverPosition, Layer::Background, Origin::TopLeft);
 	// Additional covers to hide unneeded QuarterStroke sections
 	quarterCover = Storyboard::CreateSprite(getPath(Path::EighthTopInner), centerPosition, Layer::Background, Origin::BottomLeft);
 }
@@ -38,7 +38,7 @@ void CCWEndEighthStroke::draw(const Vector2& position,
 	colorFgSprites({ pointCover }, endDraw, endDraw);
 	fadeSprites({ outer, startPoint, pointCover }, startDrain, endDrain);
 	fadeSprites({ endPoint }, endDraw, endDraw);
-	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(startPosition);
+	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(startPosition - center);
 	rotateSprites({ outer, inner, horizontalCover, verticalCover, quarterCover }, startTime, rotation);
 	const auto verticalCoverScale = outer->scale * imageSize;
 	const auto horizontalCoverScale = inner->scale * imageSize;
