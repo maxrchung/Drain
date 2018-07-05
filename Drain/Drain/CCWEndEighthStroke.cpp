@@ -6,10 +6,9 @@ CCWEndEighthStroke::CCWEndEighthStroke(const Vector2& startPosition, const Vecto
 	: CircularStroke{ startPosition, endPosition, center }, offsetPosition{ startPosition.RotateAround(center, -Math::pi / 2.0f) } {
 }
 void CCWEndEighthStroke::createPoints(const Vector2& position, const float scale) {
-	const auto centerPosition = position + center * scale;
-	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + startPosition * scale, Layer::Background);
+	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + startPosition * scale, Layer::Background);
 	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), startPoint->position, Layer::Background);
-	pointCover = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + endPosition * scale, Layer::Background);
+	pointCover = Storyboard::CreateSprite(getPath(Path::Circle), position + endPosition * scale, Layer::Background);
 }
 void CCWEndEighthStroke::createSprites(const Vector2& position, const float scale) {
 	const auto centerPosition = position + center * scale;
