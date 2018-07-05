@@ -1,4 +1,5 @@
 #include "Character.hpp"
+#include "BlankStroke.hpp"
 #include "CircularStroke.hpp"
 #include "LineStroke.hpp"
 #include "Math.hpp"
@@ -8,7 +9,7 @@ Character::Character(const char character)
 	: strokes{ createStrokes(character) } {
 }
 float Character::calculateCenter(const float scale) const {
-	if (strokes.size() <= 1) {
+	if (strokes.empty()) {
 		return 0;
 	}
 	auto left = std::numeric_limits<float>::max();
@@ -26,7 +27,7 @@ float Character::calculateCenter(const float scale) const {
 	return centerWidth;
 }
 float Character::calculateWidth(const float scale) const {
-	if (strokes.size() <= 1) {
+	if (strokes.empty()) {
 		return 0;
 	}
 	auto left = std::numeric_limits<float>::max();
@@ -54,7 +55,6 @@ float Character::calculateWidth(const float scale) const {
 float Character::calculateLength() const {
 	auto length = 0.0f;
 	for (const auto& stroke : strokes) {
-		// Always account for thickness so PointStroke has actual thickness
 		length += stroke->calculateLength();
 	}
 	return length;	
@@ -129,10 +129,19 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.0f), Vector2(0.5f, -0.5f)));
 			break;
 		case 'i':
+			strokes.push_back(std::make_unique<PointStroke>(Vector2(0.0f, 1.0f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.0f, 0.5f), Vector2(0.0f, -0.5f)));
 			break;
 		case 'j':
+			strokes.push_back(std::make_unique<PointStroke>(Vector2(0.5f, 1.0f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, -0.75f)));
+			strokes.push_back(CircularStroke::create(Vector2(0.5f, -0.75f), Vector2(0.0f, -1.25f), Vector2(0.0f, -0.75f)));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, -1.25f), Vector2(-0.5f, -0.75f), Vector2(0.0f, -0.75f)));
 			break;
 		case 'k':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 1.25f), Vector2(-0.5f, -0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.25f, 0.5f), Vector2(-0.5f, 0.0f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.0f), Vector2(0.25f, -0.5f)));
 			break;
 		case 'l':
 			break;
@@ -165,6 +174,7 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 		case 'z':
 			break;
 		case ' ':
+			strokes.push_back(std::make_unique<BlankStroke>());
 			break;
 		default:
 			throw new std::exception("Unsupported lyric character: " + character);

@@ -20,8 +20,7 @@ int main() {
 
 	//Lyric testing
 	//Lyric::draw("abcde", Vector2(0.0f, 100.0f), Time("00:05:584").ms, Time("00:15:282").ms, 80.0f);
-	Lyric::draw("abcde", Vector2(0.0f, 100.0f), Time("00:05:584").ms, Time("00:15:282").ms, 80.0f);
-	Lyric::draw("fghij", Vector2(0.0f, -100.0f), Time("00:05:584").ms, Time("00:15:282").ms, 80.0f);
+	Lyric::draw("a bcdefghijklmnopqrstuvwxyz", Vector2(0.0f, 100.0f), Time("00:05:584").ms, Time("00:15:282").ms, 60.0f);
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb

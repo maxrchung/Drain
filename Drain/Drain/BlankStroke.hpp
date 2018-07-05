@@ -1,8 +1,8 @@
 #pragma once
 #include "Stroke.hpp"
-class PointStroke : public Stroke {
+class BlankStroke : public Stroke {
 public:
-	explicit PointStroke(const Vector2& startPosition);
+	explicit BlankStroke();
 	float calculateLength() const;
 	Vector2 getEndPosition() const;
 	Vector2 getStartPosition() const;
@@ -14,7 +14,4 @@ public:
 			  const int startDrain,
 			  const int endDrain,
 			  const float scale) const;
-private:
-	const Vector2 startPosition;
-	Sprite* startPoint;
 };

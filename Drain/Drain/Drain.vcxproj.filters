@@ -87,6 +87,9 @@
     <ClCompile Include="RandomRange.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
+    <ClCompile Include="BlankStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raindrop.hpp">
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="RandomRange.hpp">
       <Filter>Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="BlankStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
