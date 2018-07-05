@@ -2,25 +2,31 @@
 #include "Path.hpp"
 #include "Storyboard.hpp"
 LineStroke::LineStroke(const Vector2& startPosition, const Vector2& endPosition)
-	: Stroke{ startPosition, endPosition } {
+	: startPosition{ startPosition }, endPosition{ endPosition } {
 }
 float LineStroke::calculateLength() const {
 	// Add thickness so PointStroke has length
 	const auto length = (endPosition - startPosition).Magnitude() + thickness;
 	return length;
 }
-void LineStroke::createSprites(const Vector2& position, const float scale) {
-	line = Storyboard::CreateSprite(getPath(Path::Square), position + startPosition * scale, Layer::Background, Origin::CentreLeft);
+Vector2 LineStroke::getEndPosition() const {
+	return endPosition;
+}
+Vector2 LineStroke::getStartPosition() const {
+	return startPosition;
+}
+void LineStroke::createPoints(const Vector2& position, const float scale) {
 	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + startPosition * scale, Layer::Background);
 	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), startPoint->position, Layer::Background);
+}
+void LineStroke::createSprites(const Vector2& position, const float scale) {
+	line = Storyboard::CreateSprite(getPath(Path::Square), position + startPosition * scale, Layer::Background, Origin::CentreLeft);
 }
 void LineStroke::draw(const Vector2& position,
 					  const int startDraw,
 					  const int endDraw,
 					  const int startDrain,
 					  const int endDrain,
-					  const Color& background,
-					  const Color& foreground,
 					  const float scale) const {
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition - startPosition);
 	line->Rotate(startDraw, startDraw, rotation, rotation);
@@ -29,10 +35,7 @@ void LineStroke::draw(const Vector2& position,
 	const auto startLineScaleVector = Vector2(0, thicknessScale);
 	const auto endLineScaleVector = Vector2(length * scale / imageSize, thicknessScale);
 	line->ScaleVector(startDraw, endDraw, startLineScaleVector, endLineScaleVector);
-	startPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
-	endPoint->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
 	endPoint->Move(startDraw, endDraw, startPoint->position, position + endPosition * scale);
-	line->Color(startDrain, endDrain, foreground, background);
-	startPoint->Color(startDrain, endDrain, foreground, background);
-	endPoint->Color(startDrain, endDrain, foreground, background);
+	scalePoints({ startPoint, endPoint }, startDraw, scale);
+	fadeSprites({ line, startPoint, endPoint }, startDrain, endDrain);
 }

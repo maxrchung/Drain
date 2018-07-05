@@ -140,6 +140,7 @@
     <ClCompile Include="PointStroke.cpp" />
     <ClCompile Include="Raindrop.cpp" />
     <ClCompile Include="RainGenerator.cpp" />
+    <ClCompile Include="RandomRange.cpp" />
     <ClCompile Include="SpriteCollection.cpp" />
     <ClCompile Include="Stroke.cpp" />
     <ClCompile Include="Swatch.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="CWQuarterStroke.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="RainGenerator.hpp" />
+    <ClInclude Include="RandomRange.hpp" />
     <ClInclude Include="SpriteCollection.hpp" />
     <ClInclude Include="Swatch.hpp" />
     <ClInclude Include="LineStroke.hpp" />

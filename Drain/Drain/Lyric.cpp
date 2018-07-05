@@ -4,8 +4,6 @@ void Lyric::draw(const std::string& lyric,
 				 const Vector2& center,
 				 const int startTime,
 				 const int endTime,
-				 const Color& background,
-				 const Color& foreground,
 				 const float scale) {
 	const auto characters = createCharacters(lyric);
 	const auto totalWidth = calculateWidth(characters, scale);
@@ -14,7 +12,7 @@ void Lyric::draw(const std::string& lyric,
 		const auto characterWidth = character.calculateWidth(scale);
 		const auto center = character.calculateCenter(scale);
 		const auto position = Vector2(left.x + center, left.y);
-		character.draw(position, startTime, endTime, background, foreground, scale);
+		character.draw(position, startTime, endTime, scale);
 		left.x += characterWidth + (kerning * scale);
 	}
 }
