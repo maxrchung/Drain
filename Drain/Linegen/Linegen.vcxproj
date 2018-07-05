@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{9E369AAC-BD0A-4BFA-8DE2-9A95320F28E9}</ProjectGuid>
-    <RootNamespace>Drain</RootNamespace>
+    <ProjectGuid>{F655578A-9DAE-4D21-BBCB-F48419C94627}</ProjectGuid>
+    <RootNamespace>Linegen</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -75,12 +75,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)S2RYBRUH;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions) ;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>S2RYBRUH.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <StackCommitSize>
+      </StackCommitSize>
+      <StackReserveSize>500000000</StackReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -88,13 +88,10 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)S2RYBRUH;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <OmitFramePointers>false</OmitFramePointers>
+      <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(SolutionDir)Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>S2RYBRUH.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <HeapReserveSize>500MB</HeapReserveSize>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -104,7 +101,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -118,7 +114,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -126,44 +121,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CCWEndEighthStroke.cpp" />
-    <ClCompile Include="CCWQuarterStroke.cpp" />
-    <ClCompile Include="CCWStartEighthStroke.cpp" />
-    <ClCompile Include="Character.cpp" />
-    <ClCompile Include="CircularStroke.cpp" />
-    <ClCompile Include="CWQuarterStroke.cpp" />
-    <ClCompile Include="Math.cpp" />
-    <ClCompile Include="Drain.cpp" />
-    <ClCompile Include="LineStroke.cpp" />
-    <ClCompile Include="Lyric.cpp" />
-    <ClCompile Include="Path.cpp" />
-    <ClCompile Include="PointStroke.cpp" />
-    <ClCompile Include="Raindrop.cpp" />
-    <ClCompile Include="RainGenerator.cpp" />
-    <ClCompile Include="RandomRange.cpp" />
-    <ClCompile Include="SpriteCollection.cpp" />
-    <ClCompile Include="Stroke.cpp" />
-    <ClCompile Include="Swatch.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="CCWEndEighthStroke.hpp" />
-    <ClInclude Include="CCWQuarterStroke.hpp" />
-    <ClInclude Include="CCWStartEighthStroke.hpp" />
-    <ClInclude Include="Character.hpp" />
-    <ClInclude Include="CircularStroke.hpp" />
-    <ClInclude Include="CWQuarterStroke.hpp" />
-    <ClInclude Include="Math.hpp" />
-    <ClInclude Include="RainGenerator.hpp" />
-    <ClInclude Include="RandomRange.hpp" />
-    <ClInclude Include="SpriteCollection.hpp" />
-    <ClInclude Include="Swatch.hpp" />
-    <ClInclude Include="LineStroke.hpp" />
-    <ClInclude Include="Lyric.hpp" />
-    <ClInclude Include="Path.hpp" />
-    <ClInclude Include="PointStroke.hpp" />
-    <ClInclude Include="Raindrop.hpp" />
-    <ClInclude Include="Stroke.hpp" />
-    <ClInclude Include="Timing.hpp" />
+    <ClCompile Include="linegen.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
