@@ -8,13 +8,13 @@
 
 class Sketch {
 public:
-	Sketch(std::string pointMapPath = "xy.txt",
-		   int resolution = 50,
-		   int thickness = 1,
-		   Path brush = Path::Pixel,
-		   Time startTime = Time("00:00:00").ms,
-		   Time endTime = Time("00:00:00").ms,
-		   Easing easing = Easing::Linear);
+	Sketch(const std::string& pointMapPath,
+		   const Time& startTime,
+		   const Time& endTime,
+		   const Easing& easing = Easing::Linear,
+		   const Path& brush = Path::Pixel,
+           const int resolution = 50,
+		   const int thickness = 1);
 	void draw();
 
 private:

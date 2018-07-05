@@ -28,7 +28,7 @@ int main() {
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
 
-	auto testSketch = Sketch("", 50, 1, Path::Pixel, 0, 20000);
+	auto testSketch = Sketch("", 0, 10000);
 	testSketch.draw();
 
 	//RainGenerator testing
