@@ -107,6 +107,11 @@ void SpriteCollection::Scale(int startTime, int endTime, float startScale, float
 
 
 void SpriteCollection::ScaleVector(int startTime, int endTime, float startX, float startY, float endX, float endY, Easing easing, int precision) {
+	float startX = startScale.x;
+	float endX = endScale.x;
+	float startY = startScale.y;
+	float endY = endScale.y;
+	
 	for (auto& sprite : sprites) {
 		sprite->ScaleVector(startTime, endTime, startX, startY, endX, endY, easing, precision);
 	}
@@ -120,6 +125,11 @@ void SpriteCollection::ScaleVector(int startTime, int endTime, float startX, flo
 
 
 void SpriteCollection::ScaleVector(int startTime, int endTime, Vector2 startScale, Vector2 endScale, Easing easing, int precision) {
+	float startX = startScale.x;
+	float endX = endScale.x;
+	float startY = startScale.y;
+	float endY = endScale.y;
+	
 	for (auto& sprite : sprites) {
 		sprite->ScaleVector(startTime, endTime, startX, startY, endX, endY, easing, precision);
 	}
