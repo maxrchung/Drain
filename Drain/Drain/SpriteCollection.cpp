@@ -1,57 +1,67 @@
+#include <algorithm>
+#include <memory>
+
 #include "SpriteCollection.hpp"
 
 
 
-SpriteCollection::SpriteCollection(Sprite *sprite) {
-	this->push_back(sprite, Vector2(0, 0));
-	position = sprite->position;
+SpriteCollection::SpriteCollection(std::vector<Sprite *> sprites)
+	: sprites(sprites) {
+	size = sprites.size();
+	stack.reserve(size);
 }
-
 
 SpriteCollection::~SpriteCollection() {
 }
 
-
-//coordinate is the relative position of the new sprite to the first sprite at (0, 0)
-void SpriteCollection::push_back(Sprite *sprite, Vector2 coordinate) {
-	sprites.push_back(sprite);
-	location.push_back(coordinate);
-	sprite->position = position + coordinate;
-	std::cout << sprite->position << "\n";
-	++length;
+bool compareValue(int *a, int *b) {
+	return (*a) > (*b);
 }
 
+//writes movements
+//only works for linear movement
+void SpriteCollection::commitMove(void) {
+	//for all the sprites in the collection
+	for (int i = 0; i < this->size; ++i) {
+		//get the number of commands for each sprite in the collection
+		int size = this->stack[i].startTimeVector.size();
+		std::vector<int *> startSort(size);
+		std::vector<int *> endSort(size);
 
-Sprite *SpriteCollection::pop(void) {
-	Sprite *out = NULL;
-	/*
-	Sprite *out = sprites.end;
-	sprites.pop_back();
+		//for all commands, have a pointer to the start and end times
+		for(int j = 0; j < size; ++j){
+			startSort[j] = &(this->stack[j].startTimeVector[j]);
+			endSort[j] = &(this->stack[j].endTimeVector[j]);
+		}
 
-	location.pop_back();
-	--length;
-	*/
-	return out;
+		std::sort(startSort.begin(), startSort.end(), compareValue);
+		std::sort(endSort.begin(), endSort.end(), compareValue);
+	}
 }
 
 void SpriteCollection::Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing) {
-	for (auto& sprite : sprites) {
-		sprite->Move(startTime, endTime, startPos, endPos, easing);
+	for (int i = 0; i < size; ++i) {
+		pushMove(i, startTime, endTime, startPos, endPos);
 	}
 }
 
 
 void SpriteCollection::MoveX(int startTime, int endTime, float startX, float endX, Easing easing) {
-	for (auto& sprite : sprites) {
-		sprite->MoveX(startTime, endTime, startX, endX, easing);
-	}
+	for (int i = 0; i < size; ++i) {
+		Vector2 startPos(startX + location[i].x, location[i].y);
+		Vector2 endPos(endX + location[i].x, location[i].y);
 
+		pushMove(i, startTime, endTime, startPos, endPos);
+	}
 }
 
 
 void SpriteCollection::MoveY(int startTime, int endTime, float startY, float endY, Easing easing) {
-	for (auto& sprite : sprites) {
-		sprite->MoveY(startTime, endTime, startY, endY, easing);
+	for (int i = 0; i < size; ++i) {
+		Vector2 startPos(location[i].x, startY + location[i].y);
+		Vector2 endPos(location[i].x, endY + location[i].y);
+
+		pushMove(i, startTime, endTime, startPos, endPos);
 	}
 }
 
@@ -64,7 +74,7 @@ void SpriteCollection::Fade(int startTime, int endTime, float startOpacity, floa
 
 
 void SpriteCollection::Rotate(int startTime, int endTime, float startRotate, float endRotate, Easing easing, int precision) {
-	for(int i = 0; i < length; ++i){
+	for(int i = 0; i < size; ++i){
 		Vector2 initial = position + location[i];
 
 		initial = initial.Rotate(startRotate);
@@ -88,7 +98,10 @@ void SpriteCollection::Rotate(int startTime, int endTime, float startRotate, flo
 void SpriteCollection::Scale(int startTime, int endTime, float startScale, float endScale, Easing easing, int precision) {
 	for (auto& sprite : sprites) {
 		sprite->Scale(startTime, endTime, startScale, endScale, easing, precision);
-		sprite->Move(startTime, endTime, sprite->position * startScale, sprite->position * endScale);
+	}
+
+	for (int i = 0; i < size; ++i) {
+		this->pushMove(i, startTime, endTime, location[i] * startScale, location[i] * endScale);
 	}
 }
 
@@ -96,23 +109,26 @@ void SpriteCollection::Scale(int startTime, int endTime, float startScale, float
 void SpriteCollection::ScaleVector(int startTime, int endTime, float startX, float startY, float endX, float endY, Easing easing, int precision) {
 	for (auto& sprite : sprites) {
 		sprite->ScaleVector(startTime, endTime, startX, startY, endX, endY, easing, precision);
-		sprite->MoveX(startTime, endTime, sprite->position.x * startX, sprite->position.x * endX, easing);
-		sprite->MoveY(startTime, endTime, sprite->position.y * startY, sprite->position.y * endY, easing);
+	}
+	for (int i = 0; i < size; ++i) {
+		Vector2 startPos(location[i].x * startX, location[i].y * startY);
+		Vector2 endPos(location[i].x * endX, location[i].y * endY);
+
+		this->pushMove(i, startTime, endTime, startPos, endPos);
 	}
 }
 
 
 void SpriteCollection::ScaleVector(int startTime, int endTime, Vector2 startScale, Vector2 endScale, Easing easing, int precision) {
-	float startX = startScale.x;
-	float startY = startScale.y;
-
-	float endX = endScale.x;
-	float endY = endScale.y;
-
 	for (auto& sprite : sprites) {
-		sprite->ScaleVector(startTime, endTime, startScale, endScale, easing, precision);
-		sprite->MoveX(startTime, endTime, sprite->position.x * startX, sprite->position.x * endX, easing);
-		sprite->MoveY(startTime, endTime, sprite->position.y * startY, sprite->position.y * endY, easing);
+		sprite->ScaleVector(startTime, endTime, startX, startY, endX, endY, easing, precision);
+	}
+	for (int i = 0; i < size; ++i) {
+
+		Vector2 startPos = startScale * location[i];
+		Vector2 endPos = endScale * location[i];
+
+		this->pushMove(i, startTime, endTime, startPos, endPos);
 	}
 }
 
@@ -130,9 +146,9 @@ void SpriteCollection::Color(int startTime, int endTime, ::Color startColor, ::C
 	}
 }
 
-
-void SpriteCollection::Loop(int startTime, int loopCount, const std::vector<std::string>& loopCommands) {
-	for (auto& sprite : sprites) {
-		sprite->Loop(startTime, loopCount, loopCommands);
-	}
+void SpriteCollection::pushMove(int number, int startTime, int endTime, Vector2 startPos, Vector2 endPos) {
+	this->stack[number].startTimeVector.push_back(startTime);
+	this->stack[number].endTimeVector.push_back(endTime);
+	this->stack[number].startPositionVector.push_back(startPos);
+	this->stack[number].endPositionVector.push_back(endPos);
 }

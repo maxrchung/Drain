@@ -42,6 +42,10 @@ float Vector2::Dot(Vector2 v) const {
 	return x * v.x + y * v.y;
 }
 
+float Vector2::DistanceBetween(Vector2 v) const {
+	return sqrt(pow(v.x - this->x, 2) + pow(v.y - this->y, 2));
+}
+
 float Vector2::AngleBetween(Vector2 v) const {
 	if (this->Magnitude() == 0 || v.Magnitude() == 0) {
 		return 0;

@@ -76,6 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_MBCS;%(PreprocessorDefinitions) ;_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)S2RYBRUH;$(SolutionDir)Drain</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <StackCommitSize>

@@ -6,8 +6,10 @@
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
 #include "Bezier.hpp"
+#include "Sketch.hpp"
 #include <iostream>
-#include <time.h>
+#include <ctime>
+#include <cmath>
 
 int main() {
 	srand(time(NULL));
@@ -25,23 +27,8 @@ int main() {
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
 
-	//auto testBez = Bezier({ Vector2(-106.46175,-100.45),
-	//							  Vector2(-105.25824,-85.5),
-	//							  Vector2(-105.64377,-42.5) });
-	//const auto result = std::vector<Vector2>({ testBez.findPosition(0.0),
-	//										   testBez.findPosition(0.5),
-	//										   testBez.findPosition(1.0) });
-	//auto const first = Storyboard::CreateSprite("a", result[0]);
-	//auto const mid = Storyboard::CreateSprite(getPath(Path::Circle), result[1]);
-	//auto const last = Storyboard::CreateSprite(getPath(Path::Circle), result[2]);
-	//first->Scale(0, Time("00:10:000").ms, 0.1, 0.1);
-	//mid->Scale(0, Time("00:10:000").ms, 0.1, 0.1);
-	//last->Scale(0, Time("00:10:000").ms, 0.1, 0.1);
-	//auto const move = Storyboard::CreateSprite("a", result[0]);
-	//move->Scale(0, Time("00:10:000").ms, 0.1, 0.1);
-	//move->Move(0, Time("00:05:000").ms, move->position, result[1]);
-	//move->Move(Time("00:05:000").ms, Time("00:10:000").ms, move->position, result[2]);
-
+	auto testSketch = Sketch("", 0, 10000);
+	testSketch.draw();
 
 	//RainGenerator testing
 	//RainGenerator::RainGenerator(5, 10, Time("00:14:00").ms, Time("00:54:00").ms, 1.2f);

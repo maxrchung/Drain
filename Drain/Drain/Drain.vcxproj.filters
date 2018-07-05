@@ -90,6 +90,9 @@
     <ClCompile Include="BlankStroke.cpp">
       <Filter>Source Files\Lyric\Stroke</Filter>
     </ClCompile>
+    <ClCompile Include="Sketch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raindrop.hpp">
@@ -148,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="BlankStroke.hpp">
       <Filter>Header Files\Lyric\Stroke</Filter>
+    </ClInclude>
+    <ClInclude Include="Sketch.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
