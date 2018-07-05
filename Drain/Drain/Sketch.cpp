@@ -6,11 +6,10 @@ This class reads from a text file, parses it, and creates a vector of
 Bezier curves to sketch an image
 */
 
-Sketch::Sketch(std::string pointMapPath, int resolution, int thickness,
-	Path brush, Time startTime, Time endTime, Easing easing)
-	: pointMapPath{ pointMapPath }, resolution{ resolution },
-	thickness{ thickness }, brush{ brush }, startTime{ startTime },
-	endTime{ endTime }, easing {easing}
+Sketch::Sketch(const std::string& pointMapPath, const Time& startTime, const Time& endTime,
+    const Easing& easing, const Path& brush, const int resolution, const int thickness)
+	: pointMapPath{ pointMapPath }, startTime{ startTime }, endTime{ endTime },
+    easing{ easing }, brush{ brush }, resolution{ resolution }, thickness{ thickness }
 {
 	brushPath = getPath(brush);
 }
