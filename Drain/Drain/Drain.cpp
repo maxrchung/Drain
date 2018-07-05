@@ -6,8 +6,10 @@
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
 #include "Bezier.hpp"
+#include "Sketch.hpp"
 #include <iostream>
-#include <time.h>
+#include <ctime>
+#include <cmath>
 
 int main() {
 	srand(time(NULL));
@@ -24,12 +26,37 @@ int main() {
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
 
-	auto testBez = Bezier({ Vector2(-106.46175,-100.45),
-								  Vector2(-105.25824,-85.5),
-								  Vector2(-105.64377,-42.5) });
-	const auto result = std::vector<Vector2>({ testBez.findPosition(0.0),
-											   testBez.findPosition(0.5),
-											   testBez.findPosition(1.0) });
+	auto testSketch = Sketch("", 50, 1, Path::Pixel, 0, 20000);
+	testSketch.draw();
+
+	/*
+	auto testBez = Bezier({ Vector2(-400,220),
+								  Vector2(-210,-85.5),
+								  Vector2(300,100) });
+	int resolution = 50;
+	float thickness = 1;
+	int numPoints = testBez.length / resolution;	// truncate
+	auto points = std::vector<Vector2>();
+	for (int i = 0; i < numPoints; i++) {
+		points.push_back(testBez.findPosition(static_cast<float>(i) / numPoints));
+	}
+	// draw each point
+	for (auto &point : points) {
+		Storyboard::CreateSprite("b", point)->Scale(0, Time("00:10:000").ms, thickness, thickness);
+	}
+	auto mpoints = std::vector<Vector2>();
+	// find midpoint of points and draw line between them
+	for (int i = 0; i < points.size() - 1; i++) {
+		mpoints.push_back((points[i] + points[i + 1]) / 2);
+		float dist = points[i].DistanceBetween(points[i + 1]);
+		float angle = atan(-(points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x)); // negate y because osu!
+		auto line = Storyboard::CreateSprite("b", mpoints[i]);
+		line->ScaleVector(0, Time("00:10:000").ms, Vector2(dist, thickness), Vector2(dist, thickness));
+		line->Rotate(0, Time("00:10:000").ms, angle, angle);
+	}
+	*/
+
+	/*
 	auto const first = Storyboard::CreateSprite("a", result[0]);
 	auto const mid = Storyboard::CreateSprite(getPath(Path::Circle), result[1]);
 	auto const last = Storyboard::CreateSprite(getPath(Path::Circle), result[2]);
@@ -40,7 +67,8 @@ int main() {
 	move->Scale(0, Time("00:10:000").ms, 0.1, 0.1);
 	move->Move(0, Time("00:05:000").ms, move->position, result[1]);
 	move->Move(Time("00:05:000").ms, Time("00:10:000").ms, move->position, result[2]);
-
+	*/
+	
 
 	//RainGenerator testing
 	//RainGenerator::RainGenerator(5, 10, Time("00:14:00").ms, Time("00:54:00").ms, 1.2f);

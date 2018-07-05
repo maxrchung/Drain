@@ -18,6 +18,7 @@ public:
 	Vector2 Normalize() const;
 	float Dot(Vector2 v) const;
 	float AngleBetween(Vector2 v) const;
+	float DistanceBetween(Vector2 v) const;
 	Vector2 Project(Vector2 axis) const;
 	// Rotates around a specified point
 	Vector2 RotateAround(Vector2 origin, float rotation) const;
