@@ -5,17 +5,16 @@ CCWQuarterStroke::CCWQuarterStroke(const Vector2& startPosition, const Vector2& 
 	: CircularStroke{ startPosition, endPosition, center } {
 }
 void CCWQuarterStroke::createPoints(const Vector2& position, const float scale) {
-	const auto centerPosition = position + center * scale;
-	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), centerPosition + startPosition * scale, Layer::Background);
+	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + startPosition * scale, Layer::Background);
 	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), startPoint->position, Layer::Background);
 }
 void CCWQuarterStroke::createSprites(const Vector2& position, const float scale) {
 	const auto centerPosition = position + center * scale;
 	outer = Storyboard::CreateSprite(getPath(Path::QuarterOuter), centerPosition, Layer::Background, Origin::BottomLeft);
 	inner = Storyboard::CreateSprite(getPath(Path::QuarterInner), centerPosition, Layer::Background, Origin::BottomLeft);
-	const auto coverPosition = endPosition.Normalize() * (endPosition.Magnitude() + thickness * 0.5f) * scale;
-	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::TopLeft);
-	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), position + coverPosition, Layer::Background, Origin::TopLeft);
+	const auto coverPosition = (endPosition - center).Normalize() * ((endPosition - center).Magnitude() + thickness * 0.5f) * scale;
+	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), centerPosition + coverPosition, Layer::Background, Origin::TopLeft);
+	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), centerPosition + coverPosition, Layer::Background, Origin::TopLeft);
 }
 void CCWQuarterStroke::draw(const Vector2& position,
 							const int startDraw,
@@ -29,7 +28,7 @@ void CCWQuarterStroke::draw(const Vector2& position,
 	colorBgSprites({ horizontalCover, verticalCover }, startDraw, startDraw);
 	colorBgSprites({ inner }, startDraw, endDrain);
 	fadeSprites({ outer, startPoint, endPoint }, startDrain, endDrain);
-	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(startPosition);
+	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(startPosition - center);
 	rotateSprites({ outer, inner, horizontalCover, verticalCover }, startDraw, rotation);
 	const auto verticalCoverScale = outer->scale * imageSize;
 	const auto horizontalCoverScale = inner->scale * imageSize;
