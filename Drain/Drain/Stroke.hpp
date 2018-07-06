@@ -23,6 +23,7 @@ protected:
 	static void colorBgSprites(const std::vector<Sprite*>& sprites, const int startDraw, const int endDraw);
 	static void colorFgSprites(const std::vector<Sprite*>& sprites, const int startDraw, const int endDraw);
 	static void fadeSprites(const std::vector<Sprite*>& sprites, const int startDrain, const int endDrain);
+	static void hideSprites(const std::vector<Sprite*>& sprites, const int endDraw);
 	static void rotateSprites(const std::vector<Sprite*>& sprites, const int startDraw, const float rotation);
 	static void scaleInner(const std::vector<Sprite*>& sprites, const int startDraw, const Vector2& startPosition, const Vector2& center, const float scale);
 	static void scaleOuter(const std::vector<Sprite*>& sprites, const int startDraw, const Vector2& startPosition, const Vector2& center, const float scale);

@@ -93,6 +93,12 @@
     <ClCompile Include="Sketch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CWStartEighthStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
+    <ClCompile Include="CWEndEighthStroke.cpp">
+      <Filter>Source Files\Lyric\Stroke</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raindrop.hpp">
@@ -154,6 +160,12 @@
     </ClInclude>
     <ClInclude Include="Sketch.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CWStartEighthStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
+    </ClInclude>
+    <ClInclude Include="CWEndEighthStroke.hpp">
+      <Filter>Header Files\Lyric\Stroke</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

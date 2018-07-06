@@ -132,7 +132,9 @@
     <ClCompile Include="CCWStartEighthStroke.cpp" />
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="CircularStroke.cpp" />
+    <ClCompile Include="CWEndEighthStroke.cpp" />
     <ClCompile Include="CWQuarterStroke.cpp" />
+    <ClCompile Include="CWStartEighthStroke.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Drain.cpp" />
     <ClCompile Include="LineStroke.cpp" />
@@ -154,7 +156,9 @@
     <ClInclude Include="CCWStartEighthStroke.hpp" />
     <ClInclude Include="Character.hpp" />
     <ClInclude Include="CircularStroke.hpp" />
+    <ClInclude Include="CWEndEighthStroke.hpp" />
     <ClInclude Include="CWQuarterStroke.hpp" />
+    <ClInclude Include="CWStartEighthStroke.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="RainGenerator.hpp" />
     <ClInclude Include="RandomRange.hpp" />

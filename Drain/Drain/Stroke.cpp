@@ -16,6 +16,11 @@ void Stroke::fadeSprites(const std::vector<Sprite*>& sprites, const int startDra
 		sprite->Color(startDrain, endDrain, Swatch::water, Swatch::offwhite);
 	}
 }
+void Stroke::hideSprites(const std::vector<Sprite*>& sprites, const int endDraw) {
+	for (auto const sprite : sprites) {
+		sprite->Fade(endDraw, endDraw, 1.0f, 0.0f);
+	}
+}
 void Stroke::rotateSprites(const std::vector<Sprite*>& sprites, const int startDraw, const float rotation) {
 	for (auto const sprite : sprites) {
 		sprite->Rotate(startDraw, startDraw, rotation, rotation);

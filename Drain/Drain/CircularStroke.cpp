@@ -2,7 +2,9 @@
 #include "CCWEndEighthStroke.hpp"
 #include "CCWQuarterStroke.hpp"
 #include "CCWStartEighthStroke.hpp"
+#include "CWEndEighthStroke.hpp"
 #include "CWQuarterStroke.hpp"
+#include "CWStartEighthStroke.hpp"
 CircularStroke::CircularStroke(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center)
 	: startPosition{ startPosition }, endPosition{ endPosition }, center{ center } {
 }
@@ -17,11 +19,13 @@ std::unique_ptr<CircularStroke> CircularStroke::create(const Vector2& startPosit
 		return std::make_unique<CCWQuarterStroke>(startPosition, endPosition, center);
 	}
 	else if (startOffset && !endOffset && clockwise) {
+		return std::make_unique<CWStartEighthStroke>(startPosition, endPosition, center);
 	}
 	else if (startOffset && !endOffset && !clockwise) {
 		return std::make_unique<CCWStartEighthStroke>(startPosition, endPosition, center);
 	}
 	else if (!startOffset && endOffset && clockwise) {
+		return std::make_unique<CWEndEighthStroke>(startPosition, endPosition, center);
 	}
 	else if (!startOffset && endOffset && !clockwise) {
 		return std::make_unique<CCWEndEighthStroke>(startPosition, endPosition, center);
