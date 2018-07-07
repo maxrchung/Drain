@@ -36,7 +36,7 @@ float CircularStroke::calculateLength() const {
 	const auto endFromCenter = endPosition - center;
 	const auto angleBetween = startFromCenter.AngleBetween(endFromCenter);
 	// Add thickness so PointStroke has length
-	const auto length = fabsf(angleBetween) * endPosition.Magnitude() + thickness;
+	const auto length = fabsf(angleBetween) * (endPosition - center).Magnitude() + thickness;
 	return length;
 }
 Vector2 CircularStroke::getEndPosition() const {
