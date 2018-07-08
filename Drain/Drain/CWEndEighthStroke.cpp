@@ -14,7 +14,7 @@ void CWEndEighthStroke::createSprites(const Vector2& position, const float scale
 	const auto centerPosition = position + center * scale;
 	outer = Storyboard::CreateSprite(getPath(Path::EighthTopOuter), centerPosition, Layer::Background, Origin::BottomLeft);
 	inner = Storyboard::CreateSprite(getPath(Path::EighthTopInner), centerPosition, Layer::Background, Origin::BottomLeft);
-	const auto coverPosition = offsetPosition.Normalize() * (offsetPosition.Magnitude() + thickness * 0.5f) * scale;
+	const auto coverPosition = (offsetPosition - center).Normalize() * ((offsetPosition - center).Magnitude() + thickness * 0.5f) * scale;
 	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), centerPosition + coverPosition, Layer::Background, Origin::BottomRight);
 	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), centerPosition + coverPosition, Layer::Background, Origin::BottomRight);
 	// Additional covers to hide unneeded QuarterStroke sections
