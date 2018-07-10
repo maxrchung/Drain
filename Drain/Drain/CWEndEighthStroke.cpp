@@ -37,7 +37,8 @@ void CWEndEighthStroke::draw(const Vector2& position,
 	colorBgSprites({ inner, quarterCover }, startTime, endDrain);
 	colorFgSprites({ endPoint }, startDraw, startDraw);
 	colorFgSprites({ pointCover }, endDraw, endDraw);
-	fadeSprites({ outer, startPoint, pointCover }, startDrain, endDrain);
+	fadeSprites({ outer }, startDrain, endDrain);
+	fadePoints({ startPoint, pointCover }, startDrain, endDrain);
 	hideSprites({ endPoint }, endDraw);
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(offsetPosition - center);
 	rotateSprites({ outer, inner, horizontalCover, verticalCover, quarterCover }, startTime, rotation);

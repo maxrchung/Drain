@@ -34,7 +34,8 @@ void CCWStartEighthStroke::draw(const Vector2& position,
 	colorBgSprites({ horizontalCover, verticalCover }, startTime, startTime);
 	colorBgSprites({ inner, quarterCover }, startTime, endDrain);
 	colorFgSprites({ startPoint, endPoint }, startDraw, startDraw);
-	fadeSprites({ outer, startPoint, endPoint }, startDrain, endDrain);
+	fadeSprites({ outer }, startDrain, endDrain);
+	fadePoints({ startPoint, endPoint }, startDrain, endDrain);
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(offsetPosition - center);
 	rotateSprites({ outer, inner, horizontalCover, verticalCover, quarterCover }, startTime, rotation);
 	float verticalCoverScale = outer->scale * imageSize;

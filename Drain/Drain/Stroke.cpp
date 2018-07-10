@@ -1,6 +1,7 @@
 #include "Stroke.hpp"
 #include "Swatch.hpp"
 const RandomRange Stroke::pointScale = RandomRange(115, 160, Stroke::imageSize);
+const RandomRange Stroke::pointFade = RandomRange(Timing::quarter, Timing::half);
 void Stroke::colorBgSprites(const std::vector<Sprite*>& sprites, const int startDraw, const int endDraw) {
 	for (auto const sprite : sprites) {
 		sprite->Color(startDraw, endDraw, Swatch::offwhite, Swatch::offwhite);
@@ -14,6 +15,11 @@ void Stroke::colorFgSprites(const std::vector<Sprite*>& sprites, const int start
 void Stroke::fadeSprites(const std::vector<Sprite*>& sprites, const int startDrain, const int endDrain) {
 	for (auto const sprite : sprites) {
 		sprite->Color(startDrain, endDrain, Swatch::water, Swatch::offwhite);
+	}
+}
+void Stroke::fadePoints(const std::vector<Sprite*>& sprites, const int startDrain, const int endDrain) {
+	for (auto const sprite : sprites) {
+		sprite->Color(startDrain, endDrain + pointFade.calculate(), Swatch::water, Swatch::offwhite);
 	}
 }
 void Stroke::hideSprites(const std::vector<Sprite*>& sprites, const int endDraw) {

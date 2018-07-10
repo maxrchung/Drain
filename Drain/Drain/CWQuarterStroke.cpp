@@ -27,7 +27,8 @@ void CWQuarterStroke::draw(const Vector2& position,
 	scaleInner({ inner }, startDraw, startPosition, center, scale);
 	colorBgSprites({ inner }, startDraw, endDrain);
 	colorBgSprites({ horizontalCover, verticalCover }, startDraw, startDraw);
-	fadeSprites({ outer, startPoint, endPoint }, startDrain, endDrain);
+	fadeSprites({ outer }, startDrain, endDrain);
+	fadePoints({ startPoint, endPoint }, startDrain, endDrain);
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition - center);
 	rotateSprites({ outer, inner, horizontalCover, verticalCover }, startDraw, rotation);
 	const auto verticalCoverScale = inner->scale * imageSize;

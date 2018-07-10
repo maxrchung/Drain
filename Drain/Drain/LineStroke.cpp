@@ -37,5 +37,6 @@ void LineStroke::draw(const Vector2& position,
 	line->ScaleVector(startDraw, endDraw, startLineScaleVector, endLineScaleVector);
 	endPoint->Move(startDraw, endDraw, startPoint->position, position + endPosition * scale);
 	scalePoints({ startPoint, endPoint }, startDraw, scale);
-	fadeSprites({ line, startPoint, endPoint }, startDrain, endDrain);
+	fadeSprites({ line }, startDrain, endDrain);
+	fadePoints({ startPoint, endPoint }, startDrain, endDrain);
 }

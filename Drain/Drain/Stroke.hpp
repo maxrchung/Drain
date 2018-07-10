@@ -23,6 +23,7 @@ protected:
 	static void colorBgSprites(const std::vector<Sprite*>& sprites, const int startDraw, const int endDraw);
 	static void colorFgSprites(const std::vector<Sprite*>& sprites, const int startDraw, const int endDraw);
 	static void fadeSprites(const std::vector<Sprite*>& sprites, const int startDrain, const int endDrain);
+	static void fadePoints(const std::vector<Sprite*>& sprites, const int startDrain, const int endDrain);
 	static void hideSprites(const std::vector<Sprite*>& sprites, const int endDraw);
 	static void rotateSprites(const std::vector<Sprite*>& sprites, const int startDraw, const float rotation);
 	static void scaleInner(const std::vector<Sprite*>& sprites, const int startDraw, const Vector2& startPosition, const Vector2& center, const float scale);
@@ -31,4 +32,5 @@ protected:
 	// Size of sprite images in pixels
 	static const int imageSize = 100;
 	static const RandomRange pointScale;
+	static const RandomRange pointFade;
 };

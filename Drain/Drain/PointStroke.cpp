@@ -26,5 +26,5 @@ void PointStroke::draw(const Vector2& position,
 					   const int endDrain,
 					   const float scale) const {
 	scalePoints({ startPoint }, startDraw, scale);
-	fadeSprites({ startPoint }, startDrain, endDrain);
+	fadePoints({ startPoint }, startDrain, endDrain);
 }
