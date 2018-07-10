@@ -1,6 +1,6 @@
 #include "Stroke.hpp"
 #include "Swatch.hpp"
-const RandomRange Stroke::pointScale = RandomRange(110, 150, Stroke::imageSize);
+const RandomRange Stroke::pointScale = RandomRange(115, 160, Stroke::imageSize);
 void Stroke::colorBgSprites(const std::vector<Sprite*>& sprites, const int startDraw, const int endDraw) {
 	for (auto const sprite : sprites) {
 		sprite->Color(startDraw, endDraw, Swatch::offwhite, Swatch::offwhite);
@@ -39,8 +39,8 @@ void Stroke::scaleOuter(const std::vector<Sprite*>& sprites, const int startDraw
 	}
 }
 void Stroke::scalePoints(const std::vector<Sprite*>& points, const int startDraw, const float scale) {
-	const auto thicknessScale = thickness * scale / imageSize * pointScale.calculate();
 	for (auto const point : points) {
+		const auto thicknessScale = thickness * scale / imageSize * pointScale.calculate();
 		point->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
 	}
 }

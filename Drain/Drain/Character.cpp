@@ -57,7 +57,7 @@ float Character::calculateLength() const {
 	for (const auto& stroke : strokes) {
 		length += stroke->calculateLength();
 	}
-	return length;	
+	return length;
 }
 void Character::createPoints(const Vector2& position, const float scale) const {
 	for (auto stroke = strokes.rbegin(); stroke != strokes.rend(); ++stroke) {
@@ -78,10 +78,12 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
 			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
 			strokes.push_back(CircularStroke::create(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.0f), Vector2(0.5f, 0.5f)));
 			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, -0.5f)));
 			break;
 		case 'b':
 			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 1.25f), Vector2(-0.5f, -0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, -0.5f), Vector2(-0.5f, 0.0f)));
 			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
 			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
 			strokes.push_back(CircularStroke::create(Vector2(0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
@@ -98,6 +100,7 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
 			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
 			strokes.push_back(CircularStroke::create(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.0f), Vector2(0.5f, 1.25f)));
 			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 1.25f), Vector2(0.5f, -0.5f)));
 			break;
 		case 'e':
@@ -118,12 +121,14 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
 			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
 			strokes.push_back(CircularStroke::create(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.0f), Vector2(0.5f, 0.5f)));
 			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, -0.75f)));
 			strokes.push_back(CircularStroke::create(Vector2(0.5f, -0.75f), Vector2(0.0f, -1.25f), Vector2(0.0f, -0.75f)));
 			strokes.push_back(CircularStroke::create(Vector2(0.0f, -1.25f), Vector2(-Math::sqrt2 * 0.25f, -0.75f - Math::sqrt2 * 0.25f), Vector2(0.0f, -0.75f)));
 			break;
 		case 'h':
 			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 1.25f), Vector2(-0.5f, -0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, -0.5f), Vector2(-0.5f, 0.0f)));
 			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
 			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
 			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.0f), Vector2(0.5f, -0.5f)));
@@ -144,34 +149,121 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.0f), Vector2(0.25f, -0.5f)));
 			break;
 		case 'l':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.0f, 1.25f), Vector2(0.0f, -0.5f)));
 			break;
 		case 'm':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.75f, 0.5f), Vector2(-0.75f, -0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.75f, -0.5f), Vector2(-0.75f, 0.125f)));
+			strokes.push_back(CircularStroke::create(Vector2(-0.75f, 0.125f), Vector2(-0.375f, 0.5f), Vector2(-0.375f, 0.125f)));
+			strokes.push_back(CircularStroke::create(Vector2(-0.375f, 0.5f), Vector2(0.0f, 0.125f), Vector2(-0.375f, 0.125f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.0f, 0.125f), Vector2(0.0f, -0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.0f, -0.5f), Vector2(0.0f, 0.125f)));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.125f), Vector2(0.375f, 0.5f), Vector2(0.375f, 0.125f)));
+			strokes.push_back(CircularStroke::create(Vector2(0.375f, 0.5f), Vector2(0.75f, 0.125f), Vector2(0.375f, 0.125f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.75f, 0.125f), Vector2(0.75f, -0.5f)));
 			break;
 		case 'n':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.5f), Vector2(-0.5f, -0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, -0.5f), Vector2(-0.5f, 0.0f)));
+			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.0f), Vector2(0.5f, -0.5f)));
 			break;
 		case 'o':
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
 			break;
 		case 'p':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.5f), Vector2(-0.5f, -1.25f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, -1.25f), Vector2(-0.5f, 0.0f)));
+			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, -0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
 			break;
 		case 'q':
+			strokes.push_back(CircularStroke::create(Vector2(0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.5f), Vector2(-0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.0f), Vector2(0.5f, 0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, -1.25f)));
 			break;
 		case 'r':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.5f), Vector2(-0.5f, -0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, -0.5f), Vector2(-0.5f, 0.0f)));
+			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, 0.5f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.5f), Vector2(Math::sqrt2 * 0.25f, Math::sqrt2 * 0.25f), Vector2::Zero));
 			break;
-		case 's':
+		case 's': {
+			const auto offset = 0.0625f;
+			strokes.push_back(CircularStroke::create(Vector2(0.5f - offset, 0.25f), Vector2(0.25f - offset, 0.5f), Vector2(0.25f - offset, 0.25f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.25f - offset, 0.5f), Vector2(-0.25f + offset, 0.5f)));
+			strokes.push_back(CircularStroke::create(Vector2(-0.25f + offset, 0.5f), Vector2(-0.5f + offset, 0.25f), Vector2(-0.25f + offset, 0.25f)));
+			strokes.push_back(CircularStroke::create(Vector2(-0.5f + offset, 0.25f), Vector2(-0.25f + offset, 0.0f), Vector2(-0.25f + offset, 0.25f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.25f + offset, 0.0f), Vector2(0.25f - offset, 0.0f)));
+			strokes.push_back(CircularStroke::create(Vector2(0.25f - offset, 0.0f), Vector2(0.5f - offset, -0.25f), Vector2(0.25f - offset, -0.25f)));
+			strokes.push_back(CircularStroke::create(Vector2(0.5f - offset, -0.25f), Vector2(0.25f - offset, -0.5f), Vector2(0.25f - offset, -0.25f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.25f - offset, -0.5f), Vector2(-0.25f + offset, -0.5f)));
+			strokes.push_back(CircularStroke::create(Vector2(-0.25f + offset, -0.5f), Vector2(-0.5f + offset, -0.25f), Vector2(-0.25f + offset, -0.25f)));
 			break;
+		}
 		case 't':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.5f), Vector2(0.5f, 0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.0f, 1.25f), Vector2(0.0f, -0.5f)));
 			break;
 		case 'u':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.5f), Vector2(-0.5f, 0.0f)));
+			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, 0.0f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.0f), Vector2(0.5f, 0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, -0.5f)));
 			break;
 		case 'v':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.5f), Vector2(0.0f, -0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.5f)));
 			break;
 		case 'w':
+			//strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.75f, 0.5f), Vector2(-0.75f, -0.5f)));
+			//strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.75f, -0.5f), Vector2(-0.75f, 0.125f)));
+			//strokes.push_back(CircularStroke::create(Vector2(-0.75f, 0.125f), Vector2(-0.375f, 0.5f), Vector2(-0.375f, 0.125f)));
+			//strokes.push_back(CircularStroke::create(Vector2(-0.375f, 0.5f), Vector2(0.0f, 0.125f), Vector2(-0.375f, 0.125f)));
+			//strokes.push_back(std::make_unique<LineStroke>(Vector2(0.0f, 0.125f), Vector2(0.0f, -0.5f)));
+			//strokes.push_back(std::make_unique<LineStroke>(Vector2(0.0f, -0.5f), Vector2(0.0f, 0.125f)));
+			//strokes.push_back(CircularStroke::create(Vector2(0.0f, 0.125f), Vector2(0.375f, 0.5f), Vector2(0.375f, 0.125f)));
+			//strokes.push_back(CircularStroke::create(Vector2(0.375f, 0.5f), Vector2(0.75f, 0.125f), Vector2(0.375f, 0.125f)));
+			//strokes.push_back(std::make_unique<LineStroke>(Vector2(0.75f, 0.125f), Vector2(0.75f, -0.5f)));
+
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.75f, 0.5f), Vector2(-0.75f, -0.125f)));
+			strokes.push_back(CircularStroke::create(Vector2(-0.75f, -0.125f), Vector2(-0.375f, -0.5f), Vector2(-0.375f, -0.125f)));
+			strokes.push_back(CircularStroke::create(Vector2(-0.375f, -0.5f), Vector2(0.0f, -0.125f), Vector2(-0.375f, -0.125f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.0f, -0.125f), Vector2(0.0f, 0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.0f, 0.5f), Vector2(0.0f, -0.125f)));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, -0.125f), Vector2(0.375f, -0.5f), Vector2(0.375f, -0.125f)));
+			strokes.push_back(CircularStroke::create(Vector2(0.375f, -0.5f), Vector2(0.75f, -0.125f), Vector2(0.375f, -0.125f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.75f, -0.125f), Vector2(0.75f, 0.5f)));
 			break;
 		case 'x':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.5f), Vector2(0.5f, -0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(-0.5f, -0.5f)));
 			break;
 		case 'y':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.5f), Vector2(-0.5f, 0.0f)));
+			strokes.push_back(CircularStroke::create(Vector2(-0.5f, 0.0f), Vector2(0.0f, -0.5f), Vector2::Zero));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, -0.5f), Vector2(0.5f, 0.0f), Vector2::Zero));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, 0.0f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.0f), Vector2(0.5f, 0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(0.5f, -0.75f)));
+			strokes.push_back(CircularStroke::create(Vector2(0.5f, -0.75f), Vector2(0.0f, -1.25f), Vector2(0.0f, -0.75f)));
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, -1.25f), Vector2(-Math::sqrt2 * 0.25f, -0.75f - Math::sqrt2 * 0.25f), Vector2(0.0f, -0.75f)));
 			break;
 		case 'z':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, 0.5f), Vector2(0.5f, 0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.5f, 0.5f), Vector2(-0.5f, -0.5f)));
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(-0.5f, -0.5f), Vector2(0.5f, -0.5f)));
 			break;
 		case ' ':
 			strokes.push_back(std::make_unique<BlankStroke>());
