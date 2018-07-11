@@ -13,7 +13,7 @@ void Lyric::draw(const std::string& lyric,
 		const auto center = character.calculateCenter(scale);
 		const auto position = Vector2(left.x + center, left.y);
 		character.draw(position, startTime, endTime, scale);
-		left.x += characterWidth + (kerning * scale);
+		left.x += characterWidth + (tracking * scale);
 	}
 }
 float Lyric::calculateWidth(const std::vector<Character>& characters, const float scale) {
@@ -21,8 +21,8 @@ float Lyric::calculateWidth(const std::vector<Character>& characters, const floa
 	for (const auto& character : characters) {
 		width += character.calculateWidth(scale);
 	}
-	const auto totalKerning = (characters.size() - 1) * kerning * scale;
-	const auto totalWidth = width + totalKerning;
+	const auto totalTracking = (characters.size() - 1) * tracking * scale;
+	const auto totalWidth = width + totalTracking;
 	return totalWidth;
 }
 std::vector<Character> Lyric::createCharacters(const std::string& lyric) {

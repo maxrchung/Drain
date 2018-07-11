@@ -17,7 +17,7 @@ public:
 					  const int endDrain,
 					  const float scale) const = 0;
 	// Thickness of Character stroke represented as a factor of scale
-	static constexpr float thickness = 0.1f;
+	static constexpr float thickness = 0.13f;
 protected:
 	// Helper static functions used to consolidate similar pieces of code
 	static void colorBgSprites(const std::vector<Sprite*>& sprites, const int startDraw, const int endDraw);

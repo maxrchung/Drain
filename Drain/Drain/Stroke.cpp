@@ -1,6 +1,6 @@
 #include "Stroke.hpp"
 #include "Swatch.hpp"
-const RandomRange Stroke::pointScale = RandomRange(115, 160, Stroke::imageSize);
+const RandomRange Stroke::pointScale = RandomRange(120, 170, Stroke::imageSize);
 const RandomRange Stroke::pointFade = RandomRange(Timing::quarter, Timing::half);
 void Stroke::colorBgSprites(const std::vector<Sprite*>& sprites, const int startDraw, const int endDraw) {
 	for (auto const sprite : sprites) {
@@ -34,8 +34,8 @@ void Stroke::rotateSprites(const std::vector<Sprite*>& sprites, const int startD
 }
 void Stroke::scaleInner(const std::vector<Sprite*>& sprites, const int startDraw, const Vector2& startPosition, const Vector2& center, const float scale) {
 	for (auto const sprite : sprites) {
-		const auto outerScale = (startPosition - center).Magnitude() * scale / imageSize - (thickness * 0.5f * scale) / imageSize;
-		sprite->Scale(startDraw, startDraw, outerScale, outerScale);
+		const auto innerScale = (startPosition - center).Magnitude() * scale / imageSize - (thickness * 0.5f * scale) / imageSize;
+		sprite->Scale(startDraw, startDraw, innerScale, innerScale);
 	}
 }
 void Stroke::scaleOuter(const std::vector<Sprite*>& sprites, const int startDraw, const Vector2& startPosition, const Vector2& center, const float scale) {
