@@ -12,7 +12,7 @@ RainGenerator::RainGenerator(int maxRainCount, int dropCount, Time startTime, Ti
 	//Note: acceleration only supports 0-2
 	//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-	//Todo: randomize sprite size, rain position, rain tilt
+	//Todo: randomize sprite size
 
 
 	//Initiate drop time values
@@ -47,10 +47,18 @@ void RainGenerator::DrawRain(int rainCount) {
 		float actualDropEnd = dropEndTime + dropTimeDelta;
 
 		Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(rainPosX, rainPosY));
-		sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(sprite->position.x, -Vector2::ScreenSize.y / 2));
+		float spritePosX = RandomRainTilt(sprite);
+		sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(spritePosX, -Vector2::ScreenSize.y / 2));
 	}
 }
 
+//Randomizes end position of rain to get a rain tilt effect
+float RainGenerator::RandomRainTilt(Sprite* sprite) {
+	float maxTiltVariance = 125;
+	int posDelta = RandomRange::calculate(-maxTiltVariance, maxTiltVariance);
+	float spritePosX = sprite->position.x + posDelta;
+	return spritePosX;
+}
 
 //Modifies the velocity of raindrops by changing time a raindrop takes to fall
 void RainGenerator::VelocityController() {

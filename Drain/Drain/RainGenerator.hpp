@@ -16,6 +16,7 @@ public:
 	void VelocityController();
 	void RainController();
 	void DrawRain(int rainCount);
+	float RandomRainTilt(Sprite* sprite);
 	std::vector<Sprite*> sprites;
 
 private:
