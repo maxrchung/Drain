@@ -31,7 +31,7 @@ int main() {
 	//testSketch.draw();
 
 	//RainGenerator testing
-	//RainGenerator::RainGenerator(5, 10, Time("00:14:00").ms, Time("00:54:00").ms, 1.2f);
+	RainGenerator::RainGenerator();
 
 	auto storyboardInputPath = std::ifstream("StoryboardInputPath.txt");
 	std::string path;
