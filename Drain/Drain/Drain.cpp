@@ -20,19 +20,16 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	background->Color(0, Time("06:37:848").ms, Swatch::offwhite, Swatch::offwhite, Easing::Linear, 0);
 
-	//Lyric testing
-	Lyric::draw("a bcdefghijklm", Vector2(0.0f, 100.0f), Time("00:05:584").ms, Time("00:10:282").ms, 50.0f);
-	Lyric::draw("nopqrstuvwxyz", Vector2(0.0f, -100.0f), Time("00:05:584").ms, Time("00:10:282").ms, 50.0f);
-
-	// Put storyboard osb path inside of StoryboardInputPath.txt
-	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
+	Lyric::render();
 
 	auto testSketch = Sketch("1.txt", 0, 10000, 1, 1);
 	testSketch.parse();
 
 	//RainGenerator testing
-	//RainGenerator::RainGenerator(5, 10, Time("00:14:00").ms, Time("00:54:00").ms, 1.2f);
+	//RainGenerator::RainGenerator();
 
+	// Put storyboard osb path inside of StoryboardInputPath.txt
+	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
 	auto storyboardInputPath = std::ifstream("StoryboardInputPath.txt");
 	std::string path;
 	std::getline(storyboardInputPath, path);
