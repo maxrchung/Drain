@@ -31,21 +31,23 @@ void RainGenerator::RainController() {
 
 	DrawRain(rainCount);
 	VelocityController();
-
-	//Increments time after row of rain is finished falling
-	dropStartTime += dropTotalTime;
-	dropEndTime = dropStartTime + dropTotalTime;
 }
 
 //Creates amount of raindrops in a row, rainCount, and drops it down the screen
 void RainGenerator::DrawRain(int rainCount) {
+	static const float topOfScreen = Vector2::ScreenSize.y / 2;
+
 	for (int i = 0; i < rainCount; i++) {
-		//rainPosX = leftOfScreen + i * rainSpacing;
-		static const float rainPosY = Vector2::ScreenSize.y / 2;
-		float rainPosX = RandomRange::calculate(-Vector2::ScreenSize.x, Vector2::ScreenSize.x);
+		float rainPosYDelta = RandomRange::calculate(0, Vector2::ScreenSize.y);
+		float rainPosY = topOfScreen + rainPosYDelta;
+		float rainPosX = RandomRange::calculate(-Vector2::ScreenSize.x / 2, Vector2::ScreenSize.x / 2);
+
+		float dropTimeDelta = RandomRange::calculate(0, dropTotalTime);
+		float actualDropStart = dropStartTime + dropTimeDelta;
+		float actualDropEnd = dropEndTime + dropTimeDelta;
 
 		Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(rainPosX, rainPosY));
-		sprite->Move(dropStartTime, dropEndTime, sprite->position, Vector2(sprite->position.x, -Vector2::ScreenSize.y / 2));
+		sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(sprite->position.x, -Vector2::ScreenSize.y / 2));
 	}
 }
 
@@ -55,4 +57,8 @@ void RainGenerator::VelocityController() {
 	if (dropTotalTime >= minDropTime) { //Ensures rain doesn't fall faster than minDropTime
 		dropTotalTime *= (2.0f - acceleration);
 	}
+
+	//Increments time after row of rain is finished falling
+	dropStartTime += dropTotalTime;
+	dropEndTime = dropStartTime + dropTotalTime;
 }
