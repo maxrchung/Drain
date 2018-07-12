@@ -25,7 +25,7 @@ int main() {
 	auto testSketch = Sketch("1.txt", 0, 10000, 1, 1);
 	testSketch.parse();
 
-	//RainGenerator testing
+	// RainGenerator testing
 	RainGenerator::RainGenerator();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
