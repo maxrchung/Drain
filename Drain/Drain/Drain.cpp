@@ -22,8 +22,8 @@ int main() {
 
 	Lyric::render();
 
-	//auto testSketch = Sketch("", 0, 10000);
-	//testSketch.draw();
+	auto testSketch = Sketch("1.txt", 0, 10000, 1, 1);
+	testSketch.parse();
 
 	//RainGenerator testing
 	RainGenerator::RainGenerator();
