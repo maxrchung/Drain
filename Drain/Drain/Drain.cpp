@@ -21,6 +21,7 @@ int main() {
 	background->Color(0, Time("06:37:848").ms, Swatch::offwhite, Swatch::offwhite, Easing::Linear, 0);
 
 	Lyric::render();
+	Swatch::colorBgSprites({ background }, 500, 1000);
 
 	//auto testSketch = Sketch("", 0, 10000);
 	//testSketch.draw();

@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Utility">
       <UniqueIdentifier>{448796c4-f102-4b1b-b7f3-92b7e289433f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utility\Swatch">
+      <UniqueIdentifier>{b68c6a60-643b-4ed0-8682-47d138c2eb2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility\Swatch">
+      <UniqueIdentifier>{fe61b4f6-d044-4134-ac0f-466ce61afe4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Drain.cpp">
@@ -52,9 +58,6 @@
       <Filter>Source Files\Lyric\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="Path.cpp">
-      <Filter>Source Files\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="Swatch.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
     <ClCompile Include="Raindrop.cpp">
@@ -99,6 +102,12 @@
     <ClCompile Include="CWEndEighthStroke.cpp">
       <Filter>Source Files\Lyric\Stroke</Filter>
     </ClCompile>
+    <ClCompile Include="Swatch.cpp">
+      <Filter>Source Files\Utility\Swatch</Filter>
+    </ClCompile>
+    <ClCompile Include="SwatchTiming.cpp">
+      <Filter>Source Files\Utility\Swatch</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raindrop.hpp">
@@ -118,9 +127,6 @@
     </ClInclude>
     <ClInclude Include="PointStroke.hpp">
       <Filter>Header Files\Lyric\Stroke</Filter>
-    </ClInclude>
-    <ClInclude Include="Swatch.hpp">
-      <Filter>Header Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="Path.hpp">
       <Filter>Header Files\Utility</Filter>
@@ -166,6 +172,12 @@
     </ClInclude>
     <ClInclude Include="CWEndEighthStroke.hpp">
       <Filter>Header Files\Lyric\Stroke</Filter>
+    </ClInclude>
+    <ClInclude Include="Swatch.hpp">
+      <Filter>Header Files\Utility\Swatch</Filter>
+    </ClInclude>
+    <ClInclude Include="SwatchTiming.hpp">
+      <Filter>Header Files\Utility\Swatch</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

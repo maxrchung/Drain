@@ -148,6 +148,7 @@
     <ClCompile Include="SpriteCollection.cpp" />
     <ClCompile Include="Stroke.cpp" />
     <ClCompile Include="Swatch.cpp" />
+    <ClCompile Include="SwatchTiming.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlankStroke.hpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="PointStroke.hpp" />
     <ClInclude Include="Raindrop.hpp" />
     <ClInclude Include="Stroke.hpp" />
+    <ClInclude Include="SwatchTiming.hpp" />
     <ClInclude Include="Timing.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
