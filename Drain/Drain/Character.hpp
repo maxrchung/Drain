@@ -16,7 +16,7 @@ public:
 private:
 	static std::vector<std::unique_ptr<Stroke>> createStrokes(const char character);
 	static const int drawBuffer = Timing::half;
-	static const int drainTime = Timing::half;
+	static const int drainTime = Timing::whole;
 	void createPoints(const Vector2& position, const float scale) const;
 	void createSprites(const Vector2& position, const float scale) const;
 	std::vector<std::unique_ptr<Stroke>> strokes;
