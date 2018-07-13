@@ -18,16 +18,15 @@ int main() {
 	// Solid color background
 	auto const background = Storyboard::CreateSprite(getPath(Path::Pixel), Vector2::Zero, Layer::Background);
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
-	background->Color(0, Time("06:37:848").ms, Swatch::offwhite, Swatch::offwhite, Easing::Linear, 0);
+	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 
 	Lyric::render();
-	Swatch::colorBgSprites({ background }, 500, 1000);
 
-	auto testSketch = Sketch("1.txt", 0, 10000, 1, 1);
-	testSketch.parse();
+	//auto testSketch = Sketch("1.txt", 0, 10000, 1, 1);
+	//testSketch.parse();
 
 	// RainGenerator testing
-	RainGenerator::RainGenerator();
+	//RainGenerator::RainGenerator();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
@@ -35,7 +34,6 @@ int main() {
 	std::string path;
 	std::getline(storyboardInputPath, path);
 	Storyboard::Write(path);
-
 
 	return 0;
 }

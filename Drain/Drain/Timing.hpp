@@ -1,4 +1,5 @@
 #pragma once
+#include "Time.hpp"
 // Beatmap timing info
 struct Timing {
 	static constexpr float bpm = 106.0f;
@@ -12,4 +13,5 @@ struct Timing {
 	static constexpr float eighth = quarter / 2.0f;
 	// ~35 ms
 	static constexpr float sixteeth = eighth / 2.0f;
+	static const int songEnd = 397848;
 };
