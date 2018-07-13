@@ -26,5 +26,6 @@ void PointStroke::draw(const Vector2& position,
 					   const int endDrain,
 					   const float scale) const {
 	scalePoints({ startPoint }, startDraw, scale);
+	colorFgSprites({ startPoint }, startDraw, startDrain);
 	fadePoints({ startPoint }, startDrain, endDrain);
 }

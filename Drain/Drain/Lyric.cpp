@@ -34,11 +34,11 @@ std::vector<Character> Lyric::createCharacters(const std::string& lyric) {
 }
 void Lyric::render() {
 	const auto fontSize = 25.0f;
-	//draw("suffocating", Vector2::Zero, Time("00:05:584").ms, Time("00:06:716").ms, fontSize);
-	//draw("puff of smoke", Vector2::Zero, Time("00:08:131").ms, Time("00:09:546").ms, fontSize);
-	//draw("i took your breath in", Vector2::Zero, Time("00:14:357").ms, Time("00:16:055").ms, fontSize);
-	//draw("and you spoke", Vector2::Zero, Time("00:17:187").ms, Time("00:18:602").ms, fontSize);
-	//draw("and i saw the world", Vector2::Zero, Time("00:21:999").ms, Time("00:25:678").ms, fontSize);
+	draw("suffocating", Vector2::Zero, Time("00:05:584").ms, Time("00:06:999").ms, fontSize);
+	draw("puff of smoke", Vector2::Zero, Time("00:08:131").ms, Time("00:09:475").ms, fontSize);
+	draw("i took your breath in", Vector2::Zero, Time("00:14:357").ms, Time("00:16:055").ms, fontSize);
+	draw("and you spoke", Vector2::Zero, Time("00:17:187").ms, Time("00:18:602").ms, fontSize);
+	draw("and i saw the world", Vector2::Zero, Time("00:21:999").ms, Time("00:25:678").ms, fontSize);
 	draw("turn white", Vector2::Zero, Time("00:26:527").ms, Time("00:35:159").ms, fontSize);
-	//draw("are you still calling me", Vector2::Zero, Time("00:36:716").ms, Time("00:38:697").ms, fontSize);
+	draw("are you still calling me", Vector2::Zero, Time("00:36:716").ms, Time("00:38:697").ms, fontSize);
 }

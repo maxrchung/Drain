@@ -6,7 +6,7 @@ void Stroke::colorBgSprites(const std::vector<Sprite*>& sprites, const int start
 	Swatch::colorBgToBgSprites(sprites, startDraw, endDraw);
 }
 void Stroke::colorFgSprites(const std::vector<Sprite*>& sprites, const int startDraw, const int endDraw) {
-	Swatch::colorBgToFgSprites(sprites, startDraw, endDraw);
+	Swatch::colorFgToFgSprites(sprites, startDraw, endDraw);
 }
 void Stroke::fadeSprites(const std::vector<Sprite*>& sprites, const int startDrain, const int endDrain) {
 	Swatch::colorFgToBgSprites(sprites, startDrain, endDrain);

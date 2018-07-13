@@ -37,6 +37,7 @@ void LineStroke::draw(const Vector2& position,
 	line->ScaleVector(startDraw, endDraw, startLineScaleVector, endLineScaleVector);
 	endPoint->Move(startDraw, endDraw, startPoint->position, position + endPosition * scale);
 	scalePoints({ startPoint, endPoint }, startDraw, scale);
+	colorFgSprites({ line, startPoint, endPoint }, startDraw, startDrain);
 	fadeSprites({ line }, startDrain, endDrain);
 	fadePoints({ startPoint, endPoint }, startDrain, endDrain);
 }

@@ -33,10 +33,9 @@ void CWEndEighthStroke::draw(const Vector2& position,
 	scaleOuter({ outer, quarterCover }, startTime, startPosition, center, scale);
 	scalePoints({ startPoint, endPoint }, startTime, scale);
 	pointCover->Scale(endDraw, endDraw, endPoint->scale, endPoint->scale);
-	colorBgSprites({ horizontalCover, verticalCover }, startTime, startTime);
-	colorBgSprites({ inner, quarterCover }, startTime, endDrain);
-	colorFgSprites({ endPoint }, startDraw, startDraw);
-	colorFgSprites({ pointCover }, endDraw, endDraw);
+	colorBgSprites({ horizontalCover, verticalCover, inner, quarterCover }, startTime, endDrain);
+	colorFgSprites({ outer, startPoint, endPoint }, startTime, startDrain);
+	colorFgSprites({ pointCover }, endDraw, startDrain);
 	fadeSprites({ outer }, startDrain, endDrain);
 	fadePoints({ startPoint, pointCover }, startDrain, endDrain);
 	hideSprites({ endPoint }, endDraw);

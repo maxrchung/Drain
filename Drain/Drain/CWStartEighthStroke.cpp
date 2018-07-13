@@ -31,9 +31,10 @@ void CWStartEighthStroke::draw(const Vector2& position,
 	scaleInner({ inner }, startTime, startPosition, center, scale);
 	scaleOuter({ outer, quarterCover }, startTime, startPosition, center, scale);
 	scalePoints({ startPoint, endPoint }, startTime, scale);
-	colorBgSprites({ horizontalCover, verticalCover }, startTime, startTime);
+	colorBgSprites({ horizontalCover, verticalCover }, startTime, endDrain);
 	colorBgSprites({ inner, quarterCover }, startTime, endDrain);
-	colorFgSprites({ startPoint, endPoint }, startDraw, startDraw);
+	colorBgSprites({ outer, startPoint, endPoint }, startDraw, startTime);
+	colorFgSprites({ outer, startPoint, endPoint }, startDraw, startDrain);
 	fadeSprites({ outer }, startDrain, endDrain);
 	fadePoints({ startPoint, endPoint }, startDrain, endDrain);
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition - center);

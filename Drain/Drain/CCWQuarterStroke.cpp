@@ -25,8 +25,8 @@ void CCWQuarterStroke::draw(const Vector2& position,
 	scaleInner({ inner }, startDraw, startPosition, center, scale);
 	scaleOuter({ outer }, startDraw, startPosition, center, scale);
 	scalePoints({ startPoint, endPoint }, startDraw, scale);
-	colorBgSprites({ horizontalCover, verticalCover }, startDraw, startDraw);
-	colorBgSprites({ inner }, startDraw, endDrain);
+	colorBgSprites({ horizontalCover, verticalCover, inner }, startDraw, endDrain);
+	colorFgSprites({ outer, startPoint, endPoint }, startDraw, startDrain);
 	fadeSprites({ outer }, startDrain, endDrain);
 	fadePoints({ startPoint, endPoint }, startDrain, endDrain);
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(startPosition - center);
