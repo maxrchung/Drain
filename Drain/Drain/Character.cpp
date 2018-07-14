@@ -263,7 +263,7 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 			strokes.push_back(std::make_unique<BlankStroke>());
 			break;
 		default:
-			throw new std::exception("Unsupported lyric character: " + character);
+			throw std::exception("Unsupported lyric character: " + character);
 	}
 	return strokes;
 }

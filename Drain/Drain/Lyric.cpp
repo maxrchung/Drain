@@ -41,4 +41,30 @@ void Lyric::render() {
 	draw("and i saw the world", Vector2::Zero, Time("00:21:999").ms, Time("00:25:678").ms, fontSize);
 	draw("turn white", Vector2::Zero, Time("00:26:527").ms, Time("00:35:159").ms, fontSize);
 	draw("are you still calling me", Vector2::Zero, Time("00:36:716").ms, Time("00:38:697").ms, fontSize);
+	draw("i melt", Vector2::Zero, Time("00:40:395").ms, Time("00:49:168").ms, fontSize);
+	draw("into", Vector2::Zero, Time("00:49:452").ms, Time("00:50:867").ms, fontSize);
+	draw("your voice", Vector2::Zero, Time("00:51:716").ms, Time("00:52:565").ms, fontSize);
+
+	//I melt into your voice
+	//
+	//Pushing aside my pain
+	//Exchanged body heat
+	//Again and again
+	//Suffocating
+	//Puff of smoke
+	//And I saw the world turn red
+	//
+	//Dripping, trickling, dribbling
+	//A little more
+	//Give me some more
+	//
+	//Dripping, trickling, dribbling
+	//Into my core
+	//
+	//I don’t know when I lost my key
+	//Take a vow
+	//And just kill me
+	//
+	//When the wall broke down,
+	//You were there; but I was on my own.
 }
