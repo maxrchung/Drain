@@ -20,8 +20,5 @@ std::string getPath(Path path) {
 		case Path::EighthBottomOuter:
 			return "h";
 		case Path::EighthTopOuter:
-			return "i";
-		default:
-			throw std::exception("Unsupported path");
-	}
+			return "i";	}
 }

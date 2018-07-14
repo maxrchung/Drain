@@ -1,4 +1,6 @@
 #include "Storyboard.hpp"
+
+#include <cmath>
 #include <fstream>
 #include <iostream>
 #include <stddef.h>

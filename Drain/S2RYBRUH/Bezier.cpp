@@ -1,5 +1,7 @@
 #include "Bezier.hpp"
 
+#include <cmath>
+
 std::vector<std::vector<float>> Bezier::binomial = { { 1 } };
 
 Bezier::Bezier(const std::vector<Vector2>& transitions)

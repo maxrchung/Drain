@@ -12,11 +12,11 @@ public:
 		   const Time& startTime,
 		   const Time& endTime,
            const int thickness = 1,
-           const int resolution = 50,
+           const int resolution = 5,
            const int margin = 5,
 		   const Easing& easing = Easing::Linear,
 		   const Path& brush = Path::Pixel);
-	const int parse();
+	const int make();
 
 private:
 	const std::string pointMapPath;
