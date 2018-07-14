@@ -1,10 +1,13 @@
 #include "Sketch.hpp"
 #include "Storyboard.hpp"
-#include <fstream>
-#include <sstream>
-#include <cassert>
+
 #include <algorithm>
+#include <cassert>
+#include <cmath>
+#include <fstream>
 #include <memory>
+#include <sstream>
+
 
 /*
 This class reads from a text file, parses it, and creates a vector of

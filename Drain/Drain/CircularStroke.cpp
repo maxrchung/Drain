@@ -5,6 +5,9 @@
 #include "CWEndEighthStroke.hpp"
 #include "CWQuarterStroke.hpp"
 #include "CWStartEighthStroke.hpp"
+
+#include <cmath>
+
 CircularStroke::CircularStroke(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center)
 	: startPosition{ startPosition }, endPosition{ endPosition }, center{ center } {
 }
