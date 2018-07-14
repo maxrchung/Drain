@@ -49,11 +49,11 @@ void RainGenerator::DrawRain(int rainCount) {
 	}
 }
 
-// Returns a random number to increase rainPosY which visually increases rain velocity. Smaller rain sizes are made more probable for visual effect
+// Returns a random number to increase rainPosY which visually increases rain velocity. Smaller rain sizes (slower velocity) are made more probable for visual effect
 float RainGenerator::RandomRainVelocity(float maxVeloVariance) {
 	float rainPosYDelta;
 	float randNum = RandomRange::calculate(0, 10);
-
+	// Each case has a 85%, 13.5%, and 1.5% probability respectively
 	if (randNum >= 0 && randNum <= 8.5) {
 		rainPosYDelta = RandomRange::calculate(0.01f, maxVeloVariance / 3);
 	}
