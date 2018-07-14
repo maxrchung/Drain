@@ -45,7 +45,7 @@ void Sketch::draw(Bezier b) {
 	}
 }
 
-const int Sketch::parse() {
+const int Sketch::make() {
     // returns 0 upon success
     std::size_t pos = pointMapPath.find(".txt");
     if (pos == std::string::npos)
@@ -88,6 +88,7 @@ const int Sketch::parse() {
 }
 
 void Sketch::getTransform(float *xshift, float *yshift, float *xscale, float *yscale) {
+    // This function transforms the entire image to be centered and scaled to fit
     std::ifstream ifs;
     ifs.open(pointMapPath);
     auto xvalues = std::vector<float>();
