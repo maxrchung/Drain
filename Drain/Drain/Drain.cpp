@@ -13,6 +13,8 @@
 
 int main() {
 	srand(time(NULL));
+	Swatch::init();
+
 	// Gets rid of beatmap background
 	Storyboard::CreateSprite("36592_serial_experiments_lain.jpg", Vector2::Zero, Layer::Background);
 	// Solid color background
