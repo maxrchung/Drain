@@ -33,6 +33,7 @@ void CCWEndEighthStroke::draw(const Vector2& position,
 	scaleOuter({ outer, quarterCover }, startTime, startPosition, center, scale);
 	scalePoints({ startPoint, endPoint }, startTime, scale);
 	pointCover->Scale(endDraw, endDraw, endPoint->scale, endPoint->scale);
+	// endTime check necessary for letters ending in this stroke, e.g. t or i
 	colorBgSprites({ horizontalCover, verticalCover, inner, quarterCover }, startTime, endDrain > endTime ? endDrain : endTime);
 	colorFgSprites({ outer, startPoint, endPoint }, startTime, startDrain);
 	colorFgSprites({ pointCover }, endDraw, startDrain);

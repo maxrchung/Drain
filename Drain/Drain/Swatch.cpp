@@ -35,7 +35,7 @@ void Swatch::init() {
 	int endTime;
 	auto currentBgColor = blood;
 	auto currentFgColor = eerie;
-	for (auto time = static_cast<float>(Time("05:03:319").ms); time < Time("05:20:301").ms; time += Timing::whole) {
+	for (auto time = static_cast<float>(Time("05:03:319").ms); time < Time("05:20:867").ms; time += Timing::whole) {
 		const auto startTime = static_cast<int>(time);
 		endTime = startTime + Timing::whole;
 		currentBgColor = getRandomColor({ currentBgColor });
@@ -49,17 +49,17 @@ void Swatch::init() {
 	fgTimings.push_back(SwatchTiming(endTime, Time("05:39:546").ms, currentFgColor, nextFgColor));
 	currentBgColor = nextBgColor;
 	currentFgColor = nextFgColor;
-	for (auto time = static_cast<float>(Time("05:39:546").ms); time < Time("05:57:659").ms; time += Timing::half) {
+	for (auto time = static_cast<float>(Time("05:39:546").ms); time < Time("05:57:659").ms; time += Timing::quarter) {
 		const auto startTime = static_cast<int>(time);
-		endTime = startTime + Timing::half;
+		endTime = startTime + Timing::quarter;
 		currentBgColor = getRandomColor({ currentBgColor });
 		bgTimings.push_back(SwatchTiming(startTime, endTime, currentBgColor, currentBgColor));
 		currentFgColor = getRandomColor({ currentBgColor, currentFgColor });
 		fgTimings.push_back(SwatchTiming(startTime, endTime, currentFgColor, currentFgColor));
 	}
 	// Floating point error :(
-	const auto epsilon = 5;
-	for (auto time = endTime; time < Time("06:22:565").ms - epsilon; time += Timing::whole * 4) {
+	const auto error = 5;
+	for (auto time = endTime; time < Time("06:22:565").ms - error; time += Timing::whole * 4) {
 		auto startTime = static_cast<int>(time);
 		endTime = startTime + Timing::half;
 		currentBgColor = getRandomColor({ currentBgColor });
