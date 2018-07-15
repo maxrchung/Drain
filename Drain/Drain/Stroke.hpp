@@ -32,5 +32,4 @@ protected:
 	// Size of sprite images in pixels
 	static const int imageSize = 100;
 	static const RandomRange pointScale;
-	static const RandomRange pointFade;
 };
