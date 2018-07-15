@@ -1,5 +1,4 @@
 #include "Path.hpp"
-#include <exception>
 // Be careful not to overlap file names
 std::string getPath(Path path) {
 	switch (path) {

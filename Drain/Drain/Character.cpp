@@ -5,7 +5,6 @@
 #include "Math.hpp"
 #include "PointStroke.hpp"
 #include <cmath>
-#include <exception>
 #include <limits>
 Character::Character(const char character)
 	: strokes{ createStrokes(character) } {
