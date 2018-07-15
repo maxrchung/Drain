@@ -12,6 +12,7 @@ public:
 	float g = 0.0f;
 	float b = 0.0f;
 	bool operator==(Color c);
+	bool operator==(const Color c) const;
 	bool operator!=(Color c);
 	Color operator/(float f) const;
 	Color operator*(float f) const;

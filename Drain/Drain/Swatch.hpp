@@ -1,5 +1,6 @@
 #pragma once
 #include "Color.hpp"
+#include "RandomRange.hpp"
 #include "Sprite.hpp"
 #include "SwatchTiming.hpp"
 #include <vector>
@@ -7,6 +8,8 @@
 // In my original outline, I only planned for 4 main colors: white, blue, red, black, but this is always subject to change
 class Swatch {
 public:
+	// Sets up random colors
+	static void init();
 	static void colorBgToBgSprites(const std::vector<Sprite*>& sprites, const int startTime, const int endTime);
 	static void colorBgToFgSprites(const std::vector<Sprite*>& sprites, const int startTime, const int endTime);
 	static void colorFgToBgSprites(const std::vector<Sprite*>& sprites, const int startTime, const int endTime);
@@ -25,7 +28,10 @@ private:
 	static const Color offwhite;
 	// Hysteresis album color blue/green;
 	static const Color water;
+	static const std::vector<Color> colors;
+	static const RandomRange randomColor;
 	static void colorSprites(const std::vector<Sprite*>& sprites, const int startTime, const int endTime, const std::vector<SwatchTiming>& startTimings, const std::vector<SwatchTiming>& endTimings);
-	static const std::vector<SwatchTiming> bgTimings;
-	static const std::vector<SwatchTiming> fgTimings;
+	static Color getRandomColor(const std::vector<Color>& exceptions);
+	static std::vector<SwatchTiming> bgTimings;
+	static std::vector<SwatchTiming> fgTimings;
 };
