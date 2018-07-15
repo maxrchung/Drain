@@ -61,19 +61,19 @@ void Lyric::render() {
 	draw("trickling", Vector2::Zero, Time("04:24:546").ms, Time("04:25:324").ms, fontSize);
 	draw("dribbling", Vector2::Zero, Time("04:26:739").ms, Time("04:27:588").ms, fontSize);
 	draw("into my core", Vector2::Zero, Time("04:31:055").ms, Time("04:36:574").ms, fontSize);
-	draw("i dont know", Vector2::Zero, Time("04:44:074").ms, Time("04:46:338").ms, fontSize);
+	draw("i don't know", Vector2::Zero, Time("04:44:074").ms, Time("04:46:338").ms, fontSize);
 	draw("when i lost", Vector2::Zero, Time("04:46:904").ms, Time("04:48:815").ms, fontSize);
 	draw("my key", Vector2::Zero, Time("04:49:239").ms, Time("04:55:749").ms, fontSize);
 	draw("take a vow", Vector2::Zero, Time("04:56:527").ms, Time("04:59:923").ms, fontSize);
 	draw("and just", Vector2::Zero, Time("05:00:560").ms, Time("05:01:763").ms, fontSize);
 	draw("kill me", Vector2::Zero, Time("05:02:187").ms, Time("05:08:838").ms, fontSize);
-	draw("i dont know", Vector2::Zero, Time("05:20:301").ms, Time("05:22:565").ms, fontSize);
+	draw("i don't know", Vector2::Zero, Time("05:20:301").ms, Time("05:22:565").ms, fontSize);
 	draw("when i lost", Vector2::Zero, Time("05:23:131").ms, Time("05:24:970").ms, fontSize);
 	draw("my key", Vector2::Zero, Time("05:25:395").ms, Time("05:31:621").ms, fontSize);
 	draw("take a vow", Vector2::Zero, Time("05:32:753").ms, Time("05:36:150").ms, fontSize);
 	draw("and just", Vector2::Zero, Time("05:36:857").ms, Time("05:37:989").ms, fontSize);
-	draw("kill me", Vector2::Zero, Time("05:38:414").ms, Time("05:48:602").ms, fontSize);
+	draw("kill me", Vector2::Zero, Time("05:38:414").ms, Time("05:49:735").ms, fontSize);
 	draw("when the wall broke down", Vector2::Zero, Time("06:31:055").ms, Time("06:32:329").ms, fontSize);
-	draw("you were there", Vector2::Zero, Time("06:32:895").ms, Time("06:33:602").ms, fontSize);
+	draw("you were there", Vector2::Zero, Time("06:32:895").ms, Time("06:33:461").ms, fontSize);
 	draw("but i was on my own", Vector2::Zero, Time("06:34:735").ms, Time("06:35:725").ms, fontSize);
 }

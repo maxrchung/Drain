@@ -11,6 +11,7 @@ public:
 	static void colorBgToFgSprites(const std::vector<Sprite*>& sprites, const int startTime, const int endTime);
 	static void colorFgToBgSprites(const std::vector<Sprite*>& sprites, const int startTime, const int endTime);
 	static void colorFgToFgSprites(const std::vector<Sprite*>& sprites, const int startTime, const int endTime);
+private:
 	// Pure white
 	static const Color white;
 	// Pure black
@@ -24,7 +25,6 @@ public:
 	static const Color offwhite;
 	// Hysteresis album color blue/green;
 	static const Color water;
-private:
 	static void colorSprites(const std::vector<Sprite*>& sprites, const int startTime, const int endTime, const std::vector<SwatchTiming>& startTimings, const std::vector<SwatchTiming>& endTimings);
 	static const std::vector<SwatchTiming> bgTimings;
 	static const std::vector<SwatchTiming> fgTimings;
