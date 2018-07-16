@@ -118,7 +118,7 @@ void Swatch::colorSprites(const std::vector<Sprite*>& sprites, const int startTi
 		}
 		int localEndTime;
 		bool endColoring;
-		if (endTime >= timing.endTime) {
+		if (endTime > timing.endTime) {
 			localEndTime = timing.endTime;
 			endColoring = false;
 		}

@@ -2,14 +2,12 @@
 #include "Math.hpp"
 #include "Path.hpp"
 #include "RainGenerator.hpp"
-#include "SpriteCollection.hpp"
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
-#include "Bezier.hpp"
 #include "Sketch.hpp"
-#include <iostream>
 #include <ctime>
 #include <cmath>
+#include <iostream>
 
 int main() {
 	srand(time(NULL));
