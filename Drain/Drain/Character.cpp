@@ -4,7 +4,8 @@
 #include "LineStroke.hpp"
 #include "Math.hpp"
 #include "PointStroke.hpp"
-#include <exception>
+#include <cmath>
+#include <limits>
 Character::Character(const char character)
 	: strokes{ createStrokes(character) } {
 }
@@ -262,8 +263,13 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 		case ' ':
 			strokes.push_back(std::make_unique<BlankStroke>());
 			break;
-		default:
-			throw new std::exception("Unsupported lyric character: " + character);
+		case ':':
+			strokes.push_back(std::make_unique<PointStroke>(Vector2(0.0f, 0.5f)));
+			strokes.push_back(std::make_unique<PointStroke>(Vector2(0.0f, -0.5f)));
+			break;
+		case '\'':
+			strokes.push_back(std::make_unique<LineStroke>(Vector2(0.0f, 1.25f), Vector2(0.0f, 1.0f)));
+			break;
 	}
 	return strokes;
 }

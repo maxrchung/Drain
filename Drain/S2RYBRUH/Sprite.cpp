@@ -1,6 +1,9 @@
 #include "Sprite.hpp"
+
+#include <cmath>
 #include <iomanip>
 #include <sstream>
+#include <math.h>
 
 // _M,<easing>,<starttime>,<endtime>,<start_x>,<start_y>,<end_x>,<end_y>
 void Sprite::Move(int startTime, int endTime, float startX, float startY, float endX, float endY, Easing easing) {

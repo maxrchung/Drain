@@ -1,7 +1,11 @@
+
+
+#include "Vector3.hpp"
 #include "Matrix.hpp"
 #include "Vector2.hpp"
-#include "Vector3.hpp"
 #include "Vector4.hpp"
+
+#include <cmath>
 
 Vector3 Vector3::Zero = Vector3(0, 0, 0);
 

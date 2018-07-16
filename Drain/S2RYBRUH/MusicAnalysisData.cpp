@@ -1,4 +1,6 @@
 #include "MusicAnalysisData.hpp"
+
+#include <cmath>
 #include <iostream>
 
 int MusicAnalysisData::GetMeasureIndex(Time time) {

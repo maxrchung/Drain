@@ -1,5 +1,8 @@
 #pragma once
 #include "Stroke.hpp"
+
+#include <memory>
+
 class CircularStroke : public Stroke {
 public:
 	explicit CircularStroke(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center);
