@@ -24,11 +24,12 @@ int main() {
 
 	Lyric::render();
 
-	//auto testSketch = Sketch("1.txt", 100, 10000, 1, 5, 5);
-	//testSketch.make();
+	auto testSketch = Sketch("1.txt", 100, 10000, 1, 5, 5);
+    if (testSketch.make())
+        return 1;   // error if make doesn't return 0
 
 	// RainGenerator testing
-	RainGenerator::RainGenerator();
+	// RainGenerator::RainGenerator();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb

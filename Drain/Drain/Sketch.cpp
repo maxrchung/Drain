@@ -33,9 +33,9 @@ void Sketch::draw(Bezier b) {
 		points.push_back(b.findPosition(static_cast<float>(i) / numPoints));
 	}
 	// draw each point
-	for (auto &point : points) {
+	/*for (auto &point : points) {
 		Storyboard::CreateSprite(brushPath, point)->Scale(startTime.ms, endTime.ms, thickness, thickness);
-	}
+	}*/
 	auto mpoints = std::vector<Vector2>();
 	// find midpoint of points and draw line between them
 	for (int i = 0; i < points.size() - 1; i++) {
@@ -91,7 +91,7 @@ const int Sketch::make() {
 }
 
 void Sketch::getTransform(float *xshift, float *yshift, float *xscale, float *yscale) {
-    // This function transforms the entire image to be centered and scaled to fit
+    // This function outputs parameters so that the entire image is centered and scaled to fit
     std::ifstream ifs;
     ifs.open(pointMapPath);
     auto xvalues = std::vector<float>();
