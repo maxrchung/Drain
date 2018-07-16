@@ -1,34 +1,41 @@
 #pragma once
 
+#include "Sprite.hpp"
+#include "Time.hpp"
+#include "Vector2.hpp"
 #include "Vector3.hpp"
 
-#include <cmath>
+#include <vector>
 
-Walker::Walker() {
-}
-
-~Walker::Walker() {
-}
-
-void Walker::walk(Vector2 startPosition, Vector2 endPosition, Time startTime, tiome endTime) {
-	return;
-}
-
-/*
- * angle vectors are for the azimuth and altitude respectively
- * these are absolute positioning in degrees
- */
-void Walker::rotate(Vector2 startAngle, Vector2 endAngle, Time startTime, Time endTime) {
-	//check that the altitude angles are within range
-	if((fabs(startAngle.y) > 90) || (fabs(endAngle.y) > 90))
-		return;
-
-	//modulo the angle so we don't have to deal with that later
-	startAngle.x = fmod(startAngle.x, 360);
-	endAngle.x = fmod(startAngle.x, 360);
-
-
-
-	return;
-}
+class Walker {
+public:
+	//field of view
+	float fov = 90;
 	
+	//current angle
+	Vector2 angle;
+
+	//current position
+	Vector3 position;
+
+	//vector of all sprites
+	std::vector<Sprite *> sprites;
+
+	//location of each sprite
+	std::vector<Vector3> location;
+
+	//size of each sprite
+	std::vector<float> size;
+
+	Walker(std::vector<Sprite *> sprites, std::vector<Vector2> location, std::vector<float> size);
+
+	void walk(float distance, Time startTime, Time endTime);
+	//void rotate(Vector2 startAngle, Vector2 endAngle, Time startTime, Time endTime);
+
+private:
+	bool checkAzimuth(Vector3 coordinates, float size);
+	bool checkAltitude(Vector3 coordinates, float size);
+	bool checkInScreen(Vector3 coordinates, float size);
+	Vector3 convertThreeD(Vector2 coordinates, float size);
+	Vector2 convertTwoD(Vector3 coordinates, float *size);
+};

@@ -1,5 +1,6 @@
 #include "Sketch.hpp"
 #include "Storyboard.hpp"
+#include "Swatch.hpp"
 
 #include <algorithm>
 #include <cassert>
@@ -22,9 +23,11 @@ Sketch::Sketch(const std::string& pointMapPath, const Time& startTime, const Tim
     thickness{ thickness }, resolution{ resolution }, margin{ margin }, easing { easing }, brush{ brush }
 {
 	brushPath = getPath(brush);
+    totalLines = 0;
 }
 
 void Sketch::draw(Bezier b) {
+    // todo: tapering effect
 	int numPoints = b.length / resolution;	// truncate
     if (!numPoints)
         return;
@@ -33,19 +36,26 @@ void Sketch::draw(Bezier b) {
 		points.push_back(b.findPosition(static_cast<float>(i) / numPoints));
 	}
 	// draw each point
-	for (auto &point : points) {
+	/*for (auto &point : points) {
 		Storyboard::CreateSprite(brushPath, point)->Scale(startTime.ms, endTime.ms, thickness, thickness);
-	}
+	}*/
 	auto mpoints = std::vector<Vector2>();
 	// find midpoint of points and draw line between them
 	for (int i = 0; i < points.size() - 1; i++) {
+        totalLines++;
 		mpoints.push_back((points[i] + points[i + 1]) / 2);
 		float dist = points[i].DistanceBetween(points[i + 1]);
 		float angle = atan(-(points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x)); // negate y because osu!
-		auto line = Storyboard::CreateSprite(brushPath, mpoints[i]);
-		line->ScaleVector(startTime.ms, endTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));
-		line->Rotate(startTime.ms, endTime.ms, angle, angle);
-	}
+        // some stupid experimental shit
+        if (totalLines % 2 == 0)
+            continue;
+        dist *= 2;
+        // end stupid
+        auto line = Storyboard::CreateSprite(brushPath, mpoints[i]);
+		line->ScaleVector(startTime.ms, endTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // osu! will optimize dup position
+		line->Rotate(startTime.ms, startTime.ms, angle, angle); // startTime as endTime because ScaleVector controls lifetime
+        Swatch::colorFgToFgSprites({ line }, startTime.ms, startTime.ms);
+    }
 }
 
 const int Sketch::make() {
@@ -91,7 +101,7 @@ const int Sketch::make() {
 }
 
 void Sketch::getTransform(float *xshift, float *yshift, float *xscale, float *yscale) {
-    // This function transforms the entire image to be centered and scaled to fit
+    // This function outputs parameters so that the entire image is centered and scaled to fit
     std::ifstream ifs;
     ifs.open(pointMapPath);
     auto xvalues = std::vector<float>();
