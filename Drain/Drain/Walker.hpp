@@ -10,7 +10,13 @@ public:
 	//field of view
 	float fov = 90;
 	
-	//vector of sprites currently on screen
+	//current angle
+	Vector2 angle;
+
+	//current position
+	Vector3 position;
+
+	//vector of all sprites
 	std::vector<Sprite *> sprites;
 
 	//location of each sprite
@@ -19,8 +25,13 @@ public:
 	Walker(std::vector<Sprite *> sprites, std::vector<Vector2> location);
 	~Walker();
 
-	void walk(Vector2 startPosition, Vector2 endPosition, Time startTime, Time endTime);
-	void rotate(Vector2 startAngle, Vector2 endAngle, Time startTime, Time endTime);
+	void walk(float distance, Time startTime, Time endTime);
+	//void rotate(Vector2 startAngle, Vector2 endAngle, Time startTime, Time endTime);
+
 private:
-	Vector3 convertThreeD(Vector2);
+	bool checkAzimuth(Vector3 coordinates, float size);
+	bool checkAltitude(Vector3 coordinates, float size);
+	bool checkInScreen(Vector3 coordinates, float size);
+	Vector3 convertThreeD(Vector2 coordinates, float size);
+	Vector2 convertTwoD(Vector3 coordinates, float *size);
 }
