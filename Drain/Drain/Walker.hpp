@@ -1,9 +1,11 @@
 #pragma once
 
-#include "Walker.hpp"
-
+#include "Sprite.hpp"
 #include "Time.hpp"
 #include "Vector2.hpp"
+#include "Vector3.hpp"
+
+#include <vector>
 
 class Walker {
 public:
@@ -22,8 +24,10 @@ public:
 	//location of each sprite
 	std::vector<Vector3> location;
 
-	Walker(std::vector<Sprite *> sprites, std::vector<Vector2> location);
-	~Walker();
+	//size of each sprite
+	std::vector<float> size;
+
+	Walker(std::vector<Sprite *> sprites, std::vector<Vector2> location, std::vector<float> size);
 
 	void walk(float distance, Time startTime, Time endTime);
 	//void rotate(Vector2 startAngle, Vector2 endAngle, Time startTime, Time endTime);
@@ -34,4 +38,4 @@ private:
 	bool checkInScreen(Vector3 coordinates, float size);
 	Vector3 convertThreeD(Vector2 coordinates, float size);
 	Vector2 convertTwoD(Vector3 coordinates, float *size);
-}
+};

@@ -1,16 +1,13 @@
-#include "Vector3.hpp"
+#include "Walker.hpp"
 
 #include <cmath>
 
-Walker::Walker(std::vector<Sprite *> sprites, std:;vector<Vector2> location)
+Walker::Walker(std::vector<Sprite *> sprites, std::vector<Vector2> location, std::vector<float> size)
 	:sprites(sprites) {
 	//convert each 2D location into a 3d location in real space
 	for(int i = 0; i < location.size(); ++i) {
-		this->location[i] = convertThreeD(location[i]);
+		this->location[i] = convertThreeD(location[i], size[i]);
 	}
-}
-
-~Walker::Walker() {
 }
 
 
@@ -18,7 +15,7 @@ Walker::Walker(std::vector<Sprite *> sprites, std:;vector<Vector2> location)
  * distance: forward distance walked, can be positive or negative?
  * startTime/endTime: specificy the distance walked
  */
-void Walker::walk(float distance, Time startTime, tiome endTime) {
+void Walker::walk(float distance, Time startTime, Time endTime) {
 
 	return;
 }
@@ -108,7 +105,7 @@ Vector2 Walker:: convertTwoD(Vector3 coordinates, float *size) {
 	Vector2 out;
 
 	out.x = coordinates.x / coordinates.z;
-	out.y = coordiantes.y / coordinates.z;
+	out.y = coordinates.y / coordinates.z;
 	
 	*size = 0;
 
