@@ -8,10 +8,10 @@ class RainGenerator {
 public:
 	// Parameters shouldn't be used for RainGenerator, use RainGenerator(); to call function.
 	RainGenerator(int maxRainCount = 50,
-				  int dropCount = 9,  // Bigger the dropCount, faster the initial raindrops fall
+				  int dropCount = 10,  // Bigger the dropCount, faster the initial raindrops fall
 				  Time startTime = Time("00:14:00").ms,
 				  Time endTime = Time("00:54:00").ms,
-				  float acceleration = 1.0f);
+				  float acceleration = 1.08f);
 
 	void VelocityController();
 	void RainController();
