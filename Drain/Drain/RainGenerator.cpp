@@ -36,8 +36,7 @@ void RainGenerator::RainController() {
 // Creates amount of raindrops in a row, rainCount, and drops it down the screen
 void RainGenerator::DrawRain(int rainCount) {
 	static const float topOfScreen = Vector2::ScreenSize.y / 2;
-	//static const float maxVeloVariance = Vector2::ScreenSize.y * 30; // Higher a raindrop starts, faster it needs to get from top to bottom of screen
-	static const float veloDelta = 30;
+	static const float veloDelta = 10;
 	float minDropTime = dropTotalTime / veloDelta;
 
 	for (int i = 0; i < rainCount; i++) {
@@ -63,20 +62,20 @@ float RainGenerator::RandomRainVelocity(float minDropTime, float veloDelta) {
 	float sectionLength = dropTotalTime / sections;
 	float randNum = RandomRange::calculate(0, 10);
 
-	// Each case has a 85%, 13.5%, and 1.5% probability respectively
+	// Gets velocity of rain drops based on number, randNum which ranges from 1-10
 	if (randNum >= 0 && randNum <= 7) {
 		actualDropTotalTime = RandomRange::calculate(sectionLength * 4, dropTotalTime);
 	}
 	else if (randNum > 7 && randNum <= 8.5) {
 		actualDropTotalTime = RandomRange::calculate(sectionLength * 3, sectionLength * 4);
 	}
-	else if (randNum > 8.5 && randNum <= 9.5) {
+	else if (randNum > 8.5 && randNum <= 9.6) {
 		actualDropTotalTime = RandomRange::calculate(sectionLength * 2, sectionLength * 3);
 	}
-	else if (randNum > 9.5 && randNum <= 9.85) {
+	else if (randNum > 9.6 && randNum <= 9.9) {
 		actualDropTotalTime = RandomRange::calculate(sectionLength, sectionLength * 2);
 	}
-	else if (randNum > 9.85 && randNum <= 10) {
+	else if (randNum > 9.9 && randNum <= 10) {
 		actualDropTotalTime = RandomRange::calculate(minDropTime, sectionLength);
 	}
 	
@@ -94,8 +93,10 @@ float RainGenerator::RandomRainTilt(Sprite* sprite) {
 // Instantly scales sprite size proportionally to rain velocity upon creation
 void RainGenerator::ScaleRainSize(Sprite* sprite, float actualDropTotalTime, float minDropTime) {
 	static const float maxScale = 1.0f;
-	float rainScale = 1 - (actualDropTotalTime / dropTotalTime);
-	sprite->Scale(0, 0, maxScale, rainScale);
+	float veloRatio = actualDropTotalTime / dropTotalTime;
+	float rainScale = 1 - veloRatio;
+	float newSize = rainScale * rainScale;
+	sprite->Scale(0, 0, maxScale, newSize);
 }
 
 // Modifies the velocity of raindrops by changing time a raindrop takes to fall
