@@ -10,8 +10,8 @@ RainGenerator::RainGenerator(int maxRainCount, int dropCount, Time startTime, Ti
 
 	//TODO: Cut down SB load 30 to <2 (meme) by removing height and velocity dependence; instead, directly modify totalDropTime (probbly wrong name w/e)
 	//FIX: All sprites are spawned at the top on instantiation, should only be spawned when needed
-	//FIX: Perspective & speed, sporadic rain
 	//TODO: Add freeze function and a method to return Sprite*, sprite sizes, and x,y coordinate of sprites currently on screen
+	//TODO: Add way to DELETE every raindrop off screen on before startTime and endTime
 
 	// Initiate drop time values
 	dropTotalTime = totalTime / dropCount;
@@ -27,7 +27,7 @@ RainGenerator::RainGenerator(int maxRainCount, int dropCount, Time startTime, Ti
 void RainGenerator::RainController() {
 	// int rainCount = static_cast<int>(RandomRange::calculate(maxRainCount, maxRainCount)); 
 	static int rainCount = maxRainCount; // Rain ended up looking better without a random raincount so rainCount is just maxRainCount
-	rainCount += 10; // Increases rain density after every iteration
+	rainCount *= acceleration; // Increases rain density after every iteration
 
 	DrawRain(rainCount);
 	VelocityController();
@@ -44,7 +44,8 @@ void RainGenerator::DrawRain(int rainCount) {
 		float rainPosX = RandomRange::calculate(-Vector2::ScreenSize.x / 2, Vector2::ScreenSize.x / 2);
 		// Handle rain timing
 		float actualDropTotalTime = RandomRainVelocity(minDropTime, veloDelta);
-		float dropTimeDelta = RandomRange::calculate(0, actualDropTotalTime);
+		float totalVariance = actualDropTotalTime * 8;
+		float dropTimeDelta = RandomRange::calculate(-totalVariance, totalVariance); // This way drop timing of rain will vary based on totalVariance
 		float actualDropStart = dropStartTime + dropTimeDelta;
 		float actualDropEnd = actualDropStart + actualDropTotalTime;
 		// Handle sprite movement
@@ -62,20 +63,19 @@ float RainGenerator::RandomRainVelocity(float minDropTime, float veloDelta) {
 	float sectionLength = dropTotalTime / sections;
 	float randNum = RandomRange::calculate(0, 10);
 
-	// Gets velocity of rain drops based on number, randNum which ranges from 1-10
-	if (randNum >= 0 && randNum <= 7) {
+	if (randNum >= 0 && randNum <= 6.5) { // Gets velocity of rain drops based on number randNum which ranges from 1-10
 		actualDropTotalTime = RandomRange::calculate(sectionLength * 4, dropTotalTime);
 	}
-	else if (randNum > 7 && randNum <= 8.5) {
+	else if (randNum > 6.5 && randNum <= 8.1) {
 		actualDropTotalTime = RandomRange::calculate(sectionLength * 3, sectionLength * 4);
 	}
-	else if (randNum > 8.5 && randNum <= 9.6) {
+	else if (randNum > 8.1 && randNum <= 9.4) {
 		actualDropTotalTime = RandomRange::calculate(sectionLength * 2, sectionLength * 3);
 	}
-	else if (randNum > 9.6 && randNum <= 9.9) {
+	else if (randNum > 9.4 && randNum <= 9.95) {
 		actualDropTotalTime = RandomRange::calculate(sectionLength, sectionLength * 2);
 	}
-	else if (randNum > 9.9 && randNum <= 10) {
+	else if (randNum > 9.95 && randNum <= 10) {
 		actualDropTotalTime = RandomRange::calculate(minDropTime, sectionLength);
 	}
 	
@@ -85,18 +85,33 @@ float RainGenerator::RandomRainVelocity(float minDropTime, float veloDelta) {
 // Randomizes end position of rain to get a rain tilt effect
 float RainGenerator::RandomRainTilt(Sprite* sprite) {
 	static const float maxTiltVariance = 100;
-	static const int posDelta = RandomRange::calculate(-maxTiltVariance, maxTiltVariance);
+	int posDelta = RandomRange::calculate(-maxTiltVariance, maxTiltVariance);
 	float spritePosX = sprite->position.x + posDelta;
 	return spritePosX;
 }
 
 // Instantly scales sprite size proportionally to rain velocity upon creation
 void RainGenerator::ScaleRainSize(Sprite* sprite, float actualDropTotalTime, float minDropTime) {
-	static const float maxScale = 1.0f;
+	static const float maxSize = 0.6f;
+	static const float minSize = 0.03f;
+	float newSize;
 	float veloRatio = actualDropTotalTime / dropTotalTime;
-	float rainScale = 1 - veloRatio;
-	float newSize = rainScale * rainScale;
-	sprite->Scale(0, 0, maxScale, newSize);
+	float rainScale = maxSize - veloRatio;
+
+	if (rainScale < 0) { // Ensures newSize isn't a negative number; negative sizes would be fked
+		float remainder = -rainScale;
+		float minSizeScaler = (1 + remainder) * (1 + remainder);
+		newSize = minSize * minSizeScaler;
+	}
+	else {
+		newSize = rainScale * rainScale; // Multiplies scale by itself so rain sprite image scales off total area instead of side length
+
+		if (newSize < minSize) { // So that raindrops that are too small (that aren't even visible in the storyboard) don't exist
+			newSize = minSize;
+		}
+	}
+
+	sprite->Scale(0, 0, 1.0f, newSize);
 }
 
 // Modifies the velocity of raindrops by changing time a raindrop takes to fall
