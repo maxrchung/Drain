@@ -17,72 +17,36 @@ Walker::Walker(std::vector<Sprite *> sprites, std::vector<Vector2> location, std
  */
 void Walker::walk(float distance, Time startTime, Time endTime) {
 
-	return;
-}
-
-/*
- * angle vectors are for the azimuth and altitude respectively
- * these are absolute positioning in degrees
- */
-/*
-void Walker::rotate(Vector2 startAngle, Vector2 endAngle, Time startTime, Time endTime) {
-	//check that the altitude angles are within range
-	if((fabs(startAngle.y) > 90) || (fabs(endAngle.y) > 90))
-		return;
-
-	//modulo the angle so we don't have to deal with that later
-	startAngle.x = fmod(startAngle.x, 360);
-	endAngle.x = fmod(startAngle.x, 360);
-
-	for(int i = 0; i < sprites.size(); ++i) {
-		Vector2 startPosition;
-		Vector2 endPosition;
-		sprites[i]->move(startTime.ms, endTime.ms, startPosition, endPosition);
-	}
 
 	return;
 }
-*/	
 
-bool Walker::checkAzimuth(Vector3 coordinates, float size) {
-	bool out = 0;
-
-	float leftAngle = this->angle.x + this->fov/2;
-	if( (leftAngle > 360) || (leftAngle < 0) ) {
-		leftAngle += 360;
-		leftAngle = fmod(leftAngle, 360);
-	}
-
-	float rightAngle = this->angle.x - this->fov/2;
-	if( (rightAngle > 360) || (rightAngle < 0) ) {
-		rightAngle += 360;
-		rightAngle = fmod(rightAngle, 360);
-	}
-
-	float coordinateAngle = atan2((position.y - coordinates.y), (position.x - coordinates.x)) * (180/M_PI);
-
-	if( (coordinateAngle <= leftAngle) && (coordinateAngle >= rightAngle) ) {
-		out = 1;
-	} else if( coordinateAngle >= leftAngle) {
-		//check if the particle will partly be on screen
-	} else if( coordinateAngle >= rightAngle) {
-	}
-
-	return out;
-}
-
-/*
- * check check the z direction
- */
-bool Walker::checkAltitude(Vector3 coordinates, float size) {
-
-}
 
 /*
  * checks that the object is within screen
  */
 bool Walker::checkInScreen(Vector3 coordinates, float size) {
-	return (checkAzimuth(coordinates, size) && checkAltitude(coordinates, size));
+	bool out = 1;
+	float spriteSize = 100;
+
+	Vector3 coordinates = convertTwoD(coordinates, size);
+
+	if( fabs(coordinates.x) > (Vector2::ScreenSize.x / 2) ) {
+		float edge = fabs(coordinates.x) - (size * spriteSize / 2);
+		if( edge > (Vector::ScreenSize.x / 2) ) {
+			out = 0;
+		} 
+	}
+
+	//if out is already determined to be 0, don't do extra work
+	if(out && (fabs(coordinates.y) > (Vector2::ScreenSize.y / 2)) ) {
+		float edge = fabs(coordinates.y) - (size * spriteSize / 2);
+		if( edge > (Vector::ScreenSize.y / 2) ) {
+			out = 0;
+		}
+	}
+
+	return out;
 }
 
 
@@ -92,22 +56,29 @@ bool Walker::checkInScreen(Vector3 coordinates, float size) {
 Vector3 Walker::convertThreeD(Vector2 coordinates, float size) {
 	Vector3 out;
 
-	out.z = 0;
-	
+	out.z = (max_distance * size) / sqrt( (coordinates.x * coordinates.x) + (coordinates.y * coordinates.y ) );
+
+	out.x = coordinates.x * out.z;
+	out.y = coordinates.y * out.z;					      
+
 	return out;
 }
 
 /*
  * convert 3d coordinates into 2d coordinates and a size
- * the size is a pointer that can be read from the calling function 
+ * the Vector3 will have x and y as usual, but the z 
+ * member will be the size
+ * probably not a good idea but uhh
  */
-Vector2 Walker:: convertTwoD(Vector3 coordinates, float *size) {
+Vector3 Walker:: convertTwoD(Vector3 coordinates) {
 	Vector2 out;
 
 	out.x = coordinates.x / coordinates.z;
 	out.y = coordinates.y / coordinates.z;
 	
-	*size = 0;
+	float r = coordinates.magnitude();
+
+	out.z = (r/max_distance);
 
 	return out;
 }

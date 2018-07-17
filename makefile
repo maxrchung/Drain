@@ -1,4 +1,4 @@
-FLAGS = -lm -w -fpermissive -Wnarrowing
+FLAGS = -lm -w -fpermissive -Wnarrowing 
 CC = g++
 
 STORY = main
