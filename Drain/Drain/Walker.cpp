@@ -16,7 +16,32 @@ Walker::Walker(std::vector<Sprite *> sprites, std::vector<Vector2> location, std
  * startTime/endTime: specificy the distance walked
  */
 void Walker::walk(float distance, Time startTime, Time endTime) {
+	//for every sprite
+	Vector3 temp = Vector3::Zero;
+	for(int i = 0; i < location.size(); ++i) {
+		Vector3 startCoord = location[i];
+		Vector3 temp = convertTwoD(startCoord);
+		
+		Vector2 startTwoD = Vector2::Vector2(temp.x, temp.y);
+		float startScale = temp.z;
 
+
+		//only walk in the z direction
+		Vector3 endCoord = startCoord;
+		endCoord.z += distance;
+
+		temp = convertTwoD(endCoord);
+		Vector2 endTwoD = Vector2::Vector2(temp.x, temp.y);
+		float endScale = startScale * temp.z;
+
+
+		bool check = checkInScreen(endCoord, endScale);
+		if( check ) {
+			sprites[i]->Move(startTime.ms, endTime.ms, startTwoD, endTwoD);
+		} else {
+
+		}
+	}
 
 	return;
 }
