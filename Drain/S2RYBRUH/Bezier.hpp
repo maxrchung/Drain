@@ -6,6 +6,8 @@
 class Bezier {
 public:
 	Bezier(const std::vector<Vector2>& transitions);
+    Vector2 findDerivative(float time, float deltaT = 0.0001);
+    Vector2 find2ndDerivative(float time, float deltaT = 0.0001);
 	Vector2 findPosition(const float time);
 	float length;
 private:

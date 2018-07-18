@@ -24,7 +24,7 @@ int main() {
 
 	Lyric::render();
 
-	auto testSketch = Sketch("1.txt", 100, 10000, 1, 4);
+	auto testSketch = Sketch("1.txt", 100, 10000, 1, 4, 5, Path::Pixel, Easing::Linear);
     if (testSketch.make())
         return 1;   // error if make doesn't return 0
 

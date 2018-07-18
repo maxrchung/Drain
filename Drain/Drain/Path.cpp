@@ -19,5 +19,8 @@ std::string getPath(Path path) {
 		case Path::EighthBottomOuter:
 			return "h";
 		case Path::EighthTopOuter:
-			return "i";	}
+			return "i";	
+        case Path::Taper:
+            return "j";
+    }
 }
