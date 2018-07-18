@@ -24,7 +24,6 @@ RainGenerator::RainGenerator(int maxRainCount, int dropCount, Time startTime, Ti
 
 // Generates rain sprites and moves them
 void RainGenerator::RainController() {
-	// int rainCount = static_cast<int>(RandomRange::calculate(maxRainCount, maxRainCount)); 
 	static int rainCount = maxRainCount; // Rain ended up looking better without a random raincount so rainCount is just maxRainCount
 	rainCount *= acceleration; // Increases rain density after every iteration
 
@@ -34,6 +33,7 @@ void RainGenerator::RainController() {
 
 // Creates amount of raindrops in a row, rainCount, and drops it down the screen
 void RainGenerator::DrawRain(int rainCount) {
+	static const float xCoordMax = Vector2::ScreenSize.x / 2;
 	static const float topOfScreen = Vector2::ScreenSize.y / 2;
 	static const float veloDelta = 10;
 	float minDropTime = dropTotalTime / veloDelta;
@@ -41,6 +41,7 @@ void RainGenerator::DrawRain(int rainCount) {
 	for (int i = 0; i < rainCount; i++) {
 		// Handle rain positioning
 		float rainPosX = RandomRange::calculate(-Vector2::ScreenSize.x / 2, Vector2::ScreenSize.x / 2);
+		static const float rainPosY = topOfScreen + (rainLength / 2);
 		// Handle rain timing
 		float actualDropTotalTime = RandomRainVelocity(minDropTime, veloDelta);
 		float totalVariance = actualDropTotalTime * 8;
@@ -53,10 +54,18 @@ void RainGenerator::DrawRain(int rainCount) {
 		}
 
 		// Handle sprite movement
-		Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(rainPosX, topOfScreen));
-		float spritePosX = RandomRainTilt(sprite);
-		ScaleRainSize(sprite, actualDropTotalTime, minDropTime);
-		sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(spritePosX, -Vector2::ScreenSize.y / 2));
+		Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(rainPosX, rainPosY));
+		float spriteEndPosX = RandomRainTilt(sprite);
+		float spriteEndPosY = -topOfScreen - ((rainLength / 2) * maxSize);
+
+		if (spriteEndPosX > xCoordMax || spriteEndPosX < -xCoordMax) { // Do raindrops fall to the right or left of the screen?
+			Coords newCoords = NewEndCoords(sprite, spriteEndPosX, spriteEndPosY, xCoordMax);
+			spriteEndPosX = newCoords.x;
+			spriteEndPosY = newCoords.y;
+		}
+
+		ScaleRainSize(sprite, actualDropTotalTime, minDropTime, actualDropStart);
+		sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(spriteEndPosX, spriteEndPosY));
 	}
 }
 
@@ -90,13 +99,50 @@ float RainGenerator::RandomRainVelocity(float minDropTime, float veloDelta) {
 float RainGenerator::RandomRainTilt(Sprite* sprite) {
 	static const float maxTiltVariance = 100;
 	int posDelta = RandomRange::calculate(-maxTiltVariance, maxTiltVariance);
-	float spritePosX = sprite->position.x + posDelta;
-	return spritePosX;
+	float spriteEndPosX = sprite->position.x + posDelta;
+
+	return spriteEndPosX;
+}
+
+// Adjusts X,Y coords so drops are deleted early in cases where rain drops fall outside of screen due to tilt
+struct Coords RainGenerator::NewEndCoords(Sprite* sprite, float spriteEndPosX, float spriteEndPosY, float xCoordMax) {
+	float halfDrop = (rainLength / 2) * maxSize;
+	float spriteStartX = sprite->position.x;
+	float pathLengthY = Vector2::ScreenSize.y + (rainLength / 2);
+	float pathLengthX;
+	Coords newCoords;
+
+	// Triangle within another similar triangle
+	if (spriteEndPosX > xCoordMax) { // Raindrop goes past right of screen
+		pathLengthX = spriteEndPosX - spriteStartX;
+		float pathLength = sqrt(pow(pathLengthX, 2) + pow(pathLengthY, 2)); // Distance a raindrop travels from start to end
+
+		float xPass = spriteEndPosX - xCoordMax;
+		float triangleRatio = xPass / pathLengthX; // Ratio of smaller triangle to bigger triangle
+		newCoords.x = spriteEndPosX - xPass + halfDrop;
+
+		float smallPath = pathLength * triangleRatio;
+		float yPass = sqrt(pow(smallPath, 2) - pow(xPass, 2));
+		newCoords.y = spriteEndPosY + yPass;
+	}
+	else if (spriteEndPosX < -xCoordMax) { // Raindrop goes past left of screen
+		pathLengthX = -(spriteEndPosX - spriteStartX);
+		float pathLength = sqrt(pow(pathLengthX, 2) + pow(pathLengthY, 2));
+
+		float xPass = -(spriteEndPosX + xCoordMax);
+		float triangleRatio = xPass / pathLengthX;
+		newCoords.x = spriteEndPosX + xPass - halfDrop;
+
+		float smallPath = pathLength * triangleRatio;
+		float yPass = sqrt(pow(smallPath, 2) - pow(xPass, 2));
+		newCoords.y = spriteEndPosY + yPass;
+	}
+
+	return newCoords;
 }
 
 // Instantly scales sprite size proportionally to rain velocity upon creation
-void RainGenerator::ScaleRainSize(Sprite* sprite, float actualDropTotalTime, float minDropTime) {
-	static const float maxSize = 0.6f;
+void RainGenerator::ScaleRainSize(Sprite* sprite, float actualDropTotalTime, float minDropTime, float actualDropStart) {
 	static const float minSize = 0.1f;
 	float newSize;
 	float veloRatio = actualDropTotalTime / dropTotalTime;
@@ -115,7 +161,7 @@ void RainGenerator::ScaleRainSize(Sprite* sprite, float actualDropTotalTime, flo
 		}
 	}
 
-	sprite->Scale(0, 0, 1.0f, newSize);
+	sprite->Scale(actualDropStart, actualDropStart, 1.0f, newSize);
 }
 
 // Modifies the velocity of raindrops by changing time a raindrop takes to fall
