@@ -1,7 +1,7 @@
 #include "CWQuarterStroke.hpp"
 #include "Path.hpp"
 #include "Storyboard.hpp"
-CWQuarterStroke::CWQuarterStroke(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center) 
+CWQuarterStroke::CWQuarterStroke(const Vector2& startPosition, const Vector2& endPosition, const Vector2& center)
 	: CircularStroke{ startPosition, endPosition, center } {
 }
 void CWQuarterStroke::createPoints(const Vector2& position, const float scale) {
@@ -49,4 +49,21 @@ void CWQuarterStroke::draw(const Vector2& position,
 		endPoint->MoveX(startDraw, endDraw, originalPosition.x, endMove.x, Easing::SineOut);
 		endPoint->MoveY(startDraw, endDraw, originalPosition.y, endMove.y, Easing::SineIn);
 	}
+}
+void CWQuarterStroke::place(const Vector2& position,
+							const int startTime,
+							const int endTime,
+							const float scale) {
+	const auto centerPosition = position + center * scale;
+	outer = Storyboard::CreateSprite(getPath(Path::QuarterOuter), centerPosition, Layer::Background, Origin::BottomLeft);
+	inner = Storyboard::CreateSprite(getPath(Path::QuarterInner), centerPosition, Layer::Background, Origin::BottomLeft);
+	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + startPosition * scale, Layer::Background);
+	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + endPosition * scale, Layer::Background);
+	scalePoints({ startPoint, endPoint }, startTime, scale);
+	scaleOuter({ outer }, startTime, startPosition, center, scale);
+	scaleInner({ inner }, startTime, startPosition, center, scale);
+	colorBgSprites({ inner }, startTime, endTime);
+	colorFgSprites({ outer, startPoint, endPoint }, startTime, endTime);
+	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition - center);
+	rotateSprites({ outer, inner, }, startTime, rotation);
 }
