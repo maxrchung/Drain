@@ -11,7 +11,6 @@ RainGenerator::RainGenerator(int maxRainCount, int dropCount, Time startTime, Ti
 	//TODO: Cut down SB load 30 to <2 (meme) by removing height and velocity dependence; instead, directly modify totalDropTime (probbly wrong name w/e)
 	//FIX: All sprites are spawned at the top on instantiation, should only be spawned when needed
 	//TODO: Add freeze function and a method to return Sprite*, sprite sizes, and x,y coordinate of sprites currently on screen
-	//TODO: Add way to DELETE every raindrop off screen on before startTime and endTime
 
 	// Initiate drop time values
 	dropTotalTime = totalTime / dropCount;
@@ -48,6 +47,11 @@ void RainGenerator::DrawRain(int rainCount) {
 		float dropTimeDelta = RandomRange::calculate(-totalVariance, totalVariance); // This way drop timing of rain will vary based on totalVariance
 		float actualDropStart = dropStartTime + dropTimeDelta;
 		float actualDropEnd = actualDropStart + actualDropTotalTime;
+
+		if (actualDropStart < startTime.ms || actualDropEnd > endTime.ms) { // Ensures drops don't fall outside of time section
+			continue;
+		}
+
 		// Handle sprite movement
 		Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(rainPosX, topOfScreen));
 		float spritePosX = RandomRainTilt(sprite);
@@ -93,14 +97,14 @@ float RainGenerator::RandomRainTilt(Sprite* sprite) {
 // Instantly scales sprite size proportionally to rain velocity upon creation
 void RainGenerator::ScaleRainSize(Sprite* sprite, float actualDropTotalTime, float minDropTime) {
 	static const float maxSize = 0.6f;
-	static const float minSize = 0.03f;
+	static const float minSize = 0.1f;
 	float newSize;
 	float veloRatio = actualDropTotalTime / dropTotalTime;
 	float rainScale = maxSize - veloRatio;
 
 	if (rainScale < 0) { // Ensures newSize isn't a negative number; negative sizes would be fked
 		float remainder = -rainScale;
-		float minSizeScaler = (1 + remainder) * (1 + remainder);
+		float minSizeScaler = maxSize - remainder; // Bigger remainder is, bigger veloRatio is, means actualDropTotalTime is bigger (slower velocity). slower the velocity, smaller the raindrops
 		newSize = minSize * minSizeScaler;
 	}
 	else {
