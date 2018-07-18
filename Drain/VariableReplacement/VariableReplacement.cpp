@@ -29,7 +29,6 @@ int main() {
 	storyboardFile.seekg(0, std::ios::beg);
 	storyboardFile.read(&storyboard[0], storyboard.size());
 
-	char variableName = 33;
 	const auto variables = std::vector<std::pair<std::string, std::string>>({
 		addVariable("Sprite,Background,Centre,\""),
 		addVariable("Sprite,Background,BottomLeft,\""),

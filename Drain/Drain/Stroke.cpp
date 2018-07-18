@@ -21,6 +21,9 @@ void Stroke::hideSprites(const std::vector<Sprite*>& sprites, const int endDraw)
 	}
 }
 void Stroke::rotateSprites(const std::vector<Sprite*>& sprites, const int startDraw, const float rotation) {
+	if (rotation == 0.0f) {
+		return;
+	}
 	for (auto const sprite : sprites) {
 		sprite->Rotate(startDraw, startDraw, rotation, rotation);
 	}
