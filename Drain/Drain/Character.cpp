@@ -298,7 +298,7 @@ void Character::place(const Vector2& position,
 					 const int startTime,
 					 const int endTime,
 					 const float scale) const {
-	for (const auto& stroke : strokes) {
-		stroke->place(position, startTime, endTime, scale);
+	for (auto stroke = strokes.rbegin(); stroke != strokes.rend(); ++stroke) {
+		stroke->get()->place(position, startTime, endTime, scale);
 	}
 }
