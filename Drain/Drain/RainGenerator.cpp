@@ -6,12 +6,6 @@
 RainGenerator::RainGenerator(int maxRainCount, int dropCount, Time startTime, Time endTime, float acceleration)
 	: maxRainCount{ maxRainCount }, dropCount{ dropCount }, startTime{ startTime }, endTime{ endTime }, acceleration{ acceleration },
 	leftOfScreen{ -Vector2::ScreenSize.x / 2 }, totalTime{ endTime.ms - startTime.ms }, rainSpacing{ Vector2::ScreenSize.x / (maxRainCount - 1) } {
-	// Note: acceleration only supports 0-2
-
-	//TODO: Cut down SB load 30 to <2 (meme) by removing height and velocity dependence; instead, directly modify totalDropTime (probbly wrong name w/e)
-	//TODO: Add freeze function and a method to return Sprite*, sprite sizes, and x,y coordinate of sprites currently on screen
-	//IDEA: Every time sprite is created, add it to a sprite vector and once it finishes dropping delete it from the vector
-	//IDEA: To freeze drops get the current sprite positions, set their movements to move to their current positions and then create new sprites at their position
 
 	// Initiate drop time values
 	dropTotalTime = totalTime / dropCount;
@@ -58,11 +52,6 @@ void RainGenerator::DrawRain(int rainCount) {
 
 		// Handle sprite movement
 		Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(rainPosX, rainPosY));
-		TrackRainDrop(sprite);
-
-		if (!(freezeTime.ms >= actualDropStart && freezeTime.ms <= actualDropEnd)) { // Removes raindrop sprite from vector if it isn't visible on the screen during freezeTime
-			UntrackRainDrop();
-		}
 
 		float spriteEndPosX = RandomRainTilt(sprite);
 		float spriteEndPosY = -topOfScreen - ((rainLength / 2) * maxSize);
@@ -73,21 +62,48 @@ void RainGenerator::DrawRain(int rainCount) {
 			spriteEndPosY = newCoords.y;
 		}
 
-		ScaleRainSize(sprite, actualDropTotalTime, minDropTime, actualDropStart);
+		float rainSize = ScaleRainSize(sprite, actualDropTotalTime, minDropTime, actualDropStart);
+
+		if (freezeTime.ms >= actualDropStart && freezeTime.ms <= actualDropEnd) { // Tracks raindrop sprite from vector if drop is visible on the screen during freezeTime
+			TrackRainDrop(sprite, actualDropStart, actualDropEnd, rainSize, spriteEndPosX, spriteEndPosY);
+		}
+
 		sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(spriteEndPosX, spriteEndPosY));
 	}
 }
 
-void RainGenerator::FreezeRain(Time freezeTime) {
-	 //for (int = 0; ) note to self somehow iterate over vector
+// Returns a vector of structures containing rain information at a certain time (doesn't actually freeze rain lol)
+std::vector<struct rainDrop> RainGenerator::FreezeRain(Time freezeTime) {
+	for (std::vector<struct rainDrop>::iterator rainDrop = std::begin(rainDrops); rainDrop != std::end(rainDrops); ++rainDrop) {
+		float totalTime = rainDrop->endingTime - rainDrop->startingTime;
+		float untilFreeze = freezeTime.ms - rainDrop->startingTime;
+		float ratio = untilFreeze / totalTime;
+		float xDiff = rainDrop->endX - rainDrop->startX;
+		float yDiff = rainDrop->endY - rainDrop->startY;
+
+		float freezeDiffX = xDiff * ratio;
+		float freezeDiffY = yDiff * ratio;
+		// Save X, Y coordinate for "frozen" raindrops into struct
+		rainDrop->freezeX = rainDrop->startX + freezeDiffX;
+		rainDrop->freezeY = rainDrop->startY + freezeDiffY;
+	}
+
+	return rainDrops;
 }
 
-void RainGenerator::TrackRainDrop(Sprite* sprite) {
-	rainDrops.push_back(sprite);
-}
+// Adds raindrop information in a struct into a struct vector
+void RainGenerator::TrackRainDrop(Sprite* sprite, float actualDropStart, float actualDropEnd, float rainSize, float spriteEndPosX, float spriteEndPosY) {
+	rainDrop rainDrop;
+	rainDrop.startingTime = actualDropStart;
+	rainDrop.endingTime = actualDropEnd;
+	rainDrop.scale = rainSize;
+	rainDrop.sprite = sprite;
+	rainDrop.startX = sprite->position.x;
+	rainDrop.startY = sprite->position.y;
+	rainDrop.endX = spriteEndPosX;
+	rainDrop.endY = spriteEndPosY;
 
-void RainGenerator::UntrackRainDrop() {
-	rainDrops.pop_back();
+	rainDrops.push_back(rainDrop);
 }
 
 // Returns the actual total time(ms) it takes for a drop to fall across the screen.. Smaller rain sizes (slower velocity) are made more probable for visual effect
@@ -136,7 +152,7 @@ struct Coords RainGenerator::NewEndCoords(Sprite* sprite, float spriteEndPosX, f
 	// Triangle within another similar triangle
 	if (spriteEndPosX > xCoordMax) { // Raindrop goes past right of screen
 		pathLengthX = spriteEndPosX - spriteStartX;
-		float pathLength = sqrt(pow(pathLengthX, 2) + pow(pathLengthY, 2)); // Distance a raindrop travels from start to end
+		float pathLength = sqrt(pow(pathLengthX, 2) + pow(pathLengthY, 2)); // Distance a raindrop travels from start to end (pythagorean meme)
 
 		float xPass = spriteEndPosX - xCoordMax;
 		float triangleRatio = xPass / pathLengthX; // Ratio of smaller triangle to bigger triangle
@@ -163,7 +179,7 @@ struct Coords RainGenerator::NewEndCoords(Sprite* sprite, float spriteEndPosX, f
 }
 
 // Instantly scales sprite size proportionally to rain velocity upon creation
-void RainGenerator::ScaleRainSize(Sprite* sprite, float actualDropTotalTime, float minDropTime, float actualDropStart) {
+float RainGenerator::ScaleRainSize(Sprite* sprite, float actualDropTotalTime, float minDropTime, float actualDropStart) {
 	static const float minSize = 0.1f;
 	float newSize;
 	float veloRatio = actualDropTotalTime / dropTotalTime;
@@ -183,6 +199,8 @@ void RainGenerator::ScaleRainSize(Sprite* sprite, float actualDropTotalTime, flo
 	}
 
 	sprite->Scale(actualDropStart, actualDropStart, 1.0f, newSize);
+
+	return newSize;
 }
 
 // Modifies the velocity of raindrops by changing time a raindrop takes to fall

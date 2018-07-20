@@ -9,6 +9,20 @@ struct Coords {
 	float y;
 };
 
+struct rainDrop {
+	Sprite* sprite;
+	float startingTime;
+	float endingTime;
+	float startX;
+	float startY;
+	float endX;
+	float endY;
+	float scale;
+
+	float freezeX;
+	float freezeY;
+};
+
 class RainGenerator {
 public:
 	// Parameters shouldn't be used for RainGenerator, use RainGenerator(); to call function.
@@ -21,13 +35,12 @@ public:
 	void VelocityController();
 	void RainController();
 	void DrawRain(int rainCount);
-	void FreezeRain(Time freezeTime);
-	void TrackRainDrop(Sprite* sprite);
-	void UntrackRainDrop();
+	std::vector<struct rainDrop> FreezeRain(Time freezeTime);
+	void TrackRainDrop(Sprite* sprite, float actualDropStart, float actualDropEnd, float newSize, float spriteEndPosX, float spriteEndPosY);
 	float RandomRainVelocity(float minDropTime, float veloDelta);
 	float RandomRainTilt(Sprite* sprite);
 	struct Coords NewEndCoords(Sprite* sprite, float spriteEndPosX, float spriteEndPosY, float xCoordMax);
-	void ScaleRainSize(Sprite* sprite, float actualDropTotalTime, float minDropTime, float actualDropStart);
+	float ScaleRainSize(Sprite* sprite, float actualDropTotalTime, float minDropTime, float actualDropStart);
 	std::vector<Sprite*> sprites;
 
 private:
@@ -35,7 +48,7 @@ private:
 	const int dropCount;
 	const Time startTime;
 	const Time endTime;
-	const float acceleration;
+	const float acceleration; // Note: acceleration only supports 0-2
 
 	float minDropTime = 20.0f;
 	const float leftOfScreen;
@@ -48,6 +61,7 @@ private:
 	const float maxSize = 0.6f; // Used in scaling rain size and determining end y position for rain
 	const float rainLength = 102; // because a.png is 102x102
 
-	std::vector<Sprite*> rainDrops;
-	Time freezeTime = Time("00:53:00").ms;
+	std::vector<struct rainDrop> rainDrops;
+
+	Time freezeTime = Time("00:53:00").ms; 
 };
