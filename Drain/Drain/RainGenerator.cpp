@@ -9,8 +9,9 @@ RainGenerator::RainGenerator(int maxRainCount, int dropCount, Time startTime, Ti
 	// Note: acceleration only supports 0-2
 
 	//TODO: Cut down SB load 30 to <2 (meme) by removing height and velocity dependence; instead, directly modify totalDropTime (probbly wrong name w/e)
-	//FIX: All sprites are spawned at the top on instantiation, should only be spawned when needed
 	//TODO: Add freeze function and a method to return Sprite*, sprite sizes, and x,y coordinate of sprites currently on screen
+	//IDEA: Every time sprite is created, add it to a sprite vector and once it finishes dropping delete it from the vector
+	//IDEA: To freeze drops get the current sprite positions, set their movements to move to their current positions and then create new sprites at their position
 
 	// Initiate drop time values
 	dropTotalTime = totalTime / dropCount;
@@ -20,6 +21,8 @@ RainGenerator::RainGenerator(int maxRainCount, int dropCount, Time startTime, Ti
 	while (dropEndTime < endTime.ms) { // Main loop for drawing and animating rain drops
 		RainController();
 	}
+
+	FreezeRain(freezeTime);
 }
 
 // Generates rain sprites and moves them
@@ -55,6 +58,12 @@ void RainGenerator::DrawRain(int rainCount) {
 
 		// Handle sprite movement
 		Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(rainPosX, rainPosY));
+		TrackRainDrop(sprite);
+
+		if (!(freezeTime.ms >= actualDropStart && freezeTime.ms <= actualDropEnd)) { // Removes raindrop sprite from vector if it isn't visible on the screen during freezeTime
+			UntrackRainDrop();
+		}
+
 		float spriteEndPosX = RandomRainTilt(sprite);
 		float spriteEndPosY = -topOfScreen - ((rainLength / 2) * maxSize);
 
@@ -67,6 +76,18 @@ void RainGenerator::DrawRain(int rainCount) {
 		ScaleRainSize(sprite, actualDropTotalTime, minDropTime, actualDropStart);
 		sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(spriteEndPosX, spriteEndPosY));
 	}
+}
+
+void RainGenerator::FreezeRain(Time freezeTime) {
+	 //for (int = 0; ) note to self somehow iterate over vector
+}
+
+void RainGenerator::TrackRainDrop(Sprite* sprite) {
+	rainDrops.push_back(sprite);
+}
+
+void RainGenerator::UntrackRainDrop() {
+	rainDrops.pop_back();
 }
 
 // Returns the actual total time(ms) it takes for a drop to fall across the screen.. Smaller rain sizes (slower velocity) are made more probable for visual effect

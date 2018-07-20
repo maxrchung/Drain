@@ -21,6 +21,9 @@ public:
 	void VelocityController();
 	void RainController();
 	void DrawRain(int rainCount);
+	void FreezeRain(Time freezeTime);
+	void TrackRainDrop(Sprite* sprite);
+	void UntrackRainDrop();
 	float RandomRainVelocity(float minDropTime, float veloDelta);
 	float RandomRainTilt(Sprite* sprite);
 	struct Coords NewEndCoords(Sprite* sprite, float spriteEndPosX, float spriteEndPosY, float xCoordMax);
@@ -44,4 +47,7 @@ private:
 
 	const float maxSize = 0.6f; // Used in scaling rain size and determining end y position for rain
 	const float rainLength = 102; // because a.png is 102x102
+
+	std::vector<Sprite*> rainDrops;
+	Time freezeTime = Time("00:53:00").ms;
 };
