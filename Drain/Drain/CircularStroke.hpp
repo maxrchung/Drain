@@ -18,6 +18,10 @@ public:
 					  const int startDrain,
 					  const int endDrain,
 					  const float scale) const = 0;
+	virtual void place(const Vector2& position,
+					   const int startTime,
+					   const int endTime,
+					   const float scale) = 0;
 protected:
 	const Vector2 center;
 	const Vector2 endPosition;

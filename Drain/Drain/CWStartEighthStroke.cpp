@@ -16,29 +16,27 @@ void CWStartEighthStroke::createSprites(const Vector2& position, const float sca
 	const auto coverPosition = (endPosition - center).Normalize() * ((endPosition - center).Magnitude() + thickness * 0.5f) * scale;
 	horizontalCover = Storyboard::CreateSprite(getPath(Path::Pixel), centerPosition + coverPosition, Layer::Background, Origin::BottomRight);
 	verticalCover = Storyboard::CreateSprite(getPath(Path::Pixel), centerPosition + coverPosition, Layer::Background, Origin::BottomRight);
-	// Additional covers to hide unneeded QuarterStroke sections
-	quarterCover = Storyboard::CreateSprite(getPath(Path::EighthTopInner), centerPosition, Layer::Background, Origin::BottomLeft);
 }
 void CWStartEighthStroke::draw(const Vector2& position,
-								const int startDraw,
-								const int endDraw,
-								const int startDrain,
-								const int endDrain,
-								const float scale) const {
+							   const int startDraw,
+							   const int endDraw,
+							   const int startDrain,
+							   const int endDrain,
+							   const float scale) const {
 	const auto drawTime = endDraw - startDraw;
 	const auto startTime = startDraw - drawTime;
 	const auto endTime = endDraw;
 	scaleInner({ inner }, startTime, startPosition, center, scale);
-	scaleOuter({ outer, quarterCover }, startTime, startPosition, center, scale);
+	scaleOuter({ outer }, startTime, startPosition, center, scale);
 	scalePoints({ startPoint, endPoint }, startTime, scale);
 	colorBgSprites({ horizontalCover, verticalCover }, startTime, endDrain);
-	colorBgSprites({ inner, quarterCover }, startTime, endDrain);
+	colorBgSprites({ inner }, startTime, endDrain);
 	colorBgSprites({ outer, startPoint, endPoint }, startDraw, startTime);
 	colorFgSprites({ outer, startPoint, endPoint }, startDraw, startDrain);
 	fadeSprites({ outer }, startDrain, endDrain);
 	fadePoints({ startPoint, endPoint }, startDrain, endDrain);
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition - center);
-	rotateSprites({ outer, inner, horizontalCover, verticalCover, quarterCover }, startTime, rotation);
+	rotateSprites({ outer, inner, horizontalCover, verticalCover }, startTime, rotation);
 	float verticalCoverScale = outer->scale * imageSize;
 	float horizontalCoverScale = inner->scale * imageSize;
 	horizontalCover->ScaleVector(startTime, endTime, Vector2(horizontalCoverScale, horizontalCoverScale), Vector2(0, horizontalCoverScale), Easing::SineOut);
@@ -56,4 +54,21 @@ void CWStartEighthStroke::draw(const Vector2& position,
 		endPoint->MoveX(startTime, endTime, originalPosition.x, endMove.x, Easing::SineOut);
 		endPoint->MoveY(startTime, endTime, originalPosition.y, endMove.y, Easing::SineIn);
 	}
+}
+void CWStartEighthStroke::place(const Vector2& position,
+								const int startTime,
+								const int endTime,
+								const float scale) {
+	const auto centerPosition = position + center * scale;
+	outer = Storyboard::CreateSprite(getPath(Path::EighthBottomOuter), centerPosition, Layer::Background, Origin::BottomLeft);
+	inner = Storyboard::CreateSprite(getPath(Path::EighthBottomInner), centerPosition, Layer::Background, Origin::BottomLeft);
+	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + startPosition * scale, Layer::Background);
+	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + endPosition * scale, Layer::Background);
+	scaleInner({ inner }, startTime, startPosition, center, scale);
+	scaleOuter({ outer }, startTime, startPosition, center, scale);
+	scalePoints({ startPoint, endPoint }, startTime, scale);
+	colorBgSprites({ inner }, startTime, endTime);
+	colorFgSprites({ outer, startPoint, endPoint }, startTime, endTime);
+	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition - center);
+	rotateSprites({ outer, inner, horizontalCover, verticalCover }, startTime, rotation);
 }

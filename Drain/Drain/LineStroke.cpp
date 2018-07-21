@@ -41,3 +41,20 @@ void LineStroke::draw(const Vector2& position,
 	fadeSprites({ line }, startDrain, endDrain);
 	fadePoints({ startPoint, endPoint }, startDrain, endDrain);
 }
+void LineStroke::place(const Vector2& position,
+					   const int startTime,
+					   const int endTime,
+					   const float scale) {
+	line = Storyboard::CreateSprite(getPath(Path::Square), position + startPosition * scale, Layer::Background, Origin::CentreLeft);
+	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + startPosition * scale, Layer::Background);
+	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + endPosition * scale, Layer::Background);
+	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition - startPosition);
+	line->Rotate(startTime, startTime, rotation, rotation);
+	const auto length = (endPosition - startPosition).Magnitude();
+	const auto thicknessScale = thickness * scale / imageSize;
+	const auto startLineScaleVector = Vector2(0, thicknessScale);
+	const auto endLineScaleVector = Vector2(length * scale / imageSize, thicknessScale);
+	line->ScaleVector(startTime, startTime, startLineScaleVector, endLineScaleVector);
+	scalePoints({ startPoint, endPoint }, startTime, scale);
+	colorFgSprites({ line, startPoint, endPoint }, startTime, endTime);
+}

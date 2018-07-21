@@ -294,3 +294,11 @@ void Character::draw(const Vector2& position,
 		partialLength += drawFraction;
 	}
 }
+void Character::place(const Vector2& position,
+					 const int startTime,
+					 const int endTime,
+					 const float scale) const {
+	for (auto stroke = strokes.rbegin(); stroke != strokes.rend(); ++stroke) {
+		stroke->get()->place(position, startTime, endTime, scale);
+	}
+}

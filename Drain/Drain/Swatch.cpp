@@ -1,5 +1,4 @@
 #include "Swatch.hpp"
-#include "Time.hpp"
 #include "Timing.hpp"
 #include <algorithm>
 const Color Swatch::white = Color(255, 255, 255);
@@ -15,6 +14,78 @@ const std::vector<Color> Swatch::colors = {
 	eerie
 };
 const RandomRange Swatch::randomColor = RandomRange(0, colors.size() - 1);
+const std::vector<Time> Swatch::fastTimes = {
+	Time("05:39:546").ms,
+	Time("05:39:829").ms,
+	Time("05:40:112").ms,
+	Time("05:40:395").ms,
+	Time("05:40:678").ms,
+	Time("05:41:244").ms,
+
+	Time("05:41:810").ms,
+	Time("05:42:093").ms,
+	Time("05:42:376").ms,
+	Time("05:42:659").ms,
+	Time("05:42:942").ms,
+	Time("05:43:508").ms,
+	Time("05:43:650").ms,
+	Time("05:43:791").ms,
+	Time("05:43:933").ms,
+
+
+	Time("05:44:074").ms,
+	Time("05:44:357").ms,
+	Time("05:44:640").ms,
+	Time("05:44:923").ms,
+	Time("05:45:206").ms,
+	Time("05:45:772").ms,
+
+	Time("05:46:338").ms,
+	Time("05:46:480").ms,
+	Time("05:46:621").ms,
+	Time("05:46:763").ms,
+	Time("05:46:904").ms,
+	Time("05:47:187").ms,
+	Time("05:47:470").ms,
+	Time("05:47:895").ms,
+	Time("05:48:036").ms,
+
+	Time("05:48:602").ms,
+	Time("05:48:885").ms,
+	Time("05:49:168").ms,
+	Time("05:49:452").ms,
+	Time("05:49:735").ms,
+	Time("05:50:301").ms,
+	Time("05:50:584").ms,
+
+	Time("05:50:867").ms,
+	Time("05:51:150").ms,
+	Time("05:51:433").ms,
+	Time("05:51:716").ms,
+	Time("05:51:999").ms,
+	Time("05:52:565").ms,
+	Time("05:52:706").ms,
+	Time("05:52:848").ms,
+	Time("05:52:989").ms,
+
+	Time("05:53:131").ms,
+	Time("05:53:414").ms,
+	Time("05:53:697").ms,
+	Time("05:53:980").ms,
+	Time("05:54:263").ms,
+	Time("05:54:829").ms,
+
+	Time("05:55:395").ms,
+	Time("05:55:536").ms,
+	Time("05:55:678").ms,
+	Time("05:55:819").ms,
+	Time("05:55:961").ms,
+
+	Time("05:56:244").ms,
+	Time("05:56:527").ms,
+	Time("05:56:952").ms,
+	Time("05:57:093").ms,
+};
 std::vector<SwatchTiming> Swatch::bgTimings = {
 	SwatchTiming(0, Time("00:27:093").ms, offwhite, offwhite),
 	SwatchTiming(Time("00:27:093").ms, Time("00:35:018").ms, offwhite, water),
@@ -49,17 +120,20 @@ void Swatch::init() {
 	fgTimings.push_back(SwatchTiming(endTime, Time("05:39:546").ms, currentFgColor, nextFgColor));
 	currentBgColor = nextBgColor;
 	currentFgColor = nextFgColor;
-	for (auto time = static_cast<float>(Time("05:39:546").ms); time < Time("05:57:659").ms; time += Timing::quarter) {
-		const auto startTime = static_cast<int>(time);
-		endTime = startTime + Timing::quarter;
+	for (auto i = 0; i < fastTimes.size(); ++i) {
+		const auto startTime = fastTimes[i].ms;
+		if (i == fastTimes.size() - 1) {
+			endTime = Time("05:57:659").ms;
+		}
+		else {
+			endTime = fastTimes[i + 1].ms;
+		}
 		currentBgColor = getRandomColor({ currentBgColor });
 		bgTimings.push_back(SwatchTiming(startTime, endTime, currentBgColor, currentBgColor));
 		currentFgColor = getRandomColor({ currentBgColor, currentFgColor });
 		fgTimings.push_back(SwatchTiming(startTime, endTime, currentFgColor, currentFgColor));
 	}
-	// Floating point error :(
-	const auto error = 5;
-	for (auto time = endTime; time < Time("06:22:565").ms - error; time += Timing::whole * 4) {
+	for (auto time = Time("05:57:659").ms; time < Time("06:20:301").ms; time += Timing::whole * 4) {
 		auto startTime = static_cast<int>(time);
 		endTime = startTime + Timing::half;
 		currentBgColor = getRandomColor({ currentBgColor });
@@ -118,7 +192,7 @@ void Swatch::colorSprites(const std::vector<Sprite*>& sprites, const int startTi
 		}
 		int localEndTime;
 		bool endColoring;
-		if (endTime >= timing.endTime) {
+		if (endTime > timing.endTime) {
 			localEndTime = timing.endTime;
 			endColoring = false;
 		}

@@ -29,3 +29,11 @@ void PointStroke::draw(const Vector2& position,
 	colorFgSprites({ startPoint }, startDraw, startDrain);
 	fadePoints({ startPoint }, startDrain, endDrain);
 }
+void PointStroke::place(const Vector2& position,
+						const int startTime,
+						const int endTime,
+						const float scale) {
+	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + startPosition * scale, Layer::Background);
+	scalePoints({ startPoint }, startTime, scale);
+	colorFgSprites({ startPoint }, startTime, endTime);
+}

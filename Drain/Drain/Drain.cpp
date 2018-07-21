@@ -2,14 +2,12 @@
 #include "Math.hpp"
 #include "Path.hpp"
 #include "RainGenerator.hpp"
-#include "SpriteCollection.hpp"
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
-#include "Bezier.hpp"
 #include "Sketch.hpp"
-#include <iostream>
 #include <ctime>
-#include <cmath>
+#include <cmath>snip
+#include <iostream>
 
 int main() {
 	srand(time(NULL));
@@ -29,7 +27,7 @@ int main() {
         return 1;   // error if make doesn't return 0
 
 	// RainGenerator testing
-	// RainGenerator::RainGenerator();
+	RainGenerator::RainGenerator();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb

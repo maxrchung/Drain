@@ -3,6 +3,7 @@
 #include "RandomRange.hpp"
 #include "Sprite.hpp"
 #include "SwatchTiming.hpp"
+#include "Time.hpp"
 #include <vector>
 // Place colors that you plan on using into here
 // In my original outline, I only planned for 4 main colors: white, blue, red, black, but this is always subject to change
@@ -32,6 +33,7 @@ private:
 	static const RandomRange randomColor;
 	static void colorSprites(const std::vector<Sprite*>& sprites, const int startTime, const int endTime, const std::vector<SwatchTiming>& startTimings, const std::vector<SwatchTiming>& endTimings);
 	static Color getRandomColor(const std::vector<Color>& exceptions);
+	static const std::vector<Time> fastTimes;
 	static std::vector<SwatchTiming> bgTimings;
 	static std::vector<SwatchTiming> fgTimings;
 };

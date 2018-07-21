@@ -11,7 +11,10 @@ public:
 			  const int startDrain,
 			  const int endDrain,
 			  const float scale) const;
+	void place(const Vector2& position,
+			   const int startTime,
+			   const int endTime,
+			   const float scale);
 private:
 	const Vector2 offsetPosition;
-	Sprite* quarterCover;
 };

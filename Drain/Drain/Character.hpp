@@ -3,6 +3,7 @@
 #include "Stroke.hpp"
 #include "Vector2.hpp"
 #include <memory>
+#include <unordered_map>
 class Character {
 public:
 	explicit Character(const char character);
@@ -13,6 +14,10 @@ public:
 			  const int startTime,
 			  const int endTime,
 			  const float scale) const;
+	void place(const Vector2& position,
+			   const int startTime,
+			   const int endTime,
+			   const float scale) const;
 private:
 	static std::vector<std::unique_ptr<Stroke>> createStrokes(const char character);
 	static const int drawBuffer = Timing::half;
