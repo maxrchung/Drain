@@ -3,9 +3,9 @@
 #include "Path.hpp"
 #include <cmath>
 
-RainGenerator::RainGenerator(int maxRainCount, int dropCount, Time startTime, Time endTime, float acceleration)
-	: maxRainCount{ maxRainCount }, dropCount{ dropCount }, startTime{ startTime }, endTime{ endTime }, acceleration{ acceleration },
-	leftOfScreen{ -Vector2::ScreenSize.x / 2 }, totalTime{ endTime.ms - startTime.ms }, rainSpacing{ Vector2::ScreenSize.x / (maxRainCount - 1) } {
+RainGenerator::RainGenerator(Time freezeTime, int maxRainCount, int dropCount, Time startTime, Time endTime, float acceleration)
+	: freezeTime{ freezeTime }, maxRainCount{ maxRainCount }, dropCount{ dropCount }, startTime{ startTime }, endTime{ endTime }, acceleration{ acceleration },
+	leftOfScreen{ -Vector2::ScreenSize.x / 2 }, totalTime{ endTime.ms - startTime.ms } {
 
 	// TODO: actually have the rain section be placed in the time section it should be at
 	// TODO: before freezeing the rain slow it down somehow
@@ -20,8 +20,6 @@ RainGenerator::RainGenerator(int maxRainCount, int dropCount, Time startTime, Ti
 	while (dropEndTime < endTime.ms) { // Main loop for drawing and animating rain drops
 		RainController();
 	}
-
-	FreezeRain(freezeTime);
 }
 
 // Generates rain sprites and moves them
@@ -78,7 +76,7 @@ void RainGenerator::DrawRain(int rainCount) {
 }
 
 // Returns a vector of structures containing rain information at a certain time (doesn't actually freeze rain lol)
-std::vector<Sprite*> RainGenerator::FreezeRain(Time freezeTime) {
+std::vector<Sprite*> RainGenerator::FreezeRain() {
 	for (auto & rainDrop: rainDrops) {
 		float totalTime = rainDrop.endingTime - rainDrop.startingTime;
 		float untilFreeze = freezeTime.ms - rainDrop.startingTime;
@@ -92,6 +90,8 @@ std::vector<Sprite*> RainGenerator::FreezeRain(Time freezeTime) {
 		// Directly replace the end positions in the sprite class with the X, Y coordinates of the rain in frozen state
 		rainDrop.sprite->position.x = rainDrop.startX + freezeDiffX;
 		rainDrop.sprite->position.y = rainDrop.startY + freezeDiffY;
+
+		std::cout << rainDrop.sprite->position.x << " " << rainDrop.sprite->position.y << "\n";
 
 		rainSprites.push_back(rainDrop.sprite);
 	}

@@ -149,6 +149,7 @@
     <ClCompile Include="Stroke.cpp" />
     <ClCompile Include="Swatch.cpp" />
     <ClCompile Include="SwatchTiming.cpp" />
+    <ClCompile Include="Walker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlankStroke.hpp" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Stroke.hpp" />
     <ClInclude Include="SwatchTiming.hpp" />
     <ClInclude Include="Timing.hpp" />
+    <ClInclude Include="Walker.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -108,6 +108,9 @@
     <ClCompile Include="SwatchTiming.cpp">
       <Filter>Source Files\Utility\Swatch</Filter>
     </ClCompile>
+    <ClCompile Include="Walker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raindrop.hpp">
@@ -178,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="SwatchTiming.hpp">
       <Filter>Header Files\Utility\Swatch</Filter>
+    </ClInclude>
+    <ClInclude Include="Walker.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
