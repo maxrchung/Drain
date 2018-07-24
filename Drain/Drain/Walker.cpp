@@ -2,18 +2,18 @@
 
 #include <cmath>
 
-Walker::Walker(std::vector<Sprite *> sprites, std::vector<Vector2> location, std::vector<float> size)
+Walker::Walker(std::vector<Sprite *> sprites)
 	:sprites(sprites) {
 	//convert each 2D location into a 3d location in real space
-	for(int i = 0; i < location.size(); ++i) {
-		this->location[i] = convertThreeD(location[i], size[i]);
+	for(int i = 0; i < sprites.size(); ++i) {
+		location.push_back(convertThreeD(sprites[i]->position, sprites[i]->scale));
 	}
 }
 
 
 /*
  * distance: forward distance walked, can be positive or negative?
- * startTime/endTime: specificy the distance walked
+ * startTime/endTime: specificy how long walked
  */
 void Walker::walk(float distance, Time startTime, Time endTime) {
 	//for every sprite
@@ -25,7 +25,6 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 		Vector2 startTwoD = Vector2::Vector2(temp.x, temp.y);
 		float startScale = temp.z;
 
-
 		//only walk in the z direction
 		Vector3 endCoord = startCoord;
 		endCoord.z += distance;
@@ -36,11 +35,12 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 
 
 		bool check = checkInScreen(endCoord, endScale);
-		if( check ) {
-			sprites[i]->Move(startTime.ms, endTime.ms, startTwoD, endTwoD);
-		} else {
-
+		if( !check ) {
+			endTwoD = findCollision(startTwoD, endTwoD);
 		}
+
+		sprites[i]->Move(startTime.ms, endTime.ms, startTwoD, endTwoD);
+		sprites[i]->Scale(startTime.ms, endTime.ms, startScale, endScale);
 	}
 
 	return;
@@ -54,19 +54,19 @@ bool Walker::checkInScreen(Vector3 coordinates, float size) {
 	bool out = 1;
 	float spriteSize = 100;
 
-	Vector3 coordinates = convertTwoD(coordinates, size);
+	Vector3 coordinate = convertTwoD(coordinates);
 
-	if( fabs(coordinates.x) > (Vector2::ScreenSize.x / 2) ) {
-		float edge = fabs(coordinates.x) - (size * spriteSize / 2);
-		if( edge > (Vector::ScreenSize.x / 2) ) {
+	if( fabs(coordinate.x) > (Vector2::ScreenSize.x / 2) ) {
+		float edge = fabs(coordinate.x) - (size * spriteSize / 2);
+		if( edge > (Vector2::ScreenSize.x / 2) ) {
 			out = 0;
 		} 
 	}
 
 	//if out is already determined to be 0, don't do extra work
-	if(out && (fabs(coordinates.y) > (Vector2::ScreenSize.y / 2)) ) {
-		float edge = fabs(coordinates.y) - (size * spriteSize / 2);
-		if( edge > (Vector::ScreenSize.y / 2) ) {
+	if(out && (fabs(coordinate.y) > (Vector2::ScreenSize.y / 2)) ) {
+		float edge = fabs(coordinate.y) - (size * spriteSize / 2);
+		if( edge > (Vector2::ScreenSize.y / 2) ) {
 			out = 0;
 		}
 	}
@@ -96,14 +96,52 @@ Vector3 Walker::convertThreeD(Vector2 coordinates, float size) {
  * probably not a good idea but uhh
  */
 Vector3 Walker:: convertTwoD(Vector3 coordinates) {
-	Vector2 out;
+	Vector3 out;
 
 	out.x = coordinates.x / coordinates.z;
 	out.y = coordinates.y / coordinates.z;
 	
-	float r = coordinates.magnitude();
+	float r = coordinates.Magnitude();
 
 	out.z = (r/max_distance);
+
+	return out;
+}
+
+
+/*
+ * assuming that b is out of the screen
+ * finds the point at which the line between 
+ * a and b hits the edge of the screen
+ */
+Vector2 Walker::findCollision(Vector2 a, Vector2 b) {
+	Vector2 out = Vector2::Zero;
+
+	Vector2 slopeV = b - a;
+	float slope = (b.y - a.y) / (b.x - a.x);
+
+	uint8_t quadrant = 0;
+
+	Vector2 mid = Vector2::Midpoint;
+
+	if(slopeV.y > 0)
+		mid.y = -Vector2::Midpoint.y;
+	if(slopeV.x > 0)
+		mid.x = -Vector2::Midpoint.x;
+
+	/*
+	 * + is 0
+	 * - is 1
+	 */
+
+	out.y = a.y - slope * (a.x - mid.x);
+	out.x = a.x - ((a.y - mid.y) / slope);
+
+	if(abs(out.y) > Vector2::Midpoint.y)
+		out.y = mid.y;
+
+	if(abs(out.x) > Vector2::Midpoint.x)
+		out.x = mid.x;
 
 	return out;
 }
