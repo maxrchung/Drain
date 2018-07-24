@@ -21,13 +21,13 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 	for(int i = 0; i < location.size(); ++i) {
 		Vector3 startCoord = location[i];
 		Vector3 temp = convertTwoD(startCoord);
-		
+
 		Vector2 startTwoD = Vector2::Vector2(temp.x, temp.y);
 		float startScale = temp.z;
 
 		//only walk in the z direction
 		Vector3 endCoord = startCoord;
-		endCoord.z += distance;
+		endCoord.z -= distance;
 
 		temp = convertTwoD(endCoord);
 		Vector2 endTwoD = Vector2::Vector2(temp.x, temp.y);
@@ -39,6 +39,7 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 			endTwoD = findCollision(startTwoD, endTwoD);
 		}
 
+		startTwoD = sprites[i]->position;
 		sprites[i]->Move(startTime.ms, endTime.ms, startTwoD, endTwoD);
 		sprites[i]->Scale(startTime.ms, endTime.ms, startScale, endScale);
 	}
@@ -54,9 +55,13 @@ bool Walker::checkInScreen(Vector3 coordinates, float size) {
 	bool out = 1;
 	float spriteSize = 100;
 
+	if(coordinates.z < 1) {
+		out = 0;
+	}
+
 	Vector3 coordinate = convertTwoD(coordinates);
 
-	if( fabs(coordinate.x) > (Vector2::ScreenSize.x / 2) ) {
+	if( out && fabs(coordinate.x) > (Vector2::ScreenSize.x / 2) ) {
 		float edge = fabs(coordinate.x) - (size * spriteSize / 2);
 		if( edge > (Vector2::ScreenSize.x / 2) ) {
 			out = 0;
@@ -120,19 +125,14 @@ Vector2 Walker::findCollision(Vector2 a, Vector2 b) {
 	Vector2 slopeV = b - a;
 	float slope = (b.y - a.y) / (b.x - a.x);
 
-	uint8_t quadrant = 0;
-
 	Vector2 mid = Vector2::Midpoint;
 
 	if(slopeV.y > 0)
 		mid.y = -Vector2::Midpoint.y;
+
 	if(slopeV.x > 0)
 		mid.x = -Vector2::Midpoint.x;
 
-	/*
-	 * + is 0
-	 * - is 1
-	 */
 
 	out.y = a.y - slope * (a.x - mid.x);
 	out.x = a.x - ((a.y - mid.y) / slope);

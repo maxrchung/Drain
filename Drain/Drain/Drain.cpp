@@ -34,15 +34,16 @@ int main() {
 	*/
 
 	//Walker shit I guess
-	RainGenerator gen = RainGenerator();
-	std::vector<rainDrop> struct_drops = gen.FreezeRain(Time("01:54:00").ms);
-	std::vector<Sprite *> raindrops;
-	for(int i = 0; i < struct_drops.size(); ++i) {
-		raindrops.push_back(struct_drops[i].sprite);
+	if(0) { //lmao
+		RainGenerator gen = RainGenerator();
+		std::vector<Sprite *> raindrops = gen.FreezeRain(Time("00:40:00").ms);
+		for(auto & raindrop : raindrops) {
+			std::cout << raindrop->position.x << " " << raindrop->position.y << "\n";
+		}
+		Walker walk_boi = Walker::Walker(raindrops);
+		walk_boi.walk(50,Time("00:40:00").ms, Time("01:04:00").ms);
 	}
-	Walker walk_boi = Walker::Walker(raindrops);
-	walk_boi.walk(50,Time("00:54:00").ms, Time("01:04:00").ms);
-	
+
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
 	auto storyboardInputPath = std::ifstream("StoryboardInputPath.txt");
