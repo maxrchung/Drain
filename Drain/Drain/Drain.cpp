@@ -6,7 +6,7 @@
 #include "Swatch.hpp"
 #include "Sketch.hpp"
 #include <ctime>
-#include <cmath>snip
+#include <cmath>
 #include <iostream>
 
 int main() {

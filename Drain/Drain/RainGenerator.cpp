@@ -7,6 +7,11 @@ RainGenerator::RainGenerator(int maxRainCount, int dropCount, Time startTime, Ti
 	: maxRainCount{ maxRainCount }, dropCount{ dropCount }, startTime{ startTime }, endTime{ endTime }, acceleration{ acceleration },
 	leftOfScreen{ -Vector2::ScreenSize.x / 2 }, totalTime{ endTime.ms - startTime.ms }, rainSpacing{ Vector2::ScreenSize.x / (maxRainCount - 1) } {
 
+	// TODO: actually have the rain section be placed in the time section it should be at
+	// TODO: before freezeing the rain slow it down somehow
+	// TODO: actually freeze the rain. . 
+	// TODO: color experimentation
+
 	// Initiate drop time values
 	dropTotalTime = totalTime / dropCount;
 	dropStartTime = startTime.ms;
@@ -73,22 +78,25 @@ void RainGenerator::DrawRain(int rainCount) {
 }
 
 // Returns a vector of structures containing rain information at a certain time (doesn't actually freeze rain lol)
-std::vector<struct rainDrop> RainGenerator::FreezeRain(Time freezeTime) {
-	for (std::vector<struct rainDrop>::iterator rainDrop = std::begin(rainDrops); rainDrop != std::end(rainDrops); ++rainDrop) {
-		float totalTime = rainDrop->endingTime - rainDrop->startingTime;
-		float untilFreeze = freezeTime.ms - rainDrop->startingTime;
+std::vector<Sprite*> RainGenerator::FreezeRain(Time freezeTime) {
+	for (auto & rainDrop: rainDrops) {
+		float totalTime = rainDrop.endingTime - rainDrop.startingTime;
+		float untilFreeze = freezeTime.ms - rainDrop.startingTime;
 		float ratio = untilFreeze / totalTime;
-		float xDiff = rainDrop->endX - rainDrop->startX;
-		float yDiff = rainDrop->endY - rainDrop->startY;
+		float xDiff = rainDrop.endX - rainDrop.startX;
+		float yDiff = rainDrop.endY - rainDrop.startY;
 
 		float freezeDiffX = xDiff * ratio;
 		float freezeDiffY = yDiff * ratio;
-		// Save X, Y coordinate for "frozen" raindrops into struct
-		rainDrop->freezeX = rainDrop->startX + freezeDiffX;
-		rainDrop->freezeY = rainDrop->startY + freezeDiffY;
+
+		// Directly replace the end positions in the sprite class with the X, Y coordinates of the rain in frozen state
+		rainDrop.sprite->position.x = rainDrop.startX + freezeDiffX;
+		rainDrop.sprite->position.y = rainDrop.startY + freezeDiffY;
+
+		rainSprites.push_back(rainDrop.sprite);
 	}
 
-	return rainDrops;
+	return rainSprites;
 }
 
 // Adds raindrop information in a struct into a struct vector
@@ -111,7 +119,7 @@ float RainGenerator::RandomRainVelocity(float minDropTime, float veloDelta) {
 	float actualDropTotalTime;
 	static const float sections = 5; // How many different "sections" of velocity are to be sorted by probability
 	float sectionLength = dropTotalTime / sections;
-	float randNum = RandomRange::calculate(0, 10);
+	float randNum = RandomRange::calculate(0, 1000, 100);
 
 	if (randNum >= 0 && randNum <= 6.5) { // Gets velocity of rain drops based on number randNum which ranges from 1-10
 		actualDropTotalTime = RandomRange::calculate(sectionLength * 4, dropTotalTime);
@@ -198,7 +206,7 @@ float RainGenerator::ScaleRainSize(Sprite* sprite, float actualDropTotalTime, fl
 		}
 	}
 
-	sprite->Scale(actualDropStart, actualDropStart, 1.0f, newSize);
+	sprite->Scale(actualDropStart, actualDropStart, newSize, newSize);
 
 	return newSize;
 }
