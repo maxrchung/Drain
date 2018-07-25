@@ -31,13 +31,15 @@ Sketch::Sketch(const std::string& pointMapPath, const Time& startTime, const Tim
 void Sketch::draw(Bezier b) {
     // todo: tapering brush apply only on edges of long lines
 
-    if (!Sketch::constResolution(b))
-        return;
-    // Sketch::dynamicResolution(b);
+    /*if (!Sketch::constResolution(b))
+        return;*/
+    Sketch::dynamicResolution(b);
+
 	// draw each point
 	/*for (auto &point : points) {
 		Storyboard::CreateSprite(brushPath, point)->Scale(startTime.ms, endTime.ms, 10, 10);
 	}*/
+
     auto mpoints = std::vector<Vector2>();
     // find midpoint of points and draw line between them
     for (int i = 0; i < points.size() - 1; i++) {
@@ -52,7 +54,8 @@ void Sketch::draw(Bezier b) {
         // end experimental
         auto line = Storyboard::CreateSprite(brushPath, mpoints[i]);
         line->ScaleVector(startTime.ms, endTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // osu! will optimize dup position
-        line->Rotate(startTime.ms, startTime.ms, angle, angle); // startTime as endTime because ScaleVector controls lifetime
+        if (angle > 0.1)    // only include a rotation command if the angle is "significant"
+            line->Rotate(startTime.ms, startTime.ms, angle, angle); // startTime as endTime because ScaleVector controls lifetime
         Swatch::colorFgToFgSprites({ line }, startTime.ms, startTime.ms);
     }
     // std::cout << totalLines << std::endl;
@@ -70,6 +73,7 @@ int Sketch::constResolution(Bezier b) {
         if (!std::isfinite(something)){
             something = 0.999;
         }
+        // todo: if points are too close together, don't add it
         points.push_back(b.findPosition(something));
     }
     return numPoints;
