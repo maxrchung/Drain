@@ -21,12 +21,20 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 
+
 	/*	
 	Lyric::render();
 
-	auto testSketch = Sketch("1.txt", 100, 10000, 1, 4);
-    if (testSketch.make())
-        return 1;   // error if make doesn't return 0
+    // idea: have the image gradually lower in resolution and fade away
+    auto sketches = std::vector<Sketch>();
+    sketches.push_back(Sketch("1.txt", Time("00:05:000"), Time("00:05:300"), 1, 4, true,  Path::Taper));
+    sketches.push_back(Sketch("1.txt", Time("00:05:300"), Time("00:05:600"), 1, 6, true,  Path::Taper));
+    sketches.push_back(Sketch("1.txt", Time("00:05:600"), Time("00:05:900"), 1, 4, false, Path::Taper));
+    sketches.push_back(Sketch("1.txt", Time("00:05:900"), Time("00:06:200"), 1, 5, false, Path::Taper));
+    for (auto& sketch : sketches) {
+        if (sketch.make())
+            return 1;   // error if make doesn't return 0
+    }
 	
 */
 	// RainGenerator testing
