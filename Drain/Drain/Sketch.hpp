@@ -9,19 +9,21 @@
 class Sketch {
 public:
 	Sketch(const std::string& pointMapPath,
-		   const Time& startTime,
-		   const Time& endTime,
-           const int thickness = 1,
-           const int resolution = 5,    // lower=more detail
+           const Time& startTime,
+           const Time& endTime,
+           const int thickness,
+           const int resolution,
+           const bool dynamic,
+           const Path& brush,
            const int margin = 5,
-           const Path& brush = Path::Pixel,
-		   const Easing& easing = Easing::Linear);
+           const Easing& easing = Easing::Linear);
 	const int make();
 
 private:
 	const std::string pointMapPath;
     const int thickness;
 	const int resolution;
+    const bool dynamic;
     const int margin;
 	const Path brush;
 	std::string brushPath;
@@ -34,5 +36,5 @@ private:
     void getTransform(float *xshift, float *yshift, float *xscale, float *yscale);
     int totalLines;
     int count;
-    void dynamicResolution(Bezier b, const double dynamicResFactor = 50.0);
+    int dynamicResolution(Bezier b);
 };

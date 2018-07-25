@@ -20,20 +20,23 @@ Bezier curves to sketch an image
 //std::istringstream& operator>>(std::istringstream& iss, Vector2& const& obj)
 
 Sketch::Sketch(const std::string& pointMapPath, const Time& startTime, const Time& endTime,
-    const int thickness, const int resolution, const int margin, const Path& brush, const Easing& easing )
+    const int thickness, const int resolution, const bool dynamic, const Path& brush, const int margin, const Easing& easing )
 	: pointMapPath{ pointMapPath }, startTime{ startTime }, endTime{ endTime },
-    thickness{ thickness }, resolution{ resolution }, margin{ margin }, brush{ brush }, easing{ easing }
+    thickness{ thickness }, resolution{ resolution }, dynamic{ dynamic }, brush { brush }, margin{ margin }, easing{ easing }
 {
 	brushPath = getPath(brush);
     totalLines = 0;
 }
 
 void Sketch::draw(Bezier b) {
-    // todo: tapering brush apply only on edges of long lines
-
-    /*if (!Sketch::constResolution(b))
-        return;*/
-    Sketch::dynamicResolution(b);
+    if (dynamic) {
+        if (!Sketch::dynamicResolution(b))
+            return;
+    }
+    else {
+        if (!Sketch::constResolution(b))
+            return;
+    }
 
 	// draw each point
 	/*for (auto &point : points) {
@@ -46,6 +49,9 @@ void Sketch::draw(Bezier b) {
         totalLines++;
         mpoints.push_back((points[i] + points[i + 1]) / 2);
         float dist = points[i].DistanceBetween(points[i + 1]);
+        if (brush == Path::Taper) {
+            dist *= 0.8;  // maybe want to scale with length of dist but this is fine for now
+        }
         float angle = atan(-(points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x + 0.001)); // negate y because osu!
         // experimental approximation optimization method
         /*if (totalLines % 2 != 0)
@@ -54,11 +60,10 @@ void Sketch::draw(Bezier b) {
         // end experimental
         auto line = Storyboard::CreateSprite(brushPath, mpoints[i]);
         line->ScaleVector(startTime.ms, endTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // osu! will optimize dup position
-        if (angle > 0.1)    // only include a rotation command if the angle is "significant"
+        if (abs(angle) > 0.1)    // only include a rotation command if the angle is significant
             line->Rotate(startTime.ms, startTime.ms, angle, angle); // startTime as endTime because ScaleVector controls lifetime
         Swatch::colorFgToFgSprites({ line }, startTime.ms, startTime.ms);
     }
-    // std::cout << totalLines << std::endl;
     points.clear();
 }
 
@@ -68,31 +73,44 @@ int Sketch::constResolution(Bezier b) {
     if (numPoints < 2) // nothing to be drawn
         return 0;
     for (int i = 0; i < numPoints; i++) {
-        // technically wrong as numPoints should be numPoints-1 but changing it results in inf and nan
-        auto something = static_cast<float>(i) / (numPoints - 1);
-        if (!std::isfinite(something)){
-            something = 0.999;
+        auto step = static_cast<float>(i) / (numPoints - 1);
+        if (!std::isfinite(step)){
+            step = 0.999;
         }
-        // todo: if points are too close together, don't add it
-        points.push_back(b.findPosition(something));
+        points.push_back(b.findPosition(step));
     }
     return numPoints;
 }
 
-void Sketch::dynamicResolution(Bezier b, const double dynamicResFactor) {
-    // experimental dynamic resolution
-    // int numPoints = b.length / resolution;
-    // auto spacing = std::vector<double>();
-    // double sumSpacing = 0;
+int Sketch::dynamicResolution(Bezier b) {
+    int numPoints = b.length / 5; // precheck if bezier is "short"
+    if (numPoints < 2) // nothing to be drawn
+        return 0;
+    // find average 2nd derivative along bezier to determine "resolution"
+    auto derivs = std::vector<double>();
+    for (double i = 0.001; i < 1; i += 1 / static_cast<float>(numPoints)) {
+        auto tmp = b.find2ndDerivative(i);
+        derivs.push_back(abs(tmp.x) + abs(tmp.y));
+    }
+    auto resolution = std::accumulate(derivs.begin(), derivs.end(), 0) / numPoints;
+    resolution /= this->resolution/2.0; // scale the generated resolution with resolution arg
+    auto ans = 1;
     points.push_back(b.findPosition(.001));
     for (double i = 0.001; i < 1.0 - 0.001;) {
         auto tmp = b.find2ndDerivative(i);
         auto dist = resolution / (abs(tmp.x) + abs(tmp.y) + 1);
+        // if points are too close together, don't add it
+        if (dist < 0.001) {  // todo: find good value here to remove small lines
+            i += dist;
+            continue;
+        }
         points.push_back(b.findPosition(i));
         i += dist;
+        ans++;
         //spacing.push_back(abs(dynamicResFactor / tmp.x) + abs(dynamicResFactor / tmp.y));
     }
     points.push_back(b.findPosition(0.999));
+    return ans + 1;
     // sumSpacing = std::accumulate(spacing.begin(), spacing.end(), 0.0);
     // normalize spacing
     /*for (auto& e: spacing) {
@@ -196,7 +214,7 @@ const int Sketch::make() {
         vv.push_back({ values[2], values[3] });
         vv.push_back({ values[4], values[5] });
     }*/
-    
+    std::cout << totalLines << std::endl;
     return 0;
 }
 
