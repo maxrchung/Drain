@@ -74,7 +74,9 @@ int main() {
 		addVariable(" F,0,"),
 	});
 	
-	replaceAll(storyboard, "\r", "");
+	// This doesn't work because of how << works on Windows, need to replace this by hand after
+	//replaceAll(storyboard, "\r", "");
+
 	for (const auto& variable : variables) {
 		replaceAll(storyboard, variable.second, variable.first);
 	}
