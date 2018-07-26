@@ -83,7 +83,8 @@ int Sketch::constResolution(Bezier b) {
 }
 
 int Sketch::dynamicResolution(Bezier b) {
-    int numPoints = b.length / 5; // precheck if bezier is "short"
+    // todo: cap to numPoints (can have <= numPoints)
+    int numPoints = (int)(b.length / 4.5); // precheck if bezier is "short"
     if (numPoints < 2) // nothing to be drawn
         return 0;
     // find average 2nd derivative along bezier to determine "resolution"
@@ -100,7 +101,7 @@ int Sketch::dynamicResolution(Bezier b) {
         auto tmp = b.find2ndDerivative(i);
         auto dist = resolution / (abs(tmp.x) + abs(tmp.y) + 1);
         // if points are too close together, don't add it
-        if (dist < 0.001) {  // todo: find good value here to remove small lines
+        if (dist < 0.001) {
             i += dist;
             continue;
         }
