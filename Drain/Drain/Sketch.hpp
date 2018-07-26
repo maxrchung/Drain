@@ -6,6 +6,11 @@
 #include "Time.hpp"
 #include "Easing.hpp"
 
+struct s {
+    double pos;
+    double secondDeriv;
+};
+
 class Sketch {
 public:
 	Sketch(const std::string& pointMapPath,

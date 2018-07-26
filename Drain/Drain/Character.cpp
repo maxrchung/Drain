@@ -263,6 +263,12 @@ std::vector<std::unique_ptr<Stroke>> Character::createStrokes(const char charact
 		case ' ':
 			strokes.push_back(std::make_unique<BlankStroke>());
 			break;
+		case ',':
+			strokes.push_back(CircularStroke::create(Vector2(0.0f, -0.5f), Vector2(-0.5f + Math::sqrt2 * 0.25f, -0.5f - Math::sqrt2 * 0.25f), Vector2(-0.5f, -0.5f)));
+			break;
+		case '.':
+			strokes.push_back(std::make_unique<PointStroke>(Vector2(0.0f, -0.5f)));
+			break;
 		case ':':
 			strokes.push_back(std::make_unique<PointStroke>(Vector2(0.0f, 0.5f)));
 			strokes.push_back(std::make_unique<PointStroke>(Vector2(0.0f, -0.5f)));
