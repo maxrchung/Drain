@@ -122,6 +122,7 @@ void Lyric::render() {
 	draw("and i saw the world", Vector2::Zero, Time("02:24:263").ms, Time("02:27:659").ms, fontSize);
 	draw("turn red", Vector2::Zero, Time("02:28:791").ms, Time("02:33:885").ms, fontSize);
 	// Poem 2
+	// Lyric 3
 	draw("dripping", Vector2::Zero, Time("04:04:168").ms, Time("04:04:805").ms, fontSize);
 	draw("trickling", Vector2::Zero, Time("04:06:433").ms, Time("04:07:211").ms, fontSize);
 	draw("dribbling", Vector2::Zero, Time("04:08:697").ms, Time("04:09:475").ms, fontSize);
@@ -170,7 +171,7 @@ void Lyric::render() {
 	place("in the wet glow",						Vector2(0,	-lineSpacing *	1.5f),		Time("06:13:508").ms, Time("06:18:036").ms, small);
 
 	place("i reached, for all the pieces",			Vector2(0,	lineSpacing *	1.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
-	place("pooled them to my hands",				Vector2(0,	lineSpacing *	0.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
+	place("pooled them to my cut hands",				Vector2(0,	lineSpacing *	0.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
 	place("but there were far too many",			Vector2(0,	-lineSpacing *	1.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
 
 	place("was it worth it",						Vector2(0,	lineSpacing *	1.0f),		Time("06:23:697").ms, Time("06:27:093").ms, small);
@@ -179,7 +180,7 @@ void Lyric::render() {
 
 	place("i kissed the sharp fragments",			Vector2(0,	lineSpacing *	0.5f),		Time("06:27:093").ms, Time("06:31:055").ms, small);
 	place("then consume them all",					Vector2(0,	-lineSpacing *	0.5f),		Time("06:27:093").ms, Time("06:31:055").ms, small);
-	// Lyric 3
+	// Lyric 4
 	draw("when the wall broke down", Vector2::Zero, Time("06:31:055").ms, Time("06:32:329").ms, fontSize);
 	draw("you were there", Vector2::Zero, Time("06:32:895").ms, Time("06:33:885").ms, fontSize);
 	draw("but i was on my own", Vector2::Zero, Time("06:34:735").ms, Time("06:35:725").ms, fontSize);
