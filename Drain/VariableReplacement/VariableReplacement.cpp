@@ -41,6 +41,8 @@ int main() {
 		addVariable("114,187,180"),
 		addVariable("218,236,236"),
 		addVariable("170,0,0"),
+		addVariable("255,255,255"),
+		addVariable("0,0,0"),
 		addVariable(" V,0,"),
 		addVariable(" C,0,"),
 		addVariable(" S,0,"),
