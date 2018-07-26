@@ -21,28 +21,36 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 
-	/*
+
+	/*	
 	Lyric::render();
 
-	auto testSketch = Sketch("1.txt", 100, 10000, 1, 4);
-    if (testSketch.make())
-        return 1;   // error if make doesn't return 0
+    // idea: have the image gradually lower in resolution and fade away
+    auto sketches = std::vector<Sketch>();
+    sketches.push_back(Sketch("1.txt", Time("00:05:000"), Time("00:05:300"), 1, 4, true,  Path::Taper));
+    sketches.push_back(Sketch("1.txt", Time("00:05:300"), Time("00:05:600"), 1, 6, true,  Path::Taper));
+    sketches.push_back(Sketch("1.txt", Time("00:05:600"), Time("00:05:900"), 1, 4, false, Path::Taper));
+    sketches.push_back(Sketch("1.txt", Time("00:05:900"), Time("00:06:200"), 1, 5, false, Path::Taper));
+    for (auto& sketch : sketches) {
+        if (sketch.make())
+            return 1;   // error if make doesn't return 0
+    }
 	
-
+*/
 	// RainGenerator testing
-	RainGenerator::RainGenerator();
-	*/
-
-	//Walker shit I guess
-	RainGenerator gen = RainGenerator();
-	std::vector<rainDrop> struct_drops = gen.FreezeRain(Time("01:54:00").ms);
-	std::vector<Sprite *> raindrops;
-	for(int i = 0; i < struct_drops.size(); ++i) {
-		raindrops.push_back(struct_drops[i].sprite);
-	}
-	Walker walk_boi = Walker::Walker(raindrops);
-	walk_boi.walk(50,Time("00:54:00").ms, Time("01:04:00").ms);
+	// RainGenerator::RainGenerator();
 	
+	//Walker shit I guess
+	if(0) { //lmao
+		RainGenerator gen = RainGenerator(Time("00:53:00"));
+		std::vector<Sprite *> raindrops = gen.FreezeRain();
+		for(auto & raindrop : raindrops) {
+			std::cout << raindrop->position.x << " " << raindrop->position.y << "\n";
+		}
+		Walker walk_boi = Walker::Walker(raindrops);
+		walk_boi.walk(50,Time("00:54:00").ms, Time("01:04:00").ms);
+	}
+
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
 	auto storyboardInputPath = std::ifstream("StoryboardInputPath.txt");

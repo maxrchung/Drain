@@ -17,7 +17,7 @@ S2RYH   := $(wildcard Drain/S2RYBRUH/*.hpp)
 
 OUT = drain
 
-all: S2RYOBJ2 DRAINOBJ2 link
+all: clean S2RYOBJ2 DRAINOBJ2 link
 	./drain
 
 $(DRAINDIR)/%.o: $(DRAINDIR)/%.cpp
@@ -36,6 +36,8 @@ link:
 	$(CC) Drain/Drain/*.o Drain/S2RYBRUH/*.o -o drain
 
 clean:
-	del $(CUROS)
 	del $(CUROD)
 
+
+cleanall:
+	del $(CUROS)

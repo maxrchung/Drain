@@ -136,6 +136,10 @@ Vector2 Vector2::operator/(float division) const {
 	return Vector2(x / division, y / division);
 }
 
+Vector2 Vector2::operator/(Vector2 v) const {
+    return Vector2(x / v.x, y / v.y);
+}
+
 void Vector2::operator+=(Vector2 v) {
 	x += v.x;
 	y += v.y;
