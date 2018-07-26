@@ -48,6 +48,8 @@ class TemplateEffect(inkex.Effect):
                         output_all += ";\n"
                     
             #
+            f = open('out.txt', 'w')
+            f.write(output_all)
             sys.stderr.write("Nodes only (in absolute position):\n%s" % output_nodes)
             sys.stderr.write("\nIncluding handles:\n%s" % output_all)
             sys.stderr.write("\nThe triplets are control point1, node, control point 2.\n")
