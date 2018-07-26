@@ -7,14 +7,14 @@
 #include <cmath>
 
 Walker::Walker(std::vector<Sprite *> sprites) {
-	//convert each 2D location into a 3d location in real space
+	//convert each 2d location into a 3d location in real space
+
 	for(int i = 0; i < sprites.size(); ++i) {
 		raindrop drop;
 		drop.sprite = sprites[i];
-		drop.position = twoToThree(sprites[i]);
 		drop.size = RandomRange::calculate(this->minSize, this->maxSize);
-
-		raindrops.push_back(drop);
+		drop.position = twoToThree(sprites[i], drop.size);
+		this->raindrops.push_back(drop);
 	}
 }
 
@@ -32,24 +32,26 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 	addSprites(distance, startTime, endTime);
 
 	for(auto & drop: this->raindrops) {
-		Vector3 startCoord = drop.position;
-		Vector3 temp = threeToTwo(startCoord);
-
-		Vector2 startTwoD = Vector2(temp.x, temp.y);
+		Vector3 start_coord = drop.position;
 		
+		Vector2 start_coord_2d = drop.sprite->position;
+
 		//only walk in the z direction
-		Vector3 endCoord = startCoord;
-		endCoord.z -= distance;
+		Vector3 end_coord = start_coord;
+		end_coord.z -= distance;
 
-		temp = threeToTwo(endCoord);
-		Vector2 endTwoD = Vector2::Vector2(temp.x, temp.y);
+		Vector3 temp = threeToTwo(end_coord, drop.size);
+		Vector2 end_coord_2d = Vector2::Vector2(temp.x, temp.y);
 
+		Vector2 t = end_coord_2d - start_coord_2d;
+		float initial_distance = t.Magnitude();
+		float distance_ratio = 0;
 
-		float startScale = drop.sprite->scale * drop.size;
-		float endScale = startScale * temp.z;
+		float start_scale = drop.sprite->scale;
+		float end_scale = temp.z;
 
-		uint8_t start = checkInScreen(startCoord, endScale);
-		uint8_t end = (checkInScreen(endCoord, endScale)) << 1;
+		uint8_t start = checkInScreen(start_coord, drop.size);
+		uint8_t end = (checkInScreen(end_coord, drop.size)) << 1;
 
 		uint8_t s = start | end;
 		switch(s) {
@@ -57,19 +59,31 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 		case 3: //starts and ends in sight
 			//don't need to do anything for either
 			break;
-		case 1: //starts in sight, ends not in sight
 
+		case 1: //starts in sight, ends not in sight
+			end_coord_2d = findCollision(start_coord_2d, end_coord_2d);
+			t = end_coord_2d - start_coord_2d;
+			distance_ratio = (t.Magnitude()) / initial_distance;
+			end_scale = distance_ratio * (end_scale - start_scale) + start_scale;
+			endTime.ms = startTime.ms + (endTime.ms - startTime.ms) * distance_ratio;
 			break;
+
 		case 2: //start not in sight, end in sight
+			start_coord_2d = findDistance(start_coord, end_coord, drop.size);
+			t = end_coord_2d - start_coord_2d;
+			distance_ratio =  1 - ((t.Magnitude()) / initial_distance);
+			start_scale = min_scale;
+			startTime.ms += distance_ratio * (endTime.ms - startTime.ms);
 			break;
+
 		default:
 			std::cout << "Error in Walker::walk\n";
 			break;
 		}
 
 		if(s) {
-			drop.sprite->Move(startTime.ms, endTime.ms, startTwoD, endTwoD);
-			drop.sprite->Scale(startTime.ms, endTime.ms, startScale, endScale);
+			drop.sprite->Move(startTime.ms, endTime.ms, start_coord_2d, end_coord_2d);
+			drop.sprite->Scale(startTime.ms, endTime.ms, start_scale, end_scale);
 		}
 	}
 
@@ -86,10 +100,13 @@ bool Walker::checkInScreen(Vector3 coordinates, float size) {
 	//size of sprite in pixels
 	float spriteSize = 100;
 
-	if((coordinates.z < 1) || (coordinates.z > max_distance))
+	if(coordinates.z < 1)
 		out = 0;
 
-	Vector3 coordinate = threeToTwo(coordinates);
+	if( (size / (coordinates.z * this->sprite_size) < min_scale) )
+		out = 0;
+
+	Vector3 coordinate = threeToTwo(coordinates, size);
 
 	if( out && fabs(coordinate.x) > (Vector2::ScreenSize.x / 2) ) {
 		float edge = fabs(coordinate.x) - (size * spriteSize / 2);
@@ -112,16 +129,13 @@ bool Walker::checkInScreen(Vector3 coordinates, float size) {
  * convert 2d coordinates and a size into 3d coordinates
  * take sprite coordinates
  */
-Vector3 Walker::twoToThree(Sprite *sprite) {
+Vector3 Walker::twoToThree(Sprite *sprite, float size) {
 	Vector3 out;
 
-	float size = sprite->scale;
-	Vector2 coordinates = sprite->position;
+	out.z = size / (this->sprite_size * sprite->scale);
 
-	out.z = (max_distance * size) / sqrt( (coordinates.x * coordinates.x) + (coordinates.y * coordinates.y ) );
-
-	out.x = coordinates.x * out.z;
-	out.y = coordinates.y * out.z;					      
+	out.x = sprite->position.x * out.z;
+	out.y = sprite->position.y * out.z;					      
 
 	return out;
 }
@@ -129,18 +143,17 @@ Vector3 Walker::twoToThree(Sprite *sprite) {
 /*
  * convert 3d coordinates into 2d coordinates and a size
  * the Vector3 will have x and y as usual, but the z 
- * member will be the size
+ * member will be the scale
  * probably not a good idea but uhh
  */
-Vector3 Walker:: threeToTwo(Vector3 coordinates) {
+Vector3 Walker::threeToTwo(Vector3 coordinates, float size) {
 	Vector3 out;
 
 	out.x = coordinates.x / coordinates.z;
 	out.y = coordinates.y / coordinates.z;
-	
-	float r = coordinates.Magnitude();
 
-	out.z = (r/max_distance);
+	//scale of the image
+	out.z = size / (coordinates.z * this->sprite_size);
 
 	return out;
 }
@@ -179,6 +192,31 @@ Vector2 Walker::findCollision(Vector2 a, Vector2 b) {
 }
 
 
+Vector2 Walker::findDistance(Vector3 a, Vector3 b, float size) {
+	Vector2 out = Vector2::Zero;
+
+	Vector3 out_3d = Vector3::Zero;
+	out_3d.z = size / (this->sprite_size * this->min_scale);
+
+	Vector3 begin = threeToTwo(a, size);
+	Vector3 end = threeToTwo(b, size);
+
+	Vector3 diff = end - begin;
+
+	float ratio = (out_3d.z - end.z) / diff.z;
+
+	out_3d.x = b.x - ratio * diff.x;
+	out_3d.y = b.y - ratio * diff.y;
+
+	out_3d = threeToTwo(out_3d, size);
+
+	out.x = out_3d.x;
+	out.y = out_3d.y;
+
+	return out;
+}
+
+
 void Walker::addSprites(float distance, Time startTime, Time endTime) {
 	float speed = distance / (endTime.ms - startTime.ms);
 
@@ -201,17 +239,18 @@ void Walker::addSprites(float distance, Time startTime, Time endTime) {
 		Vector3 position_three = Vector3(RandomRange::calculate(-sizeX, sizeX),
 						 RandomRange::calculate(-sizeY, sizeY),
 						 RandomRange::calculate(1, drawDistance));
-
-		Vector3 position_two = threeToTwo(position_three);
+		raindrop drop;
+		drop.size = RandomRange::calculate(minSize, maxSize);
+		Vector3 position_two = threeToTwo(position_three, drop.size);
 
 		Sprite *sprite = Storyboard::CreateSprite(spriteImage, Vector2(position_two.x, position_two.y));
 		sprite->scale = position_two.z;
 
-		raindrop drop;
+
 		drop.sprite = sprite;
 		drop.position = position_three;
-		drop.size = RandomRange::calculate(minSize, maxSize);
-		raindrops.push_back(drop);
+
+		this->raindrops.push_back(drop);
 	}
 
 	return;

@@ -13,16 +13,11 @@ typedef struct raindrop {
 	float size;
 } raindrop;
 
+
 class Walker {
 public:
 	//field of view
 	float fov = 90;
-	
-	//current angle of walker
-	Vector2 angle = Vector2::Zero;
-
-	//current position of walker
-	Vector3 position;
 
 	std::vector<raindrop> raindrops;
 
@@ -35,26 +30,33 @@ private:
 	bool checkInScreen(Vector3 coordinates, float size);
 
 	//convert 2d to 3d
-	Vector3 twoToThree(Sprite *sprite);
+	Vector3 twoToThree(Sprite *sprite, float size);
 
 	//convert 3d to 2d
-	Vector3 threeToTwo(Vector3 coordinates);
+	Vector3 threeToTwo(Vector3 coordinates, float size);
 
+	//find the collision point of the line between a and b
+	//to the border of the screen
 	Vector2 findCollision(Vector2 a, Vector2 b);
+
+	//find the point at which to start drawing point
+	Vector2 findDistance(Vector3 a, Vector3 b, float size);
 
 	//add more sprites for walking
 	void addSprites(float distance, Time startTime, Time endTime);
 
 	//the maximum distance that any sprite will be drawn
-	float max_distance = 30;
-
 	//the minimum distance that a sprite will be drawn
-	float min_distance = 1;
+	const float max_distance = 30;
+	const float min_distance = 1;
+
+	//size in pixels
+	const uint8_t sprite_size;
 
 	//min and max scale of the raindrop
 	//scales are for the actual sprite size
 	//i think these are the values used in rainGenerator
-	const float minScale = 0.1;
+	const float min_scale = 0.05;
 	const float maxScale = 0.7;
 
 	//sizes of the raindrop
