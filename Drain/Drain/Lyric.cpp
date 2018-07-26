@@ -80,7 +80,7 @@ void Lyric::render() {
 	place("chained and bound",						Vector2(0,	lineSpacing *	1.5f),		Time("01:12:376").ms, Time("01:21:433").ms, small);
 	place("in a corner of empty space",				Vector2(0,	lineSpacing *	0.5f),		Time("01:12:376").ms, Time("01:21:433").ms, small);
 	place("you whispered against the wall",			Vector2(0,	-lineSpacing *	0.5f),		Time("01:12:376").ms, Time("01:21:433").ms, small);
-	place("plea, pleas of help",					Vector2(0,	-lineSpacing *	1.5f),		Time("01:12:376").ms, Time("01:21:433").ms, small);
+	place("pleas, pleas of help",					Vector2(0,	-lineSpacing *	1.5f),		Time("01:12:376").ms, Time("01:21:433").ms, small);
 
 	place("a torrent of blurs outside",				Vector2(0,	lineSpacing *	1.5f),		Time("01:21:433").ms, Time("01:30:489").ms, small);
 	place("the whole world passed by",				Vector2(0,	lineSpacing *	0.5f),		Time("01:21:433").ms, Time("01:30:489").ms, small);
@@ -157,7 +157,7 @@ void Lyric::render() {
 	place("and longed for",							Vector2(0,	-lineSpacing *	1.0f),		Time("06:03:319").ms, Time("06:06:716").ms, small);
 
 	place("looking up",								Vector2(0,	lineSpacing *	1.0f),		Time("06:06:716").ms, Time("06:10:112").ms, small);
-	place("where clouds gathered",					Vector2(0,	lineSpacing *	0.0f),		Time("06:06:716").ms, Time("06:10:112").ms, small);
+	place("clouds gathered",					Vector2(0,	lineSpacing *	0.0f),		Time("06:06:716").ms, Time("06:10:112").ms, small);
 	place("and covered the sky",					Vector2(0,	-lineSpacing *	1.0f),		Time("06:06:716").ms, Time("06:10:112").ms, small);
 
 	place("the first drops came",					Vector2(0,	lineSpacing *	1.0f),		Time("06:10:112").ms, Time("06:13:508").ms, small);
@@ -170,8 +170,8 @@ void Lyric::render() {
 	place("in the wet glow",						Vector2(0,	-lineSpacing *	1.5f),		Time("06:13:508").ms, Time("06:18:036").ms, small);
 
 	place("i reached, for all the pieces",			Vector2(0,	lineSpacing *	1.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
-	place("but there were far too many",			Vector2(0,	lineSpacing *	0.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
-	place("to pool into my cut hands",				Vector2(0,	-lineSpacing *	1.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
+	place("pooled them to my hands",				Vector2(0,	lineSpacing *	0.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
+	place("but there were far too many",			Vector2(0,	-lineSpacing *	1.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
 
 	place("was it worth it",						Vector2(0,	lineSpacing *	1.0f),		Time("06:23:697").ms, Time("06:27:093").ms, small);
 	place("was it right",							Vector2(0,	lineSpacing *	0.0f),		Time("06:23:697").ms, Time("06:27:093").ms, small);
