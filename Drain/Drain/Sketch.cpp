@@ -37,6 +37,7 @@ void Sketch::draw(Bezier b) {
         if (!Sketch::constResolution(b))
             return;
     }
+    assert(points.size());
 
 	// draw each point
 	/*for (auto &point : points) {
@@ -82,8 +83,16 @@ int Sketch::constResolution(Bezier b) {
     return numPoints;
 }
 
+s createS(double pos, double secondDeriv) {
+    auto ans = s();
+    ans.pos = pos;
+    ans.secondDeriv = secondDeriv;
+    return ans;
+}
+
 int Sketch::dynamicResolution(Bezier b) {
-    int numPoints = b.length / 5; // precheck if bezier is "short"
+    // todo: cap to numPoints (can have <= numPoints)
+    int numPoints = b.length / resolution; // precheck if bezier is "short"
     if (numPoints < 2) // nothing to be drawn
         return 0;
     // find average 2nd derivative along bezier to determine "resolution"
@@ -95,21 +104,30 @@ int Sketch::dynamicResolution(Bezier b) {
     auto resolution = std::accumulate(derivs.begin(), derivs.end(), 0) / numPoints;
     resolution /= this->resolution/2.0; // scale the generated resolution with resolution arg
     auto ans = 1;
-    points.push_back(b.findPosition(.001));
-    for (double i = 0.001; i < 1.0 - 0.001;) {
+    auto steps = std::vector<s>();
+    steps.push_back(createS(0.001, derivs[0]));
+    for (double i = 0.001;;) {
         auto tmp = b.find2ndDerivative(i);
         auto dist = resolution / (abs(tmp.x) + abs(tmp.y) + 1);
         // if points are too close together, don't add it
-        if (dist < 0.001) {  // todo: find good value here to remove small lines
+        if (dist < 0.001) {
             i += dist;
             continue;
         }
-        points.push_back(b.findPosition(i));
         i += dist;
-        ans++;
+        if (i > 1.0 - 0.001)
+            break;
+        steps.push_back(createS(i, abs(tmp.x) + abs(tmp.y)));
         //spacing.push_back(abs(dynamicResFactor / tmp.x) + abs(dynamicResFactor / tmp.y));
     }
-    points.push_back(b.findPosition(0.999));
+    steps.push_back(createS(0.999, derivs[derivs.size()-1]));
+    if (numPoints < steps.size()) { // if constRes results in fewer points, use constRes
+        return constResolution(b);
+    }
+    for (auto& step : steps) {
+        points.push_back(b.findPosition(step.pos));
+        ans++;
+    }
     return ans + 1;
     // sumSpacing = std::accumulate(spacing.begin(), spacing.end(), 0.0);
     // normalize spacing
@@ -245,6 +263,8 @@ void Sketch::getTransform(float *xshift, float *yshift, float *xscale, float *ys
     auto miny = *std::min_element(yvalues.begin(), yvalues.end());
     auto maxy = *std::max_element(yvalues.begin(), yvalues.end());
     *yshift = (miny + maxy) / 2;    // average of all Y coordinates
-    *xscale = (852 - margin * 2) / (abs(minx) + abs(maxx));
-    *yscale = (480 - margin * 2) / (abs(miny) + abs(maxy));
+    //*xscale = (852 - margin * 2) / (abs(minx) + abs(maxx));
+    //*yscale = (480 - margin * 2) / (abs(miny) + abs(maxy));
+    *xscale = 1;
+    *yscale = 1;
 }
