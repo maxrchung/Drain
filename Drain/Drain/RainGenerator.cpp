@@ -60,7 +60,7 @@ void RainGenerator::DrawRain(int rainCount) {
 		float spriteEndPosY = -topOfScreen - ((rainLength / 2) * maxSize);
 
 		if (spriteEndPosX > xCoordMax || spriteEndPosX < -xCoordMax) { // Do raindrops fall to the right or left of the screen?
-			Coords newCoords = NewEndCoords(sprite, spriteEndPosX, spriteEndPosY, xCoordMax);
+			Vector2 newCoords = NewEndCoords(sprite, spriteEndPosX, spriteEndPosY, xCoordMax);
 			spriteEndPosX = newCoords.x;
 			spriteEndPosY = newCoords.y;
 		}
@@ -150,12 +150,12 @@ float RainGenerator::RandomRainTilt(Sprite* sprite) {
 }
 
 // Adjusts X,Y coords so drops are deleted early in cases where rain drops fall outside of screen due to tilt
-struct Coords RainGenerator::NewEndCoords(Sprite* sprite, float spriteEndPosX, float spriteEndPosY, float xCoordMax) {
+Vector2 RainGenerator::NewEndCoords(Sprite* sprite, float spriteEndPosX, float spriteEndPosY, float xCoordMax) {
 	float halfDrop = (rainLength / 2) * maxSize;
 	float spriteStartX = sprite->position.x;
 	float pathLengthY = Vector2::ScreenSize.y + (rainLength / 2);
 	float pathLengthX;
-	Coords newCoords;
+	Vector2 newCoords;
 
 	// Triangle within another similar triangle
 	if (spriteEndPosX > xCoordMax) { // Raindrop goes past right of screen

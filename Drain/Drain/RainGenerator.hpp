@@ -4,11 +4,6 @@
 #include "Sprite.hpp"
 #include "Time.hpp"
 
-struct Coords {
-	float x;
-	float y;
-};
-
 struct rainDrop {
 	Sprite* sprite;
 	float startingTime;
@@ -37,7 +32,7 @@ public:
 	void TrackRainDrop(Sprite* sprite, float actualDropStart, float actualDropEnd, float newSize, float spriteEndPosX, float spriteEndPosY);
 	float RandomRainVelocity(float minDropTime, float veloDelta);
 	float RandomRainTilt(Sprite* sprite);
-	struct Coords NewEndCoords(Sprite* sprite, float spriteEndPosX, float spriteEndPosY, float xCoordMax);
+	Vector2 NewEndCoords(Sprite* sprite, float spriteEndPosX, float spriteEndPosY, float xCoordMax);
 	float ScaleRainSize(Sprite* sprite, float actualDropTotalTime, float minDropTime, float actualDropStart);
 	std::vector<Sprite*> sprites;
 

@@ -21,7 +21,7 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 
-	
+	/*
 	Lyric::render();
 
 	auto testSketch = Sketch("1.txt", 100, 10000, 1, 4);
@@ -30,8 +30,9 @@ int main() {
 	
 
 	// RainGenerator testing
-	// RainGenerator::RainGenerator();
-	
+	RainGenerator::RainGenerator();
+	*/
+
 	//Walker shit I guess
 	if(0) { //lmao
 		RainGenerator gen = RainGenerator(Time("00:45:00").ms);
