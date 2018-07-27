@@ -95,8 +95,8 @@ void Lyric::render() {
 
 	place("i reached out",							Vector2(0,	lineSpacing *	1.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
 	place("and we touched.",						Vector2(0,	lineSpacing *	0.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
-	place("for a delicate second",					Vector2(0,	-lineSpacing *	0.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
-	place("forming a connection",					Vector2(0,	-lineSpacing *	1.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
+	place("for a second",					Vector2(0,	-lineSpacing *	0.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
+	place("forming a bond",					Vector2(0,	-lineSpacing *	1.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
 
 	place("trust in me",							Vector2(0,	lineSpacing *	1.5f),		Time("01:44:074").ms, Time("01:48:602").ms, small);
 	place("follow me",								Vector2(0,	lineSpacing *	0.5f),		Time("01:44:074").ms, Time("01:48:602").ms, small);
@@ -186,8 +186,8 @@ void Lyric::render() {
 	place("for each trip",							Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
 
 	place("with exhaustion",						Vector2(0,	lineSpacing *	1.0f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("we barely met the night’s end",			Vector2(0,	lineSpacing *	0.0f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("to catch the day’s start",				Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("we barely met the nightÂ’s end",			Vector2(0,	lineSpacing *	0.0f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("to catch the dayÂ’s start",				Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
 
 	place("but one night,",							Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
 	place("we failed to make it back",				Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
@@ -215,7 +215,7 @@ void Lyric::render() {
 	place("a panic, struggle",						Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
 	place("pulling you up",							Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
 	place("but we broke apart",						Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("lost touch",								Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("and lost touch",								Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
 
 	place("a final scream",							Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
 	place("left your lips",							Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
