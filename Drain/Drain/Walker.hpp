@@ -62,6 +62,6 @@ private:
 	const float maxScale = 0.7;
 
 	//sizes of the raindrop
-	const float minSize = 0.1;
-	const float maxSize = 1;
+	const float minSize = 1;
+	const float maxSize = 100;
 };

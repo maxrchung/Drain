@@ -14,6 +14,8 @@ Walker::Walker(std::vector<Sprite *> sprites) {
 		drop.size = w_rand(this->minSize, this->maxSize);
 		drop.position = twoToThree(sprites[i], drop.size);
 		this->raindrops.push_back(drop);
+
+		std::cout << sprites[i]->position.x << " " << sprites[i]->position.y << "|" << drop.position.x << " " << drop.position.y << " " << drop.position.z << "\n";
 	}
 }
 
