@@ -20,12 +20,13 @@ Bezier curves to sketch an image
 //std::istringstream& operator>>(std::istringstream& iss, Vector2& const& obj)
 
 Sketch::Sketch(const std::string& pointMapPath, const Time& startTime, const Time& endTime,
-    const int thickness, const int resolution, const bool dynamic, const Path& brush, const int margin, const Easing& easing )
+    const int thickness, const float resolution, const bool dynamic, const Path& brush, const int margin, const Easing& easing )
 	: pointMapPath{ pointMapPath }, startTime{ startTime }, endTime{ endTime },
     thickness{ thickness }, resolution{ resolution }, dynamic{ dynamic }, brush { brush }, margin{ margin }, easing{ easing }
 {
 	brushPath = getPath(brush);
     totalLines = 0;
+    visDur = endTime.ms - startTime.ms;
 }
 
 void Sketch::draw(Bezier b) {
@@ -54,16 +55,25 @@ void Sketch::draw(Bezier b) {
             dist *= 0.8;  // maybe want to scale with length of dist but this is fine for now
         }
         float angle = atan(-(points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x + 0.001)); // negate y because osu!
-        // experimental approximation optimization method
-        /*if (totalLines % 2 != 0)
-        continue;
-        dist *= 2;*/
-        // end experimental
-        auto line = Storyboard::CreateSprite(brushPath, mpoints[i]);
-        line->ScaleVector(startTime.ms, endTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // osu! will optimize dup position
+        auto line = Storyboard::CreateSprite(brushPath, mpoints[i]);    // the actual line being drawn
+        sprites.push_back(line);    // add it to the global sprites list
         if (abs(angle) > 0.1)    // only include a rotation command if the angle is significant
-            line->Rotate(startTime.ms, startTime.ms, angle, angle); // startTime as endTime because ScaleVector controls lifetime
+            line->Rotate(startTime.ms, startTime.ms, angle, angle);
         Swatch::colorFgToFgSprites({ line }, startTime.ms, startTime.ms);
+        if (times == 1) {   // not looping
+            line->ScaleVector(startTime.ms, endTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // this will dictate endTime
+            continue;
+        }
+        else {
+            line->ScaleVector(startTime.ms, startTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // Loop will dictate endTime
+        }
+        Sprite * tmpSprite;     // jank tmpSprite to generate the command strings for Fading
+        tmpSprite = &Sprite();
+        auto commands = std::vector<std::string>();
+        commands.push_back(tmpSprite->Fade(visDur, visDur, 1, 0));  // disappear instantaneously
+        // TODO: loop not workig correctly, fade in not working
+        commands.push_back(tmpSprite->Fade(visDur + hiddenDur, visDur + hiddenDur, 0, 1));  // reappear instantaneously
+        line->Loop(startTime.ms, times, commands);
     }
     points.clear();
 }
@@ -91,7 +101,6 @@ s createS(double pos, double secondDeriv) {
 }
 
 int Sketch::dynamicResolution(Bezier b) {
-    // todo: cap to numPoints (can have <= numPoints)
     int numPoints = b.length / resolution; // precheck if bezier is "short"
     if (numPoints < 2) // nothing to be drawn
         return 0;
@@ -101,8 +110,8 @@ int Sketch::dynamicResolution(Bezier b) {
         auto tmp = b.find2ndDerivative(i);
         derivs.push_back(abs(tmp.x) + abs(tmp.y));
     }
-    auto resolution = std::accumulate(derivs.begin(), derivs.end(), 0) / numPoints;
-    resolution /= this->resolution/2.0; // scale the generated resolution with resolution arg
+    auto resolution = std::accumulate(derivs.begin(), derivs.end(), 0) / numPoints; // average of 2nd derivs
+    resolution /= this->resolution; // scale the generated resolution with resolution arg
     auto ans = 1;
     auto steps = std::vector<s>();
     steps.push_back(createS(0.001, derivs[0]));
@@ -233,6 +242,7 @@ const int Sketch::make() {
         vv.push_back({ values[4], values[5] });
     }*/
     std::cout << totalLines << std::endl;
+    assert(totalLines == sprites.size());
     return 0;
 }
 
@@ -267,4 +277,31 @@ void Sketch::getTransform(float *xshift, float *yshift, float *xscale, float *ys
     //*yscale = (480 - margin * 2) / (abs(miny) + abs(maxy));
     *xscale = 1;
     *yscale = 1;
+}
+
+void Sketch::loop(int times, std::vector<Sketch> v) {
+    auto durSoFar = 0;  // sum of duration of each iteration of the loop
+    auto totalDur = 0;  // total duration of the loop
+    // durSoFar will == totalDur at the end of this function
+    for (auto& frame : v) {
+        totalDur += frame.visDur;
+    }
+    for (auto& frame : v) {
+        frame.times = times;
+        frame.relStart = durSoFar;
+        frame.hiddenDur = totalDur - frame.visDur;
+        frame.make();
+        durSoFar += frame.visDur;
+    }
+}
+
+void Sketch::render() {
+    // art idea: have the image gradually lower in resolution and fade away
+    auto v = std::vector<Sketch>();
+    v.push_back(Sketch("1.txt", Time("00:05:000"), Time("00:05:300"), 1, 4, true, Path::Taper));      // 651
+    v.push_back(Sketch("1.txt", Time("00:05:300"), Time("00:05:600"), 1, 4.7, false, Path::Taper));   // 562
+    v.push_back(Sketch("1.txt", Time("00:05:600"), Time("00:05:900"), 1, 4.5, true, Path::Taper));    // 541
+    v.push_back(Sketch("1.txt", Time("00:05:900"), Time("00:06:200"), 1, 4.5, false, Path::Taper));   // 629
+    loop(3, v);     // result will be from 5:000 to 8:600
+    //Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper).make();
 }
