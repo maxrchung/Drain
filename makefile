@@ -38,6 +38,8 @@ link:
 clean:
 	del $(CUROD)
 
-
 cleanall:
 	del $(CUROS)
+
+hardlink:
+	ln Drain/Drain/*.hpp Drain/S2RYBRUH/*.hpp

@@ -33,6 +33,7 @@ public:
 	Vector2 operator*(float multiple) const;
 	Vector2 operator*(Vector2 v) const;
 	Vector2 operator/(float division) const;
+    Vector2 operator/(Vector2 v) const;
 	void operator+=(Vector2 v);
 	void operator-=(Vector2 v);
 	void operator*=(float multiple);

@@ -9,6 +9,38 @@ Bezier::Bezier(const std::vector<Vector2>& transitions)
 	Bezier::length = findLength();
 }
 
+int nCr(int n, int r) {
+    if (r == 0) return 1;
+
+    if (r > n / 2) return nCr(n, n - r); // save some computation
+
+    long res = 1;
+
+    for (int k = 1; k <= r; ++k)
+    {
+        res *= n - k + 1;
+        res /= k;
+    }
+
+    return res;
+}
+
+Vector2 Bezier::findDerivative(float time, float deltaT) {
+    if (time - deltaT < 0)
+        time = deltaT;
+    else if (time + deltaT > 1)
+        time = time - deltaT;
+    return (findPosition(time + deltaT) - findPosition(time - deltaT)) / (Vector2(deltaT, deltaT) * 2);
+}
+
+Vector2 Bezier::find2ndDerivative(float time, float deltaT) {
+    if (time - deltaT < 0)
+        time = deltaT;
+    else if (time + deltaT > 1)
+        time = time - deltaT;
+    return (findDerivative(time + deltaT) - findDerivative(time - deltaT)) / (Vector2(deltaT, deltaT) * 2);
+}
+
 Vector2 Bezier::findPosition(const float time) {
 	// Anything larger exceeds float numeric limits
 	if (transitions.size() <= 33) {
@@ -35,7 +67,7 @@ Vector2 Bezier::binomialPosition(const float time) {
 		const auto part = point * (binomial * t1 * t2);
 		position += part;
 	}
-	return position;
+    return position;
 }
 
 Vector2 Bezier::deCasteljauPosition(const float time) {

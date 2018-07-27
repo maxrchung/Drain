@@ -13,6 +13,8 @@ void replaceAll(std::string& str, const std::string& from, const std::string& to
 
 char variableName = 33;
 std::pair<std::string, std::string> addVariable(const std::string& variable) {
+    if (variableName == 61)
+        variableName++;
 	return std::make_pair(std::string("$") + variableName++, variable);
 }
 
@@ -29,7 +31,22 @@ int main() {
 	storyboardFile.seekg(0, std::ios::beg);
 	storyboardFile.read(&storyboard[0], storyboard.size());
 
-	const auto variables = std::vector<std::pair<std::string, std::string>>({
+    const auto variables = std::vector<std::pair<std::string, std::string>>({
+        // Sketch variables
+        addVariable("Sprite,Foreground,Centre,\"j\","),
+        addVariable(" C,0,5000,,114,187,180"),
+        addVariable(" R,0,5000,,"),
+        addVariable(" V,0,5000,5300,"),
+        addVariable(" C,0,5300,,114,187,180"),
+        addVariable(" R,0,5300,,"),
+        addVariable(" V,0,5300,5600,"),
+        addVariable(" C,0,5600,,114,187,180"),
+        addVariable(" R,0,5600,,"),
+        addVariable(" V,0,5600,5900,"),
+        addVariable(" C,0,5900,,114,187,180"),
+        addVariable(" R,0,5900,,"),
+        addVariable(" V,0,5900,6200,"),
+        // BG variables
 		addVariable("Sprite,Background,Centre,\""),
 		addVariable("Sprite,Background,BottomLeft,\""),
 		addVariable("Sprite,Background,TopLeft,\""),
@@ -41,6 +58,8 @@ int main() {
 		addVariable("114,187,180"),
 		addVariable("218,236,236"),
 		addVariable("170,0,0"),
+		addVariable("255,255,255"),
+		addVariable("0,0,0"),
 		addVariable(" V,0,"),
 		addVariable(" C,0,"),
 		addVariable(" S,0,"),
@@ -55,7 +74,9 @@ int main() {
 		addVariable(" F,0,"),
 	});
 	
-	replaceAll(storyboard, "\r", "");
+	// This doesn't work because of how << works on Windows, need to replace this by hand after
+	//replaceAll(storyboard, "\r", "");
+
 	for (const auto& variable : variables) {
 		replaceAll(storyboard, variable.second, variable.first);
 	}

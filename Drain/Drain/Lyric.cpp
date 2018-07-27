@@ -50,8 +50,9 @@ std::vector<Character> Lyric::createCharacters(const std::string& lyric) {
 }
 void Lyric::render() {
 	const auto fontSize = 25.0f;
-	const auto small = 18.0f;
+	const auto small = 15.0f;
 	const auto lineSpacing = small * 3.0f;
+	// Lyric 1
 	draw("suffocating", Vector2::Zero, Time("00:05:584").ms, Time("00:06:999").ms, fontSize);
 	draw("puff of smoke", Vector2::Zero, Time("00:08:131").ms, Time("00:09:475").ms, fontSize);
 	draw("i took your breath in", Vector2::Zero, Time("00:14:357").ms, Time("00:16:055").ms, fontSize);
@@ -62,6 +63,7 @@ void Lyric::render() {
 	draw("i melt", Vector2::Zero, Time("00:40:395").ms, Time("00:49:168").ms, fontSize);
 	draw("into", Vector2::Zero, Time("00:49:452").ms, Time("00:50:867").ms, fontSize);
 	draw("your voice", Vector2::Zero, Time("00:51:716").ms, Time("00:52:565").ms, fontSize);
+	// Credits
 	place("song:", Vector2(0, lineSpacing * 0.5f), Time("01:03:319").ms, Time("01:05:584").ms, small);
 	place("drain", Vector2(0, -lineSpacing * 0.5f), Time("01:03:602").ms, Time("01:05:584").ms, small);
 	place("artist:", Vector2(0, lineSpacing * 0.5f), Time("01:05:584").ms, Time("01:07:848").ms, small);
@@ -74,7 +76,44 @@ void Lyric::render() {
 	place("xenocidel", Vector2(0, -lineSpacing * 0.5f), Time("01:10:678").ms, Time("01:11:810").ms, small);
 	place("naranja sagged", Vector2(0, -lineSpacing * 1.5f), Time("01:10:867").ms, Time("01:11:999").ms, small);
 	place("dicingdice", Vector2(0, -lineSpacing * 2.5f), Time("01:11:055").ms, Time("01:12:187").ms, small);
-	draw("push it aside", Vector2::Zero, Time("01:58:791").ms, Time("02:00:489").ms, fontSize);
+	// Poem 1
+	place("chained and bound",						Vector2(0,	lineSpacing *	1.5f),		Time("01:12:376").ms, Time("01:21:433").ms, small);
+	place("in a corner of empty space",				Vector2(0,	lineSpacing *	0.5f),		Time("01:12:376").ms, Time("01:21:433").ms, small);
+	place("you whispered against the wall",			Vector2(0,	-lineSpacing *	0.5f),		Time("01:12:376").ms, Time("01:21:433").ms, small);
+	place("pleas, pleas of help",					Vector2(0,	-lineSpacing *	1.5f),		Time("01:12:376").ms, Time("01:21:433").ms, small);
+
+	place("a torrent of blurs outside",				Vector2(0,	lineSpacing *	1.5f),		Time("01:21:433").ms, Time("01:30:489").ms, small);
+	place("the whole world passed by",				Vector2(0,	lineSpacing *	0.5f),		Time("01:21:433").ms, Time("01:30:489").ms, small);
+	place("as you cried",							Vector2(0,	-lineSpacing *	0.5f),		Time("01:21:433").ms, Time("01:30:489").ms, small);
+	place("cried and cried",						Vector2(0,	-lineSpacing *	1.5f),		Time("01:21:433").ms, Time("01:30:489").ms, small);
+
+	place("drowning",								Vector2(0,	lineSpacing *	2.0f),		Time("01:30:489").ms, Time("01:39:546").ms, small);
+	place("dangling in the abyss",					Vector2(0,	lineSpacing *	1.0f),		Time("01:30:489").ms, Time("01:39:546").ms, small);
+	place("your fingers outstretched to nothing",	Vector2(0,	lineSpacing *	0.0f),		Time("01:30:489").ms, Time("01:39:546").ms, small);
+	place("searching, for anything",				Vector2(0,	-lineSpacing *	1.0f),		Time("01:30:489").ms, Time("01:39:546").ms, small);
+	place("anyone out there",						Vector2(0,	-lineSpacing *	2.0f),		Time("01:30:489").ms, Time("01:39:546").ms, small);
+
+	place("i reached out",							Vector2(0,	lineSpacing *	1.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
+	place("and we touched.",						Vector2(0,	lineSpacing *	0.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
+	place("for a delicate second",					Vector2(0,	-lineSpacing *	0.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
+	place("forming a connection",					Vector2(0,	-lineSpacing *	1.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
+
+	place("trust in me",							Vector2(0,	lineSpacing *	1.5f),		Time("01:44:074").ms, Time("01:48:602").ms, small);
+	place("follow me",								Vector2(0,	lineSpacing *	0.5f),		Time("01:44:074").ms, Time("01:48:602").ms, small);
+	place("and i'll lead you to peace",				Vector2(0,	-lineSpacing *	0.5f),		Time("01:44:074").ms, Time("01:48:602").ms, small);
+	place("i promised",								Vector2(0,	-lineSpacing *	1.5f),		Time("01:44:074").ms, Time("01:48:602").ms, small);
+
+	place("so began our nights",					Vector2(0,	lineSpacing *	1.5f),		Time("01:48:602").ms, Time("01:53:131").ms, small);
+	place("of running away",						Vector2(0,	lineSpacing *	0.5f),		Time("01:48:602").ms, Time("01:53:131").ms, small);
+	place("trips of respite",						Vector2(0,	-lineSpacing *	0.5f),		Time("01:48:602").ms, Time("01:53:131").ms, small);
+	place("far away",								Vector2(0,	-lineSpacing *	1.5f),		Time("01:48:602").ms, Time("01:53:131").ms, small);
+
+	place("through city streets",					Vector2(0,	lineSpacing *	1.5f),		Time("01:53:131").ms, Time("01:57:659").ms, small);
+	place("and rainy nights",						Vector2(0,	lineSpacing *	0.5f),		Time("01:53:131").ms, Time("01:57:659").ms, small);
+	place("we splashed and danced",					Vector2(0,	-lineSpacing *	0.5f),		Time("01:53:131").ms, Time("01:57:659").ms, small);
+	place("atop puddles",							Vector2(0,	-lineSpacing *	1.5f),		Time("01:53:131").ms, Time("01:57:659").ms, small);
+	// Lyric 2
+	draw("pushing aside", Vector2::Zero, Time("01:58:791").ms, Time("02:00:489").ms, fontSize);
 	draw("my pain", Vector2::Zero, Time("02:01:338").ms, Time("02:05:584").ms, fontSize);
 	draw("exchanged body heat", Vector2::Zero, Time("02:06:338").ms, Time("02:08:414").ms, fontSize);
 	draw("again and again", Vector2::Zero, Time("02:09:475").ms, Time("02:14:640").ms, fontSize);
@@ -82,6 +121,8 @@ void Lyric::render() {
 	draw("puff of smoke", Vector2::Zero, Time("02:19:452").ms, Time("02:21:150").ms, fontSize);
 	draw("and i saw the world", Vector2::Zero, Time("02:24:263").ms, Time("02:27:659").ms, fontSize);
 	draw("turn red", Vector2::Zero, Time("02:28:791").ms, Time("02:33:885").ms, fontSize);
+	// Poem 2
+	// Lyric 3
 	draw("dripping", Vector2::Zero, Time("04:04:168").ms, Time("04:04:805").ms, fontSize);
 	draw("trickling", Vector2::Zero, Time("04:06:433").ms, Time("04:07:211").ms, fontSize);
 	draw("dribbling", Vector2::Zero, Time("04:08:697").ms, Time("04:09:475").ms, fontSize);
@@ -103,7 +144,44 @@ void Lyric::render() {
 	draw("take a vow", Vector2::Zero, Time("05:32:753").ms, Time("05:36:150").ms, fontSize);
 	draw("and just", Vector2::Zero, Time("05:36:857").ms, Time("05:37:989").ms, fontSize);
 	draw("kill me", Vector2::Zero, Time("05:38:414").ms, Time("05:49:735").ms, fontSize);
+	// Poem 3
+	place("it wasn't until evening",				Vector2(0,	lineSpacing *	1.0f),		Time("05:57:659").ms, Time("05:59:923").ms, small);
+	place("that i returned",						Vector2(0,	lineSpacing *	0.0f),		Time("05:57:659").ms, Time("05:59:923").ms, small);
+	place("back to the city",						Vector2(0,	-lineSpacing *	1.0f),		Time("05:57:659").ms, Time("05:59:923").ms, small);
+
+	place("where your body laid",					Vector2(0,	lineSpacing *	1.0f),		Time("05:59:923").ms, Time("06:03:319").ms, small);
+	place("was a jagged shard",						Vector2(0,	lineSpacing *	0.0f),		Time("05:59:923").ms, Time("06:03:319").ms, small);
+	place("a fraction of your soul",				Vector2(0,	-lineSpacing *	1.0f),		Time("05:59:923").ms, Time("06:03:319").ms, small);
+
+	place("a memory, of bliss",						Vector2(0,	lineSpacing *	1.0f),		Time("06:03:319").ms, Time("06:06:716").ms, small);
+	place("that you so chased",						Vector2(0,	lineSpacing *	0.0f),		Time("06:03:319").ms, Time("06:06:716").ms, small);
+	place("and longed for",							Vector2(0,	-lineSpacing *	1.0f),		Time("06:03:319").ms, Time("06:06:716").ms, small);
+
+	place("looking up",								Vector2(0,	lineSpacing *	1.0f),		Time("06:06:716").ms, Time("06:10:112").ms, small);
+	place("clouds gathered",					Vector2(0,	lineSpacing *	0.0f),		Time("06:06:716").ms, Time("06:10:112").ms, small);
+	place("and covered the sky",					Vector2(0,	-lineSpacing *	1.0f),		Time("06:06:716").ms, Time("06:10:112").ms, small);
+
+	place("the first drops came",					Vector2(0,	lineSpacing *	1.0f),		Time("06:10:112").ms, Time("06:13:508").ms, small);
+	place("dotted the landscape",					Vector2(0,	lineSpacing *	0.0f),		Time("06:10:112").ms, Time("06:13:508").ms, small);
+	place("turned the world to haze",				Vector2(0,	-lineSpacing *	1.0f),		Time("06:10:112").ms, Time("06:13:508").ms, small);
+
+	place("more and more",							Vector2(0,	lineSpacing *	1.5f),		Time("06:13:508").ms, Time("06:18:036").ms, small);
+	place("fragments of you appeared",				Vector2(0,	lineSpacing *	0.5f),		Time("06:13:508").ms, Time("06:18:036").ms, small);
+	place("twinkling and sparkling",				Vector2(0,	-lineSpacing *	0.5f),		Time("06:13:508").ms, Time("06:18:036").ms, small);
+	place("in the wet glow",						Vector2(0,	-lineSpacing *	1.5f),		Time("06:13:508").ms, Time("06:18:036").ms, small);
+
+	place("i reached, for all the pieces",			Vector2(0,	lineSpacing *	1.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
+	place("pooled them to my cut hands",				Vector2(0,	lineSpacing *	0.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
+	place("but there were far too many",			Vector2(0,	-lineSpacing *	1.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
+
+	place("was it worth it",						Vector2(0,	lineSpacing *	1.0f),		Time("06:23:697").ms, Time("06:27:093").ms, small);
+	place("was it right",							Vector2(0,	lineSpacing *	0.0f),		Time("06:23:697").ms, Time("06:27:093").ms, small);
+	place("was it good",							Vector2(0,	-lineSpacing *	1.0f),		Time("06:23:697").ms, Time("06:27:093").ms, small);
+
+	place("i kissed the sharp fragments",			Vector2(0,	lineSpacing *	0.5f),		Time("06:27:093").ms, Time("06:31:055").ms, small);
+	place("then consume them all",					Vector2(0,	-lineSpacing *	0.5f),		Time("06:27:093").ms, Time("06:31:055").ms, small);
+	// Lyric 4
 	draw("when the wall broke down", Vector2::Zero, Time("06:31:055").ms, Time("06:32:329").ms, fontSize);
-	draw("you were there", Vector2::Zero, Time("06:32:895").ms, Time("06:33:461").ms, fontSize);
+	draw("you were there", Vector2::Zero, Time("06:32:895").ms, Time("06:33:885").ms, fontSize);
 	draw("but i was on my own", Vector2::Zero, Time("06:34:735").ms, Time("06:35:725").ms, fontSize);
 }
