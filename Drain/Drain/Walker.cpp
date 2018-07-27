@@ -1,4 +1,3 @@
-#include "RandomRange.hpp"
 #include "Storyboard.hpp"
 #include "Path.hpp"
 
@@ -12,7 +11,7 @@ Walker::Walker(std::vector<Sprite *> sprites) {
 	for(int i = 0; i < sprites.size(); ++i) {
 		raindrop drop;
 		drop.sprite = sprites[i];
-		drop.size = RandomRange::calculate(this->minSize, this->maxSize);
+		drop.size = w_rand(this->minSize, this->maxSize);
 		drop.position = twoToThree(sprites[i], drop.size);
 		this->raindrops.push_back(drop);
 	}
@@ -236,11 +235,11 @@ void Walker::addSprites(float distance, Time startTime, Time endTime) {
 	float drawDistance = this->max_distance + distance * 2;
 
 	for(uint64_t i = 0; i < iteratorMax; ++i) {
-		Vector3 position_three = Vector3(RandomRange::calculate(-sizeX, sizeX),
-						 RandomRange::calculate(-sizeY, sizeY),
-						 RandomRange::calculate(1, drawDistance));
+		Vector3 position_three = Vector3(w_rand(-sizeX, sizeX),
+						 w_rand(-sizeY, sizeY),
+						 w_rand(1, drawDistance));
 		raindrop drop;
-		drop.size = RandomRange::calculate(minSize, maxSize);
+		drop.size = w_rand(minSize, maxSize);
 		Vector3 position_two = threeToTwo(position_three, drop.size);
 
 		Sprite *sprite = Storyboard::CreateSprite(spriteImage, Vector2(position_two.x, position_two.y));
@@ -254,4 +253,13 @@ void Walker::addSprites(float distance, Time startTime, Time endTime) {
 	}
 
 	return;
+}
+
+
+float Walker::w_rand(float min, float max) {
+	float out = (float)rand() / RAND_MAX;
+	out *= (max - min);
+	out += min;
+
+	return out;
 }

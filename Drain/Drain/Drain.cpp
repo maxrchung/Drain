@@ -26,6 +26,7 @@ int main() {
 	// idea: have the image gradually lower in resolution and fade away
 	auto sketches = std::vector<Sketch>();
 	sketches.push_back(Sketch("1.txt", Time("00:05:000"), Time("00:05:300"), 1, 3, true, Path::Taper));    // best quality
+	/*
 	sketches.push_back(Sketch("1.txt", Time("00:05:600"), Time("00:05:900"), 1, 4, false, Path::Taper));    // same cost as above, looks like below
 	sketches.push_back(Sketch("1.txt", Time("00:05:300"), Time("00:05:600"), 1, 4, true, Path::Taper));     // best bang for buck
 	sketches.push_back(Sketch("1.txt", Time("00:05:900"), Time("00:06:200"), 1, 5, false, Path::Taper));    // cheapest but worst looking
@@ -33,12 +34,12 @@ int main() {
 		if (sketch.make())
 			return 1;   // error if make doesn't return 0
 	}
-
+	*/
 	// RainGenerator testing
 	// RainGenerator::RainGenerator();
 
 	//Walker shit I guess
-	if (0) { //lmao
+	if (1) { //lmao
 		RainGenerator gen = RainGenerator(Time("00:53:00"));
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
 		for (auto & raindrop : raindrops) {

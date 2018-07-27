@@ -26,6 +26,8 @@ public:
 	void walk(float distance, Time startTime, Time endTime);
 
 private:
+	float w_rand(float min, float max);
+
 	//check if the given 3d coordinate is on screen
 	bool checkInScreen(Vector3 coordinates, float size);
 
@@ -51,7 +53,7 @@ private:
 	const float min_distance = 1;
 
 	//size in pixels
-	const uint8_t sprite_size;
+	const uint8_t sprite_size = 100;
 
 	//min and max scale of the raindrop
 	//scales are for the actual sprite size
