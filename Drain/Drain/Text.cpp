@@ -1,6 +1,6 @@
 #include "Text.hpp"
 #include <exception>
-const RandomRange Text::poemScale = RandomRange(900, 1500, 100);
+const RandomRange Text::poemScale = RandomRange(10, 18);
 void Text::draw(const std::string& lyric,
 				 const Vector2& center,
 				 const int startTime,
@@ -71,11 +71,11 @@ void Text::render() {
 	place("electrocutica", Vector2(0, -0.5f), Time("01:05:867").ms, Time("01:07:848").ms);
 	place("mapper:", Vector2(0, 0.5f), Time("01:07:848").ms, Time("01:10:112").ms);
 	place("fartownik", Vector2(0, -0.5f), Time("01:08:131").ms, Time("01:10:112").ms);
-	place("storyboarders:", Vector2(0, 2.5f), Time("01:10:112").ms, Time("01:11:244").ms);
-	place("szvx", Vector2(0, 1.5f), Time("01:10:301").ms, Time("01:11:433").ms);
-	place("niseboi", Vector2(0, 0.5f), Time("01:10:489").ms, Time("01:11:621").ms);
-	place("xenocidel", Vector2(0, -0.5f), Time("01:10:678").ms, Time("01:11:810").ms);
-	place("naranja sagged", Vector2(0, -1.5f), Time("01:10:867").ms, Time("01:11:999").ms);
+	place("storyboarders:", Vector2(0, 2.5f), Time("01:10:112").ms, Time("01:12:187").ms);
+	place("szvx", Vector2(0, 1.5f), Time("01:10:301").ms, Time("01:12:187").ms);
+	place("niseboi", Vector2(0, 0.5f), Time("01:10:489").ms, Time("01:12:187").ms);
+	place("xenocidel", Vector2(0, -0.5f), Time("01:10:678").ms, Time("01:12:187").ms);
+	place("naranja sagged", Vector2(0, -1.5f), Time("01:10:867").ms, Time("01:12:187").ms);
 	place("dicingdice", Vector2(0, -2.5f), Time("01:11:055").ms, Time("01:12:187").ms);
 	// Poem 1
 	place("chained and bound",						Vector2(0, 1.5f),		Time("01:12:376").ms, Time("01:21:433").ms);
@@ -121,7 +121,7 @@ void Text::render() {
 	draw("suffocating", Vector2::Zero, Time("02:16:904").ms, Time("02:18:744").ms);
 	draw("puff of smoke", Vector2::Zero, Time("02:19:452").ms, Time("02:21:150").ms);
 	draw("and i saw the world", Vector2::Zero, Time("02:24:263").ms, Time("02:27:659").ms);
-	draw("turn red", Vector2::Zero, Time("02:28:791").ms, Time("02:33:885").ms);
+	draw("turn red", Vector2::Zero, Time("02:28:791").ms, Time("02:32:753").ms);
 	// Poem 2
 	place("your voice",								Vector2(0, 1.0f),		Time("02:33:885").ms, Time("02:38:414").ms);
 	place("pierced the falling rain",				Vector2(0, 0.0f),		Time("02:33:885").ms, Time("02:38:414").ms);
