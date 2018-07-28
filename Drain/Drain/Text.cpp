@@ -1,6 +1,6 @@
-#include "Lyric.hpp"
+#include "Text.hpp"
 #include <exception>
-void Lyric::draw(const std::string& lyric,
+void Text::draw(const std::string& lyric,
 				 const Vector2& center,
 				 const int startTime,
 				 const int endTime,
@@ -16,7 +16,7 @@ void Lyric::draw(const std::string& lyric,
 		left.x += characterWidth + (tracking * scale);
 	}
 }
-void Lyric::place(const std::string& lyric,
+void Text::place(const std::string& lyric,
 				  const Vector2& center,
 				  const int startTime,
 				  const int endTime,
@@ -32,7 +32,7 @@ void Lyric::place(const std::string& lyric,
 		left.x += characterWidth + (tracking * scale);
 	}
 }
-float Lyric::calculateWidth(const std::vector<Character>& characters, const float scale) {
+float Text::calculateWidth(const std::vector<Character>& characters, const float scale) {
 	auto width = 0.0f;
 	for (const auto& character : characters) {
 		width += character.calculateWidth(scale);
@@ -41,14 +41,14 @@ float Lyric::calculateWidth(const std::vector<Character>& characters, const floa
 	const auto totalWidth = width + totalTracking;
 	return totalWidth;
 }
-std::vector<Character> Lyric::createCharacters(const std::string& lyric) {
+std::vector<Character> Text::createCharacters(const std::string& lyric) {
 	std::vector<Character> characters;
 	for (const auto& letter : lyric) {
 		characters.push_back(Character(letter));
 	}
 	return characters;
 }
-void Lyric::render() {
+void Text::render() {
 	const auto fontSize = 25.0f;
 	const auto small = 15.0f;
 	const auto lineSpacing = small * 3.0f;
@@ -95,8 +95,8 @@ void Lyric::render() {
 
 	place("i reached out",							Vector2(0,	lineSpacing *	1.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
 	place("and we touched.",						Vector2(0,	lineSpacing *	0.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
-	place("for a second",					Vector2(0,	-lineSpacing *	0.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
-	place("forming a bond",					Vector2(0,	-lineSpacing *	1.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
+	place("for a second",							Vector2(0,	-lineSpacing *	0.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
+	place("forming a bond",							Vector2(0,	-lineSpacing *	1.5f),		Time("01:39:546").ms, Time("01:44:074").ms, small);
 
 	place("trust in me",							Vector2(0,	lineSpacing *	1.5f),		Time("01:44:074").ms, Time("01:48:602").ms, small);
 	place("follow me",								Vector2(0,	lineSpacing *	0.5f),		Time("01:44:074").ms, Time("01:48:602").ms, small);
@@ -122,105 +122,99 @@ void Lyric::render() {
 	draw("and i saw the world", Vector2::Zero, Time("02:24:263").ms, Time("02:27:659").ms, fontSize);
 	draw("turn red", Vector2::Zero, Time("02:28:791").ms, Time("02:33:885").ms, fontSize);
 	// Poem 2
-	place("your voice",								Vector2(0,	lineSpacing *	1.0f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("pierced the falling rain",				Vector2(0,	lineSpacing *	0.0f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("singing, screaming in song",				Vector2(0,	-lineSpacing *	1.0f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("your voice",								Vector2(0,	lineSpacing *	1.0f),		Time("02:33:885").ms, Time("02:38:414").ms, small);
+	place("pierced the falling rain",				Vector2(0,	lineSpacing *	0.0f),		Time("02:33:885").ms, Time("02:38:414").ms, small);
+	place("singing, screaming in song",				Vector2(0,	-lineSpacing *	1.0f),		Time("02:33:885").ms, Time("02:38:414").ms, small);
 
-	place("out, from every depth",					Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("came feeling",							Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("feelings of sincerity",					Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("of everything",							Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("for a few moments then",					Vector2(0,	lineSpacing *	1.0f),		Time("02:38:414").ms, Time("02:42:949").ms, small);
+	place("we forgot the sad world",				Vector2(0,	lineSpacing *	0.0f),		Time("02:38:414").ms, Time("02:42:949").ms, small);
+	place("crying in its sweet dream",				Vector2(0,	-lineSpacing *	1.0f),		Time("02:38:414").ms, Time("02:42:949").ms, small);
 
-	place("for a few moments then",					Vector2(0,	lineSpacing *	1.0f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("we forgot the sad world",				Vector2(0,	lineSpacing *	0.0f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("crying in its sweet dream",				Vector2(0,	-lineSpacing *	1.0f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("you and i",								Vector2(0,	lineSpacing *	1.5f),		Time("02:42:949").ms, Time("02:47:470").ms, small);
+	place("laughed",								Vector2(0,	lineSpacing *	0.5f),		Time("02:42:949").ms, Time("02:47:470").ms, small);
+	place("stumbled through alleyways",				Vector2(0,	-lineSpacing *	0.5f),		Time("02:42:949").ms, Time("02:47:470").ms, small);
+	place("exploring every nook",					Vector2(0,	-lineSpacing *	1.5f),		Time("02:42:949").ms, Time("02:47:470").ms, small);
 
-	place("you and i",								Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("laughed",								Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("stumbled through alleyways",				Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("exploring every nook",					Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("clasping tightly",						Vector2(0,	lineSpacing *	1.5f),		Time("02:47:470").ms, Time("02:51:999").ms, small);
+	place("i dragged us along",						Vector2(0,	lineSpacing *	0.5f),		Time("02:47:470").ms, Time("02:51:999").ms, small);
+	place("in a frenzied daze",						Vector2(0,	-lineSpacing *	0.5f),		Time("02:47:470").ms, Time("02:51:999").ms, small);
+	place("night after night",						Vector2(0,	-lineSpacing *	1.5f),		Time("02:47:470").ms, Time("02:51:999").ms, small);
 
-	place("clasping tightly",						Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("i dragged us along",						Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("in a frenzied daze",						Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("night after night",						Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("a signal",								Vector2(0,	lineSpacing *	1.5f),		Time("02:51:999").ms, Time("02:56:527").ms, small);
+	place("shining high in the sky",				Vector2(0,	lineSpacing *	0.5f),		Time("02:51:999").ms, Time("02:56:527").ms, small);
+	place("to return back",							Vector2(0,	-lineSpacing *	0.5f),		Time("02:51:999").ms, Time("02:56:527").ms, small);
+	place("to daily life",							Vector2(0,	-lineSpacing *	1.5f),		Time("02:51:999").ms, Time("02:56:527").ms, small);
 
-	place("a signal",								Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("shining high in the sky",				Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("to return back",							Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("to daily life",							Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("lost in the morning fog",				Vector2(0,	lineSpacing *	1.5f),		Time("02:56:527").ms, Time("03:01:055").ms, small);
+	place("we parted ways",							Vector2(0,	lineSpacing *	0.5f),		Time("02:56:527").ms, Time("03:01:055").ms, small);
+	place("separated by our",						Vector2(0,	-lineSpacing *	0.5f),		Time("02:56:527").ms, Time("03:01:055").ms, small);
+	place("different worlds",						Vector2(0,	-lineSpacing *	1.5f),		Time("02:56:527").ms, Time("03:01:055").ms, small);
 
-	place("lost in the morning fog",				Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("we parted ways",							Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("separated by our",						Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("different worlds",						Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("in hiding we bid our time",				Vector2(0,	lineSpacing *	1.0f),		Time("03:01:055").ms, Time("03:05:584").ms, small);
+	place("waiting for the next opportunity",		Vector2(0,	lineSpacing *	0.0f),		Time("03:01:055").ms, Time("03:05:584").ms, small);
+	place("to sneak out in the rain",				Vector2(0,	-lineSpacing *	1.0f),		Time("03:01:055").ms, Time("03:05:584").ms, small);
 
-	place("in hiding we bid our time",				Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("waiting for the sun to set",				Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("for the next opportunity",				Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("to sneak out in the rain",				Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("night by night",							Vector2(0,	lineSpacing *	1.5f),		Time("03:05:584").ms, Time("03:10:112").ms, small);
+	place("we met each other",						Vector2(0,	lineSpacing *	0.5f),		Time("03:05:584").ms, Time("03:10:112").ms, small);
+	place("night by night",							Vector2(0,	-lineSpacing *	0.5f),		Time("03:05:584").ms, Time("03:10:112").ms, small);
+	place("we escaped",								Vector2(0,	-lineSpacing *	1.5f),		Time("03:05:584").ms, Time("03:10:112").ms, small);
 
-	place("night by night",							Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("we met each other",						Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("night by night",							Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("we escaped",								Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("counting the moons",						Vector2(0,	lineSpacing *	1.5f),		Time("03:10:112").ms, Time("03:14:640").ms, small);
+	place("from crescent to full",					Vector2(0,	lineSpacing *	0.5f),		Time("03:10:112").ms, Time("03:14:640").ms, small);
+	place("every adventure",						Vector2(0,	-lineSpacing *	0.5f),		Time("03:10:112").ms, Time("03:14:640").ms, small);
+	place("one to remember",						Vector2(0,	-lineSpacing *	1.5f),		Time("03:10:112").ms, Time("03:14:640").ms, small);
 
-	place("counting the moons",						Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("from crescent to full",					Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("every adventure",						Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("one to remember",						Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("through the seasons",					Vector2(0,	lineSpacing *	1.5f),		Time("03:14:640").ms, Time("03:19:168").ms, small);
+	place("time passed",							Vector2(0,	lineSpacing *	0.5f),		Time("03:14:640").ms, Time("03:19:168").ms, small);
+	place("the sun rose sooner",					Vector2(0,	-lineSpacing *	0.5f),		Time("03:14:640").ms, Time("03:19:168").ms, small);
+	place("and our time, shorter",					Vector2(0,	-lineSpacing *	1.5f),		Time("03:14:640").ms, Time("03:19:168").ms, small);
 
-	place("through the seasons",					Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("time passed",							Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("the sun rose sooner",					Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("and our time, shorter",					Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("runs became walks",						Vector2(0,	lineSpacing *	1.5f),		Time("03:19:168").ms, Time("03:23:697").ms, small);
+	place("laughs became smiles",					Vector2(0,	lineSpacing *	0.5f),		Time("03:19:168").ms, Time("03:23:697").ms, small);
+	place("now we took shelter",					Vector2(0,	-lineSpacing *	0.5f),		Time("03:19:168").ms, Time("03:23:697").ms, small);
+	place("from the pouring nights",				Vector2(0,	-lineSpacing *	1.5f),		Time("03:19:168").ms, Time("03:23:697").ms, small);
 
-	place("runs became walks",						Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("laughs became smiles",					Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("now we took shelter",					Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("from the pouring nights",							Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("a toll, a price to pay",					Vector2(0,	lineSpacing *	1.5f),		Time("03:23:697").ms, Time("03:28:225").ms, small);
+	place("with your mind and body",				Vector2(0,	lineSpacing *	0.5f),		Time("03:23:697").ms, Time("03:28:225").ms, small);
+	place("a cost and affordance",					Vector2(0,	-lineSpacing *	0.5f),		Time("03:23:697").ms, Time("03:28:225").ms, small);
+	place("for each trip",							Vector2(0,	-lineSpacing *	1.5f),		Time("03:23:697").ms, Time("03:28:225").ms, small);
 
-	place("a toll, a price to pay",					Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("with your mind and body",				Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("a cost and affordance",					Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("for each trip",							Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("with exhaustion",						Vector2(0,	lineSpacing *	1.0f),		Time("03:28:225").ms, Time("03:32:753").ms, small);
+	place("we barely met the night's end",			Vector2(0,	lineSpacing *	0.0f),		Time("03:28:225").ms, Time("03:32:753").ms, small);
+	place("to catch the day's start",				Vector2(0,	-lineSpacing *	1.5f),		Time("03:28:225").ms, Time("03:32:753").ms, small);
 
-	place("with exhaustion",						Vector2(0,	lineSpacing *	1.0f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("we barely met the nights end",			Vector2(0,	lineSpacing *	0.0f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("to catch the days start",				Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("but one night,",							Vector2(0,	lineSpacing *	1.5f),		Time("03:32:753").ms, Time("03:37:282").ms, small);
+	place("we failed to make it back",				Vector2(0,	lineSpacing *	0.5f),		Time("03:32:753").ms, Time("03:37:282").ms, small);
+	place("lost in the maze",						Vector2(0,	-lineSpacing *	0.5f),		Time("03:32:753").ms, Time("03:37:282").ms, small);
+	place("of winding streets",						Vector2(0,	-lineSpacing *	1.5f),		Time("03:32:753").ms, Time("03:37:282").ms, small);
 
-	place("but one night,",							Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("we failed to make it back",				Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("lost in the maze",						Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("of winding streets",						Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("as the day broke",						Vector2(0,	lineSpacing *	1.5f),		Time("03:37:282").ms, Time("03:41:810").ms, small);
+	place("ghosts and demons",						Vector2(0,	lineSpacing *	0.5f),		Time("03:37:282").ms, Time("03:41:810").ms, small);
+	place("evil of all kind",						Vector2(0,	-lineSpacing *	0.5f),		Time("03:37:282").ms, Time("03:41:810").ms, small);
+	place("spawned from the shadows",				Vector2(0,	-lineSpacing *	1.5f),		Time("03:37:282").ms, Time("03:41:810").ms, small);
 
-	place("as the day broke",						Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("ghosts and demons",						Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("evil of all kind",						Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("spawned from the shadows",				Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("every dark corner",						Vector2(0,	lineSpacing *	1.5f),		Time("03:41:810").ms, Time("03:46:338").ms, small);
+	place("hid encroaching fears",					Vector2(0,	lineSpacing *	0.5f),		Time("03:41:810").ms, Time("03:46:338").ms, small);
+	place("so we ran, ran away",					Vector2(0,	-lineSpacing *	0.5f),		Time("03:41:810").ms, Time("03:46:338").ms, small);
+	place("through twisting paths",					Vector2(0,	-lineSpacing *	1.5f),		Time("03:41:810").ms, Time("03:46:338").ms, small);
 
-	place("every dark corner",						Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("hid encroaching fears",					Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("so we ran, ran away",					Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("through twisting paths",					Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("around corners and bends",				Vector2(0,	lineSpacing *	0.5f),		Time("03:46:338").ms, Time("03:48:602").ms, small);
+	place("a storm of frantic movements",			Vector2(0,	-lineSpacing *	0.5f),		Time("03:46:338").ms, Time("03:48:602").ms, small);
 
-	place("around corners and bends",				Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("a storm of frantic movements",			Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("with a misstep",							Vector2(0,	lineSpacing *	1.5f),		Time("03:48:602").ms, Time("03:53:131").ms, small);
+	place("you tumbled to the floor",				Vector2(0,	lineSpacing *	0.5f),		Time("03:48:602").ms, Time("03:53:131").ms, small);
+	place("and a swarm of shadows",					Vector2(0,	-lineSpacing *	0.5f),		Time("03:48:602").ms, Time("03:53:131").ms, small);
+	place("swallowed you whole",					Vector2(0,	-lineSpacing *	1.5f),		Time("03:48:602").ms, Time("03:53:131").ms, small);
 
-	place("with a misstep",							Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("you tumbled to the floor",				Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("and a swarm of shadows",					Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("swallowed you whole",					Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("a panic, struggle",						Vector2(0,	lineSpacing *	1.5f),		Time("03:53:131").ms, Time("03:57:659").ms, small);
+	place("pulling you up",							Vector2(0,	lineSpacing *	0.5f),		Time("03:53:131").ms, Time("03:57:659").ms, small);
+	place("but we broke apart",						Vector2(0,	-lineSpacing *	0.5f),		Time("03:53:131").ms, Time("03:57:659").ms, small);
+	place("and lost touch",							Vector2(0,	-lineSpacing *	1.5f),		Time("03:53:131").ms, Time("03:57:659").ms, small);
 
-	place("a panic, struggle",						Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("pulling you up",							Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("but we broke apart",						Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("and lost touch",								Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-
-	place("a final scream",							Vector2(0,	lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("left your lips",							Vector2(0,	lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("before the void took you",				Vector2(0,	-lineSpacing *	0.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
-	place("and i ran, ran away",					Vector2(0,	-lineSpacing *	1.5f),		Time("00:00:000").ms, Time("00:00:000").ms, small);
+	place("a final scream",							Vector2(0,	lineSpacing *	1.5f),		Time("03:57:659").ms, Time("04:04:168").ms, small);
+	place("left your lips",							Vector2(0,	lineSpacing *	0.5f),		Time("03:57:659").ms, Time("04:04:168").ms, small);
+	place("before the void took you",				Vector2(0,	-lineSpacing *	0.5f),		Time("03:57:659").ms, Time("04:04:168").ms, small);
+	place("and i ran, ran away",					Vector2(0,	-lineSpacing *	1.5f),		Time("03:57:659").ms, Time("04:04:168").ms, small);
 	// Lyric 3
 	draw("dripping", Vector2::Zero, Time("04:04:168").ms, Time("04:04:805").ms, fontSize);
 	draw("trickling", Vector2::Zero, Time("04:06:433").ms, Time("04:07:211").ms, fontSize);
@@ -257,7 +251,7 @@ void Lyric::render() {
 	place("and longed for",							Vector2(0,	-lineSpacing *	1.0f),		Time("06:03:319").ms, Time("06:06:716").ms, small);
 
 	place("looking up",								Vector2(0,	lineSpacing *	1.0f),		Time("06:06:716").ms, Time("06:10:112").ms, small);
-	place("clouds gathered",					Vector2(0,	lineSpacing *	0.0f),		Time("06:06:716").ms, Time("06:10:112").ms, small);
+	place("clouds gathered",						Vector2(0,	lineSpacing *	0.0f),		Time("06:06:716").ms, Time("06:10:112").ms, small);
 	place("and covered the sky",					Vector2(0,	-lineSpacing *	1.0f),		Time("06:06:716").ms, Time("06:10:112").ms, small);
 
 	place("the first drops came",					Vector2(0,	lineSpacing *	1.0f),		Time("06:10:112").ms, Time("06:13:508").ms, small);
@@ -270,7 +264,7 @@ void Lyric::render() {
 	place("in the wet glow",						Vector2(0,	-lineSpacing *	1.5f),		Time("06:13:508").ms, Time("06:18:036").ms, small);
 
 	place("i reached, for all the pieces",			Vector2(0,	lineSpacing *	1.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
-	place("pooled them to my cut hands",				Vector2(0,	lineSpacing *	0.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
+	place("pooled them to my cut hands",			Vector2(0,	lineSpacing *	0.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
 	place("but there were far too many",			Vector2(0,	-lineSpacing *	1.0f),		Time("06:18:036").ms, Time("06:23:697").ms, small);
 
 	place("was it worth it",						Vector2(0,	lineSpacing *	1.0f),		Time("06:23:697").ms, Time("06:27:093").ms, small);

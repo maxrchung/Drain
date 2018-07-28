@@ -42,9 +42,6 @@
     <ClCompile Include="Drain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Lyric.cpp">
-      <Filter>Source Files\Lyric</Filter>
-    </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>Source Files\Lyric</Filter>
     </ClCompile>
@@ -111,13 +108,13 @@
     <ClCompile Include="Walker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Source Files\Lyric</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raindrop.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Lyric.hpp">
-      <Filter>Header Files\Lyric</Filter>
     </ClInclude>
     <ClInclude Include="Character.hpp">
       <Filter>Header Files\Lyric</Filter>
@@ -184,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="Walker.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.hpp">
+      <Filter>Header Files\Lyric</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@
 #include <vector>
 // To use Lyric, call the static function draw() and enter all the parameters
 // I decided to use a static method over constructor because this doesn't need to return an object
-class Lyric {
+class Text {
 public:
 	static void render();
 private:

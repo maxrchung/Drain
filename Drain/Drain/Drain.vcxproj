@@ -138,7 +138,7 @@
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Drain.cpp" />
     <ClCompile Include="LineStroke.cpp" />
-    <ClCompile Include="Lyric.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="PointStroke.cpp" />
     <ClCompile Include="Raindrop.cpp" />
@@ -168,7 +168,7 @@
     <ClInclude Include="SpriteCollection.hpp" />
     <ClInclude Include="Swatch.hpp" />
     <ClInclude Include="LineStroke.hpp" />
-    <ClInclude Include="Lyric.hpp" />
+    <ClInclude Include="Text.hpp" />
     <ClInclude Include="Path.hpp" />
     <ClInclude Include="PointStroke.hpp" />
     <ClInclude Include="Raindrop.hpp" />
