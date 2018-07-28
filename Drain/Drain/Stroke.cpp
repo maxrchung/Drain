@@ -1,6 +1,6 @@
 #include "Stroke.hpp"
 #include "Swatch.hpp"
-const RandomRange Stroke::pointScale = RandomRange(120, 170, Stroke::imageSize);
+const RandomRange Stroke::pointScale = RandomRange(150, 200, Stroke::imageSize);
 void Stroke::colorBgSprites(const std::vector<Sprite*>& sprites, const int startDraw, const int endDraw) {
 	Swatch::colorBgToBgSprites(sprites, startDraw, endDraw);
 }

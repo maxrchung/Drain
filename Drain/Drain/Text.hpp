@@ -23,7 +23,7 @@ private:
 					  const int endTime,
 					  const float scale);
 	// Space between characters represented as a factor of scale
-	static constexpr float tracking = 0.18f;
+	static constexpr float tracking = 0.26f;
 	static float calculateWidth(const std::vector<Character>& characters, const float scale);
 	static std::vector<Character> createCharacters(const std::string& lyric);
 };

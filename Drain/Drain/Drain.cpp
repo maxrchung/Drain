@@ -1,10 +1,10 @@
-#include "Lyric.hpp"
 #include "Math.hpp"
 #include "Path.hpp"
 #include "RainGenerator.hpp"
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
 #include "Sketch.hpp"
+#include "Text.hpp"
 #include "Walker.hpp"
 #include <ctime>
 #include <cmath>
@@ -21,8 +21,8 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
-	//Lyric::render();
-    Sketch::render();
+	Text::render();
+    //Sketch::render();
 	
 	// RainGenerator testing
 	// RainGenerator::RainGenerator();
