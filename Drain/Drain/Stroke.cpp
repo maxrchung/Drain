@@ -12,7 +12,7 @@ void Stroke::fadeSprites(const std::vector<Sprite*>& sprites, const int startDra
 }
 void Stroke::fadePoints(const std::vector<Sprite*>& sprites, const int startDrain, const int endDrain) {
 	for (auto const sprite : sprites) {
-		Swatch::colorFgToBgSprites({ sprite }, startDrain, endDrain + Timing::half);
+		Swatch::colorFgToBgSprites({ sprite }, startDrain, endDrain + Timing::quarter);
 	}
 }
 void Stroke::hideSprites(const std::vector<Sprite*>& sprites, const int endDraw) {
