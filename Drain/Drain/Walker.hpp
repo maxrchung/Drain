@@ -49,7 +49,7 @@ private:
 
 	//the maximum distance that any sprite will be drawn
 	//the minimum distance that a sprite will be drawn
-	const float max_distance = 30;
+	const float max_distance = 100;
 	const float min_distance = 1;
 
 	//size in pixels
@@ -58,10 +58,12 @@ private:
 	//min and max scale of the raindrop
 	//scales are for the actual sprite size
 	//i think these are the values used in rainGenerator
-	const float min_scale = 0.05;
-	const float maxScale = 0.7;
+	const float min_scale = 0.01;
+	const float max_scale = 0.1;
+
+	const float sizeScale = 1;
 
 	//sizes of the raindrop
-	const float minSize = 1;
+	const float minSize = 10;
 	const float maxSize = 100;
 };

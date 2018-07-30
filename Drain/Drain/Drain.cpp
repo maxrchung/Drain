@@ -31,7 +31,6 @@ int main() {
 	if(0) { //lmao
 		RainGenerator gen = RainGenerator(Time("00:53:00"));
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
-
 		Walker walk_boi = Walker::Walker(raindrops);
 		walk_boi.walk(50, Time("00:54:00").ms, Time("01:04:00").ms);
 	}
