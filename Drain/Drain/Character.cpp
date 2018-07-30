@@ -9,7 +9,25 @@
 Character::Character(const char character)
 	: strokes{ createStrokes(character) } {
 }
-float Character::calculateCenter(const float scale) const {
+float Character::calculateTopToCenter(const float scale) const {
+	if (strokes.empty()) {
+		return 0;
+	}
+	auto top = std::numeric_limits<float>::min();
+	for (const auto& stroke : strokes) {
+		auto startY = stroke->getStartPosition().y * scale;
+		if (startY > top) {
+			top = startY;
+		}
+		auto endY = stroke->getEndPosition().y * scale;
+		if (endY > top) {
+			top = endY;
+		}
+	}
+	const auto centerHeight = fabsf(top);
+	return centerHeight;
+}
+float Character::calculateLeftToCenter(const float scale) const {
 	if (strokes.empty()) {
 		return 0;
 	}
@@ -26,6 +44,31 @@ float Character::calculateCenter(const float scale) const {
 	}
 	const auto centerWidth = fabsf(left);
 	return centerWidth;
+}
+float Character::calculateHeight(const float scale) const {
+	if (strokes.empty()) {
+		return 0;
+	}
+	auto bottom = std::numeric_limits<float>::max();
+	auto top = std::numeric_limits<float>::min();
+	for (const auto& stroke : strokes) {
+		auto startY = stroke->getStartPosition().y * scale;
+		if (startY < bottom) {
+			bottom = startY;
+		}
+		if (startY > top) {
+			top = startY;
+		}
+		auto endY = stroke->getEndPosition().y * scale;
+		if (endY < bottom) {
+			bottom = endY;
+		}
+		if (endY > top) {
+			top = endY;
+		}
+	}
+	const auto height = top - bottom + Stroke::thickness * scale;
+	return height;
 }
 float Character::calculateWidth(const float scale) const {
 	if (strokes.empty()) {
