@@ -6,13 +6,11 @@
 #include <memory>
 #include <string>
 #include <vector>
-// To use Lyric, call the static function draw() and enter all the parameters
-// I decided to use a static method over constructor because this doesn't need to return an object
+// I decided to use a static render method over constructor because this doesn't need to return an object
 class Text {
 public:
 	static void render();
 private:
-	static float getPoemScale(const float scale);
 	static void draw(const std::string& lyric,
 					 const Vector2& center,
 					 const int startTime,

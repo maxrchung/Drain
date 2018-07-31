@@ -9,17 +9,20 @@
 Character::Character(const char character)
 	: strokes{ createStrokes(character) } {
 }
+const std::vector<std::unique_ptr<Stroke>>& Character::getStrokes() const {
+	return strokes;
+}
 float Character::calculateTopToCenter(const float scale) const {
 	if (strokes.empty()) {
 		return 0;
 	}
 	auto top = std::numeric_limits<float>::min();
 	for (const auto& stroke : strokes) {
-		auto startY = stroke->getStartPosition().y * scale;
+		const auto startY = stroke->getStartPosition().y * scale;
 		if (startY > top) {
 			top = startY;
 		}
-		auto endY = stroke->getEndPosition().y * scale;
+		const auto endY = stroke->getEndPosition().y * scale;
 		if (endY > top) {
 			top = endY;
 		}
@@ -33,11 +36,11 @@ float Character::calculateLeftToCenter(const float scale) const {
 	}
 	auto left = std::numeric_limits<float>::max();
 	for (const auto& stroke : strokes) {
-		auto startX = stroke->getStartPosition().x * scale;
+		const auto startX = stroke->getStartPosition().x * scale;
 		if (startX < left) {
 			left = startX;
 		}
-		auto endX = stroke->getEndPosition().x * scale;
+		const auto endX = stroke->getEndPosition().x * scale;
 		if (endX < left) {
 			left = endX;
 		}
@@ -52,14 +55,14 @@ float Character::calculateHeight(const float scale) const {
 	auto bottom = std::numeric_limits<float>::max();
 	auto top = std::numeric_limits<float>::min();
 	for (const auto& stroke : strokes) {
-		auto startY = stroke->getStartPosition().y * scale;
+		const auto startY = stroke->getStartPosition().y * scale;
 		if (startY < bottom) {
 			bottom = startY;
 		}
 		if (startY > top) {
 			top = startY;
 		}
-		auto endY = stroke->getEndPosition().y * scale;
+		const auto endY = stroke->getEndPosition().y * scale;
 		if (endY < bottom) {
 			bottom = endY;
 		}
@@ -77,14 +80,14 @@ float Character::calculateWidth(const float scale) const {
 	auto left = std::numeric_limits<float>::max();
 	auto right = std::numeric_limits<float>::min();
 	for (const auto& stroke : strokes) {
-		auto startX = stroke->getStartPosition().x * scale;
+		const auto startX = stroke->getStartPosition().x * scale;
 		if (startX < left) {
 			left = startX;
 		}
 		if (startX > right) {
 			right = startX;
 		}
-		auto endX = stroke->getEndPosition().x * scale;
+		const auto endX = stroke->getEndPosition().x * scale;
 		if (endX < left) {
 			left = endX;
 		}
