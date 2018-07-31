@@ -159,7 +159,7 @@ void Text::render() {
 
 	//place("trust in me", Vector2(0, 1.5f), Time("01:44:074").ms, Time("01:48:602").ms);
 	//place("follow me", Vector2(0, 0.5f), Time("01:44:074").ms, Time("01:48:602").ms);
-	//place("and i'll lead you to peace", Vector2(0, -0.5f), Time("01:44:074").ms, Time("01:48:602").ms);
+	//place("and you'll find peace", Vector2(0, -0.5f), Time("01:44:074").ms, Time("01:48:602").ms);
 	//place("i promised", Vector2(0, -1.5f), Time("01:44:074").ms, Time("01:48:602").ms);
 
 	//place("so began our nights", Vector2(0, 1.5f), Time("01:48:602").ms, Time("01:53:131").ms);
