@@ -294,11 +294,11 @@ void Text::render() {
 		"every dark corner",
 		"hid encroaching fears", 
 		"so we ran, ran away",
-		"through twisting paths",
+		"through frantic paths",
 	}, Time("03:41:810").ms, Time("03:46:338").ms);
 	place({
 		"around corners and bends",
-		"a storm of frantic movements",
+		"a storm of movements",
 	}, Time("03:46:338").ms, Time("03:48:602").ms);
 	place({
 		"with a misstep",
