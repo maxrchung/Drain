@@ -2,8 +2,8 @@
 #include <algorithm>
 #include <exception>
 #include <limits>
-const RandomRange Text::poemScale = RandomRange(8, 16);
-const RandomRange Text::poemSpacing = RandomRange(10, 30);
+const RandomRange Text::poemScale = RandomRange(8, 12);
+const RandomRange Text::poemSpacing = RandomRange(10, 26);
 void Text::draw(const std::string& lyric,
 				const Vector2& center,
 				const int startTime,
