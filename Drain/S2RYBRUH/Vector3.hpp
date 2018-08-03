@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ostream>
+
 // Circular dependency, need to forward declare
 class Matrix;
 class Vector2;
@@ -36,9 +38,13 @@ public:
 	void operator*=(Vector3 rhs);
 	bool operator==(Vector3 rhs);
 
+
+	friend std::ostream& operator<<(std::ostream& os, const Vector3& v);
+
 	static Vector3 Zero;
 
 	float x;
 	float y;
 	float z;
 };
+

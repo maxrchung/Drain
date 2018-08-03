@@ -9,23 +9,69 @@
 Character::Character(const char character)
 	: strokes{ createStrokes(character) } {
 }
-float Character::calculateCenter(const float scale) const {
+const std::vector<std::unique_ptr<Stroke>>& Character::getStrokes() const {
+	return strokes;
+}
+float Character::calculateTopToCenter(const float scale) const {
+	if (strokes.empty()) {
+		return 0;
+	}
+	auto top = std::numeric_limits<float>::min();
+	for (const auto& stroke : strokes) {
+		const auto startY = stroke->getStartPosition().y * scale;
+		if (startY > top) {
+			top = startY;
+		}
+		const auto endY = stroke->getEndPosition().y * scale;
+		if (endY > top) {
+			top = endY;
+		}
+	}
+	const auto centerHeight = fabsf(top);
+	return centerHeight;
+}
+float Character::calculateLeftToCenter(const float scale) const {
 	if (strokes.empty()) {
 		return 0;
 	}
 	auto left = std::numeric_limits<float>::max();
 	for (const auto& stroke : strokes) {
-		auto startX = stroke->getStartPosition().x * scale;
+		const auto startX = stroke->getStartPosition().x * scale;
 		if (startX < left) {
 			left = startX;
 		}
-		auto endX = stroke->getEndPosition().x * scale;
+		const auto endX = stroke->getEndPosition().x * scale;
 		if (endX < left) {
 			left = endX;
 		}
 	}
 	const auto centerWidth = fabsf(left);
 	return centerWidth;
+}
+float Character::calculateHeight(const float scale) const {
+	if (strokes.empty()) {
+		return 0;
+	}
+	auto bottom = std::numeric_limits<float>::max();
+	auto top = std::numeric_limits<float>::min();
+	for (const auto& stroke : strokes) {
+		const auto startY = stroke->getStartPosition().y * scale;
+		if (startY < bottom) {
+			bottom = startY;
+		}
+		if (startY > top) {
+			top = startY;
+		}
+		const auto endY = stroke->getEndPosition().y * scale;
+		if (endY < bottom) {
+			bottom = endY;
+		}
+		if (endY > top) {
+			top = endY;
+		}
+	}
+	const auto height = top - bottom + Stroke::thickness * scale;
+	return height;
 }
 float Character::calculateWidth(const float scale) const {
 	if (strokes.empty()) {
@@ -34,14 +80,14 @@ float Character::calculateWidth(const float scale) const {
 	auto left = std::numeric_limits<float>::max();
 	auto right = std::numeric_limits<float>::min();
 	for (const auto& stroke : strokes) {
-		auto startX = stroke->getStartPosition().x * scale;
+		const auto startX = stroke->getStartPosition().x * scale;
 		if (startX < left) {
 			left = startX;
 		}
 		if (startX > right) {
 			right = startX;
 		}
-		auto endX = stroke->getEndPosition().x * scale;
+		const auto endX = stroke->getEndPosition().x * scale;
 		if (endX < left) {
 			left = endX;
 		}

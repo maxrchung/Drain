@@ -7,6 +7,7 @@
 
 #include <cmath>
 
+
 Vector3 Vector3::Zero = Vector3(0, 0, 0);
 
 Vector3::Vector3(float x, float y, float z)
@@ -170,4 +171,9 @@ void Vector3::operator*=(float rhs) {
 	x *= rhs;
 	y *= rhs;
 	z *= rhs;
+}
+
+std::ostream& operator<<(std::ostream& os, const Vector3& v) {
+	os << v.x << " " << v.y << " " << v.z;
+	return os;
 }
