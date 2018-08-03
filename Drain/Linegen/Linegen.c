@@ -3,8 +3,8 @@
 #include <math.h>
 #include <string.h>
 
-#define ROWS	1900
-#define COLS	1400
+#define ROWS	748 // height
+#define COLS	1328 // width
 #define PI		3.14159265
 #define sqr(x)	((x)*(x))
 #define bucket_size 100
@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 	unsigned int    s[ROWS][COLS], A[180][10000] = { 0 };
 	char			filename[50], ch;
 
-	strcpy(filename, "image.raw");
+	strcpy(filename, "test2.raw");
 	header(ROWS, COLS, head);
 	max = 0;
 	memset(himage, 0, sizeof(char) * ROWS * COLS);	// init himage bg to 0
@@ -115,7 +115,7 @@ int main(int argc, char** argv)
 		}
 	}
 	*/
-	if (!(fp = fopen("image-b.ras", "wb")))
+	if (!(fp = fopen("test2.ras", "wb")))
 	{
 		fprintf(stderr, "error: could not open %s\n", filename);
 		exit(1);

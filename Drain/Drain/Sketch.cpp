@@ -303,5 +303,5 @@ void Sketch::render() {
     v.push_back(Sketch("1.txt", Time("00:05:600"), Time("00:05:900"), 1, 4.5, true, Path::Taper));    // 541
     v.push_back(Sketch("1.txt", Time("00:05:900"), Time("00:06:200"), 1, 4.5, false, Path::Taper));   // 629
     loop(3, v);     // result will be from 5:000 to 8:600
-    //Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper).make();
+    Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper).make();
 }
