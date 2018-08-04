@@ -4,7 +4,7 @@
 #include "Sprite.hpp"
 #include "Time.hpp"
 
-struct rainDrop {
+struct RainDrop {
 	Sprite* sprite;
 	float startingTime;
 	float endingTime;
@@ -29,6 +29,8 @@ public:
 	void RainController();
 	void DrawRain(int rainCount);
 	std::vector<Sprite*> FreezeRain();
+	Vector2 FreezePos();
+	float SlowRainBeforeFreeze(float actualDropStart, float actualDropTotalTime);
 	void TrackRainDrop(Sprite* sprite, float actualDropStart, float actualDropEnd, float newSize, float spriteEndPosX, float spriteEndPosY);
 	float RandomRainVelocity(float minDropTime, float veloDelta);
 	float RandomRainTilt(Sprite* sprite);
@@ -53,8 +55,10 @@ private:
 	const float maxSize = 0.7f; // Used in scaling rain size and determining end y position for rain
 	const float rainLength = 102; // because a.png is 102x102
 
-	std::vector<rainDrop> rainDrops;
+	std::vector<RainDrop> rainDrops;
 	std::vector<Sprite*> rainSprites;
 
 	Time freezeTime;
+	Time slowPeriod = Time("00:03:00");
+	float maxSlow = 2;
 };

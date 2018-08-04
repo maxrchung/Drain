@@ -8,9 +8,8 @@ RainGenerator::RainGenerator(Time freezeTime, int maxRainCount, int dropCount, T
 	leftOfScreen{ -Vector2::ScreenSize.x / 2 }, totalTime{ endTime.ms - startTime.ms } {
 
 	// TODO: actually have the rain section be placed in the time section it should be at
-	// TODO: before freezeing the rain slow it down somehow
-	// TODO: actually freeze the rain. . 
 	// TODO: color experimentation
+	// TODO: bubble stuff
 
 	// Initiate drop time values
 	dropTotalTime = totalTime / dropCount;
@@ -42,14 +41,15 @@ void RainGenerator::DrawRain(int rainCount) {
 		// Handle rain positioning
 		float rainPosX = RandomRange::calculate(-Vector2::ScreenSize.x / 2, Vector2::ScreenSize.x / 2);
 		static const float rainPosY = topOfScreen + (rainLength / 2);
+
 		// Handle rain timing
 		float actualDropTotalTime = RandomRainVelocity(minDropTime, veloDelta);
 		float totalVariance = actualDropTotalTime * 8;
 		float dropTimeDelta = RandomRange::calculate(-totalVariance, totalVariance); // This way drop timing of rain will vary based on totalVariance
 		float actualDropStart = dropStartTime + dropTimeDelta;
-		float actualDropEnd = actualDropStart + actualDropTotalTime;
+		float actualDropEnd = SlowRainBeforeFreeze(actualDropStart, actualDropTotalTime);
 
-		if (actualDropStart < startTime.ms || actualDropEnd > endTime.ms) { // Ensures drops don't fall outside of time section
+		if (actualDropStart < startTime.ms || (actualDropStart > freezeTime.ms)) { // Ensures drops don't fall outside of time section & freezeTime
 			continue;
 		}
 
@@ -69,39 +69,62 @@ void RainGenerator::DrawRain(int rainCount) {
 
 		if (freezeTime.ms >= actualDropStart && freezeTime.ms <= actualDropEnd) { // Tracks raindrop sprite from vector if drop is visible on the screen during freezeTime
 			TrackRainDrop(sprite, actualDropStart, actualDropEnd, rainSize, spriteEndPosX, spriteEndPosY);
+			Vector2 freezePos = FreezePos();
+			sprite->Move(actualDropStart, freezeTime.ms, sprite->position, Vector2(freezePos.x, freezePos.y));
 		}
-
-		sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(spriteEndPosX, spriteEndPosY));
+		else { // If this particular raindrop isn't being frozen, drop it to the bottom of the screen
+			sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(spriteEndPosX, spriteEndPosY));
+		}
 	}
+}
+
+// Gets the appropriate x and y positions for a raindrop that will be frozen
+Vector2 RainGenerator::FreezePos() {
+	Vector2 freezePos;
+	RainDrop rainDrop = rainDrops.back(); // Gets the newest added rainDrop which is added by TrackRainDrop
+
+	float totalTime = rainDrop.endingTime - rainDrop.startingTime;
+	float untilFreeze = freezeTime.ms - rainDrop.startingTime;
+	float ratio = untilFreeze / totalTime;
+	float xDiff = rainDrop.endX - rainDrop.startX;
+	float yDiff = rainDrop.endY - rainDrop.startY;
+
+	float freezeDiffX = xDiff * ratio;
+	float freezeDiffY = yDiff * ratio;
+
+	// Directly replace the end positions in the sprite class with the X, Y coordinates of the rain in frozen state
+	freezePos.x = rainDrop.startX + freezeDiffX;
+	freezePos.y = rainDrop.startY + freezeDiffY;
+
+	rainSprites.push_back(rainDrop.sprite); // Save the sprite to a sprite vector which is used by walker boi
+
+	return freezePos;
 }
 
 // Returns a vector of structures containing rain information at a certain time (doesn't actually freeze rain lol)
 std::vector<Sprite*> RainGenerator::FreezeRain() {
-	for (auto & rainDrop: rainDrops) {
-		float totalTime = rainDrop.endingTime - rainDrop.startingTime;
-		float untilFreeze = freezeTime.ms - rainDrop.startingTime;
-		float ratio = untilFreeze / totalTime;
-		float xDiff = rainDrop.endX - rainDrop.startX;
-		float yDiff = rainDrop.endY - rainDrop.startY;
-
-		float freezeDiffX = xDiff * ratio;
-		float freezeDiffY = yDiff * ratio;
-
-		// Directly replace the end positions in the sprite class with the X, Y coordinates of the rain in frozen state
-		rainDrop.sprite->position.x = rainDrop.startX + freezeDiffX;
-		rainDrop.sprite->position.y = rainDrop.startY + freezeDiffY;
-
-		std::cout << rainDrop.sprite->position.x << " " << rainDrop.sprite->position.y << "\n";
-
-		rainSprites.push_back(rainDrop.sprite);
-	}
-
 	return rainSprites;
+}
+
+float RainGenerator::SlowRainBeforeFreeze(float actualDropStart, float actualDropTotalTime) {
+	float slowStartTime = freezeTime.ms - slowPeriod.ms;
+	float timeFromStartSlow = actualDropStart - slowStartTime;
+	float slowRatio = timeFromStartSlow / slowPeriod.ms;
+
+	if (actualDropStart >= slowStartTime) { // Slows down drops a certain time before freezeTime
+		float realActualDropTotalTime = actualDropTotalTime + (actualDropTotalTime * (maxSlow * slowRatio));
+		float actualDropEnd = actualDropStart + realActualDropTotalTime;
+
+		return actualDropEnd;
+	}
+	else { // Won't increase actualDropEnd until it's time to slow down rain drops
+		return actualDropStart + actualDropTotalTime;
+	}
 }
 
 // Adds raindrop information in a struct into a struct vector
 void RainGenerator::TrackRainDrop(Sprite* sprite, float actualDropStart, float actualDropEnd, float rainSize, float spriteEndPosX, float spriteEndPosY) {
-	rainDrop rainDrop;
+	RainDrop rainDrop;
 	rainDrop.startingTime = actualDropStart;
 	rainDrop.endingTime = actualDropEnd;
 	rainDrop.scale = rainSize;
