@@ -59,5 +59,6 @@ private:
 	std::vector<Sprite*> rainSprites;
 
 	Time freezeTime;
-	int slowPeriod = 5;
+	Time slowPeriod = Time("00:03:00");
+	float maxSlow = 2;
 };
