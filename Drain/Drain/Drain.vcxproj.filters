@@ -111,6 +111,9 @@
     <ClCompile Include="Text.cpp">
       <Filter>Source Files\Lyric</Filter>
     </ClCompile>
+    <ClCompile Include="Splatter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Raindrop.hpp">
@@ -184,6 +187,9 @@
     </ClInclude>
     <ClInclude Include="Text.hpp">
       <Filter>Header Files\Lyric</Filter>
+    </ClInclude>
+    <ClInclude Include="Splatter.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

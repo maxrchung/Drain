@@ -66,12 +66,14 @@ void Sketch::draw(Bezier b) {
         }
         else {
             line->ScaleVector(startTime.ms, startTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // Loop will dictate endTime
+            //line->ScaleVector(startTime.ms, startTime.ms+(visDur+hiddenDur)*times, Vector2(dist, thickness), Vector2(dist, thickness));  // this will dictate endTime
+
         }
         Sprite * tmpSprite;     // jank tmpSprite to generate the command strings for Fading
         tmpSprite = &Sprite();
         auto commands = std::vector<std::string>();
+        commands.push_back(tmpSprite->Fade(0, visDur, 1, 1));  // stay visible NOTE: THIS LINE IS REQUIRED FOR LOOP TO WORK
         commands.push_back(tmpSprite->Fade(visDur, visDur, 1, 0));  // disappear instantaneously
-        // TODO: loop not workig correctly, fade in not working
         commands.push_back(tmpSprite->Fade(visDur + hiddenDur, visDur + hiddenDur, 0, 1));  // reappear instantaneously
         line->Loop(startTime.ms, times, commands);
     }
@@ -302,6 +304,6 @@ void Sketch::render() {
     v.push_back(Sketch("1.txt", Time("00:05:300"), Time("00:05:600"), 1, 4.7, false, Path::Taper));   // 562
     v.push_back(Sketch("1.txt", Time("00:05:600"), Time("00:05:900"), 1, 4.5, true, Path::Taper));    // 541
     v.push_back(Sketch("1.txt", Time("00:05:900"), Time("00:06:200"), 1, 4.5, false, Path::Taper));   // 629
-    loop(3, v);     // result will be from 5:000 to 8:600
-    Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper).make();
+    loop(3, v);     // loop duration is 1200ms
+    //Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper).make();
 }

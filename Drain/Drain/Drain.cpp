@@ -21,19 +21,19 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
-	Text::render();
+	// Text::render();
     Sketch::render();
 	
 	// RainGenerator testing
 	// RainGenerator::RainGenerator();
 	
 	//Walker shit I guess
-	if(1) { //lmao
-		RainGenerator gen = RainGenerator(Time("00:53:00"));
-		std::vector<Sprite *> raindrops = gen.FreezeRain();
-		Walker walk_boi = Walker::Walker(raindrops);
-		walk_boi.walk(50, Time("00:54:00").ms, Time("01:04:00").ms);
-	}
+	//if(1) { //lmao
+	//	RainGenerator gen = RainGenerator(Time("00:53:00"));
+	//	std::vector<Sprite *> raindrops = gen.FreezeRain();
+	//	Walker walk_boi = Walker::Walker(raindrops);
+	//	walk_boi.walk(50, Time("00:54:00").ms, Time("01:04:00").ms);
+	//}
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
