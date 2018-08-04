@@ -6,6 +6,7 @@
 #include <unordered_map>
 class Character {
 public:
+	const std::vector<std::unique_ptr<Stroke>>& getStrokes() const;
 	explicit Character(const char character);
 	float calculateTopToCenter(const float scale) const;
 	float calculateLeftToCenter(const float scale) const;
