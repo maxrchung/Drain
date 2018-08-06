@@ -3,11 +3,10 @@
 #include "Path.hpp"
 #include <cmath>
 
-RainGenerator::RainGenerator(Time freezeTime, int maxRainCount, int dropCount, Time startTime, Time endTime, float acceleration)
-	: freezeTime{ freezeTime }, maxRainCount{ maxRainCount }, dropCount{ dropCount }, startTime{ startTime }, endTime{ endTime }, acceleration{ acceleration },
+RainGenerator::RainGenerator(Time startTime, Time endTime, bool willFreeze, float acceleration, Time freezeTime, int dropCount)
+	: startTime{ startTime }, endTime{ endTime }, willFreeze{ willFreeze }, acceleration{ acceleration }, freezeTime {freezeTime}, dropCount{ dropCount },
 	leftOfScreen{ -Vector2::ScreenSize.x / 2 }, totalTime{ endTime.ms - startTime.ms } {
 
-	// TODO: actually have the rain section be placed in the time section it should be at
 	// TODO: color experimentation
 	// TODO: bubble stuff
 
@@ -23,15 +22,14 @@ RainGenerator::RainGenerator(Time freezeTime, int maxRainCount, int dropCount, T
 
 // Generates rain sprites and moves them
 void RainGenerator::RainController() {
-	static int rainCount = maxRainCount; // Rain ended up looking better without a random raincount so rainCount is just maxRainCount
 	rainCount *= acceleration; // Increases rain density after every iteration
 
-	DrawRain(rainCount);
+	DrawRain();
 	VelocityController();
 }
 
 // Creates amount of raindrops in a row, rainCount, and drops it down the screen
-void RainGenerator::DrawRain(int rainCount) {
+void RainGenerator::DrawRain() {
 	static const float xCoordMax = Vector2::ScreenSize.x / 2;
 	static const float topOfScreen = Vector2::ScreenSize.y / 2;
 	static const float veloDelta = 10;
@@ -49,7 +47,7 @@ void RainGenerator::DrawRain(int rainCount) {
 		float actualDropStart = dropStartTime + dropTimeDelta;
 		float actualDropEnd = SlowRainBeforeFreeze(actualDropStart, actualDropTotalTime);
 
-		if (actualDropStart < startTime.ms || (actualDropStart > freezeTime.ms)) { // Ensures drops don't fall outside of time section & freezeTime
+		if (actualDropStart < startTime.ms || actualDropStart > freezeTime.ms || (!willFreeze && actualDropStart > endTime.ms)) { // Ensures drops don't fall outside of time section & freezeTime
 			continue;
 		}
 
@@ -67,7 +65,7 @@ void RainGenerator::DrawRain(int rainCount) {
 
 		float rainSize = ScaleRainSize(sprite, actualDropTotalTime, minDropTime, actualDropStart);
 
-		if (freezeTime.ms >= actualDropStart && freezeTime.ms <= actualDropEnd) { // Tracks raindrop sprite from vector if drop is visible on the screen during freezeTime
+		if (willFreeze && (freezeTime.ms >= actualDropStart && freezeTime.ms <= actualDropEnd)) { // Tracks raindrop sprite from vector if drop is visible on the screen during freezeTime
 			TrackRainDrop(sprite, actualDropStart, actualDropEnd, rainSize, spriteEndPosX, spriteEndPosY);
 			Vector2 freezePos = FreezePos();
 			sprite->Move(actualDropStart, freezeTime.ms, sprite->position, Vector2(freezePos.x, freezePos.y));

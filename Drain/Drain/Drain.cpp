@@ -23,16 +23,16 @@ int main() {
 		
 	Text::render();
     //Sketch::render();
-	
-	// RainGenerator testing
-	// RainGenerator::RainGenerator();
+
+	// RainGenerator shit
+	RainGenerator::RainGenerator(Time("00:05:58"), Time("00:52:57"));
 	
 	//Walker shit I guess
 	if(1) { //lmao
-		RainGenerator gen = RainGenerator(Time("00:53:00"));
+		RainGenerator gen = RainGenerator(Time("01:03:32"), Time("01:31:00"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
 		Walker walk_boi = Walker::Walker(raindrops);
-		walk_boi.walk(50, Time("00:54:00").ms, Time("01:04:00").ms);
+		walk_boi.walk(50, Time("01:32:00").ms, Time("01:42:00").ms);
 	}
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt

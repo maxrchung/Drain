@@ -18,16 +18,16 @@ struct RainDrop {
 class RainGenerator {
 public:
 	// Parameters shouldn't be used for RainGenerator, use RainGenerator(); to call function.
-	RainGenerator(Time freezeTime,
-				  int maxRainCount = 50,
-				  int dropCount = 20,  // Bigger the dropCount, faster the initial raindrops fall
-				  Time startTime = Time("00:14:00").ms,
-				  Time endTime = Time("00:54:00").ms,
-				  float acceleration = 1.04f); // Note: should be 1.04 in case I forget
+	RainGenerator(Time startTime,
+				  Time endTime,
+				  bool willFreeze = false,
+				  float acceleration = 1.04f, // Note: should be 1.04 default in case I forget
+				  Time freezeTime = Time("01:30:49"),
+				  int dropCount = 20);  // Bigger the dropCount, faster the initial raindrops fall 
 
 	void VelocityController();
 	void RainController();
-	void DrawRain(int rainCount);
+	void DrawRain();
 	std::vector<Sprite*> FreezeRain();
 	Vector2 FreezePos();
 	float SlowRainBeforeFreeze(float actualDropStart, float actualDropTotalTime);
@@ -39,7 +39,7 @@ public:
 	std::vector<Sprite*> sprites;
 
 private:
-	const int maxRainCount;
+	int rainCount = 50;
 	const int dropCount;
 	const Time startTime;
 	const Time endTime;
@@ -58,7 +58,8 @@ private:
 	std::vector<RainDrop> rainDrops;
 	std::vector<Sprite*> rainSprites;
 
+	bool willFreeze;
 	Time freezeTime;
-	Time slowPeriod = Time("00:03:00");
-	float maxSlow = 2;
+	Time slowPeriod = Time("00:02:67");
+	float maxSlow = 5;
 };
