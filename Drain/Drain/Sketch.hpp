@@ -24,7 +24,9 @@ public:
            const int margin = 5,
            const Easing& easing = Easing::Linear,
            const bool drawIn = false,
-           const bool drawOut = false);
+           const bool drawOut = false,
+           const bool fadeIn = false,
+           const bool fadeOut = false);
     static void render();
     int times;  // times to loop visibility on and off
     int relStart; // delay between start of loop and start of this sketch
@@ -44,6 +46,8 @@ private:
 	const Easing easing;
     const bool drawIn;
     const bool drawOut;
+    const bool fadeIn;
+    const bool fadeOut;
 	std::vector<Vector2> points;
     void draw(Bezier b);    // make() breaks the .txt up into 4-dim beziers and calls draw
     int constResolution(Bezier b);

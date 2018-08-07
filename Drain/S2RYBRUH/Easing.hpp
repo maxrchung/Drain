@@ -113,6 +113,8 @@ static Easing mirrorEasing(Easing easingEnum) {
         return static_cast<Easing>(easing - 1);
     case 2:
         return static_cast<Easing>(easing);
+    default:    // catch-all just in case I missed any
+        return static_cast<Easing>(easing);
     }
 }
 

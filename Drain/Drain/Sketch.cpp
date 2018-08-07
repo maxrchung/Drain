@@ -21,10 +21,10 @@ Bezier curves to sketch an image
 
 Sketch::Sketch(const std::string& pointMapPath, const Time& startTime, const Time& endTime,
     const int thickness, const float resolution, const bool dynamic, const Path& brush,
-    const int margin, const Easing& easing, const bool drawIn, const bool drawOut )
+    const int margin, const Easing& easing, const bool drawIn, const bool drawOut, const bool fadeIn, const bool fadeOut)
 	: pointMapPath{ pointMapPath }, startTime{ startTime }, endTime{ endTime },
     thickness{ thickness }, resolution{ resolution }, dynamic{ dynamic }, brush { brush },
-    margin{ margin }, easing{ easing }, drawIn{ drawIn }, drawOut{ drawOut }
+    margin{ margin }, easing{ easing }, drawIn{ drawIn }, drawOut{ drawOut }, fadeIn{ fadeIn }, fadeOut{ fadeOut }
 {
 	brushPath = getPath(brush);
     totalLines = 0;
@@ -75,7 +75,16 @@ void Sketch::draw(Bezier b) {
             else if (drawOut)
                 line->ScaleVector(startTime.ms, endTime.ms, Vector2(dist, thickness), Vector2(0, thickness), easing);
             else
-                line->ScaleVector(startTime.ms, endTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // this will dictate endTime
+                line->ScaleVector(startTime.ms, endTime.ms, Vector2(dist, thickness), Vector2(dist, thickness), easing);  // this will dictate endTime
+            if (fadeIn && fadeOut) {
+                line->Fade(startTime.ms, startTime.ms + visDur / 2, 0, 1, easing);
+                line->Fade(startTime.ms + visDur / 2, endTime.ms, 1, 0, mirrorEasing(easing));
+            }
+            else if (fadeIn)
+                line->Fade(startTime.ms, endTime.ms, 0, 1, easing);
+            else if (fadeOut)
+                line->Fade(startTime.ms, endTime.ms, 1, 0, easing);  // this will dictate endTime
+            else;
             continue;
         }
         else {
@@ -311,7 +320,7 @@ void Sketch::loop(int times, std::vector<Sketch> v) {
 
 void Sketch::render() {
     // art idea: have the image gradually lower in resolution and fade away
-    Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper, 5, Easing::ExpoOut, true, true).make();
+    Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper, 5, Easing::ExpoOut, true, true, true, true).make();
     auto v = std::vector<Sketch>();
     v.push_back(Sketch("1.txt", Time("00:05:000"), Time("00:05:300"), 1, 4, true, Path::Taper));      // 651
     v.push_back(Sketch("1.txt", Time("00:05:300"), Time("00:05:600"), 1, 4.7, false, Path::Taper));   // 562
