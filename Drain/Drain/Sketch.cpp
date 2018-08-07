@@ -20,13 +20,18 @@ Bezier curves to sketch an image
 //std::istringstream& operator>>(std::istringstream& iss, Vector2& const& obj)
 
 Sketch::Sketch(const std::string& pointMapPath, const Time& startTime, const Time& endTime,
-    const int thickness, const float resolution, const bool dynamic, const Path& brush, const int margin, const Easing& easing )
+    const int thickness, const float resolution, const bool dynamic, const Path& brush,
+    const int margin, const Easing& easing, const bool drawIn, const bool drawOut )
 	: pointMapPath{ pointMapPath }, startTime{ startTime }, endTime{ endTime },
-    thickness{ thickness }, resolution{ resolution }, dynamic{ dynamic }, brush { brush }, margin{ margin }, easing{ easing }
+    thickness{ thickness }, resolution{ resolution }, dynamic{ dynamic }, brush { brush },
+    margin{ margin }, easing{ easing }, drawIn{ drawIn }, drawOut{ drawOut }
 {
 	brushPath = getPath(brush);
     totalLines = 0;
     visDur = endTime.ms - startTime.ms;
+    times = 1;
+    relStart = 0;
+    hiddenDur = 0;
 }
 
 void Sketch::draw(Bezier b) {
@@ -61,13 +66,20 @@ void Sketch::draw(Bezier b) {
             line->Rotate(startTime.ms, startTime.ms, angle, angle);
         Swatch::colorFgToFgSprites({ line }, startTime.ms, startTime.ms);
         if (times == 1) {   // not looping
-            line->ScaleVector(startTime.ms, endTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // this will dictate endTime
+            if (drawIn && drawOut){
+                line->ScaleVector(startTime.ms, startTime.ms + visDur / 2, Vector2(0, thickness), Vector2(dist, thickness), easing);
+                line->ScaleVector(startTime.ms + visDur / 2, endTime.ms, Vector2(dist, thickness), Vector2(0, thickness), mirrorEasing(static_cast<int>(easing)));
+            }
+            else if (drawIn)
+                line->ScaleVector(startTime.ms, endTime.ms, Vector2(0, thickness), Vector2(dist, thickness), easing);
+            else if (drawOut)
+                line->ScaleVector(startTime.ms, endTime.ms, Vector2(dist, thickness), Vector2(0, thickness), easing);
+            else
+                line->ScaleVector(startTime.ms, endTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // this will dictate endTime
             continue;
         }
         else {
             line->ScaleVector(startTime.ms, startTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // Loop will dictate endTime
-            //line->ScaleVector(startTime.ms, startTime.ms+(visDur+hiddenDur)*times, Vector2(dist, thickness), Vector2(dist, thickness));  // this will dictate endTime
-
         }
         Sprite * tmpSprite;     // jank tmpSprite to generate the command strings for Fading
         tmpSprite = &Sprite();
@@ -299,11 +311,11 @@ void Sketch::loop(int times, std::vector<Sketch> v) {
 
 void Sketch::render() {
     // art idea: have the image gradually lower in resolution and fade away
+    Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper, 5, Easing::ExpoOut, true, true).make();
     auto v = std::vector<Sketch>();
     v.push_back(Sketch("1.txt", Time("00:05:000"), Time("00:05:300"), 1, 4, true, Path::Taper));      // 651
     v.push_back(Sketch("1.txt", Time("00:05:300"), Time("00:05:600"), 1, 4.7, false, Path::Taper));   // 562
     v.push_back(Sketch("1.txt", Time("00:05:600"), Time("00:05:900"), 1, 4.5, true, Path::Taper));    // 541
     v.push_back(Sketch("1.txt", Time("00:05:900"), Time("00:06:200"), 1, 4.5, false, Path::Taper));   // 629
     loop(3, v);     // loop duration is 1200ms
-    //Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper).make();
 }

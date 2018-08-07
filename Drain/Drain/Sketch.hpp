@@ -22,7 +22,9 @@ public:
            const bool dynamic,
            const Path& brush,
            const int margin = 5,
-           const Easing& easing = Easing::Linear);
+           const Easing& easing = Easing::Linear,
+           const bool drawIn = false,
+           const bool drawOut = false);
     static void render();
     int times;  // times to loop visibility on and off
     int relStart; // delay between start of loop and start of this sketch
@@ -40,6 +42,8 @@ private:
 	const Time endTime;
     int visDur;
 	const Easing easing;
+    const bool drawIn;
+    const bool drawOut;
 	std::vector<Vector2> points;
     void draw(Bezier b);    // make() breaks the .txt up into 4-dim beziers and calls draw
     int constResolution(Bezier b);

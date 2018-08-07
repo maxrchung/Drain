@@ -83,4 +83,36 @@ static std::string* Easings() {
 	return easings;
 }
 
+static Easing mirrorEasing(int easing) {
+    switch (easing) {
+    case 0:
+    case 26:
+    case 27:
+    case 28:
+    case 31:
+        return static_cast<Easing>(easing);
+    case 1:
+        return static_cast<Easing>(2);
+    case 2:
+        return static_cast<Easing>(1);
+    case 29:
+        return static_cast<Easing>(30);
+    case 30:
+        return static_cast<Easing>(29);
+    case 32:
+        return static_cast<Easing>(33);
+    case 33:
+        return static_cast<Easing>(32);
+    }
+    // 3 to 4, 4 to 3, 5 to 5; 6 to 7, 7 to 6, 8 to 8
+    switch ((easing - 3) % 3) {
+    case 0:
+        return static_cast<Easing>(easing + 1);
+    case 1:
+        return static_cast<Easing>(easing - 1);
+    case 2:
+        return static_cast<Easing>(easing);
+    }
+}
+
 #endif//EASING_HPP
