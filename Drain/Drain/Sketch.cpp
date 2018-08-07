@@ -68,7 +68,7 @@ void Sketch::draw(Bezier b) {
         if (times == 1) {   // not looping
             if (drawIn && drawOut){
                 line->ScaleVector(startTime.ms, startTime.ms + visDur / 2, Vector2(0, thickness), Vector2(dist, thickness), easing);
-                line->ScaleVector(startTime.ms + visDur / 2, endTime.ms, Vector2(dist, thickness), Vector2(0, thickness), mirrorEasing(static_cast<int>(easing)));
+                line->ScaleVector(startTime.ms + visDur / 2, endTime.ms, Vector2(dist, thickness), Vector2(0, thickness), mirrorEasing(easing));
             }
             else if (drawIn)
                 line->ScaleVector(startTime.ms, endTime.ms, Vector2(0, thickness), Vector2(dist, thickness), easing);

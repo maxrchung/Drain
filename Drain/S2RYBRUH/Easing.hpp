@@ -83,7 +83,8 @@ static std::string* Easings() {
 	return easings;
 }
 
-static Easing mirrorEasing(int easing) {
+static Easing mirrorEasing(Easing easingEnum) {
+    int easing = static_cast<int>(easingEnum);
     switch (easing) {
     case 0:
     case 26:
