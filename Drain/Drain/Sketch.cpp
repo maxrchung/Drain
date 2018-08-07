@@ -264,7 +264,7 @@ const int Sketch::make() {
         vv.push_back({ values[2], values[3] });
         vv.push_back({ values[4], values[5] });
     }*/
-    std::cout << totalLines << std::endl;
+    // std::cout << totalLines << std::endl;
     assert(totalLines == sprites.size());
     return 0;
 }
@@ -319,6 +319,7 @@ void Sketch::loop(int times, std::vector<Sketch> v) {
 }
 
 void Sketch::render() {
+    std::cout << "Rendering Sketch..." << std::endl;
     // art idea: have the image gradually lower in resolution and fade away
     Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper, 5, Easing::ExpoOut, true, true, true, true).make();
     auto v = std::vector<Sketch>();

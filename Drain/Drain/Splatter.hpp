@@ -30,6 +30,7 @@ private:
     const int numDrops;
     const Easing easing;
     const Sketch * bubble;   // replace with AirBubble
-    void draw();
+    Sprite * draw(Vector2 pos, int offset);
+    int make();
 };
 

@@ -6,6 +6,7 @@
 #include "Sketch.hpp"
 #include "Text.hpp"
 #include "Walker.hpp"
+#include "Splatter.hpp"
 #include <ctime>
 #include <cmath>
 #include <iostream>
@@ -21,19 +22,20 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
-	//Text::render();
+	// Text::render();
     Sketch::render();
+    Splatter::render();
 
 	// RainGenerator shit
-	//RainGenerator::RainGenerator(Time("00:05:58"), Time("00:52:57"));
+	RainGenerator::RainGenerator(Time("00:05:58"), Time("00:52:57"));
 	
 	//Walker shit I guess
-	//if(0) { //lmao
-	//	RainGenerator gen = RainGenerator(Time("01:03:32"), Time("01:31:00"), true, 1.03f);
-	//	std::vector<Sprite *> raindrops = gen.FreezeRain();
-	//	Walker walk_boi = Walker::Walker(raindrops);
-	//	walk_boi.walk(50, Time("01:32:00").ms, Time("01:42:00").ms);
-	//}
+	if(0) { //lmao
+		RainGenerator gen = RainGenerator(Time("01:03:32"), Time("01:31:00"), true, 1.03f);
+		std::vector<Sprite *> raindrops = gen.FreezeRain();
+		Walker walk_boi = Walker::Walker(raindrops);
+		walk_boi.walk(50, Time("01:32:00").ms, Time("01:42:00").ms);
+	}
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
