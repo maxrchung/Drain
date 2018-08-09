@@ -12,7 +12,7 @@ public:
         const Time& endTime,
         const float size,
         const int numDrops,
-        const Vector2 pos);
+        const Vector2 centerPos);
     // position defined by existing AirBubble
     Splatter(const Time& startTime,
         const Time& endTime,
@@ -23,8 +23,8 @@ public:
 private:
     const Time startTime;
     const Time endTime;
-    int visDur;
-    const Vector2 pos;
+    int totalDur;
+    const Vector2 centerPos;
     const float sizeFactor;
     const int numDrops;
     const Sketch * bubble;   // replace with AirBubble
