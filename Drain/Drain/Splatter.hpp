@@ -33,6 +33,7 @@ private:
         float size,
         float fadeInDur = 0,    // duration of fade in ms
         float fadeFrom = 0,     // origin opacity from 0 to 1
+        float fadeTo = 1,     // destination opacity from 0 to 1
         float growDur = 0,      // duration of expansion in ms
         float growFrom = 0,     // origin size from 0 to 1
         Easing easing = Easing::Linear);
