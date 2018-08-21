@@ -5,10 +5,7 @@
 
 RainGenerator::RainGenerator(Time startTime, Time endTime, bool willFreeze, float acceleration, Time freezeTime, int dropCount)
 	: startTime{ startTime }, endTime{ endTime }, willFreeze{ willFreeze }, acceleration{ acceleration }, freezeTime {freezeTime}, dropCount{ dropCount },
-	leftOfScreen{ -Vector2::ScreenSize.x / 2 }, totalTime{ endTime.ms - startTime.ms } {
-
-	// TODO: color experimentation
-	// TODO: bubble stuff
+	leftOfScreen{ -Vector2::ScreenSize.x / 2 }, totalTime{ static_cast<float>(endTime.ms - startTime.ms) } {
 
 	// Initiate drop time values
 	dropTotalTime = totalTime / dropCount;

@@ -48,9 +48,9 @@ private:
 	float minDropTime = 750.0f; // Edit to cap max rain velocity
 	const float leftOfScreen;
 	float dropTotalTime;
-	int totalTime;
-	int dropStartTime;
-	int dropEndTime;
+	float totalTime;
+	float dropStartTime;
+	float dropEndTime;
 
 	const float maxSize = 0.7f; // Used in scaling rain size and determining end y position for rain
 	const float rainLength = 102; // because a.png is 102x102
