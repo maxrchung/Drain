@@ -66,6 +66,7 @@ void RainGenerator::DrawRain() {
 			TrackRainDrop(sprite, actualDropStart, actualDropEnd, rainSize, spriteEndPosX, spriteEndPosY);
 			Vector2 freezePos = FreezePos();
 			sprite->Move(actualDropStart, freezeTime.ms, sprite->position, Vector2(freezePos.x, freezePos.y));
+			std::cout << actualDropStart << " " << freezeTime.ms << " " << sprite->position.x << " " << sprite->position.y << " " << freezePos.x << " " << freezePos.y << std::endl;
 		}
 		else { // If this particular raindrop isn't being frozen, drop it to the bottom of the screen
 			sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(spriteEndPosX, spriteEndPosY));

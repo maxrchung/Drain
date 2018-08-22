@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "Time.hpp"
 #include "Storyboard.hpp"
 #include "Path.hpp"
@@ -9,8 +10,9 @@ public:
 	BubbleGenerator();
 	void BubbleController();
 	void DrawBubble();
-	void MoveBubble(Sprite* sprite);
+	void MoveBubble(Sprite* sprite, std::vector<float> moveTimes);
 	Vector2 GetBubbleStartPos();
+	std::vector<float> GetBubbleTiming();
 	void VelocityController();
 
 private:
@@ -18,7 +20,7 @@ private:
 	Time endTime = Time("02:33:89");
 	Time splatterTime;
 	float acceleration = 1.08;
-	float bubbleCount = 20;
+	float bubbleCount = 5;
 	float minMoveTime = 750.0f; // Edit to cap max bubble velocity
 	float screenBottom = -Vector2::ScreenSize.y / 2; 
 	float screenTop = Vector2::ScreenSize.y / 2;

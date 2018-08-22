@@ -1,6 +1,7 @@
 #include "BubbleGenerator.hpp"
 
 BubbleGenerator::BubbleGenerator() {
+	// TODO: add cool wiggly bubble move effect lmao
 	while (moveEndTime < endTime.ms) {
 		BubbleController();
 	}
@@ -15,8 +16,9 @@ void BubbleGenerator::BubbleController() {
 void BubbleGenerator::DrawBubble() {
 	for (int i = 0; i < bubbleCount; ++i) {
 		Vector2 startPos = GetBubbleStartPos();
+		std::vector<float> moveTimes = GetBubbleTiming();
 		Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(startPos.x, startPos.y));
-		MoveBubble(sprite);
+		MoveBubble(sprite, moveTimes);
 	}
 }
 
@@ -29,9 +31,22 @@ Vector2 BubbleGenerator::GetBubbleStartPos() {
 	return startPos;
 }
 
-// Move bubble from spawn point (bottom) to end point (top)
-void BubbleGenerator::MoveBubble(Sprite* sprite) {
-	sprite->Move(moveStartTime, moveEndTime, sprite->position, Vector2(sprite->position.x, screenTop));
+// Randomizes and returns bubble startTime and endTime
+std::vector<float> BubbleGenerator::GetBubbleTiming() {
+	float adjustedTotalTime = moveTotalTime; // Note to self: This value will be randomized later on
+	float timeVariance = adjustedTotalTime * 8; // Constant here is copied over from RainGenerator, adjust if necessary
+	float moveTimeDelta = RandomRange::calculate(-timeVariance, timeVariance);
+	float adjustedStartTime = moveStartTime + moveTimeDelta;
+	float adjustedEndTime = adjustedStartTime + adjustedTotalTime;
+
+	return {adjustedStartTime, adjustedEndTime };
+}
+
+// Handles all bubble movement from bottom of screen to top
+void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes) {
+	float startMove = moveTimes[0];
+	float endMove = moveTimes[1];
+	sprite->Move(startMove, endMove, sprite->position, Vector2(sprite->position.x, screenTop));
 }
 
 // Adjust bubble velocity and density according to acceleration constant after each iteration of DrawBubble
