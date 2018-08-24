@@ -33,9 +33,12 @@ int main() {
 	//Walker shit I guess
 	if(0) { //lmao
 		RainGenerator gen = RainGenerator(Time("01:03:32"), Time("01:31:00"), true, 1.03f);
-		std::vector<Sprite *> raindrops = gen.FreezeRain();
+		//std::vector<Sprite *> raindrops = gen.FreezeRain();
+		std::vector<Sprite *> raindrops;
+		Sprite *temp_raindrop = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(-444.667, 263.334));
+		raindrops.push_back(temp_raindrop);
 		Walker walk_boi = Walker::Walker(raindrops);
-		walk_boi.walk(50, Time("01:32:00").ms, Time("01:42:00").ms);
+		walk_boi.walk(200, Time("01:32:00").ms, Time("01:42:00").ms);
 	}
 
 	// BubbleGenerator shit

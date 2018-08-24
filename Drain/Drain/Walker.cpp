@@ -30,10 +30,21 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 	//add more sprites
 	addSprites(distance, startTime, endTime);
 
+	//move those boys
+	moveSprites(distance, startTime, endTime);
+  
+	return;
+}
+
+
+void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 	int a = 0;
 	int b = 0;
 	int c = 0;
 	int d = 0;
+
+	int elapsed_time = endTime.ms - startTime.ms;
+
 	for(auto & drop: this->raindrops) {
 		Vector3 start_coord = drop.position;
 		
@@ -51,17 +62,16 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 		float distance_ratio = 0;
 
 		float start_scale = drop.sprite->scale;
-		float end_scale = temp.z;
+		float end_scale = temp.z + start_scale;
 
 		uint8_t start = checkInScreen(start_coord, drop.size);
 		uint8_t end = (checkInScreen(end_coord, drop.size)) << 1;
-		//std::cout << "start2d: " << drop.sprite->position << " " << drop.sprite->scale << "\n";
-		//std::cout << "3dconvert: " << twoToThree(drop.sprite, drop.size) << "\n";
+
 		uint8_t s = start | end;
 
 		switch(s) {
-		case 0: //never in sight
-			std::cout << "test\n";
+		case 0: //beginning and end are not in sight
+			//because of how the dots move, we can safely ignore
 			++a;
 			break;
 
@@ -71,20 +81,34 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 			break;
 
 		case 1: //starts in sight, ends not in sight
+
 			end_coord_2d = findCollision(start_coord_2d, end_coord_2d);
 			t = end_coord_2d - start_coord_2d;
 			distance_ratio = (t.Magnitude()) / initial_distance;
+
 			end_scale = distance_ratio * (end_scale - start_scale) + start_scale;
-			endTime.ms = startTime.ms + (endTime.ms - startTime.ms) * distance_ratio;
+			endTime.ms = startTime.ms + (elapsed_time) * distance_ratio;
+
+			if((start_coord_2d.x * end_coord_2d.x) < 0) {
+				std::cout << "S3: " << start_coord << "\n";
+				std::cout << "E3: " << end_coord << "\n";
+				std::cout << "Start: " << start_coord_2d << "\n";
+				std::cout << "End: " << end_coord_2d << "\n";
+				std::cout << "Size: " << drop.size << "\n";
+				std::cout << "Scale: " << drop.sprite->scale << "\n";
+				std::cout << "\n";
+			}
+
 			++c;
 			break;
 
 		case 2: //start not in sight, end in sight
+			//start_coord_2d = findCollision(end_coord, start_coord);
 			start_coord_2d = findDistance(start_coord, end_coord, drop.size);
 			t = end_coord_2d - start_coord_2d;
 			distance_ratio =  1 - ((t.Magnitude()) / initial_distance);
 			start_scale = min_scale;
-			startTime.ms += distance_ratio * (endTime.ms - startTime.ms);
+			startTime.ms += distance_ratio * (elapsed_time);
 			++d;
 			break;
 
@@ -94,8 +118,6 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 		}
 
 		if(s) {
-			//std::cout << "Start: " << start_coord_2d << "\n";
-			//std::cout << "End: " << end_coord_2d << "\n\n";
 			drop.sprite->Move(startTime.ms, endTime.ms, start_coord_2d, end_coord_2d);
 			drop.sprite->Scale(startTime.ms, endTime.ms, start_scale, end_scale);
 		} else {
@@ -104,10 +126,7 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 	}
 
 	std::cout << a << " " << b << " " << c << " " << d << "\n";
-
-	return;
 }
-
 
 /*
  * checks that the object is within screen
@@ -174,7 +193,7 @@ Vector3 Walker::twoToThree(Sprite *sprite, float size) {
  */
 Vector3 Walker::threeToTwo(Vector3 coordinates, float size) {
 	Vector3 out;
-
+	coordinates.z = -coordinates.z;
 	out.x = coordinates.x / coordinates.z;
 	out.y = coordinates.y / coordinates.z;
 
@@ -194,8 +213,8 @@ Vector2 Walker::findCollision(Vector2 a, Vector2 b) {
 	Vector2 out = Vector2::Zero;
 
 	Vector2 slopeV = b - a;
-	float slope = (b.y - a.y) / (b.x - a.x);
 
+	//determine which border of the screen has a collision
 	Vector2 mid = Vector2::ScreenSize;
 
 	if(slopeV.y > 0)
@@ -205,8 +224,23 @@ Vector2 Walker::findCollision(Vector2 a, Vector2 b) {
 		mid.x = -Vector2::ScreenSize.x;
 
 
-	out.y = a.y - slope * (a.x - mid.x);
-	out.x = a.x - ((a.y - mid.y) / slope);
+	float slope = slopeV.y / slopeV.x;
+
+	switch((!!slopeV.y) | (!!slopeV.x << 1)) {
+	case 0: //same point
+		return out;
+
+	case 1: //horizontal line
+	case 2: //vertical line
+		out = b;
+		break;
+
+	case 3:
+		out.y = a.y - (slope * (a.x - mid.x));
+		out.x = a.x - ((a.y - mid.y) / slope);
+		break;
+	}
+
 
 	if(abs(out.y) > Vector2::ScreenSize.y)
 		out.y = mid.y;
@@ -244,13 +278,15 @@ Vector2 Walker::findDistance(Vector3 a, Vector3 b, float size) {
 
 
 void Walker::addSprites(float distance, Time startTime, Time endTime) {
+	//speed in distance/second
+	distance = abs(distance);
 	float speed = 1000 * distance / (endTime.ms - startTime.ms);
 
 	const float sizeX = Vector2::ScreenSize.x;
 	const float sizeY = Vector2::ScreenSize.y;
 
-	//some constant to multiply the speed by
-	const uint8_t multiplier = 255;
+	//constant to multiply speed by, affects density
+	const uint8_t multiplier = 100;
 
 	//max value for loop
 	uint64_t iteratorMax = speed * multiplier;
@@ -268,7 +304,7 @@ void Walker::addSprites(float distance, Time startTime, Time endTime) {
 		raindrop drop;
 
 		Sprite *sprite = Storyboard::CreateSprite(spriteImage, position_two);
-		sprite->scale = w_rand(min_scale, max_scale);
+		sprite->scale = w_rand(min_scale/100, min_scale+1);
 
 		drop.size = w_rand(minSize, maxSize);
 		Vector3 position_three = twoToThree(sprite, drop.size);

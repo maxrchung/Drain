@@ -1,5 +1,5 @@
 FLAGS = -lm -w -fpermissive -Wnarrowing 
-CC = g++
+CC = g++ -g
 
 STORY = main
 
