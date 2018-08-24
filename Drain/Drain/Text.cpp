@@ -180,8 +180,8 @@ void Text::render() {
 	place({
 		"trust in me",
 		"follow me",
-		"and you'll find peace",
 		"i promised",
+		"you'll find peace",
 	}, Time("01:44:074").ms, Time("01:48:602").ms);
 	place({
 		"so began our nights",
