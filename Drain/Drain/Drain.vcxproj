@@ -127,6 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BlankStroke.cpp" />
+    <ClCompile Include="BubbleGenerator.cpp" />
     <ClCompile Include="CCWEndEighthStroke.cpp" />
     <ClCompile Include="CCWQuarterStroke.cpp" />
     <ClCompile Include="CCWStartEighthStroke.cpp" />
@@ -155,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlankStroke.hpp" />
+    <ClInclude Include="BubbleGenerator.hpp" />
     <ClInclude Include="CCWEndEighthStroke.hpp" />
     <ClInclude Include="CCWQuarterStroke.hpp" />
     <ClInclude Include="CCWStartEighthStroke.hpp" />
