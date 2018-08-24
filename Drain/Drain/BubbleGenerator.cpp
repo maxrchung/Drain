@@ -39,7 +39,7 @@ std::vector<float> BubbleGenerator::GetBubbleTiming() {
 	float adjustedStartTime = moveStartTime + moveTimeDelta;
 	float adjustedEndTime = adjustedStartTime + adjustedTotalTime;
 
-	return {adjustedStartTime, adjustedEndTime };
+	return {adjustedStartTime, adjustedEndTime};
 }
 
 // Handles all bubble movement from bottom of screen to top

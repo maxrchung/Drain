@@ -114,6 +114,9 @@
     <ClCompile Include="Splatter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Drip.cpp">
+        <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="BubbleGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -193,6 +196,9 @@
     </ClInclude>
     <ClInclude Include="Splatter.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Drip.hpp">
+    <   Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BubbleGenerator.hpp">
       <Filter>Header Files</Filter>

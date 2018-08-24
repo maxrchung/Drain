@@ -24,119 +24,137 @@ int main(int argc, char** argv)
 	// A is voting array, size determined by finding maximum rho
 	// no need for combining buckets for the given image
 	unsigned int    s[ROWS][COLS], A[180][10000] = { 0 };
-	char			filename[50], ch;
+	char			filename[64], ch;
 
-	strcpy(filename, "test2.raw");
-	header(ROWS, COLS, head);
-	max = 0;
-	memset(himage, 0, sizeof(char) * ROWS * COLS);	// init himage bg to 0
-	index_offset = 598;		// determined by finding minimum rho
-	sgm_threshold = 2; // 200
-	hough_threshold = 180;	// will result in the 3 lines of the given triangle
+    strcpy(filename, "filenames.txt");
+    FILE * fnames;
+    if (!(fnames = fopen(filename, "rb")))
+    {
+        fprintf(stderr, "error: couldn't open %s\n", filename);
+        exit(1);
+    }
+    char fname[64];
+    // loop through filenames.txt (does not have .raw extension)
+    while (fgets(fname, 64, fnames) != NULL) {
+        for (int index = strlen(fname) - 1; fname[index] == '\n' || fname[index] == '\r'; index--)
+            fname[index-1] = 0;
+        header(ROWS, COLS, head);
+        max = 0;
+        memset(himage, 0, sizeof(char) * ROWS * COLS);	// init himage bg to 0
+        index_offset = 598;		// determined by finding minimum rho
+        sgm_threshold = 2; // 200
+        hough_threshold = 180;	// will result in the 3 lines of the given triangle
+        char raw[68];
+        strcpy(raw, fname);
+        if (!(fp = fopen(strcat(raw, ".raw"), "rb")))
+        {
+            fprintf(stderr, "error: couldn't open %s\n", raw);
+            exit(1);
+        }
 
-	if (!(fp = fopen(filename, "rb")))
-	{
-		fprintf(stderr, "error: couldn't open %s\n", argv[1]);
-		exit(1);
-	}
+        for (i = 0; i < ROWS; i++)
+            if (!(COLS == fread(image[i], sizeof(char), COLS, fp)))
+            {
+                fprintf(stderr, "error: couldn't read %s\n", raw);
+                exit(1);
+            }
+        fclose(fp);
 
-	for (i = 0; i < ROWS; i++)
-		if (!(COLS == fread(image[i], sizeof(char), COLS, fp)))
-		{
-			fprintf(stderr, "error: couldn't read %s\n", argv[1]);
-			exit(1);
-		}
-	fclose(fp);
+        for (i = ROWS - 2; i > 0; i--)
+            for (j = COLS - 2; j > 0; j--)
+            {
+                dedx =
+                    -image[i - 1][j - 1] + image[i - 1][j + 1] +
+                    -2 * image[i][j - 1] + 2 * image[i][j + 1] +
+                    -image[i + 1][j - 1] + image[i + 1][j + 1];
 
-	for (i = ROWS - 2; i > 0; i--)
-		for (j = COLS - 2; j > 0; j--)
-		{
-			dedx =
-				-image[i - 1][j - 1] + image[i - 1][j + 1] +
-				-2 * image[i][j - 1] + 2 * image[i][j + 1] +
-				-image[i + 1][j - 1] + image[i + 1][j + 1];
+                dedy =
+                    -image[i - 1][j - 1] - 2 * image[i - 1][j] - image[i - 1][j + 1] +
+                    image[i + 1][j - 1] + 2 * image[i + 1][j] + image[i + 1][j + 1];
 
-			dedy =
-				-image[i - 1][j - 1] - 2 * image[i - 1][j] - image[i - 1][j + 1] +
-				image[i + 1][j - 1] + 2 * image[i + 1][j] + image[i + 1][j + 1];
+                sgm = sqr(dedx) + sqr(dedy);
+                s[i][j] = sgm;
+                max = (sgm > max) ? sgm : max;
+            }
+        int min = 0;
+        int rho;
+        int topVotes[180] = { 0 };
+        for (i = 0; i < ROWS; i++) {
+            for (j = 0; j < COLS; j++) {
+                if (i == 0 || j == 0 || i == ROWS - 1 || j == COLS - 1) {
+                    s[i][j] = 0;	// SGM has no outer edge
+                    continue;
+                }
+                simage[i][j] = s[i][j] *= 255.0 / max;
+                if (simage[i][j] > sgm_threshold) {
+                    bimage[i][j] = 255;		// binary image
+                    //for (k = 0; k < 180; k++) {
+                    //    rho = -1 * (j * sin(k*PI / 180) - (ROWS - i - 1) * cos(k*PI / 180));	// Hough Transform equation
+                    //    max = (rho > max) ? rho : max;	// was used for finding max rho for voting array size
+                    //    min = (rho < min) ? rho : min;	// was used for index offset for negative rho
+                    //                                    //A[k][(rho + -min)/bucket_size]++;		// increase vote count in this accumulator bucket
+                    //                                    // printf("min %d\n", min);
+                    //    if (A[k][(rho + -min) / bucket_size] > topVotes[k]) {
+                    //        topVotes[k] = A[k][(rho + -min) / bucket_size];
+                    //        printf("%d votes at theta %d rho %d\n", topVotes[k], k, (rho + -min) / bucket_size);
+                    //    }
+                    //}
+                }
+                else {
+                    bimage[i][j] = 0;
+                }
+            }
+        }
+        /*
+        int m;
+        for (k = 1; k < 180 - 1; k++) {		// theta
+        for (m = 1; m < 129360 - 1; m++) {	// rho, no need for merging
+        int cur = A[k][m];	// current vote count
+        if (A[k - 1][m - 1] < cur && A[k][m - 1] < cur && A[k + 1][m - 1] < cur && A[k - 1][m] < cur && A[k + 1][m] < cur && A[k - 1][m + 1] < cur && A[k][m + 1] < cur && A[k + 1][m + 1] < cur) {
+        // cur is a local maximum (all surrounding vote counts are less than current)
+        if (cur > hough_threshold) {
+        printf("%d votes at theta = %d rho = %d\n", cur, k, m - index_offset);
+        for (i = 0; i < ROWS; i++) {
+        for (j = 0; j < COLS; j++) {
+        // reconstruct the line at this rho and theta by iterating through all x and y that satisfy Hough transform equation
+        if (m - index_offset == (int)(-1 * (j * sin(k*PI / 180) - (ROWS - i - 1) * cos(k*PI / 180)))) {
+        himage[i][j] = 255;
+        }
+        }
+        }
+        }
+        }
+        }
+        }
+        */
+        char ras[68];
+        strcpy(ras, fname);
+        if (!(fp = fopen(strcat(ras, ".ras"), "wb")))
+        {
+            fprintf(stderr, "error: could not open %s\n", ras);
+            exit(1);
+        }
+        fwrite(head, 4, 8, fp);
+        for (i = 0; i < ROWS; i++)
+            fwrite(bimage[i], 1, COLS, fp);
+        printf("wrote %s\n", ras);
+        fclose(fp);
+        /*
+        if (!(fp = fopen("image-h.ras", "wb")))
+        {
+        fprintf(stderr, "error: could not open %s\n", filename);
+        exit(1);
+        }
+        fwrite(head, 4, 8, fp);
+        for (i = 0; i < ROWS; i++) fwrite(himage[i], 1, COLS, fp);
+        fclose(fp);
 
-			sgm = sqr(dedx) + sqr(dedy);
-			s[i][j] = sgm;
-			max = (sgm > max) ? sgm : max;
-		}
-	int min = 0;
-	int rho;
-	int topVotes[180] = { 0 };
-	for (i = 0; i < ROWS; i++) {
-		for (j = 0; j < COLS; j++) {
-			if (i == 0 || j == 0 || i == ROWS - 1 || j == COLS - 1) {
-				s[i][j] = 0;	// SGM has no outer edge
-				continue;
-			}
-			simage[i][j] = s[i][j] *= 255.0 / max;
-			if (simage[i][j] > sgm_threshold) {
-				bimage[i][j] = 255;		// binary image
-				for (k = 0; k < 180; k++) {
-					rho = -1 * (j * sin(k*PI / 180) - (ROWS - i - 1) * cos(k*PI / 180));	// Hough Transform equation
-					max = (rho > max) ? rho : max;	// was used for finding max rho for voting array size
-					min = (rho < min) ? rho : min;	// was used for index offset for negative rho
-					//A[k][(rho + -min)/bucket_size]++;		// increase vote count in this accumulator bucket
-					// printf("min %d\n", min);
-					if (A[k][(rho + -min) / bucket_size] > topVotes[k]) {
-						topVotes[k] = A[k][(rho + -min) / bucket_size];
-						printf("%d votes at theta %d rho %d\n", topVotes[k], k, (rho + -min) / bucket_size);
-					}
-				}
-			}
-			else {
-				bimage[i][j] = 0;
-			}
-		}
-	}
-	/*
-	int m;
-	for (k = 1; k < 180 - 1; k++) {		// theta
-		for (m = 1; m < 129360 - 1; m++) {	// rho, no need for merging
-			int cur = A[k][m];	// current vote count
-			if (A[k - 1][m - 1] < cur && A[k][m - 1] < cur && A[k + 1][m - 1] < cur && A[k - 1][m] < cur && A[k + 1][m] < cur && A[k - 1][m + 1] < cur && A[k][m + 1] < cur && A[k + 1][m + 1] < cur) {
-				// cur is a local maximum (all surrounding vote counts are less than current)
-				if (cur > hough_threshold) {
-					printf("%d votes at theta = %d rho = %d\n", cur, k, m - index_offset);
-					for (i = 0; i < ROWS; i++) {
-						for (j = 0; j < COLS; j++) {
-							// reconstruct the line at this rho and theta by iterating through all x and y that satisfy Hough transform equation
-							if (m - index_offset == (int)(-1 * (j * sin(k*PI / 180) - (ROWS - i - 1) * cos(k*PI / 180)))) {
-								himage[i][j] = 255;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	*/
-	if (!(fp = fopen("test2.ras", "wb")))
-	{
-		fprintf(stderr, "error: could not open %s\n", filename);
-		exit(1);
-	}
-	fwrite(head, 4, 8, fp);
-	for (i = 0; i < ROWS; i++) fwrite(bimage[i], 1, COLS, fp);
-	fclose(fp);
-	/*
-	if (!(fp = fopen("image-h.ras", "wb")))
-	{
-		fprintf(stderr, "error: could not open %s\n", filename);
-		exit(1);
-	}
-	fwrite(head, 4, 8, fp);
-	for (i = 0; i < ROWS; i++) fwrite(himage[i], 1, COLS, fp);
-	fclose(fp);
-
-	printf("Press any key to exit: ");
-	gets(&ch);
-	return 0;
-	*/
+        printf("Press any key to exit: ");
+        gets(&ch);
+        return 0;
+        */
+    }
+    fclose(fnames);
 }
 
 void clear(unsigned char image[][COLS])

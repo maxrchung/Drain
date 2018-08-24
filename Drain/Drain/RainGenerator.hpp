@@ -22,7 +22,7 @@ public:
 				  Time endTime,
 				  bool willFreeze = false,
 				  float acceleration = 1.04f, // Note: should be 1.04 default in case I forget
-				  Time freezeTime = Time("01:30:49"),
+				  Time freezeTime = Time("01:30:489"),
 				  int dropCount = 20);  // Bigger the dropCount, faster the initial raindrops fall 
 
 	void VelocityController();
