@@ -24,8 +24,8 @@ int main() {
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
 	Text::render();
-    Sketch::render();
-    //Splatter::render();
+	Sketch::render();
+	//Splatter::render();
 
 	// RainGenerator shit
 	RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
