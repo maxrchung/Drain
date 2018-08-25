@@ -71,7 +71,8 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 
 		switch(s) {
 		case 0: //beginning and end are not in sight
-			//because of how the dots move, we can safely ignore
+			//have to find the start coordinate and the start scale
+			//after that, do things like in case 1
 			++a;
 			break;
 
@@ -304,7 +305,7 @@ void Walker::addSprites(float distance, Time startTime, Time endTime) {
 		raindrop drop;
 
 		Sprite *sprite = Storyboard::CreateSprite(spriteImage, position_two);
-		sprite->scale = w_rand(min_scale/100, min_scale+1);
+		sprite->scale = w_rand(min_scale/100, min_scale/2);
 
 		drop.size = w_rand(minSize, maxSize);
 		Vector3 position_three = twoToThree(sprite, drop.size);
