@@ -90,12 +90,14 @@ void Sketch::draw(Bezier b) {
         else {
             line->ScaleVector(startTime.ms, startTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // Loop will dictate endTime
         }
-        Sprite * tmpSprite = new Sprite();     // jank tmpSprite to generate the command strings for Fading
-        //tmpSprite = &Sprite();
+        //Sprite * tmpSprite;     // jank tmpSprite to generate the command strings for Fading
+        //tmpSprite = &(Sprite());
+	Sprite tmpSprite = Sprite();
+
         auto commands = std::vector<std::string>();
-        commands.push_back(tmpSprite->Fade(0, visDur, 1, 1));  // stay visible NOTE: THIS LINE IS REQUIRED FOR LOOP TO WORK
-        commands.push_back(tmpSprite->Fade(visDur, visDur, 1, 0));  // disappear instantaneously
-        commands.push_back(tmpSprite->Fade(visDur + hiddenDur, visDur + hiddenDur, 0, 1));  // reappear instantaneously
+        commands.push_back(tmpSprite.Fade(0, visDur, 1, 1));  // stay visible NOTE: THIS LINE IS REQUIRED FOR LOOP TO WORK
+        commands.push_back(tmpSprite.Fade(visDur, visDur, 1, 0));  // disappear instantaneously
+        commands.push_back(tmpSprite.Fade(visDur + hiddenDur, visDur + hiddenDur, 0, 1));  // reappear instantaneously
         line->Loop(startTime.ms, times, commands);
     }
     points.clear();
