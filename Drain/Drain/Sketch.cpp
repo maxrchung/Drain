@@ -62,7 +62,7 @@ void Sketch::draw(Bezier b) {
         float angle = atan(-(points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x + 0.001)); // negate y because osu!
         auto line = Storyboard::CreateSprite(brushPath, mpoints[i]);    // the actual line being drawn
         sprites.push_back(line);    // add it to the global sprites list
-        if (abs(angle) > 0.1)    // only include a rotation command if the angle is significant
+        if (std::abs(angle) > 0.1)    // only include a rotation command if the angle is significant
             line->Rotate(startTime.ms, startTime.ms, angle, angle);
         Swatch::colorFgToFgSprites({ line }, startTime.ms, startTime.ms);
         if (times == 1) {   // not looping
@@ -90,8 +90,8 @@ void Sketch::draw(Bezier b) {
         else {
             line->ScaleVector(startTime.ms, startTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // Loop will dictate endTime
         }
-        Sprite * tmpSprite;     // jank tmpSprite to generate the command strings for Fading
-        tmpSprite = &Sprite();
+        Sprite * tmpSprite = new Sprite();     // jank tmpSprite to generate the command strings for Fading
+        //tmpSprite = &Sprite();
         auto commands = std::vector<std::string>();
         commands.push_back(tmpSprite->Fade(0, visDur, 1, 1));  // stay visible NOTE: THIS LINE IS REQUIRED FOR LOOP TO WORK
         commands.push_back(tmpSprite->Fade(visDur, visDur, 1, 0));  // disappear instantaneously
@@ -131,7 +131,7 @@ int Sketch::dynamicResolution(Bezier b) {
     auto derivs = std::vector<double>();
     for (double i = 0.001; i < 1; i += 1 / static_cast<float>(numPoints)) {
         auto tmp = b.find2ndDerivative(i);
-        derivs.push_back(abs(tmp.x) + abs(tmp.y));
+        derivs.push_back(std::abs(tmp.x) + std::abs(tmp.y));
     }
     auto resolution = std::accumulate(derivs.begin(), derivs.end(), 0) / numPoints; // average of 2nd derivs
     resolution /= this->resolution; // scale the generated resolution with resolution arg
@@ -140,7 +140,7 @@ int Sketch::dynamicResolution(Bezier b) {
     steps.push_back(createS(0.001, derivs[0]));
     for (double i = 0.001;;) {
         auto tmp = b.find2ndDerivative(i);
-        auto dist = resolution / (abs(tmp.x) + abs(tmp.y) + 1);
+        auto dist = resolution / (std::abs(tmp.x) + std::abs(tmp.y) + 1);
         // if points are too close together, don't add it
         if (dist < 0.001) {
             i += dist;
@@ -149,7 +149,7 @@ int Sketch::dynamicResolution(Bezier b) {
         i += dist;
         if (i > 1.0 - 0.001)
             break;
-        steps.push_back(createS(i, abs(tmp.x) + abs(tmp.y)));
+        steps.push_back(createS(i, std::abs(tmp.x) + std::abs(tmp.y)));
         //spacing.push_back(abs(dynamicResFactor / tmp.x) + abs(dynamicResFactor / tmp.y));
     }
     steps.push_back(createS(0.999, derivs[derivs.size()-1]));

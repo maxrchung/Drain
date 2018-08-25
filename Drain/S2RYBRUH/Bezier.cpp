@@ -34,7 +34,7 @@ Vector2 Bezier::findDerivative(float time, float deltaT) {
 }
 
 Vector2 Bezier::find2ndDerivative(float time, float deltaT) {
-    if (time - deltaT < 0)
+    if (time - deltaT < 0)	// 
         time = deltaT;
     else if (time + deltaT > 1)
         time = time - deltaT;
