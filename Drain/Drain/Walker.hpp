@@ -42,7 +42,7 @@ private:
 	Vector2 findCollision(Vector2 a, Vector2 b);
 
 	//find the point at which to start drawing point
-	Vector2 findDistance(Vector3 a, Vector3 b, float size);
+	Vector2 findAppearPoint(Vector3 a, Vector3 b, float size);
 
 	//add more sprites for walking
 	void addSprites(float distance, Time startTime, Time endTime);
@@ -64,7 +64,7 @@ private:
 	const float min_scale = 0.01;
 	const float max_scale = 0.1;
 
-	const float sizeScale = 0.001;
+	const float sizeScale = 1;
 
 	//sizes of the raindrop
 	const float minSize = 10;
