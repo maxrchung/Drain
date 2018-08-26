@@ -8,6 +8,7 @@
 #include "Text.hpp"
 #include "Walker.hpp"
 #include "Splatter.hpp"
+#include "Drip.hpp"
 #include <ctime>
 #include <cmath>
 #include <iostream>
@@ -25,7 +26,8 @@ int main() {
 		
 	Text::render();
 	Sketch::render();
-	//Splatter::render();
+	Splatter::render();
+    //Drip::render();
 
 	// RainGenerator shit
 	RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));

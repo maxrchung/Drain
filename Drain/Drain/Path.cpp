@@ -22,5 +22,7 @@ std::string getPath(Path path) {
 			return "i";	
         case Path::Taper:
             return "j";
+        case Path::Column:
+            return "k";
     }
 }

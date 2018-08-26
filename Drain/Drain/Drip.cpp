@@ -5,44 +5,41 @@
 #include <ctime>
 
 Drip::Drip(const Time& startTime, const Time& endTime,
-    const float size, const Vector2 centerPos)
+    const float xSize, const float xPos, const float speedFactor)
     : startTime{ startTime }, endTime{ endTime },
-    sizeFactor{ size }, centerPos{ centerPos }
+    xSize{ xSize }, xPos { xPos }, speedFactor { speedFactor }
 {
     totalDur = endTime.ms - startTime.ms;
 }
 
-// returns and draws a single circle at pos after offset ms
-Sprite * Drip::draw(Vector2 pos, int offset, float size,
-    float fadeInDur, float fadeFrom, float fadeTo, float growDur, float growFromSize, Easing easing)
+// returns and draws a single rectangle after offset ms at xPos growing down
+Sprite * Drip::drawRect(int offset, float growDur, Easing easing)
 {
-    auto s = Storyboard::CreateSprite(getPath(Path::Circle), pos);
+    auto s = Storyboard::CreateSprite(getPath(Path::Column), Vector2(xPos, 240), Layer::Foreground, Origin::TopCentre);
+    const float ySizeStart = 0;
+    const float ySizeFullScreen = 480.0 / 100.0;    // div 100 because of 100x100 sprite size
+    const Vector2 endSize = Vector2(xSize, ySizeFullScreen);
     if (growDur != 0) {
         if (startTime.ms + offset + growDur < endTime.ms)
-            s->Scale(startTime.ms + offset, startTime.ms + offset + growDur, size * growFromSize, size, easing);
+            s->ScaleVector(startTime.ms + offset, startTime.ms + offset + growDur, Vector2(xSize, ySizeStart), endSize, easing);
         else
-            s->Scale(startTime.ms + offset, endTime.ms, size * growFromSize, size, easing);
+            s->ScaleVector(startTime.ms + offset, endTime.ms, Vector2(xSize, ySizeStart), endSize, easing);   // clip duration to endTime
     }
     else
-        s->Scale(startTime.ms + offset, startTime.ms + offset, size, size); // scale to proper size instantaneously
-    if (fadeInDur != 0) {
-        if (startTime.ms + offset + fadeInDur < endTime.ms)
-            s->Fade(startTime.ms + offset, startTime.ms + offset + fadeInDur, fadeFrom, fadeTo, easing);
-        else
-            s->Fade(startTime.ms + offset, endTime.ms, fadeFrom, fadeTo, easing);
-    }
+        s->ScaleVector(startTime.ms + offset, startTime.ms + offset, endSize, endSize); // scale to proper size instantaneously
     Swatch::colorFgToFgSprites({ s }, startTime.ms + offset, endTime.ms); // color will determine Sprite lifetime
     return s;
 }
 
 // returns number of sprites drawn
 int Drip::make() {
-
+    drawRect(0, speedFactor, Easing::Linear);
     return 0;
 }
 
 void Drip::render() {
     std::cout << "Rendering Drip..." << std::endl;
+    Drip(Time("04:04:168"), Time("04:44:074"), 1, 0, 1500).make();
     // drip to cover screen 04:04:168 - 04:44:074
     // 3D drip 05:39:000 - 06:06:000
 }
