@@ -8,6 +8,7 @@
 #include "Text.hpp"
 #include "Walker.hpp"
 #include "Splatter.hpp"
+#include "Drip.hpp"
 #include <ctime>
 #include <cmath>
 #include <iostream>
@@ -25,13 +26,14 @@ int main() {
 		
 	Text::render();
 	Sketch::render();
-	//Splatter::render();
+	Splatter::render();
+    //Drip::render();
 
 	// RainGenerator shit
-	RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
+	//RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
-	if(1) { //lmao
+	if(0) { //lmao
 		RainGenerator gen = RainGenerator(Time("01:03:32"), Time("01:31:00"), true, 1.03f);
 		//std::vector<Sprite *> raindrops = gen.FreezeRain();
 		std::vector<Sprite *> raindrops;

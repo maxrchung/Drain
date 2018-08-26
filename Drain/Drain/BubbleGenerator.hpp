@@ -16,9 +16,9 @@ public:
 	void VelocityController();
 
 private:
-	Time startTime = Time("01:58:79");
-	Time endTime = Time("02:33:89");
-	Time splatterTime;
+	Time startTime = Time("01:58:790");
+	Time endTime = Time("02:33:890");
+	Time splatterTime = Time("02:32:890"); // Not the correct time edit later <---------
 	float acceleration = 1.08;
 	float bubbleCount = 5;
 	float minMoveTime = 750.0f; // Edit to cap max bubble velocity
