@@ -8,6 +8,7 @@
 #include "Text.hpp"
 #include "Walker.hpp"
 #include "Splatter.hpp"
+#include "Drip.hpp"
 #include <ctime>
 #include <cmath>
 #include <iostream>
@@ -23,19 +24,23 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
-	//Text::render();
-    //Sketch::render();
-    //Splatter::render();
+	Text::render();
+	Sketch::render();
+	Splatter::render();
+    //Drip::render();
 
 	// RainGenerator shit
 	//RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
 	if(0) { //lmao
-		RainGenerator gen = RainGenerator(Time("01:03:320"), Time("01:31:000"), true, 1.03f);
-		std::vector<Sprite *> raindrops = gen.FreezeRain();
+		RainGenerator gen = RainGenerator(Time("01:03:32"), Time("01:31:00"), true, 1.03f);
+		//std::vector<Sprite *> raindrops = gen.FreezeRain();
+		std::vector<Sprite *> raindrops;
+		Sprite *temp_raindrop = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(-444.667, 263.334));
+		raindrops.push_back(temp_raindrop);
 		Walker walk_boi = Walker::Walker(raindrops);
-		walk_boi.walk(50, Time("01:32:000").ms, Time("01:42:000").ms);
+		walk_boi.walk(200, Time("01:32:00").ms, Time("01:42:00").ms);
 	}
 
 	// BubbleGenerator shit

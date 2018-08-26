@@ -47,6 +47,9 @@ private:
 	//add more sprites for walking
 	void addSprites(float distance, Time startTime, Time endTime);
 
+	//move the sprites
+	void moveSprites(float distance, Time startTime, Time endTime);
+	
 	//the maximum distance that any sprite will be drawn
 	//the minimum distance that a sprite will be drawn
 	const float max_distance = 100;
@@ -61,7 +64,7 @@ private:
 	const float min_scale = 0.01;
 	const float max_scale = 0.1;
 
-	const float sizeScale = 1;
+	const float sizeScale = 0.001;
 
 	//sizes of the raindrop
 	const float minSize = 10;
