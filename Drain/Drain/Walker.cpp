@@ -56,7 +56,6 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 		end_coord_3d.z -= distance;
 
 
-
 		Vector3 temp = Vector3::Zero;
 		Vector2 end_coord_2d = Vector2::Zero;
 
@@ -66,8 +65,7 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 			end_coord_3d.z = 1;
 			temp = threeToTwo(end_coord_3d, drop.size);
 
-			//do this line except for if end_coord_2d doesn't end up going off screen
-			//end_coord_2d = findCollision(start_coord_2d, end_coord_2d);
+			end_coord_2d = findProjection(start_coord_2d, end_coord_2d);
 		} else {
 			temp = threeToTwo(end_coord_3d, drop.size);
 			end_coord_2d = Vector2::Vector2(temp.x, temp.y);
@@ -212,7 +210,7 @@ Vector2 Walker::findCollision(Vector2 a, Vector2 b) {
 
 	switch((!!slopeV.y) | (!!slopeV.x << 1)) {
 	case 0: //same point
-		return out;
+		return a;
 
 	case 1: //horizontal line
 	case 2: //vertical line
@@ -232,6 +230,34 @@ Vector2 Walker::findCollision(Vector2 a, Vector2 b) {
 		out.x = mid.x;
 
 	return out;
+}
+
+Vector2 Walker::findProjection(Vector2 a, Vector2 b) {
+	Vector2 out = Vector2::Zero;
+
+	Vector2 slopeV = b - a;
+	Vector2 mid = Vector2::ScreenSize;
+
+	float slope = slopeV.y / slopeV.x;
+
+	if(slopeV.y < 0)
+		mid.y = -Vector2::ScreenSize.y;
+
+	if(slopeV.x < 0)
+		mid.x = -Vector2::ScreenSize.x;
+
+	switch((!!slopeV.y) | (!!slopeV.x << 1)) {
+	case 0:
+		return out;
+	case 1:
+	case 2:
+		out = b;
+		break;
+	case 3:
+		out.y = a.y - (slope * (a.x - mid.x));
+		out.x - a.x - ((a.y - mid.y) / slope);
+		break;
+	}
 }
 
 
