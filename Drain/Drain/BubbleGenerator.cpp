@@ -35,9 +35,14 @@ Vector2 BubbleGenerator::GetBubbleStartPos() {
 std::vector<float> BubbleGenerator::GetBubbleTiming() {
 	float adjustedTotalTime = moveTotalTime; // Note to self: This value will be randomized later on
 	float timeVariance = adjustedTotalTime * 8; // Constant here is copied over from RainGenerator, adjust if necessary
-	float moveTimeDelta = RandomRange::calculate(-timeVariance, timeVariance);
-	float adjustedStartTime = moveStartTime + moveTimeDelta;
-	float adjustedEndTime = adjustedStartTime + adjustedTotalTime;
+	float adjustedStartTime = 0;
+	float adjustedEndTime = 0;
+
+	do { // Ensures drops don't fall outside of time section & freezeTime
+		float moveTimeDelta = timeVariance * RandomRange::calculate(-10000, 10000, 10000);
+		adjustedStartTime = moveStartTime + moveTimeDelta;
+		adjustedEndTime = adjustedStartTime + adjustedTotalTime;
+	} while (adjustedStartTime < startTime.ms || adjustedEndTime > splatterTime.ms);
 
 	return {adjustedStartTime, adjustedEndTime};
 }
@@ -46,6 +51,7 @@ std::vector<float> BubbleGenerator::GetBubbleTiming() {
 void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes) {
 	float startMove = moveTimes[0];
 	float endMove = moveTimes[1];
+	std::cout << startMove << " " << endMove << std::endl;
 	sprite->Move(startMove, endMove, sprite->position, Vector2(sprite->position.x, screenTop));
 }
 
