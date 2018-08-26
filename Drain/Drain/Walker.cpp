@@ -29,10 +29,10 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 
 	//in addition to the sprites from the initial rain generator
 	//add more sprites
-	addSprites(distance, startTime.ms, endTime.ms);
+	addSprites(distance, startTime, endTime);
 
 	//move those boys
-	moveSprites(distance, startTime.ms, endTime.ms);
+	moveSprites(distance, startTime, endTime);
   
 	return;
 }
@@ -64,7 +64,7 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 		if(end_coord_3d.z < 0) {
 			//determine the exit coordinates of the drop
 			end_coord_3d.z = 1;
-			temp = threetoTwo(end_coord_3d, drop.size);
+			temp = threeToTwo(end_coord_3d, drop.size);
 
 			//do this line except for if end_coord_2d doesn't end up going off screen
 			//end_coord_2d = findCollision(start_coord_2d, end_coord_2d);
