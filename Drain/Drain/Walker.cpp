@@ -39,8 +39,42 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 
 
 void Walker::moveSprites(float distance, Time startTime, Time endTime) {
+
+	int total_time = endTime.ms - startTime.ms;
+
+	std::string spriteImage = getPath(Path::Circle);
+
+	const float sizeX = Vector2::ScreenSize.x/2;
+	const float sizeY = Vector2::ScreenSize.y/2;
+	for(int i = 0; i < (int) distance; ++i) {
+		int int_start_time = startTime.ms + i * w_rand(-1000, 1000);
+		if(int_start_time < startTime.ms)
+			int_start_time = startTime.ms;
+		
+		int int_end_time = int_start_time + w_rand(1000, total_time);
+
+		if(int_end_time > endTime.ms)
+			int_end_time = endTime.ms;
+
+		float start_scale = min_scale;
+		float end_scale = max_scale;
+
+		Vector2 start_coord = Vector2(w_rand(-sizeX, sizeX),
+					       w_rand(-sizeY, sizeY));
+
+		Vector2 end_coord = findProjection(Vector2::Zero, start_coord);
+
+		Sprite *sprite = Storyboard::CreateSprite(spriteImage, start_coord);
+
+
+		sprite->Move(int_start_time, int_end_time, start_coord, end_coord);
+		sprite->Scale(int_start_time, int_end_time, start_scale, end_scale);
+	}
+
+	/*
 	int a = 0;
 	int b = 0;
+	int c = 0;
 
 	const int elapsed_time = endTime.ms - startTime.ms;
 		
@@ -66,6 +100,8 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 			temp = threeToTwo(end_coord_3d, drop.size);
 
 			end_coord_2d = findProjection(start_coord_2d, end_coord_2d);
+			end = 1;
+			++c;	
 		} else {
 			temp = threeToTwo(end_coord_3d, drop.size);
 			end_coord_2d = Vector2::Vector2(temp.x, temp.y);
@@ -105,12 +141,13 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 			int_end_time = pos_ratio * (int_end_time - int_start_time) + int_start_time;
 			++b;
 		}
-		std::cout << "debug: " << int_start_time << "|" << int_end_time << "|" << start_coord_2d << "|" << end_coord_2d << "|" << start_scale << "|" << end_scale << "\n";
+		std::cout << "debug: " << start << " " << end << " " << int_start_time << "|" << int_end_time << "|" << start_coord_2d << "|" << end_coord_2d << "|" << start_scale << "|" << end_scale << "\n";
 
 		drop.sprite->Move(int_start_time, int_end_time, start_coord_2d, end_coord_2d);
 		drop.sprite->Scale(int_start_time, int_end_time, start_scale, end_scale);
 	}
-	std::cout << a << " " << b << "\n";
+	std::cout << a << " " << b << " " << c << "\n";
+	*/
 }
 
 /*
@@ -236,28 +273,44 @@ Vector2 Walker::findProjection(Vector2 a, Vector2 b) {
 	Vector2 out = Vector2::Zero;
 
 	Vector2 slopeV = b - a;
-	Vector2 mid = Vector2::ScreenSize;
+	Vector2 mid = Vector2::ScreenSize/2;
 
 	float slope = slopeV.y / slopeV.x;
 
 	if(slopeV.y < 0)
-		mid.y = -Vector2::ScreenSize.y;
+		mid.y = -Vector2::ScreenSize.y/2;
 
 	if(slopeV.x < 0)
-		mid.x = -Vector2::ScreenSize.x;
+		mid.x = -Vector2::ScreenSize.x/2;
 
 	switch((!!slopeV.y) | (!!slopeV.x << 1)) {
 	case 0:
-		return out;
-	case 1:
-	case 2:
-		out = b;
 		break;
+		
+	case 1:
+		out.x = mid.x;
+		break;
+
+	case 2:
+		out.y = mid.y;
+		break;
+		
 	case 3:
-		out.y = a.y - (slope * (a.x - mid.x));
-		out.x - a.x - ((a.y - mid.y) / slope);
+		/*
+		out.y = a.y - (slope * (mid.x - a.x));
+		out.x - a.x - ((mid.y - a.y) / slope);
+		*/
+		out.y = slope * mid.x + a.y;
+		out.x = (mid.y - a.y) / slope;
+		if(std::abs(out.y) > Vector2::ScreenSize.y/2)
+			out.y = mid.y;
+
+		if(std::abs(out.x) > Vector2::ScreenSize.x/2)
+			out.x = mid.x;
+
 		break;
 	}
+	return out;
 }
 
 
@@ -292,11 +345,11 @@ void Walker::addSprites(float distance, Time startTime, Time endTime) {
 	distance = abs(distance);
 	float speed = 1000 * distance / (endTime.ms - startTime.ms);
 
-	const float sizeX = Vector2::ScreenSize.x;
-	const float sizeY = Vector2::ScreenSize.y;
+	const float sizeX = Vector2::ScreenSize.x/2;
+	const float sizeY = Vector2::ScreenSize.y/2;
 
 	//constant to multiply speed by, affects density
-	const uint8_t multiplier = 100;
+	const uint8_t multiplier = 1;
 
 	//max value for loop
 	uint64_t iteratorMax = speed * multiplier;
@@ -308,15 +361,18 @@ void Walker::addSprites(float distance, Time startTime, Time endTime) {
 	float drawDistance = this->max_distance + distance * 2;
 
 	for(uint64_t i = 0; i < iteratorMax; ++i) {
+		raindrop drop;
+		drop.size = w_rand(minSize, maxSize);
+
 		Vector2 position_two = Vector2(w_rand(-sizeX, sizeX),
 					       w_rand(-sizeY, sizeY));
 
-		raindrop drop;
+
 
 		Sprite *sprite = Storyboard::CreateSprite(spriteImage, position_two);
 		sprite->scale = w_rand(min_scale/2, min_scale);
 
-		drop.size = w_rand(minSize, maxSize);
+
 		Vector3 position_three = twoToThree(sprite, drop.size);
 
 		drop.sprite = sprite;
