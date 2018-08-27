@@ -40,7 +40,7 @@ int main() {
 		Sprite *temp_raindrop = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(10, 10));
 		//raindrops.push_back(temp_raindrop);
 		Walker walk_boi = Walker::Walker(raindrops);
-		walk_boi.walk(200, Time("01:32:00"), Time("01:42:00"));
+		walk_boi.walk(100, Time("01:32:00"), Time("01:42:00"));
 	}
 
 	// BubbleGenerator shit
