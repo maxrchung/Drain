@@ -320,6 +320,12 @@ void Sketch::loop(int times, std::vector<Sketch> v) {
 	}
 }
 
+void Sketch::draw(const std::string& pointMapPath, const Time& startTime, const Time& endTime,
+				  const int thickness, const float resolution, const bool dynamic, const Path& brush,
+				  const int margin, const Easing& easing, const bool drawIn, const bool drawOut, const bool fadeIn, const bool fadeOut) {
+	Sketch(pointMapPath, startTime, endTime, thickness, resolution, dynamic, brush, margin, easing, drawIn, drawOut, fadeIn, fadeOut).make();
+}
+
 void Sketch::render() {
 	std::cout << "Rendering Sketch..." << std::endl;
 	// art idea: have the image gradually lower in resolution and fade away
@@ -331,5 +337,5 @@ void Sketch::render() {
 	//v.push_back(Sketch("1.txt", Time("00:05:900"), Time("00:06:200"), 1, 4.5, false, Path::Taper));   // 629
 	//loop(3, v);     // loop duration is 1200ms
 
-	Sketch("000 eyes closed.txt", Time("00:00:900"), Time("00:04:200"), 1, 6, true, Path::Taper, 5, Easing::ExpoOut, true, true, true, true).make();
+	draw("025 ting.txt", Time("00:00:900"), Time("00:04:200"), 1, 6, true, Path::Taper, 5);
 }
