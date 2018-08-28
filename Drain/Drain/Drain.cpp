@@ -25,15 +25,15 @@ int main() {
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
 	//Text::render();
-	//Sketch::render();
+	Sketch::render();
 	//Splatter::render();
-    Drip::render();
+    //Drip::render();
 
 	// RainGenerator shit
 	//RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
-	if(1) { //lmao
+	if(0) { //lmao
 		RainGenerator gen = RainGenerator(Time("01:03:32"), Time("01:31:00"), true, 1.03f);
 		//std::vector<Sprite *> raindrops = gen.FreezeRain();
 		std::vector<Sprite *> raindrops;

@@ -20,7 +20,7 @@ public:
            const int thickness,
            const float resolution,
            const bool dynamic,
-           const Path& brush,
+           const Path& brush = Path::Taper,
            const int margin = 5,
            const Easing& easing = Easing::Linear,
            const bool drawIn = false,
