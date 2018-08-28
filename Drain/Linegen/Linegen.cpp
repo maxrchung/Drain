@@ -6,8 +6,8 @@
 #include <sstream>
 namespace fs = std::experimental::filesystem;
 
-#define ROWS	2988 // height
-#define COLS	5312 // width
+#define ROWS	480 // height
+#define COLS	854 // width
 #define PI		3.14159265
 #define sqr(x)	((x)*(x))
 #define bucket_size 100
@@ -39,7 +39,7 @@ int main(int argc, char** argv)
 		max = 0;
 		memset(himage, 0, sizeof(char) * ROWS * COLS);	// init himage bg to 0
 		index_offset = 598;		// determined by finding minimum rho
-		sgm_threshold = 2; // 200
+		sgm_threshold = 2;		// 200
 		hough_threshold = 180;	// will result in the 3 lines of the given triangle
 		char raw[68];
 		strcpy(raw, RAWFileName);
@@ -48,11 +48,13 @@ int main(int argc, char** argv)
 			exit(1);
 		}
 
-		for (i = 0; i < ROWS; i++)
-			if (!(COLS == fread(image[i], sizeof(char), COLS, fp))) {
+		for (i = 0; i < ROWS; i++) {
+			auto a = fread(image[i], sizeof(char), COLS, fp);
+			if (!(COLS == a)) {
 				fprintf(stderr, "error: couldn't read %s\n", raw);
 				exit(1);
 			}
+		}
 		fclose(fp);
 
 		for (i = ROWS - 2; i > 0; i--)
