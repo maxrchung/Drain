@@ -78,6 +78,7 @@ int main(int argc, char** argv)
 		for (i = 0; i < ROWS; i++) {
 			for (j = 0; j < COLS; j++) {
 				if (i == 0 || j == 0 || i == ROWS - 1 || j == COLS - 1) {
+					bimage[i][j] = 0;
 					s[i][j] = 0;	// SGM has no outer edge
 					continue;
 				}
