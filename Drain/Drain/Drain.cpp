@@ -30,10 +30,10 @@ int main() {
     //Drip::render();
 
 	// RainGenerator shit
-	//RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
+	RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
-	if(0) { //lmao
+	if(1) { //lmao
 		RainGenerator gen = RainGenerator(Time("01:03:32"), Time("01:31:00"), true, 1.03f);
 		//std::vector<Sprite *> raindrops = gen.FreezeRain();
 		std::vector<Sprite *> raindrops;
@@ -44,7 +44,7 @@ int main() {
 	}
 
 	// BubbleGenerator shit
-	//BubbleGenerator::BubbleGenerator();
+	BubbleGenerator::BubbleGenerator();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
