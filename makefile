@@ -1,4 +1,5 @@
-FLAGS = -lm -w -fpermissive -Wnarrowing 
+LDFLAGS = -lm
+FLAGS = -w -fpermissive -Wnarrowing 
 CC = g++ -MMD -g
 
 STORY = main
@@ -21,7 +22,7 @@ all: S2RYOBJ2 DRAINOBJ2 link
 	./drain
 
 $(DRAINDIR)/%.o: $(DRAINDIR)/%.cpp
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) -IDrain/S2RYBRUH/ -c $< -o $@
 
 DRAINOBJ2: $(DRAINSRC:.cpp=.o)
 
@@ -34,7 +35,7 @@ $(S2RYDIR)/%.o: $(S2RYDIR)/%.c
 S2RYOBJ2: $(S2RYSRC:.cpp=.o)
 
 link:
-	$(CC) Drain/Drain/*.o Drain/S2RYBRUH/*.o -o drain
+	$(CC) Drain/Drain/*.o Drain/S2RYBRUH/*.o -o drain $(LDFLAGS)
 
 clean:
 	del $(CUROD)

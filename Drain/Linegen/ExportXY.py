@@ -20,7 +20,6 @@ class TemplateEffect(inkex.Effect):
         
         #Loop through all the selected items in Inkscape
         for node in self.selected.iteritems():
-            
             #Create the string variable which will hold the formatted data (note that '\n' defines a line break)
             output_all = output_nodes = ""
                     
@@ -47,12 +46,13 @@ class TemplateEffect(inkex.Effect):
                             output_all += str(csp[2][0]) + "," + str(csp[2][1])  + "\n"
                         output_all += ";\n"
                     
-            #
-            f = open('out.txt', 'w')
+            path = str(self.document.getroot().get("{http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd}docname"))
+            fileName = path[:len(path) - 4]
+            f = open(fileName + '.txt', 'w')
             f.write(output_all)
-            sys.stderr.write("Nodes only (in absolute position):\n%s" % output_nodes)
-            sys.stderr.write("\nIncluding handles:\n%s" % output_all)
-            sys.stderr.write("\nThe triplets are control point1, node, control point 2.\n")
+            # sys.stderr.write("Nodes only (in absolute position):\n%s" % output_nodes)
+            # sys.stderr.write("\nIncluding handles:\n%s" % output_all)
+            # sys.stderr.write("\nThe triplets are control point1, node, control point 2.\n")
             
 
 # Create effect instance and apply it.

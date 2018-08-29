@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Linegen.c">
+    <ClCompile Include="Linegen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

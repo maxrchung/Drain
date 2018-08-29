@@ -24,9 +24,9 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
-	Text::render();
+	//Text::render();
 	Sketch::render();
-	Splatter::render();
+	//Splatter::render();
     //Drip::render();
 
 	// RainGenerator shit
@@ -37,10 +37,10 @@ int main() {
 		RainGenerator gen = RainGenerator(Time("01:03:32"), Time("01:31:00"), true, 1.03f);
 		//std::vector<Sprite *> raindrops = gen.FreezeRain();
 		std::vector<Sprite *> raindrops;
-		Sprite *temp_raindrop = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(-444.667, 263.334));
-		raindrops.push_back(temp_raindrop);
+		Sprite *temp_raindrop = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(10, 10));
+		//raindrops.push_back(temp_raindrop);
 		Walker walk_boi = Walker::Walker(raindrops);
-		walk_boi.walk(200, Time("01:32:00").ms, Time("01:42:00").ms);
+		walk_boi.walk(100, Time("01:32:00"), Time("01:42:00"));
 	}
 
 	// BubbleGenerator shit
