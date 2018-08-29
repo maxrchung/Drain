@@ -5,8 +5,12 @@
 
 #include <cmath>
 
-Walker::Walker(std::vector<Sprite *> sprites) {
+Walker::Walker(std::vector<Sprite *> sprites)
+	: sprites{sprites} {
 	//convert each 2d location into a 3d location in real space
+	/*
+
+	int int_start_time = startTime.ms;
 
 	for(int i = 0; i < sprites.size(); ++i) {
 		raindrop drop;
@@ -14,7 +18,11 @@ Walker::Walker(std::vector<Sprite *> sprites) {
 		drop.size = w_rand(this->minSize, this->maxSize);
 		drop.position = twoToThree(sprites[i], drop.size);
 		this->raindrops.push_back(drop);
+
+		sprites[i]->Move(int_start_time, int_end_time, start_coord, end_coord);
+		sprites[i]->Scale(int_start_time, int_end_time, start_scale, end_scale);
 	}
+*/
 }
 
 
@@ -29,7 +37,9 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 
 	//in addition to the sprites from the initial rain generator
 	//add more sprites
-	addSprites(distance, startTime, endTime);
+	//addSprites(distance, startTime, endTime);
+	//move current
+	moveCurrent(distance, startTime, endTime);
 
 	//move those boys
 	moveSprites(distance, startTime, endTime);
@@ -38,26 +48,49 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 }
 
 
+void Walker::moveCurrent(float distance, Time startTime, Time endTime) {
+	int int_start_time = startTime.ms;
+	int total_time = endTime.ms - startTime.ms;
+
+	for(auto & drop : sprites) {
+		Vector2 start_coord = drop->position;
+		Vector2 end_coord = findProjection(Vector2::Zero, start_coord);
+
+		float ratio_traveled = (end_coord - start_coord).Magnitude() / (end_coord.Magnitude());
+
+		float start_scale = drop->scale;
+		float end_scale = start_scale * (1 + ratio_traveled);
+		
+ 		int int_end_time = int_start_time + w_rand(1000, total_time);
+		if(int_end_time > endTime.ms)
+			int_end_time = endTime.ms;
+
+		drop->Move(int_start_time, int_end_time, start_coord, end_coord);
+		drop->Scale(int_start_time, int_end_time, start_scale, end_scale);
+	}
+}
+
 void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 
 	int total_time = endTime.ms - startTime.ms;
 
 	std::string spriteImage = getPath(Path::Circle);
 
-	const float sizeX = Vector2::ScreenSize.x/2;
-	const float sizeY = Vector2::ScreenSize.y/2;
-	for(int i = 0; i < (int) distance; ++i) {
-		int int_start_time = startTime.ms + i * w_rand(-1000, 1000);
+	const float sizeX = Vector2::ScreenSize.x/2 * 0.4;
+	const float sizeY = Vector2::ScreenSize.y/2 * 0.4;
+	int count = distance * (total_time/1000);
+
+	for(int i = 0; i < count; ++i) {
+		int int_start_time = startTime.ms + i * w_rand(0, 1000);
 		if(int_start_time < startTime.ms)
 			int_start_time = startTime.ms;
 		
 		int int_end_time = int_start_time + w_rand(1000, total_time);
-
 		if(int_end_time > endTime.ms)
-			int_end_time = endTime.ms;
+			int_end_time = endTime.ms - w_rand(0, 2000);
 
 		float start_scale = min_scale;
-		float end_scale = max_scale;
+		float end_scale = max_scale * w_rand(1, 5);
 
 		Vector2 start_coord = Vector2(w_rand(-sizeX, sizeX),
 					       w_rand(-sizeY, sizeY));
@@ -70,84 +103,6 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 		sprite->Move(int_start_time, int_end_time, start_coord, end_coord);
 		sprite->Scale(int_start_time, int_end_time, start_scale, end_scale);
 	}
-
-	/*
-	int a = 0;
-	int b = 0;
-	int c = 0;
-
-	const int elapsed_time = endTime.ms - startTime.ms;
-		
-	for(auto & drop: this->raindrops) {
-		int int_start_time = startTime.ms;
-		int int_end_time = endTime.ms;
-
-		Vector3 start_coord_3d = drop.position;
-		Vector2 start_coord_2d = drop.sprite->position;
-
-		//only walk in the z direction
-		Vector3 end_coord_3d = start_coord_3d;
-		end_coord_3d.z -= distance;
-
-
-		Vector3 temp = Vector3::Zero;
-		Vector2 end_coord_2d = Vector2::Zero;
-
-		bool end = 0;
-		if(end_coord_3d.z < 0) {
-			//determine the exit coordinates of the drop
-			end_coord_3d.z = 1;
-			temp = threeToTwo(end_coord_3d, drop.size);
-
-			end_coord_2d = findProjection(start_coord_2d, end_coord_2d);
-			end = 1;
-			++c;	
-		} else {
-			temp = threeToTwo(end_coord_3d, drop.size);
-			end_coord_2d = Vector2::Vector2(temp.x, temp.y);
-			end = checkInScreen(end_coord_3d, drop.size);
-		}
-		float initial_distance = (end_coord_2d - start_coord_2d).Magnitude();
-
-		float start_scale = drop.sprite->scale;
-		float end_scale = temp.z + start_scale;
-
-		bool start = checkInScreen(start_coord_3d, drop.size);
-
-
-		//const values
-		const float const_start_scale = start_scale;
-		const float const_end_scale = end_scale;
-		const float const_scale_diff = const_end_scale - const_start_scale;
-
-		const float const_x_start_pos = start_coord_2d.x;
-		const float const_x_end_pos = end_coord_2d.x;
-
-		if(!start) {
-			start_coord_2d = findAppearPoint(start_coord_3d, end_coord_3d, drop.size);
-			start_scale = min_scale;
-			int_start_time = (min_scale - const_start_scale) / const_scale_diff * elapsed_time + int_start_time;
-			++a;
-		}
-
-		if(!end) {
-			end_coord_2d = findCollision(start_coord_2d, end_coord_2d);
-			float x_diff = end_coord_2d.x - start_coord_2d.x;
-			float scale_diff = end_scale - start_scale;
-			float pos_ratio = x_diff / (const_x_end_pos - start_coord_2d.x);
-
-			//std::cout << pos_ratio << "|" << scale_diff << "|" << x_diff << "\n";
-			end_scale = pos_ratio * scale_diff + start_scale;
-			int_end_time = pos_ratio * (int_end_time - int_start_time) + int_start_time;
-			++b;
-		}
-		std::cout << "debug: " << start << " " << end << " " << int_start_time << "|" << int_end_time << "|" << start_coord_2d << "|" << end_coord_2d << "|" << start_scale << "|" << end_scale << "\n";
-
-		drop.sprite->Move(int_start_time, int_end_time, start_coord_2d, end_coord_2d);
-		drop.sprite->Scale(int_start_time, int_end_time, start_scale, end_scale);
-	}
-	std::cout << a << " " << b << " " << c << "\n";
-	*/
 }
 
 /*

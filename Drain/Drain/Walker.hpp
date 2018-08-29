@@ -20,6 +20,7 @@ public:
 	float fov = 90;
 
 	std::vector<raindrop> raindrops;
+	std::vector<Sprite *> sprites;
 
 	Walker(std::vector<Sprite *> sprites);
 
@@ -47,6 +48,8 @@ private:
 	//find the point at which to start drawing point
 	Vector2 findAppearPoint(Vector3 a, Vector3 b, float size);
 
+
+	void moveCurrent(float distance, Time startTime, Time endTime);
 
 	//add more sprites for walking
 	void addSprites(float distance, Time startTime, Time endTime);
