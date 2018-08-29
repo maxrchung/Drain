@@ -34,6 +34,15 @@ Sketch::Sketch(const std::string& pointMapPath, const Time& startTime, const Tim
 	hiddenDur = 0;
 }
 
+bool Sketch::inBounds(const Vector2& point) {
+	const auto half = Vector2::ScreenSize / 2;
+	if (point.x > -half.x + 5 && point.x < half.x - 5 &&
+		point.y > -half.y + 5 && point.y < half.y - 5) {
+		return true;
+	}
+	return false;
+}
+
 void Sketch::draw(Bezier b) {
 	if (dynamic) {
 		if (!Sketch::dynamicResolution(b))
@@ -55,6 +64,9 @@ void Sketch::draw(Bezier b) {
 	for (int i = 0; i < points.size() - 1; i++) {
 		totalLines++;
 		mpoints.push_back((points[i] + points[i + 1]) / 2);
+		if (!inBounds(points[i]) && !inBounds(points[i + 1])) {
+			continue;
+		}
 		float dist = points[i].DistanceBetween(points[i + 1]);
 		if (brush == Path::Taper) {
 			dist *= 0.8;  // maybe want to scale with length of dist but this is fine for now
@@ -267,7 +279,7 @@ const int Sketch::make() {
 		vv.push_back({ values[4], values[5] });
 	}*/
 	std::cout << totalLines << std::endl;
-	assert(totalLines == sprites.size());
+	//assert(totalLines == sprites.size());
 	return 0;
 }
 
@@ -320,10 +332,10 @@ void Sketch::loop(int times, std::vector<Sketch> v) {
 	}
 }
 
-void Sketch::draw(const std::string& pointMapPath, const Time& startTime, const Time& endTime,
+void Sketch::make(const std::string& pointMapPath, const Time& startTime, const Time& endTime,
 				  const int thickness, const float resolution, const bool dynamic, const Path& brush,
 				  const int margin, const Easing& easing, const bool drawIn, const bool drawOut, const bool fadeIn, const bool fadeOut) {
-	Sketch(pointMapPath, startTime, endTime, thickness, resolution, dynamic, brush, margin, easing, drawIn, drawOut, fadeIn, fadeOut).make();
+	Sketch(pointMapPath + ".txt", startTime, endTime, thickness, resolution, dynamic, brush, margin, easing, drawIn, drawOut, fadeIn, fadeOut).make();
 }
 
 void Sketch::render() {
@@ -337,5 +349,5 @@ void Sketch::render() {
 	//v.push_back(Sketch("1.txt", Time("00:05:900"), Time("00:06:200"), 1, 4.5, false, Path::Taper));   // 629
 	//loop(3, v);     // loop duration is 1200ms
 
-	draw("025 ting.txt", Time("00:00:900"), Time("00:04:200"), 1, 6, true, Path::Taper, 5);
+	make("010 su", Time("00:00:900"), Time("00:04:200"), 1, 6, true, Path::Taper, 5);
 }
