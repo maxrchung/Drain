@@ -1,7 +1,7 @@
 #include "BubbleGenerator.hpp"
 
 BubbleGenerator::BubbleGenerator() {
-	// TODO: add cool wiggly bubble move effect lmao
+	// TODO: add cool wiggly bubble move effect lmao moveX shittt
 	while (moveEndTime < endTime.ms) {
 		BubbleController();
 	}
@@ -47,12 +47,47 @@ std::vector<float> BubbleGenerator::GetBubbleTiming() {
 	return {adjustedStartTime, adjustedEndTime};
 }
 
-// Handles all bubble movement from bottom of screen to top
+// Handles all bubble movement from bottom of screen to top including side movement
 void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes) {
 	float startMove = moveTimes[0];
 	float endMove = moveTimes[1];
-	std::cout << startMove << " " << endMove << std::endl;
-	sprite->Move(startMove, endMove, sprite->position, Vector2(sprite->position.x, screenTop));
+
+	sprite->Move(startMove, endMove, sprite->position, Vector2(sprite->position.x, screenTop)); // Handles only vertical movement
+
+	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
+	float oneDirMoveLength = sideMoveLength / 2;
+	float xSideDelta = 55;
+
+	float sideMoveTotalTime = (endMove - startMove) / sideMoveTimes;
+	float oneDirTime = sideMoveTotalTime / 2; // Time for bubble to move in one direction, either left or right
+	float oneDirMoveTimes = sideMoveTimes * 2;
+
+	float startSideMove = startMove;
+	float endSideMove = startSideMove + oneDirTime;
+
+	int leftOrRight = RandomRange::calculate(0, 1); // 0 = left 1 = right
+
+	if (leftOrRight == 0) { // So bubbles won't always start moving to the same side
+		sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x - xSideDelta);
+		xSideDelta *= -1;
+	}
+	else if (leftOrRight == 1) {
+		sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + xSideDelta);
+	}
+
+	startSideMove += oneDirTime;
+	endSideMove += oneDirTime;
+
+	for (int i = 0; i < oneDirMoveTimes - 1; i++) { // note to self add dependence on left or right and also switch direcitons every 2 iterations to fix bug adsljadasdfsdf
+		if ((i % 2) == 0) { // If 0 or even
+			sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x - xSideDelta);
+		}
+		else if ((i % 2) == 1) { // If odd
+			sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + xSideDelta);
+		}
+		startSideMove += oneDirTime;
+		endSideMove += oneDirTime;
+	}
 }
 
 // Adjust bubble velocity and density according to acceleration constant after each iteration of DrawBubble

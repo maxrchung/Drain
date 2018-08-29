@@ -34,7 +34,7 @@ public:
 private:
 	const int make();
 	// Helper that calls make()
-	static void draw(const std::string& pointMapPath,
+	static void make(const std::string& pointMapPath,
 					 const Time& startTime,
 					 const Time& endTime,
 					 const int thickness,
@@ -47,6 +47,9 @@ private:
 					 const bool drawOut = false,
 					 const bool fadeIn = false,
 					 const bool fadeOut = false);
+	// Check if point is within bounds
+	bool inBounds(const Vector2& point);
+	int boundsBorder = 5;
 	const std::string pointMapPath;
 	const int thickness;
 	const float resolution;

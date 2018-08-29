@@ -1,9 +1,10 @@
 #pragma once
 #include <vector>
-#include "Time.hpp"
-#include "Storyboard.hpp"
+#include "Easing.hpp"
 #include "Path.hpp"
 #include "RandomRange.hpp"
+#include "Storyboard.hpp"
+#include "Time.hpp"
 
 class BubbleGenerator {
 public:
@@ -29,4 +30,5 @@ private:
 	float moveTotalTime = totalTime / bubbleCount;
 	float moveStartTime = startTime.ms;
 	float moveEndTime = startTime.ms + moveTotalTime;
+	int sideMoveTimes = 4; // Amount of times a bubble moves to the sides
 };
