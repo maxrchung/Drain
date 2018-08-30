@@ -25,7 +25,7 @@ int main() {
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
 	//Text::render();
-	Sketch::render();
+	//Sketch::render();
 	//Splatter::render();
     //Drip::render();
 
