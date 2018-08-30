@@ -17,11 +17,11 @@ public:
 	Sketch(const std::string& pointMapPath,
 		   const Time& startTime,
 		   const Time& endTime,
-		   const int thickness,
-		   const float resolution,
-		   const bool dynamic,
+		   const float resolution = 5.0f,
+		   const bool dynamic = true,
 		   const Path& brush = Path::Taper,
-		   const int margin = 5,
+		   const int margin = 0,
+		   const int thickness = 1,
 		   const Easing& easing = Easing::Linear,
 		   const bool drawIn = false,
 		   const bool drawOut = false,
@@ -32,21 +32,22 @@ public:
 	int relStart; // delay between start of loop and start of this sketch
 	int hiddenDur;  // time this sketch is hidden (used in loops)
 private:
-	const int make();
 	// Helper that calls make()
 	static void make(const std::string& pointMapPath,
 					 const Time& startTime,
 					 const Time& endTime,
-					 const int thickness,
-					 const float resolution,
-					 const bool dynamic,
+					 const float resolution = 5.0f,
+					 const bool dynamic = true,
 					 const Path& brush = Path::Taper,
-					 const int margin = 5,
+					 const int margin = 0,
+					 const int thickness = 1,
 					 const Easing& easing = Easing::Linear,
 					 const bool drawIn = false,
 					 const bool drawOut = false,
 					 const bool fadeIn = false,
 					 const bool fadeOut = false);
+	static void loop(int times, std::vector<Sketch> v);
+	const int make();
 	// Check if point is within bounds
 	bool inBounds(const Vector2& point);
 	int boundsBorder = 5;
@@ -73,5 +74,4 @@ private:
 	std::vector<Sprite*> sprites;
 	int count;  // number of ; in .txt (curves)
 	int dynamicResolution(Bezier b);
-	static void loop(int times, std::vector<Sketch> v);
 };
