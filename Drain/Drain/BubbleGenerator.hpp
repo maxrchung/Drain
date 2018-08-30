@@ -30,5 +30,5 @@ private:
 	float moveTotalTime = totalTime / bubbleCount;
 	float moveStartTime = startTime.ms;
 	float moveEndTime = startTime.ms + moveTotalTime;
-	int sideMoveTimes = 4; // Amount of times a bubble moves to the sides
+	int sideMoveTimes = 3; // Amount of times a bubble moves to the sides
 };

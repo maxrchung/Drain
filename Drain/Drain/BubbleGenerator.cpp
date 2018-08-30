@@ -55,35 +55,42 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes) {
 
 	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
 	float oneDirMoveLength = sideMoveLength / 2;
-	float xSideDelta = 55;
+	float xSideDelta = 30;
 
 	float sideMoveTotalTime = (endMove - startMove) / sideMoveTimes;
 	float oneDirTime = sideMoveTotalTime / 2; // Time for bubble to move in one direction, either left or right
 	float oneDirMoveTimes = sideMoveTimes * 2;
 
-	float startSideMove = startMove + 1;
+	float startSideMove = startMove + 1; // +1 to avoid conflict with sprite->Move
 	float endSideMove = startSideMove + oneDirTime;
 
-	int leftOrRight = RandomRange::calculate(0, 1); // 0 (-1 later) = left 1 = right
-	if (leftOrRight == 0) { // didnt know how to randomize btwn -1 or 1 so ye
+	int leftOrRight = RandomRange::calculate(0, 1); // 0 = left 1 = right
+	if (leftOrRight == 0) { // didnt know how to randomize btwn -1 and 1 so ye
 		leftOrRight = -1;
 	}
 
 	if (leftOrRight == -1) { // So bubbles won't always start moving to the same side
-		sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x - xSideDelta);
+		sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x - xSideDelta, Easing::SineOut);
 	}
 	else if (leftOrRight == 1) {
-		sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + xSideDelta);
+		sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + xSideDelta, Easing::SineOut);
 	}
 
 	startSideMove += oneDirTime;
 	endSideMove += oneDirTime;
 
-	for (int i = 0; i < oneDirMoveTimes - 1; i++) { // note to self add dependence on left or right and also switch direcitons every 2 iterations to fix bug adsljadasdfsdf
-		if ((i % 2) == 0) {
+	for (int i = 0; i < oneDirMoveTimes - 1; i++) {
+		if ((i % 2) == 0) { // Change direction every other iteration
 			leftOrRight *= -1;
 		}
-		sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + (xSideDelta * leftOrRight));
+
+		if ((i % 2) == 0) {
+			sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + (xSideDelta * leftOrRight), Easing::SineIn);
+		}
+		else if ((i % 2) == 1) {
+			sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + (xSideDelta * leftOrRight), Easing::SineOut);
+		}
+
 		startSideMove += oneDirTime;
 		endSideMove += oneDirTime;
 	}
