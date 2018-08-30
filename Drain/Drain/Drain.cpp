@@ -27,20 +27,17 @@ int main() {
 	//Text::render();
 	//Sketch::render();
 	//Splatter::render();
-    //Drip::render();
+	//Drip::render();
 
 	// RainGenerator shit
 	RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
 	if(1) { //lmao
-		RainGenerator gen = RainGenerator(Time("01:03:32"), Time("01:31:00"), true, 1.03f);
-		//std::vector<Sprite *> raindrops = gen.FreezeRain();
-		std::vector<Sprite *> raindrops;
-		Sprite *temp_raindrop = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(10, 10));
-		//raindrops.push_back(temp_raindrop);
+		RainGenerator gen = RainGenerator(Time("01:03:32"), Time("01:30:489"), true, 1.03f);
+		std::vector<Sprite *> raindrops = gen.FreezeRain();
 		Walker walk_boi = Walker::Walker(raindrops);
-		walk_boi.walk(100, Time("01:32:00"), Time("01:42:00"));
+		walk_boi.walk(1000, Time("01:30:489"), Time("01:57:659"));
 	}
 
 	// BubbleGenerator shit

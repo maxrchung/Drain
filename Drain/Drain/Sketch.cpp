@@ -20,9 +20,9 @@ Bezier curves to sketch an image
 //std::istringstream& operator>>(std::istringstream& iss, Vector2& const& obj)
 
 Sketch::Sketch(const std::string& pointMapPath, const Time& startTime, const Time& endTime,
-			   const int thickness, const float resolution, const bool dynamic, const Path& brush,
-			   const int margin, const Easing& easing, const bool drawIn, const bool drawOut, const bool fadeIn, const bool fadeOut)
-	: pointMapPath{ pointMapPath }, startTime{ startTime }, endTime{ endTime },
+			   const float resolution, const bool dynamic, const Path& brush,
+			   const int margin, const int thickness, const Easing& easing, const bool drawIn, const bool drawOut, const bool fadeIn, const bool fadeOut)
+	: pointMapPath{ pointMapPath + ".txt" }, startTime{ startTime }, endTime{ endTime },
 	thickness{ thickness }, resolution{ resolution }, dynamic{ dynamic }, brush{ brush },
 	margin{ margin }, easing{ easing }, drawIn{ drawIn }, drawOut{ drawOut }, fadeIn{ fadeIn }, fadeOut{ fadeOut }
 {
@@ -74,9 +74,9 @@ void Sketch::draw(Bezier b) {
 		float angle = atan(-(points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x + 0.001)); // negate y because osu!
 		auto line = Storyboard::CreateSprite(brushPath, mpoints[i]);    // the actual line being drawn
 		sprites.push_back(line);    // add it to the global sprites list
-		if (std::abs(angle) > 0.1)    // only include a rotation command if the angle is significant
+		if (std::abs(angle) > 0.01)    // only include a rotation command if the angle is significant
 			line->Rotate(startTime.ms, startTime.ms, angle, angle);
-		Swatch::colorFgToFgSprites({ line }, startTime.ms, startTime.ms);
+		Swatch::colorFgToFgSprites({ line }, startTime.ms, endTime.ms);
 		if (times == 1) {   // not looping
 			if (drawIn && drawOut) {
 				line->ScaleVector(startTime.ms, startTime.ms + visDur / 2, Vector2(0, thickness), Vector2(dist, thickness), easing);
@@ -158,7 +158,7 @@ int Sketch::dynamicResolution(Bezier b) {
 		// if points are too close together, don't add it
 		if (dist < 0.001) {
 			i += dist;
-			continue;
+			break;
 		}
 		i += dist;
 		if (i > 1.0 - 0.001)
@@ -333,15 +333,15 @@ void Sketch::loop(int times, std::vector<Sketch> v) {
 }
 
 void Sketch::make(const std::string& pointMapPath, const Time& startTime, const Time& endTime,
-				  const int thickness, const float resolution, const bool dynamic, const Path& brush,
-				  const int margin, const Easing& easing, const bool drawIn, const bool drawOut, const bool fadeIn, const bool fadeOut) {
-	Sketch(pointMapPath + ".txt", startTime, endTime, thickness, resolution, dynamic, brush, margin, easing, drawIn, drawOut, fadeIn, fadeOut).make();
+				  const float resolution, const bool dynamic, const Path& brush,
+				  const int margin, const int thickness, const Easing& easing, const bool drawIn, const bool drawOut, const bool fadeIn, const bool fadeOut) {
+	Sketch(pointMapPath, startTime, endTime, resolution, dynamic, brush, margin, thickness, easing, drawIn, drawOut, fadeIn, fadeOut).make();
 }
 
 void Sketch::render() {
 	std::cout << "Rendering Sketch..." << std::endl;
 	// art idea: have the image gradually lower in resolution and fade away
-	//Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper, 5, Easing::ExpoOut, true, true, true, true).make();
+	//Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper, margin, Easing::ExpoOut, true, true, true, true).make();
 	//auto v = std::vector<Sketch>();
 	//v.push_back(Sketch("1.txt", Time("00:05:000"), Time("00:05:300"), 1, 4, true, Path::Taper));      // 651
 	//v.push_back(Sketch("1.txt", Time("00:05:300"), Time("00:05:600"), 1, 4.7, false, Path::Taper));   // 562
@@ -349,5 +349,47 @@ void Sketch::render() {
 	//v.push_back(Sketch("1.txt", Time("00:05:900"), Time("00:06:200"), 1, 4.5, false, Path::Taper));   // 629
 	//loop(3, v);     // loop duration is 1200ms
 
-	make("010 su", Time("00:00:900"), Time("00:04:200"), 1, 6, true, Path::Taper, 5);
+	make("010 su", Time("00:05:584"), Time("00:05:867"), 5, true, Path::Taper, 0, 1, Easing::EasingOut, false, false, true, false);
+	make("015 ffo", Time("00:05:867"), Time("00:06:150"));
+	make("020 ca", Time("00:06:150"), Time("00:06:433"));
+	make("025 ting", Time("00:06:433"), Time("00:06:999"));
+	make("025 ting", Time("00:06:999"), Time("00:07:565"), 1, 6);
+	make("025 ting", Time("00:07:565"), Time("00:08:131"));
+	//auto ting = std::vector<Sketch>();
+	//ting.push_back(Sketch("025 ting.txt", Time("00:06:433"), Time("00:06:999"), 1, 5, true));
+	//ting.push_back(Sketch("025 ting.txt", Time("00:06:999"), Time("00:07:565"), 1, 6, true));
+	//loop(2, ting);
+	make("035 puff", Time("00:08:131"), Time("00:08:414"));
+	make("040 of", Time("00:08:414"), Time("00:08:697"));
+	auto smoke = std::vector<Sketch>();
+	smoke.push_back(Sketch("045 smoke", Time("00:08:697"), Time("00:09:546")));
+	smoke.push_back(Sketch("045 smoke", Time("00:09:546"), Time("00:10:112"), 6));
+	loop(4, smoke);
+	make("055 i", Time("00:14:357"), Time("00:14:640"));
+	make("060 took", Time("00:14:640"), Time("00:14:923"));
+	make("065 your", Time("00:14:923"), Time("00:15:206"));
+	make("070 breath", Time("00:15:206"), Time("00:15:489"));
+	make("075 in", Time("00:15:489"), Time("00:17:187"));
+	make("080 and", Time("00:17:187"), Time("00:17:470"));
+	make("085 you", Time("00:17:470"), Time("00:17:753"));
+	make("090 spoke", Time("00:17:753"), Time("00:21:963"));
+	make("100 and", Time("00:21:963"), Time("00:22:282"));
+	make("105 i", Time("00:22:282"), Time("00:22:565"));
+	make("110 saw", Time("00:22:565"), Time("00:23:131"));
+	make("115 the", Time("00:23:131"), Time("00:23:697"));
+	make("120 world", Time("00:23:697"), Time("00:26:527"));
+	make("125 turn", Time("00:26:527"), Time("00:27:093"));
+	make("130 white", Time("00:27:093"), Time("00:36:574"));
+	make("135 are", Time("00:36:574"), Time("00:36:716"));
+	make("140 you", Time("00:36:716"), Time("00:37:140"));
+	make("145 still", Time("00:37:140"), Time("00:37:423"));
+	make("150 cal", Time("00:37:423"), Time("00:37:848"));
+	make("155 ling", Time("00:37:848"), Time("00:38:131"));
+	make("160 me", Time("00:38:131"), Time("00:40:395"));
+	make("170 i", Time("00:40:395"), Time("00:40:749"));
+	make("175 melt", Time("00:40:749"), Time("00:49:452"));
+	make("180 in", Time("00:49:452"), Time("00:49:735"));
+	make("185 to", Time("00:49:735"), Time("00:51:716"));
+	make("190 your", Time("00:51:716"), Time("00:51:999"));
+	make("195 voice", Time("00:51:999"), Time("00:52:565"), 5, true, Path::Taper, 0, 1, Easing::EasingIn, false, false, false, true);
 }
