@@ -2,6 +2,7 @@
 
 BubbleGenerator::BubbleGenerator() {
 	// TODO: fix side movement lmao also add easing to it lmao
+	// mouth bubbles
 	while (moveEndTime < endTime.ms) {
 		BubbleController();
 	}
@@ -18,6 +19,8 @@ void BubbleGenerator::DrawBubble() {
 		Vector2 startPos = GetBubbleStartPos();
 		std::vector<float> moveTimes = GetBubbleTiming();
 		Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(startPos.x, startPos.y));
+		ScaleBubbleSize(sprite, moveTimes);
+
 		MoveBubble(sprite, moveTimes);
 	}
 }
@@ -33,7 +36,7 @@ Vector2 BubbleGenerator::GetBubbleStartPos() {
 
 // Randomizes and returns bubble startTime and endTime
 std::vector<float> BubbleGenerator::GetBubbleTiming() {
-	float adjustedTotalTime = moveTotalTime; // Note to self: This value will be randomized later on
+	float adjustedTotalTime = RandomBubbleSpeed(); // Note to self: This value will be randomized later on
 	float timeVariance = adjustedTotalTime * 8; // Constant here is copied over from RainGenerator, adjust if necessary
 	float adjustedStartTime = 0;
 	float adjustedEndTime = 0;
@@ -84,10 +87,10 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes) {
 			leftOrRight *= -1;
 		}
 
-		if ((i % 2) == 0) {
+		if ((i % 2) == 0) { // Bubble moving inwards
 			sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + (xSideDelta * leftOrRight), Easing::SineIn);
 		}
-		else if ((i % 2) == 1) {
+		else if ((i % 2) == 1) { // Bubble moving outwards
 			sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + (xSideDelta * leftOrRight), Easing::SineOut);
 		}
 
@@ -96,11 +99,64 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes) {
 	}
 }
 
+// Returns the actual total time(ms) it takes for a bubble to float to the top of the screen; Smaller bubble sizes (slower speed) are made more probable for visual effect
+float BubbleGenerator::RandomBubbleSpeed() {
+	float adjustedTotalTime;
+	static const float sections = 5; // How many different "sections" of velocity are to be sorted by probability
+	static const float veloDelta = 10;
+	float sectionLength = moveTotalTime / sections;
+	float randNum = RandomRange::calculate(0, 1000, 100);
+
+	if (randNum >= 0 && randNum <= 6.5) { // Gets speed of bubbles based on number randNum which ranges from 1-10
+		adjustedTotalTime = RandomRange::calculate(sectionLength * 4, moveTotalTime);
+	}
+	else if (randNum > 6.5 && randNum <= 8.1) {
+		adjustedTotalTime = RandomRange::calculate(sectionLength * 3, sectionLength * 4);
+	}
+	else if (randNum > 8.1 && randNum <= 9.4) {
+		adjustedTotalTime = RandomRange::calculate(sectionLength * 2, sectionLength * 3);
+	}
+	else if (randNum > 9.4 && randNum <= 9.95) {
+		adjustedTotalTime = RandomRange::calculate(sectionLength, sectionLength * 2);
+	}
+	else if (randNum > 9.95 && randNum <= 10) {
+		adjustedTotalTime = RandomRange::calculate(minMoveTime, sectionLength);
+	}
+
+	return adjustedTotalTime;
+}
+
+// Scales bubbles to appropriate size based on speed
+void BubbleGenerator::ScaleBubbleSize(Sprite* sprite, std::vector<float> moveTimes) {
+	float adjustedSize;
+
+	float adjustedTotalTime = moveTimes[1] - moveTimes[0];
+	float veloRatio = adjustedTotalTime / moveTotalTime;
+	float bubbleScale = maxSize - veloRatio;
+
+	if (bubbleScale < 0) { // Ensures adjustedSize isn't a negative number; negative sizes would be fked
+		float remainder = -bubbleScale;
+		float minSizeScaler = maxSize - remainder;
+		adjustedSize = minSize * minSizeScaler;
+	}
+	else {
+		adjustedSize = bubbleScale * bubbleScale; // Multiplies scale by itself so image scales off total area instead of side length
+
+		if (adjustedSize < minSize) { // So that bubbles that are too small don't exist
+			adjustedSize = minSize;
+		}
+	}
+
+	sprite->Scale(moveTimes[0], moveTimes[0], adjustedSize, adjustedSize);
+}
+
 // Adjust bubble velocity and density according to acceleration constant after each iteration of DrawBubble
 void BubbleGenerator::VelocityController() {
 	if (moveTotalTime >= minMoveTime) { // Ensures bubble doesn't move faster than minDropTime
 		moveTotalTime *= (2.0f - acceleration);
 	}
+
+	bubbleCount *= acceleration;
 
 	// Increments time after "row" of bubbles finish moving
 	moveStartTime += moveTotalTime;
