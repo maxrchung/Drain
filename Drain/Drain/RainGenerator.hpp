@@ -3,6 +3,7 @@
 #include "RandomRange.hpp"
 #include "Sprite.hpp"
 #include "Time.hpp"
+#include "Timing.hpp"
 
 struct RainDrop {
 	Sprite* sprite;
@@ -22,7 +23,7 @@ public:
 				  Time endTime,
 				  bool willFreeze = false,
 				  float acceleration = 1.04f, // Note: should be 1.04 default in case I forget
-				  Time freezeTime = Time("01:30:489"),
+				  Time freezeTime = Time("01:30:348"),
 				  int dropCount = 20);  // Bigger the dropCount, faster the initial raindrops fall 
 
 	void VelocityController();
@@ -30,7 +31,7 @@ public:
 	void DrawRain();
 	std::vector<Sprite*> FreezeRain();
 	Vector2 FreezePos();
-	float SlowRainBeforeFreeze(float actualDropStart, float actualDropTotalTime);
+	float SlowRainBeforeFreeze(float actualDropStart, float actualDropTotalTime, bool& freezeFlag);
 	void TrackRainDrop(Sprite* sprite, float actualDropStart, float actualDropEnd, float newSize, float spriteEndPosX, float spriteEndPosY);
 	float RandomRainVelocity(float minDropTime, float veloDelta);
 	float RandomRainTilt(Sprite* sprite);
@@ -60,6 +61,6 @@ private:
 
 	bool willFreeze;
 	Time freezeTime;
-	Time slowPeriod = Time("00:02:67");
+	Time slowPeriod = Time(Timing::whole * 8);
 	float maxSlow = 5;
 };
