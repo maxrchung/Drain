@@ -7,22 +7,6 @@
 
 Walker::Walker(std::vector<Sprite *> sprites)
 	: sprites{sprites} {
-	//convert each 2d location into a 3d location in real space
-	/*
-
-	int int_start_time = startTime.ms;
-
-	for(int i = 0; i < sprites.size(); ++i) {
-		raindrop drop;
-		drop.sprite = sprites[i];
-		drop.size = w_rand(this->minSize, this->maxSize);
-		drop.position = twoToThree(sprites[i], drop.size);
-		this->raindrops.push_back(drop);
-
-		sprites[i]->Move(int_start_time, int_end_time, start_coord, end_coord);
-		sprites[i]->Scale(int_start_time, int_end_time, start_scale, end_scale);
-	}
-*/
 }
 
 
@@ -34,11 +18,7 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 	//for every sprite
 	Vector3 temp = Vector3::Zero;
 
-
-	//in addition to the sprites from the initial rain generator
-	//add more sprites
-	//addSprites(distance, startTime, endTime);
-	//move current
+	//move the boys from rainGenerator
 	moveCurrent(distance, startTime, endTime);
 
 	//move those boys
@@ -53,20 +33,23 @@ void Walker::moveCurrent(float distance, Time startTime, Time endTime) {
 	int total_time = endTime.ms - startTime.ms;
 
 	for(auto & drop : sprites) {
-		Vector2 start_coord = drop->position;
-		Vector2 end_coord = findProjection(Vector2::Zero, start_coord);
+		if(inScreen(drop->position)) {
+			Vector2 start_coord = drop->position;
+			Vector2 end_coord = findProjection(Vector2::Zero, start_coord);
 
-		float ratio_traveled = (end_coord - start_coord).Magnitude() / (end_coord.Magnitude());
+			float ratio_traveled = (end_coord - start_coord).Magnitude() / (end_coord.Magnitude());
 
-		float start_scale = drop->scale;
-		float end_scale = start_scale * (1 + ratio_traveled);
+			float start_scale = drop->scale;
+			float end_scale = start_scale * (1 + ratio_traveled);
 		
- 		int int_end_time = int_start_time + w_rand(1000, total_time);
-		if(int_end_time > endTime.ms)
-			int_end_time = endTime.ms;
+			int int_end_time = int_start_time + w_rand(1000, total_time);
+			if(int_end_time > endTime.ms)
+				int_end_time = endTime.ms;
 
-		drop->Move(int_start_time, int_end_time, start_coord, end_coord);
-		drop->Scale(int_start_time, int_end_time, start_scale, end_scale);
+			drop->Move(int_start_time, int_end_time, start_coord, end_coord);
+			drop->Scale(int_start_time, int_end_time, start_scale, end_scale);
+		}
+
 	}
 }
 
@@ -108,36 +91,14 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 /*
  * checks that the object is within screen
  */
-bool Walker::checkInScreen(Vector3 coordinates, float size) {
+bool Walker::inScreen(Vector2 a) {
 	bool out = 1;
 
-	if(coordinates.z < 0)
+	if(std::abs(a.x) > Vector2::ScreenSize.x/2)
 		out = 0;
 
-	//if scale is too small
-	if( out && (((this->sizeScale * size) / (coordinates.z * this->sprite_size)) < min_scale) ) {
+	if(out && (std::abs(a.y) > Vector2::ScreenSize.y/2))
 		out = 0;
-	}
-
-	Vector3 coordinate = threeToTwo(coordinates, size);
-
-	//if xcoord is out of bounds
-	if( out && std::abs(coordinate.x) > (Vector2::ScreenSize.x / 2) ) {
-		float edge = std::abs(coordinate.x) - (size * this->sprite_size / 2);
-		if( edge > (Vector2::ScreenSize.x / 2) ) {
-			out = 0;
-			std::cout << "x out of range\n";
-		}
-	}
-
-	//if ycoord is out of bounds
-	if(out && (std::abs(coordinate.y) > (Vector2::ScreenSize.y / 2)) ) {
-		float edge = std::abs(coordinate.y) - (size * this->sprite_size / 2);
-		if( edge > (Vector2::ScreenSize.y / 2) ) {
-			out = 0;
-			std::cout << "y out of range\n";
-		}
-	}
 
 	return out;
 }
@@ -177,53 +138,6 @@ Vector3 Walker::threeToTwo(Vector3 coordinates, float size) {
 	return out;
 }
 
-
-/*
- * assuming that b is out of the screen
- * finds the point at which the line between 
- * a and b hits the edge of the screen
- */
-Vector2 Walker::findCollision(Vector2 a, Vector2 b) {
-	Vector2 out = Vector2::Zero;
-
-	Vector2 slopeV = b - a;
-
-	//determine which border of the screen has a collision
-	Vector2 mid = Vector2::ScreenSize;
-
-	if(slopeV.y < 0)
-		mid.y = -Vector2::ScreenSize.y;
-
-	if(slopeV.x < 0)
-		mid.x = -Vector2::ScreenSize.x;
-
-
-	float slope = slopeV.y / slopeV.x;
-
-	switch((!!slopeV.y) | (!!slopeV.x << 1)) {
-	case 0: //same point
-		return a;
-
-	case 1: //horizontal line
-	case 2: //vertical line
-		out = b;
-		break;
-
-	case 3:
-		out.y = a.y - (slope * (a.x - mid.x));
-		out.x = a.x - ((a.y - mid.y) / slope);
-		break;
-	}
-
-	if(std::abs(out.y) > Vector2::ScreenSize.y)
-		out.y = mid.y;
-
-	if(std::abs(out.x) > Vector2::ScreenSize.x)
-		out.x = mid.x;
-
-	return out;
-}
-
 Vector2 Walker::findProjection(Vector2 a, Vector2 b) {
 	Vector2 out = Vector2::Zero;
 
@@ -232,11 +146,19 @@ Vector2 Walker::findProjection(Vector2 a, Vector2 b) {
 
 	float slope = slopeV.y / slopeV.x;
 
-	if(slopeV.y < 0)
-		mid.y = -Vector2::ScreenSize.y/2;
+	float size_offset = this->sprite_size * this->max_scale * 5;
 
-	if(slopeV.x < 0)
-		mid.x = -Vector2::ScreenSize.x/2;
+	if(slopeV.y < 0) {
+		mid.y = -Vector2::ScreenSize.y/2 - size_offset;
+	} else {
+		mid.y += size_offset;
+	}
+
+	if(slopeV.x < 0) {
+		mid.x = -Vector2::ScreenSize.x/2 - size_offset;
+	} else {
+		mid.y += size_offset;
+	}
 
 	switch((!!slopeV.y) | (!!slopeV.x << 1)) {
 	case 0:
@@ -251,10 +173,6 @@ Vector2 Walker::findProjection(Vector2 a, Vector2 b) {
 		break;
 		
 	case 3:
-		/*
-		out.y = a.y - (slope * (mid.x - a.x));
-		out.x - a.x - ((mid.y - a.y) / slope);
-		*/
 		out.y = slope * mid.x + a.y;
 		out.x = (mid.y - a.y) / slope;
 		if(std::abs(out.y) > Vector2::ScreenSize.y/2)
@@ -265,6 +183,7 @@ Vector2 Walker::findProjection(Vector2 a, Vector2 b) {
 
 		break;
 	}
+
 	return out;
 }
 
@@ -292,51 +211,6 @@ Vector2 Walker::findAppearPoint(Vector3 a, Vector3 b, float size) {
 	out.y = out_3d.y;
 
 	return out;
-}
-
-
-void Walker::addSprites(float distance, Time startTime, Time endTime) {
-	//speed in distance/second
-	distance = abs(distance);
-	float speed = 1000 * distance / (endTime.ms - startTime.ms);
-
-	const float sizeX = Vector2::ScreenSize.x/2;
-	const float sizeY = Vector2::ScreenSize.y/2;
-
-	//constant to multiply speed by, affects density
-	const uint8_t multiplier = 1;
-
-	//max value for loop
-	uint64_t iteratorMax = speed * multiplier;
-
-	//path to image
-	std::string spriteImage = getPath(Path::Circle);
-
-	//maximum distance to draw a raindrop
-	float drawDistance = this->max_distance + distance * 2;
-
-	for(uint64_t i = 0; i < iteratorMax; ++i) {
-		raindrop drop;
-		drop.size = w_rand(minSize, maxSize);
-
-		Vector2 position_two = Vector2(w_rand(-sizeX, sizeX),
-					       w_rand(-sizeY, sizeY));
-
-
-
-		Sprite *sprite = Storyboard::CreateSprite(spriteImage, position_two);
-		sprite->scale = w_rand(min_scale/2, min_scale);
-
-
-		Vector3 position_three = twoToThree(sprite, drop.size);
-
-		drop.sprite = sprite;
-		drop.position = position_three;
-
-		this->raindrops.push_back(drop);
-	}
-
-	return;
 }
 
 
