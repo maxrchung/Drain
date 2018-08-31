@@ -42,7 +42,8 @@ void RainGenerator::DrawRain() {
 		float totalVariance = actualDropTotalTime * 8;
 		float dropTimeDelta = RandomRange::calculate(-totalVariance, totalVariance); // This way drop timing of rain will vary based on totalVariance
 		float actualDropStart = dropStartTime + dropTimeDelta;
-		float actualDropEnd = SlowRainBeforeFreeze(actualDropStart, actualDropTotalTime);
+		bool freezeFlag = false;
+		float actualDropEnd = SlowRainBeforeFreeze(actualDropStart, actualDropTotalTime, freezeFlag);
 
 		if (actualDropStart < startTime.ms || actualDropStart > freezeTime.ms || (!willFreeze && actualDropStart > endTime.ms)) { // Ensures drops don't fall outside of time section & freezeTime
 			continue;
@@ -68,7 +69,11 @@ void RainGenerator::DrawRain() {
 			sprite->Move(actualDropStart, freezeTime.ms, sprite->position, Vector2(freezePos.x, freezePos.y));
 		}
 		else { // If this particular raindrop isn't being frozen, drop it to the bottom of the screen
-			sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(spriteEndPosX, spriteEndPosY));
+			auto easing = Easing::Linear;
+			if (freezeFlag) {
+				easing = Easing::QuadOut;
+			}
+			sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(spriteEndPosX, spriteEndPosY), easing);
 		}
 	}
 }
@@ -101,7 +106,7 @@ std::vector<Sprite*> RainGenerator::FreezeRain() {
 	return rainSprites;
 }
 
-float RainGenerator::SlowRainBeforeFreeze(float actualDropStart, float actualDropTotalTime) {
+float RainGenerator::SlowRainBeforeFreeze(float actualDropStart, float actualDropTotalTime, bool& freezeFlag) {
 	float slowStartTime = freezeTime.ms - slowPeriod.ms;
 	float timeFromStartSlow = actualDropStart - slowStartTime;
 	float slowRatio = timeFromStartSlow / slowPeriod.ms;
@@ -109,7 +114,7 @@ float RainGenerator::SlowRainBeforeFreeze(float actualDropStart, float actualDro
 	if (actualDropStart >= slowStartTime) { // Slows down drops a certain time before freezeTime
 		float realActualDropTotalTime = actualDropTotalTime + (actualDropTotalTime * (maxSlow * slowRatio));
 		float actualDropEnd = actualDropStart + realActualDropTotalTime;
-
+		freezeFlag = true;
 		return actualDropEnd;
 	}
 	else { // Won't increase actualDropEnd until it's time to slow down rain drops

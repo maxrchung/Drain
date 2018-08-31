@@ -17,16 +17,13 @@ This class reads from a text file, parses it, and creates a vector of
 Bezier curves to sketch an image
 */
 
-//std::istringstream& operator>>(std::istringstream& iss, Vector2& const& obj)
-
 Sketch::Sketch(const std::string& pointMapPath, const Time& startTime, const Time& endTime,
 			   const float resolution, const bool dynamic, const Path& brush,
 			   const int margin, const int thickness, const Easing& easing, const bool drawIn, const bool drawOut, const bool fadeIn, const bool fadeOut)
 	: pointMapPath{ pointMapPath + ".txt" }, startTime{ startTime }, endTime{ endTime },
-	thickness{ thickness }, resolution{ resolution }, dynamic{ dynamic }, brush{ brush },
+	thickness{ thickness }, resolution{ resolution }, dynamic{ dynamic }, brush{ brush }, brushPath { getPath(brush) },
 	margin{ margin }, easing{ easing }, drawIn{ drawIn }, drawOut{ drawOut }, fadeIn{ fadeIn }, fadeOut{ fadeOut }
 {
-	brushPath = getPath(brush);
 	totalLines = 0;
 	visDur = endTime.ms - startTime.ms;
 	times = 1;
@@ -53,11 +50,6 @@ void Sketch::draw(Bezier b) {
 			return;
 	}
 	assert(points.size());
-
-	// draw each point
-	/*for (auto &point : points) {
-		Storyboard::CreateSprite(brushPath, point)->Scale(startTime.ms, endTime.ms, 10, 10);
-	}*/
 
 	auto mpoints = std::vector<Vector2>();
 	// find midpoint of points and draw line between them
@@ -102,8 +94,6 @@ void Sketch::draw(Bezier b) {
 		else {
 			line->ScaleVector(startTime.ms, startTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // Loop will dictate endTime
 		}
-		//Sprite * tmpSprite;     // jank tmpSprite to generate the command strings for Fading
-		//tmpSprite = &(Sprite());
 		Sprite tmpSprite = Sprite();
 
 		auto commands = std::vector<std::string>();
@@ -164,7 +154,6 @@ int Sketch::dynamicResolution(Bezier b) {
 		if (i > 1.0 - 0.001)
 			break;
 		steps.push_back(createS(i, std::abs(tmp.x) + std::abs(tmp.y)));
-		//spacing.push_back(abs(dynamicResFactor / tmp.x) + abs(dynamicResFactor / tmp.y));
 	}
 	steps.push_back(createS(0.999, derivs[derivs.size() - 1]));
 	if (numPoints < steps.size()) { // if constRes results in fewer points, use constRes
@@ -175,25 +164,9 @@ int Sketch::dynamicResolution(Bezier b) {
 		ans++;
 	}
 	return ans + 1;
-	// sumSpacing = std::accumulate(spacing.begin(), spacing.end(), 0.0);
-	// normalize spacing
-	/*for (auto& e: spacing) {
-		e /= sumSpacing;
-	}*/
-	// place points based on spacing
-	/*points.push_back(b.findPosition(0.0));
-	double progress = 0.0;
-	for (int i = 1; i < numPoints-1; i++) {
-		auto next = b.findPosition(spacing[i]);
-		if (points.back().DistanceBetween(next) > resolution)
-			continue;
-		progress += spacing[i];
-		points.push_back(b.findPosition(progress));
-	}
-	*/
 }
 
-const int Sketch::make() {
+int Sketch::make() {
 	// returns 0 upon success
 	std::size_t pos = pointMapPath.find(".txt");
 	if (pos == std::string::npos)
@@ -234,52 +207,7 @@ const int Sketch::make() {
 		numBeziers++;
 		line1 = line2;
 	}
-	// experimental 2
-	//auto vv = std::vector<Vector2>();
-	//while (std::getline(ifs, line2)) {
-	//    if (line2 == ";") {
-	//        /*if (!std::getline(ifs, line1))
-	//            break;*/
-	//        auto bez = Bezier(vv);
-	//        draw(bez);
-	//        std::cout << ++numBeziers << "/" << count << std::endl;
-	//        vv.clear();
-	//        continue;
-	//    }
-	//    std::istringstream iss(line1);
-	//    iss >> values[0] >> absorb >> values[1] >> values[2] >> absorb >> values[3] >> values[4] >> absorb >> values[5];
-	//    std::istringstream iss2(line2);
-	//    iss2 >> values[6] >> absorb >> values[7] >> values[8] >> absorb >> values[9] >> values[10] >> absorb >> values[11];
-	//    vv.push_back({ (values[4] - xshift)*xscale, (values[5]+yshift)*yscale });
-	//    vv.push_back({ (values[6] - xshift)*xscale, (values[7] + yshift)*yscale });
-	//    line1 = line2;
-	//}
-
-	// experimental
-	/*auto vv = std::vector<Vector2>();
-	bool first = true;
-	while (std::getline(ifs, line1)) {
-		if (line1 == ";") {
-			vv.pop_back();
-			first = true;
-			auto bez = Bezier(vv);
-			draw(bez);
-			std::cout << ++numBeziers << "/" << count << std::endl;
-			vv.clear();
-			continue;
-		}
-		std::istringstream iss(line1);
-		iss >> values[0] >> absorb >> values[1] >> values[2] >> absorb >> values[3] >> values[4] >> absorb >> values[5];
-		if (!first) {
-			vv.push_back({ values[0], values[1] });
-			first = false;
-		}
-
-		vv.push_back({ values[2], values[3] });
-		vv.push_back({ values[4], values[5] });
-	}*/
 	std::cout << totalLines << std::endl;
-	//assert(totalLines == sprites.size());
 	return 0;
 }
 
@@ -353,7 +281,7 @@ void Sketch::render() {
 	make("015 ffo", Time("00:05:867"), Time("00:06:150"));
 	make("020 ca", Time("00:06:150"), Time("00:06:433"));
 	make("025 ting", Time("00:06:433"), Time("00:06:999"));
-	make("025 ting", Time("00:06:999"), Time("00:07:565"), 1, 6);
+	make("025 ting", Time("00:06:999"), Time("00:07:565"), 1, 5.5);
 	make("025 ting", Time("00:07:565"), Time("00:08:131"));
 	//auto ting = std::vector<Sketch>();
 	//ting.push_back(Sketch("025 ting.txt", Time("00:06:433"), Time("00:06:999"), 1, 5, true));
@@ -363,7 +291,7 @@ void Sketch::render() {
 	make("040 of", Time("00:08:414"), Time("00:08:697"));
 	auto smoke = std::vector<Sketch>();
 	smoke.push_back(Sketch("045 smoke", Time("00:08:697"), Time("00:09:546")));
-	smoke.push_back(Sketch("045 smoke", Time("00:09:546"), Time("00:10:112"), 6));
+	smoke.push_back(Sketch("045 smoke", Time("00:09:546"), Time("00:10:112"), 5.5));
 	loop(4, smoke);
 	make("055 i", Time("00:14:357"), Time("00:14:640"));
 	make("060 took", Time("00:14:640"), Time("00:14:923"));

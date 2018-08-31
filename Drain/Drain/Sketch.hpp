@@ -47,31 +47,30 @@ private:
 					 const bool fadeIn = false,
 					 const bool fadeOut = false);
 	static void loop(int times, std::vector<Sketch> v);
-	const int make();
-	// Check if point is within bounds
-	bool inBounds(const Vector2& point);
-	int boundsBorder = 5;
+	void draw(Bezier b);    // make() breaks the .txt up into 4-dim beziers and calls draw
+	void getTransform(float *xshift, float *yshift, float *xscale, float *yscale);
+	bool inBounds(const Vector2& point); // Check if point is within bounds
+	int constResolution(Bezier b);
+	int dynamicResolution(Bezier b);
+	int make();
 	const std::string pointMapPath;
-	const int thickness;
-	const float resolution;
-	const bool dynamic;
-	const int margin;
-	const Path brush;
-	std::string brushPath;
-	const Time startTime;
-	const Time endTime;
-	int visDur;
-	const Easing easing;
-	const bool drawIn;
-	const bool drawOut;
 	const bool fadeIn;
 	const bool fadeOut;
-	std::vector<Vector2> points;
-	void draw(Bezier b);    // make() breaks the .txt up into 4-dim beziers and calls draw
-	int constResolution(Bezier b);
-	void getTransform(float *xshift, float *yshift, float *xscale, float *yscale);
-	int totalLines; // should be the same as sprites.size()
-	std::vector<Sprite*> sprites;
+	const bool drawIn;
+	const bool drawOut;
+	const bool dynamic;
+	const Easing easing;
+	const float resolution;
+	const int boundsBorder = 5;
+	const int margin;
+	const int thickness;
+	const Path brush;
+	const std::string brushPath;
+	const Time endTime;
+	const Time startTime;
 	int count;  // number of ; in .txt (curves)
-	int dynamicResolution(Bezier b);
+	int totalLines;
+	int visDur;
+	std::vector<Vector2> points;
+	std::vector<Sprite*> sprites;
 };
