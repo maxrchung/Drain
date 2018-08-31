@@ -21,7 +21,7 @@ Sketch::Sketch(const std::string& pointMapPath, const Time& startTime, const Tim
 			   const float resolution, const bool dynamic, const Path& brush,
 			   const int margin, const int thickness, const Easing& easing, const bool drawIn, const bool drawOut, const bool fadeIn, const bool fadeOut)
 	: pointMapPath{ pointMapPath + ".txt" }, startTime{ startTime }, endTime{ endTime },
-	thickness{ thickness }, resolution{ resolution }, dynamic{ dynamic }, brush{ brush }, brushPath { getPath(brush) },
+	thickness{ thickness }, resolution{ resolution }, dynamic{ dynamic }, brush{ brush }, brushPath{ getPath(brush) },
 	margin{ margin }, easing{ easing }, drawIn{ drawIn }, drawOut{ drawOut }, fadeIn{ fadeIn }, fadeOut{ fadeOut }
 {
 	totalLines = 0;
@@ -268,39 +268,34 @@ void Sketch::make(const std::string& pointMapPath, const Time& startTime, const 
 
 void Sketch::render() {
 	std::cout << "Rendering Sketch..." << std::endl;
-	// art idea: have the image gradually lower in resolution and fade away
-	//Sketch("1.txt", Time("00:00:900"), Time("00:04:200"), 1, 4.5, true, Path::Taper, margin, Easing::ExpoOut, true, true, true, true).make();
-	//auto v = std::vector<Sketch>();
-	//v.push_back(Sketch("1.txt", Time("00:05:000"), Time("00:05:300"), 1, 4, true, Path::Taper));      // 651
-	//v.push_back(Sketch("1.txt", Time("00:05:300"), Time("00:05:600"), 1, 4.7, false, Path::Taper));   // 562
-	//v.push_back(Sketch("1.txt", Time("00:05:600"), Time("00:05:900"), 1, 4.5, true, Path::Taper));    // 541
-	//v.push_back(Sketch("1.txt", Time("00:05:900"), Time("00:06:200"), 1, 4.5, false, Path::Taper));   // 629
-	//loop(3, v);     // loop duration is 1200ms
-
-	make("010 su", Time("00:05:584"), Time("00:05:867"), 5, true, Path::Taper, 0, 1, Easing::EasingOut, false, false, true, false);
+	make("010 su", Time("00:05:584"), Time("00:05:867"));
 	make("015 ffo", Time("00:05:867"), Time("00:06:150"));
 	make("020 ca", Time("00:06:150"), Time("00:06:433"));
 	make("025 ting", Time("00:06:433"), Time("00:06:999"));
-	make("025 ting", Time("00:06:999"), Time("00:07:565"), 1, 5.5);
+	make("025 ting", Time("00:06:999"), Time("00:07:565"), 5.2);
 	make("025 ting", Time("00:07:565"), Time("00:08:131"));
-	//auto ting = std::vector<Sketch>();
-	//ting.push_back(Sketch("025 ting.txt", Time("00:06:433"), Time("00:06:999"), 1, 5, true));
-	//ting.push_back(Sketch("025 ting.txt", Time("00:06:999"), Time("00:07:565"), 1, 6, true));
-	//loop(2, ting);
 	make("035 puff", Time("00:08:131"), Time("00:08:414"));
 	make("040 of", Time("00:08:414"), Time("00:08:697"));
-	auto smoke = std::vector<Sketch>();
-	smoke.push_back(Sketch("045 smoke", Time("00:08:697"), Time("00:09:546")));
-	smoke.push_back(Sketch("045 smoke", Time("00:09:546"), Time("00:10:112"), 5.5));
-	loop(4, smoke);
+	auto smoke = std::vector<Sketch>({
+		Sketch("045 smoke", Time("00:08:697"), Time("00:09:263")),
+		Sketch("045 smoke", Time("00:09:263"), Time("00:09:829"), 5.2)
+	});
+	loop(5, smoke);
 	make("055 i", Time("00:14:357"), Time("00:14:640"));
 	make("060 took", Time("00:14:640"), Time("00:14:923"));
 	make("065 your", Time("00:14:923"), Time("00:15:206"));
 	make("070 breath", Time("00:15:206"), Time("00:15:489"));
-	make("075 in", Time("00:15:489"), Time("00:17:187"));
+	make("075 in", Time("00:15:489"), Time("00:16:055"));
+	make("075 in", Time("00:16:055"), Time("00:16:621"), 5.2);
+	make("075 in", Time("00:16:621"), Time("00:17:187"));
 	make("080 and", Time("00:17:187"), Time("00:17:470"));
 	make("085 you", Time("00:17:470"), Time("00:17:753"));
-	make("090 spoke", Time("00:17:753"), Time("00:21:963"));
+	auto spoke = std::vector<Sketch>({
+		Sketch("090 spoke", Time("00:17:753"), Time("00:18:319")),
+		Sketch("090 spoke", Time("00:18:319"), Time("00:18:885"), 5.2),
+	});
+	loop(3, spoke);
+	make("090 spoke", Time("00:21:150"), Time("00:21:999")),
 	make("100 and", Time("00:21:963"), Time("00:22:282"));
 	make("105 i", Time("00:22:282"), Time("00:22:565"));
 	make("110 saw", Time("00:22:565"), Time("00:23:131"));
