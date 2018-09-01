@@ -36,4 +36,5 @@ private:
 
 	const float maxSize = 1.0f;
 	const float minSize = 0.2f;
+	const float rainLength = 102; // because a.png is 102x102
 };

@@ -1,8 +1,7 @@
 #include "BubbleGenerator.hpp"
 
 BubbleGenerator::BubbleGenerator() {
-	// TODO: fix side movement lmao also add easing to it lmao
-	// mouth bubbles
+	// TODO: mouth bubbles etc 
 	while (moveEndTime < endTime.ms) {
 		BubbleController();
 	}
@@ -29,7 +28,7 @@ void BubbleGenerator::DrawBubble() {
 Vector2 BubbleGenerator::GetBubbleStartPos() {
 	Vector2 startPos;
 	startPos.x = RandomRange::calculate(-Vector2::ScreenSize.x / 2, Vector2::ScreenSize.x / 2); // Random x-coordinate in osu! screen
-	startPos.y = screenBottom;
+	startPos.y = screenBottom - ((rainLength / 2) * maxSize);
 
 	return startPos;
 }
@@ -52,9 +51,11 @@ std::vector<float> BubbleGenerator::GetBubbleTiming() {
 
 // Handles all bubble movement from bottom of screen to top including side movement
 void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes) {
+	static const float endY = screenTop + ((rainLength / 2) * maxSize);
 	float startMove = moveTimes[0];
 	float endMove = moveTimes[1];
-	sprite->Move(startMove, endMove, sprite->position, Vector2(sprite->position.x, screenTop)); // Handles only vertical movement
+
+	sprite->Move(startMove, endMove, sprite->position, Vector2(sprite->position.x, endY)); // Handles only vertical movement
 
 	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
 	float oneDirMoveLength = sideMoveLength / 2;
