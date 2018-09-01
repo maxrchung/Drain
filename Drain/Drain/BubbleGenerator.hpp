@@ -8,7 +8,8 @@
 
 class BubbleGenerator {
 public:
-	BubbleGenerator(bool isMouth = false);
+	BubbleGenerator(bool isMouth = false, bool willSplatter = true);
+	void SwitchToMouthBubble();
 	void BubbleController();
 	void DrawBubble();
 	void MoveBubble(Sprite* sprite, std::vector<float> moveTimes);
@@ -21,6 +22,7 @@ public:
 private:
 	Time startTime = Time("01:58:790");
 	Time endTime = Time("02:33:890");
+	bool willSplatter;
 	Time splatterTime = Time("02:32:890"); // Not the correct time edit later <---------
 	float acceleration = 1.07;
 	float bubbleCount = 8;
@@ -34,14 +36,17 @@ private:
 	float moveEndTime = startTime.ms + moveTotalTime;
 	int sideMoveTimes = 2; // Amount of times a bubble moves to the sides
 
-	const float maxSize = 1.0f;
-	const float minSize = 0.2f;
+	float maxSize = 1.0f;
+	float minSize = 0.2f;
 	const float rainLength = 102; // because a.png is 102x102
 
+	/* Mouth timing and shit are placeholders, should be edited with the actual values later*/
 	bool isMouth;
-	float mouthX;
-	float mouthY;
-
-	const float mouthBubbleMaxSize = 0.5;
-	const float mouthBubbleMinSize = 0.1;
+	Time mouthStartTime = Time("02:10:790");
+	Time mouthEndTime = Time("02:20:890");
+	float mouthX = 0;
+	float mouthY = 0;
+	const float mouthBubbleMaxSize = 0.6;
+	const float mouthBubbleMinSize = 0.15;
+	float mouthBubbleCount = 7;
 };

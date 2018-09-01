@@ -1,13 +1,32 @@
 #include "BubbleGenerator.hpp"
 
-BubbleGenerator::BubbleGenerator(bool isMouth)
-	: isMouth{ isMouth } {
-	// TODO: mouth bubbles
+BubbleGenerator::BubbleGenerator(bool isMouth, bool willSplatter)
+	: isMouth{ isMouth }, willSplatter{ willSplatter } {
+	// TODO: mouth bubbles stuff + implement splatterTime stuffs
+
+	if (isMouth) { 
+		SwitchToMouthBubble();
+	}
+
 	while (moveEndTime < endTime.ms) {
 		BubbleController();
 	}
 }
 
+// Switches appropriate variables if instance of class is mouth bubble instead of default bubble
+void BubbleGenerator::SwitchToMouthBubble() {
+	maxSize = mouthBubbleMaxSize;
+	minSize = mouthBubbleMinSize;
+	startTime = mouthStartTime;
+	endTime = mouthEndTime;
+	bubbleCount = mouthBubbleCount;
+	totalTime = static_cast<float>(endTime.ms - startTime.ms);
+	moveTotalTime = totalTime / bubbleCount;
+	moveStartTime = startTime.ms;
+	moveEndTime = startTime.ms + moveTotalTime;
+}
+
+// Handles the overall creation of bubbles
 void BubbleGenerator::BubbleController() {
 	DrawBubble();
 	VelocityController();
@@ -51,7 +70,7 @@ std::vector<float> BubbleGenerator::GetBubbleTiming() {
 		float moveTimeDelta = timeVariance * RandomRange::calculate(-10000, 10000, 10000);
 		adjustedStartTime = moveStartTime + moveTimeDelta;
 		adjustedEndTime = adjustedStartTime + adjustedTotalTime;
-	} while (adjustedStartTime < startTime.ms || adjustedEndTime > splatterTime.ms);
+	} while (adjustedStartTime < startTime.ms || ((adjustedEndTime > splatterTime.ms) && willSplatter) || ((adjustedEndTime > endTime.ms) && !willSplatter));
 
 	return {adjustedStartTime, adjustedEndTime};
 }
@@ -137,32 +156,21 @@ float BubbleGenerator::RandomBubbleSpeed() {
 // Scales bubbles to appropriate size based on speed
 void BubbleGenerator::ScaleBubbleSize(Sprite* sprite, std::vector<float> moveTimes) {
 	float adjustedSize;
-	float bubMaxSize;
-	float bubMinSize;
-
-	if (!isMouth) {
-		bubMaxSize = maxSize;
-		bubMinSize = minSize;
-	}
-	else {
-		bubMaxSize = mouthBubbleMaxSize;
-		bubMinSize = mouthBubbleMinSize;
-	}
 
 	float adjustedTotalTime = moveTimes[1] - moveTimes[0];
 	float veloRatio = adjustedTotalTime / moveTotalTime;
-	float bubbleScale = bubMaxSize - veloRatio;
+	float bubbleScale = maxSize - veloRatio;
 
 	if (bubbleScale < 0) { // Ensures adjustedSize isn't a negative number; negative sizes would be fked
 		float remainder = -bubbleScale;
-		float minSizeScaler = bubMaxSize - remainder;
-		adjustedSize = bubMinSize * minSizeScaler;
+		float minSizeScaler = maxSize - remainder;
+		adjustedSize = minSize * minSizeScaler;
 	}
 	else {
 		adjustedSize = bubbleScale * bubbleScale; // Multiplies scale by itself so image scales off total area instead of side length
 
-		if (adjustedSize < bubMinSize) { // So that bubbles that are too small don't exist
-			adjustedSize = bubMinSize;
+		if (adjustedSize < minSize) { // So that bubbles that are too small don't exist
+			adjustedSize = minSize;
 		}
 	}
 
