@@ -1,7 +1,8 @@
 #include "BubbleGenerator.hpp"
 
-BubbleGenerator::BubbleGenerator() {
-	// TODO: mouth bubbles etc 
+BubbleGenerator::BubbleGenerator(bool isMouth)
+	: isMouth{ isMouth } {
+	// TODO: mouth bubbles
 	while (moveEndTime < endTime.ms) {
 		BubbleController();
 	}
@@ -27,8 +28,14 @@ void BubbleGenerator::DrawBubble() {
 // Returns position of where bubble should be spawned
 Vector2 BubbleGenerator::GetBubbleStartPos() {
 	Vector2 startPos;
-	startPos.x = RandomRange::calculate(-Vector2::ScreenSize.x / 2, Vector2::ScreenSize.x / 2); // Random x-coordinate in osu! screen
-	startPos.y = screenBottom - ((rainLength / 2) * maxSize);
+	if (!isMouth) {
+		startPos.x = RandomRange::calculate(-Vector2::ScreenSize.x / 2, Vector2::ScreenSize.x / 2); // Random x-coordinate in osu! screen
+		startPos.y = screenBottom - ((rainLength / 2) * maxSize);
+	}
+	else {
+		startPos.x = mouthX;
+		startPos.y = mouthY;
+	}
 
 	return startPos;
 }
@@ -130,21 +137,32 @@ float BubbleGenerator::RandomBubbleSpeed() {
 // Scales bubbles to appropriate size based on speed
 void BubbleGenerator::ScaleBubbleSize(Sprite* sprite, std::vector<float> moveTimes) {
 	float adjustedSize;
+	float bubMaxSize;
+	float bubMinSize;
+
+	if (!isMouth) {
+		bubMaxSize = maxSize;
+		bubMinSize = minSize;
+	}
+	else {
+		bubMaxSize = mouthBubbleMaxSize;
+		bubMinSize = mouthBubbleMinSize;
+	}
 
 	float adjustedTotalTime = moveTimes[1] - moveTimes[0];
 	float veloRatio = adjustedTotalTime / moveTotalTime;
-	float bubbleScale = maxSize - veloRatio;
+	float bubbleScale = bubMaxSize - veloRatio;
 
 	if (bubbleScale < 0) { // Ensures adjustedSize isn't a negative number; negative sizes would be fked
 		float remainder = -bubbleScale;
-		float minSizeScaler = maxSize - remainder;
-		adjustedSize = minSize * minSizeScaler;
+		float minSizeScaler = bubMaxSize - remainder;
+		adjustedSize = bubMinSize * minSizeScaler;
 	}
 	else {
 		adjustedSize = bubbleScale * bubbleScale; // Multiplies scale by itself so image scales off total area instead of side length
 
-		if (adjustedSize < minSize) { // So that bubbles that are too small don't exist
-			adjustedSize = minSize;
+		if (adjustedSize < bubMinSize) { // So that bubbles that are too small don't exist
+			adjustedSize = bubMinSize;
 		}
 	}
 

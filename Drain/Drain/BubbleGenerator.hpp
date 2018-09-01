@@ -8,7 +8,7 @@
 
 class BubbleGenerator {
 public:
-	BubbleGenerator();
+	BubbleGenerator(bool isMouth = false);
 	void BubbleController();
 	void DrawBubble();
 	void MoveBubble(Sprite* sprite, std::vector<float> moveTimes);
@@ -37,4 +37,11 @@ private:
 	const float maxSize = 1.0f;
 	const float minSize = 0.2f;
 	const float rainLength = 102; // because a.png is 102x102
+
+	bool isMouth;
+	float mouthX;
+	float mouthY;
+
+	const float mouthBubbleMaxSize = 0.5;
+	const float mouthBubbleMinSize = 0.1;
 };
