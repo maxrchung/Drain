@@ -28,9 +28,6 @@ public:
 		   const bool fadeIn = false,
 		   const bool fadeOut = false);
 	static void render();
-	int times;  // times to loop visibility on and off
-	int relStart; // delay between start of loop and start of this sketch
-	int hiddenDur;  // time this sketch is hidden (used in loops)
 private:
 	// Helper that calls make()
 	static void make(const std::string& pointMapPath,
@@ -71,6 +68,10 @@ private:
 	int count;  // number of ; in .txt (curves)
 	int totalLines;
 	int visDur;
+	int loopEndTime;
+	int times;  // times to loop visibility on and off
+	int relStart; // delay between start of loop and start of this sketch
+	int hiddenDur;  // time this sketch is hidden (used in loops)
 	std::vector<Vector2> points;
 	std::vector<Sprite*> sprites;
 };

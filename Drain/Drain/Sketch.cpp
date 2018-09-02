@@ -1,6 +1,7 @@
 #include "Sketch.hpp"
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
+#include "Timing.hpp"
 
 #include <algorithm>
 #include <cassert>
@@ -22,8 +23,7 @@ Sketch::Sketch(const std::string& pointMapPath, const Time& startTime, const Tim
 			   const int margin, const int thickness, const Easing& easing, const bool drawIn, const bool drawOut, const bool fadeIn, const bool fadeOut)
 	: pointMapPath{ pointMapPath + ".txt" }, startTime{ startTime }, endTime{ endTime },
 	thickness{ thickness }, resolution{ resolution }, dynamic{ dynamic }, brush{ brush }, brushPath{ getPath(brush) },
-	margin{ margin }, easing{ easing }, drawIn{ drawIn }, drawOut{ drawOut }, fadeIn{ fadeIn }, fadeOut{ fadeOut }
-{
+	margin{ margin }, easing{ easing }, drawIn{ drawIn }, drawOut{ drawOut }, fadeIn{ fadeIn }, fadeOut{ fadeOut } {
 	totalLines = 0;
 	visDur = endTime.ms - startTime.ms;
 	times = 1;
@@ -68,8 +68,8 @@ void Sketch::draw(Bezier b) {
 		sprites.push_back(line);    // add it to the global sprites list
 		if (std::abs(angle) > 0.01)    // only include a rotation command if the angle is significant
 			line->Rotate(startTime.ms, startTime.ms, angle, angle);
-		Swatch::colorFgToFgSprites({ line }, startTime.ms, endTime.ms);
 		if (times == 1) {   // not looping
+			Swatch::colorFgToFgSprites({ line }, startTime.ms, endTime.ms);
 			if (drawIn && drawOut) {
 				line->ScaleVector(startTime.ms, startTime.ms + visDur / 2, Vector2(0, thickness), Vector2(dist, thickness), easing);
 				line->ScaleVector(startTime.ms + visDur / 2, endTime.ms, Vector2(dist, thickness), Vector2(0, thickness), mirrorEasing(easing));
@@ -92,15 +92,15 @@ void Sketch::draw(Bezier b) {
 			continue;
 		}
 		else {
+			Swatch::colorFgToFgSprites({ line }, startTime.ms, loopEndTime);
 			line->ScaleVector(startTime.ms, startTime.ms, Vector2(dist, thickness), Vector2(dist, thickness));  // Loop will dictate endTime
+			Sprite temp = Sprite();
+			auto commands = std::vector<std::string>();
+			commands.push_back(temp.Fade(0, visDur, 1, 1));  // stay visible NOTE: THIS LINE IS REQUIRED FOR LOOP TO WORK
+			commands.push_back(temp.Fade(visDur, visDur, 1, 0));  // disappear instantaneously
+			commands.push_back(temp.Fade(visDur + hiddenDur, visDur + hiddenDur, 0, 1));  // reappear instantaneously
+			line->Loop(startTime.ms, times, commands);
 		}
-		Sprite tmpSprite = Sprite();
-
-		auto commands = std::vector<std::string>();
-		commands.push_back(tmpSprite.Fade(0, visDur, 1, 1));  // stay visible NOTE: THIS LINE IS REQUIRED FOR LOOP TO WORK
-		commands.push_back(tmpSprite.Fade(visDur, visDur, 1, 0));  // disappear instantaneously
-		commands.push_back(tmpSprite.Fade(visDur + hiddenDur, visDur + hiddenDur, 0, 1));  // reappear instantaneously
-		line->Loop(startTime.ms, times, commands);
 	}
 	points.clear();
 }
@@ -251,7 +251,9 @@ void Sketch::loop(int times, std::vector<Sketch> v) {
 	for (auto& frame : v) {
 		totalDur += frame.visDur;
 	}
+	const auto loopEndTime = v[0].startTime.ms + totalDur * times;
 	for (auto& frame : v) {
+		frame.loopEndTime = loopEndTime;
 		frame.times = times;
 		frame.relStart = durSoFar;
 		frame.hiddenDur = totalDur - frame.visDur;
@@ -268,51 +270,88 @@ void Sketch::make(const std::string& pointMapPath, const Time& startTime, const 
 
 void Sketch::render() {
 	std::cout << "Rendering Sketch..." << std::endl;
+	const auto shift = 5.1f;
+
+	const auto start = Time("00:00:489").ms - Timing::whole;
+	const auto eyesClosed000 = std::vector<Sketch>({
+		Sketch("000 eyes closed", Time(start), Time("00:00:489")),
+		Sketch("000 eyes closed", Time("00:00:489"), Time("00:01:055"), shift)
+												   });
+	loop(4, eyesClosed000);
+	make("005 eyes open", Time("00:04:452"), Time("00:05:018"));
+	make("005 eyes open", Time("00:05:018"), Time("00:05:584"), shift);
 	make("010 su", Time("00:05:584"), Time("00:05:867"));
 	make("015 ffo", Time("00:05:867"), Time("00:06:150"));
 	make("020 ca", Time("00:06:150"), Time("00:06:433"));
 	make("025 ting", Time("00:06:433"), Time("00:06:999"));
-	make("025 ting", Time("00:06:999"), Time("00:07:565"), 5.2);
+	make("025 ting", Time("00:06:999"), Time("00:07:565"), shift);
 	make("025 ting", Time("00:07:565"), Time("00:08:131"));
 	make("035 puff", Time("00:08:131"), Time("00:08:414"));
 	make("040 of", Time("00:08:414"), Time("00:08:697"));
-	auto smoke = std::vector<Sketch>({
+	const auto smoke045 = std::vector<Sketch>({
 		Sketch("045 smoke", Time("00:08:697"), Time("00:09:263")),
-		Sketch("045 smoke", Time("00:09:263"), Time("00:09:829"), 5.2)
-	});
-	loop(5, smoke);
+		Sketch("045 smoke", Time("00:09:263"), Time("00:09:829"), shift)
+											  });
+	loop(5, smoke045);
 	make("055 i", Time("00:14:357"), Time("00:14:640"));
 	make("060 took", Time("00:14:640"), Time("00:14:923"));
 	make("065 your", Time("00:14:923"), Time("00:15:206"));
 	make("070 breath", Time("00:15:206"), Time("00:15:489"));
 	make("075 in", Time("00:15:489"), Time("00:16:055"));
-	make("075 in", Time("00:16:055"), Time("00:16:621"), 5.2);
+	make("075 in", Time("00:16:055"), Time("00:16:621"), shift);
 	make("075 in", Time("00:16:621"), Time("00:17:187"));
 	make("080 and", Time("00:17:187"), Time("00:17:470"));
 	make("085 you", Time("00:17:470"), Time("00:17:753"));
-	auto spoke = std::vector<Sketch>({
+	const auto spoke090 = std::vector<Sketch>({
 		Sketch("090 spoke", Time("00:17:753"), Time("00:18:319")),
-		Sketch("090 spoke", Time("00:18:319"), Time("00:18:885"), 5.2),
-	});
-	loop(3, spoke);
-	make("090 spoke", Time("00:21:150"), Time("00:21:999")),
+		Sketch("090 spoke", Time("00:18:319"), Time("00:18:885"), shift)
+											  });
+	loop(3, spoke090);
+	make("090 spoke", Time("00:21:150"), Time("00:21:999"));
 	make("100 and", Time("00:21:963"), Time("00:22:282"));
 	make("105 i", Time("00:22:282"), Time("00:22:565"));
 	make("110 saw", Time("00:22:565"), Time("00:23:131"));
 	make("115 the", Time("00:23:131"), Time("00:23:697"));
-	make("120 world", Time("00:23:697"), Time("00:26:527"));
+	const auto world120 = std::vector<Sketch>({
+		Sketch("120 world", Time("00:23:697"), Time("00:24:263")),
+		Sketch("120 world", Time("00:24:263"), Time("00:24:829"), shift)
+											  });
+	loop(2, world120);
+	make("120 world", Time("00:25:961"), Time("00:26:527"));
 	make("125 turn", Time("00:26:527"), Time("00:27:093"));
-	make("130 white", Time("00:27:093"), Time("00:36:574"));
-	make("135 are", Time("00:36:574"), Time("00:36:716"));
+	const auto white130 = std::vector<Sketch>({
+		Sketch("130 white", Time("00:27:093"), Time("00:27:659")),
+		Sketch("130 white", Time("00:27:659"), Time("00:28:225"), shift)
+											  });
+	loop(8, white130);
+	make("130 white", Time("00:36:150"), Time("00:36:433"));
+	make("135 are", Time("00:36:433"), Time("00:36:716"));
 	make("140 you", Time("00:36:716"), Time("00:37:140"));
 	make("145 still", Time("00:37:140"), Time("00:37:423"));
 	make("150 cal", Time("00:37:423"), Time("00:37:848"));
 	make("155 ling", Time("00:37:848"), Time("00:38:131"));
-	make("160 me", Time("00:38:131"), Time("00:40:395"));
-	make("170 i", Time("00:40:395"), Time("00:40:749"));
-	make("175 melt", Time("00:40:749"), Time("00:49:452"));
+	const auto me160 = std::vector<Sketch>({
+		Sketch("160 me", Time("00:38:131"), Time("00:38:697")),
+		Sketch("160 me", Time("00:38:697"), Time("00:39:263"), shift)
+										   });
+	loop(2, me160);
+	make("170 i", Time("00:40:395"), Time("00:40:678"));
+	const auto melt175 = std::vector<Sketch>({
+		Sketch("175 melt", Time("00:40:678"), Time("00:41:244")),
+		Sketch("175 melt", Time("00:41:244"), Time("00:41:810"), shift)
+											 });
+	loop(7, melt175);
+	make("175 melt", Time("00:48:602"), Time("00:49:168"));
+	make("175 melt", Time("00:49:168"), Time("00:49:452"), shift);
 	make("180 in", Time("00:49:452"), Time("00:49:735"));
-	make("185 to", Time("00:49:735"), Time("00:51:716"));
+	make("185 to", Time("00:49:735"), Time("00:50:301"));
+	make("185 to", Time("00:50:301"), Time("00:50:867"), shift);
+	make("185 to", Time("00:50:867"), Time("00:51:433"));
+	make("185 to", Time("00:51:433"), Time("00:51:716"), shift);
 	make("190 your", Time("00:51:716"), Time("00:51:999"));
-	make("195 voice", Time("00:51:999"), Time("00:52:565"), 5, true, Path::Taper, 0, 1, Easing::EasingIn, false, false, false, true);
+	const auto voice195 = std::vector<Sketch>({
+		Sketch("195 voice", Time("00:51:999"), Time("00:52:565")),
+		Sketch("195 voice", Time("00:52:565"), Time("00:53:131"), shift)
+											  });
+	loop(2, voice195);
 }

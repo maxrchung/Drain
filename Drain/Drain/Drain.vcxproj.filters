@@ -13,18 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Lyric">
-      <UniqueIdentifier>{15371023-0224-40bb-a0aa-6e58ab8a9755}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Lyric">
-      <UniqueIdentifier>{8e5da06d-dc76-4f08-a7f6-76da631fbf33}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Lyric\Stroke">
-      <UniqueIdentifier>{521ec273-fff4-430d-9094-a925ff0ff630}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Lyric\Stroke">
-      <UniqueIdentifier>{e1787740-0242-4e1a-894a-a904a17be3ff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Utility">
       <UniqueIdentifier>{bfc6c404-a866-471c-9aca-8e1546cabe8d}</UniqueIdentifier>
     </Filter>
@@ -37,22 +25,34 @@
     <Filter Include="Source Files\Utility\Swatch">
       <UniqueIdentifier>{fe61b4f6-d044-4134-ac0f-466ce61afe4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Text">
+      <UniqueIdentifier>{15371023-0224-40bb-a0aa-6e58ab8a9755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Text\Stroke">
+      <UniqueIdentifier>{521ec273-fff4-430d-9094-a925ff0ff630}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Text">
+      <UniqueIdentifier>{8e5da06d-dc76-4f08-a7f6-76da631fbf33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Text\Stroke">
+      <UniqueIdentifier>{e1787740-0242-4e1a-894a-a904a17be3ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Drain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
-      <Filter>Source Files\Lyric</Filter>
+      <Filter>Source Files\Text</Filter>
     </ClCompile>
     <ClCompile Include="LineStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
+      <Filter>Source Files\Text\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="Stroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
+      <Filter>Source Files\Text\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="PointStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
+      <Filter>Source Files\Text\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="Path.cpp">
       <Filter>Source Files\Utility</Filter>
@@ -64,19 +64,19 @@
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
     <ClCompile Include="CircularStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
+      <Filter>Source Files\Text\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="CWQuarterStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
+      <Filter>Source Files\Text\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="CCWQuarterStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
+      <Filter>Source Files\Text\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="CCWEndEighthStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
+      <Filter>Source Files\Text\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="CCWStartEighthStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
+      <Filter>Source Files\Text\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="RainGenerator.cpp">
       <Filter>Source Files</Filter>
@@ -88,16 +88,16 @@
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
     <ClCompile Include="BlankStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
+      <Filter>Source Files\Text\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="Sketch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CWStartEighthStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
+      <Filter>Source Files\Text\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="CWEndEighthStroke.cpp">
-      <Filter>Source Files\Lyric\Stroke</Filter>
+      <Filter>Source Files\Text\Stroke</Filter>
     </ClCompile>
     <ClCompile Include="Swatch.cpp">
       <Filter>Source Files\Utility\Swatch</Filter>
@@ -109,7 +109,7 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Text.cpp">
-      <Filter>Source Files\Lyric</Filter>
+      <Filter>Source Files\Text</Filter>
     </ClCompile>
     <ClCompile Include="Splatter.cpp">
       <Filter>Source Files</Filter>
@@ -126,16 +126,16 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Character.hpp">
-      <Filter>Header Files\Lyric</Filter>
+      <Filter>Header Files\Text</Filter>
     </ClInclude>
     <ClInclude Include="Stroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
+      <Filter>Header Files\Text\Stroke</Filter>
     </ClInclude>
     <ClInclude Include="LineStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
+      <Filter>Header Files\Text\Stroke</Filter>
     </ClInclude>
     <ClInclude Include="PointStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
+      <Filter>Header Files\Text\Stroke</Filter>
     </ClInclude>
     <ClInclude Include="Path.hpp">
       <Filter>Header Files\Utility</Filter>
@@ -147,19 +147,19 @@
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="CircularStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
+      <Filter>Header Files\Text\Stroke</Filter>
     </ClInclude>
     <ClInclude Include="CWQuarterStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
+      <Filter>Header Files\Text\Stroke</Filter>
     </ClInclude>
     <ClInclude Include="CCWQuarterStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
+      <Filter>Header Files\Text\Stroke</Filter>
     </ClInclude>
     <ClInclude Include="CCWStartEighthStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
+      <Filter>Header Files\Text\Stroke</Filter>
     </ClInclude>
     <ClInclude Include="CCWEndEighthStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
+      <Filter>Header Files\Text\Stroke</Filter>
     </ClInclude>
     <ClInclude Include="RainGenerator.hpp">
       <Filter>Header Files</Filter>
@@ -171,16 +171,16 @@
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
     <ClInclude Include="BlankStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
+      <Filter>Header Files\Text\Stroke</Filter>
     </ClInclude>
     <ClInclude Include="Sketch.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CWStartEighthStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
+      <Filter>Header Files\Text\Stroke</Filter>
     </ClInclude>
     <ClInclude Include="CWEndEighthStroke.hpp">
-      <Filter>Header Files\Lyric\Stroke</Filter>
+      <Filter>Header Files\Text\Stroke</Filter>
     </ClInclude>
     <ClInclude Include="Swatch.hpp">
       <Filter>Header Files\Utility\Swatch</Filter>
@@ -192,7 +192,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Text.hpp">
-      <Filter>Header Files\Lyric</Filter>
+      <Filter>Header Files\Text</Filter>
     </ClInclude>
     <ClInclude Include="Splatter.hpp">
       <Filter>Header Files</Filter>
