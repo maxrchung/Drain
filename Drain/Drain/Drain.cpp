@@ -42,6 +42,7 @@ int main() {
 
 	// BubbleGenerator shit
 	BubbleGenerator::BubbleGenerator();
+	BubbleGenerator::BubbleGenerator(true, false);
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
