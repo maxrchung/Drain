@@ -420,28 +420,64 @@ void Sketch::render() {
 	//loop(4, red350);
 
 	// Lyric 3
-	make("360 dri", Time("02:28:791"), Time("02:29:357"));
-	make("365 pping", Time("02:28:791"), Time("02:29:357"));
-	make("370 tri", Time("02:28:791"), Time("02:29:357"));
-	make("375 ckling", Time("02:28:791"), Time("02:29:357"));
-	make("380 dri", Time("02:28:791"), Time("02:29:357"));
-	make("385 bbling", Time("02:28:791"), Time("02:29:357"));
-	make("390 a", Time("02:28:791"), Time("02:29:357"));
-	make("395 li", Time("02:28:791"), Time("02:29:357"));
-	make("400 ttle", Time("02:28:791"), Time("02:29:357"));
-	make("405 more", Time("02:28:791"), Time("02:29:357"));
-	make("410 give", Time("02:28:791"), Time("02:29:357"));
-	make("415 me", Time("02:28:791"), Time("02:29:357"));
-	make("420 some", Time("02:28:791"), Time("02:29:357"));
-	make("425 more", Time("02:28:791"), Time("02:29:357"));
-	make("430 dri", Time("02:28:791"), Time("02:29:357"));
-	make("435 pping", Time("02:28:791"), Time("02:29:357"));
-	make("440 trick", Time("02:28:791"), Time("02:29:357"));
-	make("445 ling", Time("02:28:791"), Time("02:29:357"));
-	make("450 dri", Time("02:28:791"), Time("02:29:357"));
-	make("455 bbling", Time("02:28:791"), Time("02:29:357"));
-	make("465 in", Time("02:28:791"), Time("02:29:357"));
-	make("470 to", Time("02:28:791"), Time("02:29:357"));
-	make("475 my", Time("02:28:791"), Time("02:29:357"));
-	make("480 core", Time("02:28:791"), Time("02:29:357"));
+	make("360 dri", Time("04:04:168"), Time("04:04:452"));
+	make("365 pping", Time("04:04:452"), Time("04:05:018"));
+	make("365 pping", Time("04:05:018"), Time("04:05:584"), shift);
+	make("365 pping", Time("04:05:584"), Time("04:06:150"));
+	make("365 pping", Time("04:06:150"), Time("04:06:433"), shift);
+	make("370 tri", Time("04:06:433"), Time("04:06:716"));
+	make("375 ckling", Time("04:06:716"), Time("04:07:282"));
+	make("375 ckling", Time("04:07:282"), Time("04:07:848"), shift);
+	make("375 ckling", Time("04:07:848"), Time("04:08:414"));
+	make("375 ckling", Time("04:08:414"), Time("04:08:697"), shift);
+	make("380 dri", Time("04:08:697"), Time("04:08:980"));
+	const auto bbling385 = std::vector<Sketch>({
+		Sketch("385 bbling", Time("04:08:980"), Time("04:09:546")),
+		Sketch("385 bbling", Time("04:09:546"), Time("04:10:112"), shift)
+											   });
+	loop(3, bbling385);
+	make("385 bbling", Time("04:12:376"), Time("04:12:942"));
+	make("390 a", Time("04:12:942"), Time("04:13:225"));
+	make("395 li", Time("04:13:225"), Time("04:13:791"));
+	make("400 ttle", Time("04:13:791"), Time("04:14:074"));
+	const auto more405 = std::vector<Sketch>({
+		Sketch("405 more", Time("04:14:074"), Time("04:14:640")),
+		Sketch("405 more", Time("04:14:640"), Time("04:15:206"), shift)
+											 });
+	loop(3, more405);
+	make("410 give", Time("04:17:470"), Time("04:17:753"));
+	make("415 me", Time("04:17:753"), Time("04:18:319"));
+	make("420 some", Time("04:18:319"), Time("04:18:602"));
+	const auto more425 = std::vector<Sketch>({
+		Sketch("425 more", Time("04:18:602"), Time("04:19:168")),
+		Sketch("425 more", Time("04:19:168"), Time("04:19:735"), shift)
+											 });
+	loop(3, more425);
+	make("425 more", Time("04:21:999"), Time("04:22:282"));
+	make("430 dri", Time("04:22:282"), Time("04:22:565"));
+	make("435 pping", Time("04:22:565"), Time("04:23:131"));
+	make("435 pping", Time("04:23:131"), Time("04:23:697"), shift);
+	make("435 pping", Time("04:23:697"), Time("04:24:263"));
+	make("435 pping", Time("04:24:263"), Time("04:24:546"), shift);
+	make("440 trick", Time("04:24:546"), Time("04:24:829"));
+	make("445 ling", Time("04:24:829"), Time("04:25:395"));
+	make("445 ling", Time("04:25:395"), Time("04:25:961"), shift);
+	make("445 ling", Time("04:25:961"), Time("04:26:527"));
+	make("445 ling", Time("04:26:527"), Time("04:26:810"), shift);
+	make("450 dri", Time("04:26:810"), Time("04:27:093"));
+	const auto bbling455 = std::vector<Sketch>({
+		Sketch("455 bbling", Time("04:27:093"), Time("04:27:659")),
+		Sketch("455 bbling", Time("04:27:659"), Time("04:28:225"), shift)
+											   });
+	loop(3, bbling455);
+	make("455 bbling", Time("04:30:489"), Time("04:31:055")),
+	make("465 in", Time("04:31:055"), Time("04:31:338"));
+	make("470 to", Time("04:31:338"), Time("04:31:904"));
+	make("475 my", Time("04:31:904"), Time("04:32:187"));
+	const auto core480 = std::vector<Sketch>({
+		Sketch("480 core", Time("04:32:187"), Time("04:32:753")),
+		Sketch("480 core", Time("04:32:753"), Time("04:33:319"), shift)
+											 });
+	make("480 core", Time("04:43:508"), Time("04:44:074")),
+	loop(10, core480);
 }
