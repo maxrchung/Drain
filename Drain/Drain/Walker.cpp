@@ -5,7 +5,7 @@
 
 #include <cmath>
 
-Walker::Walker(std::vector<Sprite *> sprites)
+Walker::Walker(std::vector<SpriteCollection *> sprites)
 	: sprites{sprites} {
 }
 

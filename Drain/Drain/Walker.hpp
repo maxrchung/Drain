@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Sprite.hpp"
+#include "SpriteCollection.hpp"
 #include "Time.hpp"
 #include "Vector2.hpp"
 #include "Vector3.hpp"
@@ -20,9 +21,9 @@ public:
 	float fov = 90;
 
 	std::vector<raindrop> raindrops;
-	std::vector<Sprite *> sprites;
+	std::vector<SpriteCollection *> sprites;
 
-	Walker(std::vector<Sprite *> sprites);
+	Walker(std::vector<SpriteCollection *> sprites);
 
 	void walk(float distance, Time startTime, Time endTime);
 

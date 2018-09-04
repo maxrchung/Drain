@@ -33,12 +33,12 @@ int main() {
 	RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
-	if(1) { //lmao
+#if 0
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
 		Walker walk_boi = Walker::Walker(raindrops);
 		walk_boi.walk(1000, Time("01:30:489"), Time("01:57:659"));
-	}
+#endif
 
 	// BubbleGenerator shit
 	BubbleGenerator::BubbleGenerator();
