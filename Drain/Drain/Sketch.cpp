@@ -273,151 +273,151 @@ void Sketch::render() {
 	const auto shift = 4.6f;
 
 	// Lyric 1
-	//const auto start = Time("00:00:489").ms - Timing::whole;
-	//const auto eyesClosed000 = std::vector<Sketch>({
-	//	Sketch("000 eyes closed", Time(start), Time("00:00:489")),
-	//	Sketch("000 eyes closed", Time("00:00:489"), Time("00:01:055"), shift)
-	//											   });
-	//loop(4, eyesClosed000);
-	//make("005 eyes open", Time("00:04:452"), Time("00:05:018"));
-	//make("005 eyes open", Time("00:05:018"), Time("00:05:584"), shift);
-	//make("010 su", Time("00:05:584"), Time("00:05:867"));
-	//make("015 ffo", Time("00:05:867"), Time("00:06:150"));
-	//make("020 ca", Time("00:06:150"), Time("00:06:433"));
-	//make("025 ting", Time("00:06:433"), Time("00:06:999"));
-	//make("025 ting", Time("00:06:999"), Time("00:07:565"), shift);
-	//make("025 ting", Time("00:07:565"), Time("00:08:131"));
-	//make("035 puff", Time("00:08:131"), Time("00:08:414"));
-	//make("040 of", Time("00:08:414"), Time("00:08:697"));
-	//const auto smoke045 = std::vector<Sketch>({
-	//	Sketch("045 smoke", Time("00:08:697"), Time("00:09:263")),
-	//	Sketch("045 smoke", Time("00:09:263"), Time("00:09:829"), shift)
-	//										  });
-	//loop(5, smoke045);
-	//make("055 i", Time("00:14:357"), Time("00:14:640"));
-	//make("060 took", Time("00:14:640"), Time("00:14:923"));
-	//make("065 your", Time("00:14:923"), Time("00:15:206"));
-	//make("070 breath", Time("00:15:206"), Time("00:15:489"));
-	//make("075 in", Time("00:15:489"), Time("00:16:055"));
-	//make("075 in", Time("00:16:055"), Time("00:16:621"), shift);
-	//make("075 in", Time("00:16:621"), Time("00:17:187"));
-	//make("080 and", Time("00:17:187"), Time("00:17:470"));
-	//make("085 you", Time("00:17:470"), Time("00:17:753"));
-	//const auto spoke090 = std::vector<Sketch>({
-	//	Sketch("090 spoke", Time("00:17:753"), Time("00:18:319")),
-	//	Sketch("090 spoke", Time("00:18:319"), Time("00:18:885"), shift)
-	//										  });
-	//loop(3, spoke090);
-	//make("090 spoke", Time("00:21:150"), Time("00:21:999"));
-	//make("100 and", Time("00:21:963"), Time("00:22:282"));
-	//make("105 i", Time("00:22:282"), Time("00:22:565"));
-	//make("110 saw", Time("00:22:565"), Time("00:23:131"));
-	//make("115 the", Time("00:23:131"), Time("00:23:697"));
-	//const auto world120 = std::vector<Sketch>({
-	//	Sketch("120 world", Time("00:23:697"), Time("00:24:263")),
-	//	Sketch("120 world", Time("00:24:263"), Time("00:24:829"), shift)
-	//										  });
-	//loop(2, world120);
-	//make("120 world", Time("00:25:961"), Time("00:26:527"));
-	//make("125 turn", Time("00:26:527"), Time("00:27:093"));
-	//const auto white130 = std::vector<Sketch>({
-	//	Sketch("130 white", Time("00:27:093"), Time("00:27:659")),
-	//	Sketch("130 white", Time("00:27:659"), Time("00:28:225"), shift)
-	//										  });
-	//loop(8, white130);
-	//make("130 white", Time("00:36:150"), Time("00:36:433"));
-	//make("135 are", Time("00:36:433"), Time("00:36:716"));
-	//make("140 you", Time("00:36:716"), Time("00:37:140"));
-	//make("145 still", Time("00:37:140"), Time("00:37:423"));
-	//make("150 cal", Time("00:37:423"), Time("00:37:848"));
-	//make("155 ling", Time("00:37:848"), Time("00:38:131"));
-	//const auto me160 = std::vector<Sketch>({
-	//	Sketch("160 me", Time("00:38:131"), Time("00:38:697")),
-	//	Sketch("160 me", Time("00:38:697"), Time("00:39:263"), shift)
-	//									   });
-	//loop(2, me160);
-	//make("170 i", Time("00:40:395"), Time("00:40:678"));
-	//const auto melt175 = std::vector<Sketch>({
-	//	Sketch("175 melt", Time("00:40:678"), Time("00:41:244")),
-	//	Sketch("175 melt", Time("00:41:244"), Time("00:41:810"), shift)
-	//										 });
-	//loop(7, melt175);
-	//make("175 melt", Time("00:48:602"), Time("00:49:168"));
-	//make("175 melt", Time("00:49:168"), Time("00:49:452"), shift);
-	//make("180 in", Time("00:49:452"), Time("00:49:735"));
-	//make("185 to", Time("00:49:735"), Time("00:50:301"));
-	//make("185 to", Time("00:50:301"), Time("00:50:867"), shift);
-	//make("185 to", Time("00:50:867"), Time("00:51:433"));
-	//make("185 to", Time("00:51:433"), Time("00:51:716"), shift);
-	//make("190 your", Time("00:51:716"), Time("00:51:999"));
-	//const auto voice195 = std::vector<Sketch>({
-	//	Sketch("195 voice", Time("00:51:999"), Time("00:52:565")),
-	//	Sketch("195 voice", Time("00:52:565"), Time("00:53:131"), shift)
-	//										  });
-	//loop(2, voice195);
+	const auto start = Time("00:00:489").ms - Timing::whole;
+	const auto eyesClosed000 = std::vector<Sketch>({
+		Sketch("000 eyes closed", Time(start), Time("00:00:489")),
+		Sketch("000 eyes closed", Time("00:00:489"), Time("00:01:055"), shift)
+												   });
+	loop(4, eyesClosed000);
+	make("005 eyes open", Time("00:04:452"), Time("00:05:018"));
+	make("005 eyes open", Time("00:05:018"), Time("00:05:584"), shift);
+	make("010 su", Time("00:05:584"), Time("00:05:867"));
+	make("015 ffo", Time("00:05:867"), Time("00:06:150"));
+	make("020 ca", Time("00:06:150"), Time("00:06:433"));
+	make("025 ting", Time("00:06:433"), Time("00:06:999"));
+	make("025 ting", Time("00:06:999"), Time("00:07:565"), shift);
+	make("025 ting", Time("00:07:565"), Time("00:08:131"));
+	make("035 puff", Time("00:08:131"), Time("00:08:414"));
+	make("040 of", Time("00:08:414"), Time("00:08:697"));
+	const auto smoke045 = std::vector<Sketch>({
+		Sketch("045 smoke", Time("00:08:697"), Time("00:09:263")),
+		Sketch("045 smoke", Time("00:09:263"), Time("00:09:829"), shift)
+											  });
+	loop(5, smoke045);
+	make("055 i", Time("00:14:357"), Time("00:14:640"));
+	make("060 took", Time("00:14:640"), Time("00:14:923"));
+	make("065 your", Time("00:14:923"), Time("00:15:206"));
+	make("070 breath", Time("00:15:206"), Time("00:15:489"));
+	make("075 in", Time("00:15:489"), Time("00:16:055"));
+	make("075 in", Time("00:16:055"), Time("00:16:621"), shift);
+	make("075 in", Time("00:16:621"), Time("00:17:187"));
+	make("080 and", Time("00:17:187"), Time("00:17:470"));
+	make("085 you", Time("00:17:470"), Time("00:17:753"));
+	const auto spoke090 = std::vector<Sketch>({
+		Sketch("090 spoke", Time("00:17:753"), Time("00:18:319")),
+		Sketch("090 spoke", Time("00:18:319"), Time("00:18:885"), shift)
+											  });
+	loop(3, spoke090);
+	make("090 spoke", Time("00:21:150"), Time("00:21:999"));
+	make("100 and", Time("00:21:963"), Time("00:22:282"));
+	make("105 i", Time("00:22:282"), Time("00:22:565"));
+	make("110 saw", Time("00:22:565"), Time("00:23:131"));
+	make("115 the", Time("00:23:131"), Time("00:23:697"));
+	const auto world120 = std::vector<Sketch>({
+		Sketch("120 world", Time("00:23:697"), Time("00:24:263")),
+		Sketch("120 world", Time("00:24:263"), Time("00:24:829"), shift)
+											  });
+	loop(2, world120);
+	make("120 world", Time("00:25:961"), Time("00:26:527"));
+	make("125 turn", Time("00:26:527"), Time("00:27:093"));
+	const auto white130 = std::vector<Sketch>({
+		Sketch("130 white", Time("00:27:093"), Time("00:27:659")),
+		Sketch("130 white", Time("00:27:659"), Time("00:28:225"), shift)
+											  });
+	loop(8, white130);
+	make("130 white", Time("00:36:150"), Time("00:36:433"));
+	make("135 are", Time("00:36:433"), Time("00:36:716"));
+	make("140 you", Time("00:36:716"), Time("00:37:140"));
+	make("145 still", Time("00:37:140"), Time("00:37:423"));
+	make("150 cal", Time("00:37:423"), Time("00:37:848"));
+	make("155 ling", Time("00:37:848"), Time("00:38:131"));
+	const auto me160 = std::vector<Sketch>({
+		Sketch("160 me", Time("00:38:131"), Time("00:38:697")),
+		Sketch("160 me", Time("00:38:697"), Time("00:39:263"), shift)
+										   });
+	loop(2, me160);
+	make("170 i", Time("00:40:395"), Time("00:40:678"));
+	const auto melt175 = std::vector<Sketch>({
+		Sketch("175 melt", Time("00:40:678"), Time("00:41:244")),
+		Sketch("175 melt", Time("00:41:244"), Time("00:41:810"), shift)
+											 });
+	loop(7, melt175);
+	make("175 melt", Time("00:48:602"), Time("00:49:168"));
+	make("175 melt", Time("00:49:168"), Time("00:49:452"), shift);
+	make("180 in", Time("00:49:452"), Time("00:49:735"));
+	make("185 to", Time("00:49:735"), Time("00:50:301"));
+	make("185 to", Time("00:50:301"), Time("00:50:867"), shift);
+	make("185 to", Time("00:50:867"), Time("00:51:433"));
+	make("185 to", Time("00:51:433"), Time("00:51:716"), shift);
+	make("190 your", Time("00:51:716"), Time("00:51:999"));
+	const auto voice195 = std::vector<Sketch>({
+		Sketch("195 voice", Time("00:51:999"), Time("00:52:565")),
+		Sketch("195 voice", Time("00:52:565"), Time("00:53:131"), shift)
+											  });
+	loop(2, voice195);
 
 	// Lyric 2
-	//make("205 push", Time("01:58:791"), Time("01:59:074"));
-	//make("210 ing", Time("01:59:074"), Time("01:59:357"));
-	//make("215 a", Time("01:59:357"), Time("01:59:640"));
-	//make("220 side", Time("01:59:640"), Time("02:00:206"));
-	//make("220 side", Time("02:00:206"), Time("02:00:772"), shift);
-	//make("220 side", Time("02:00:772"), Time("02:01:338"));
-	//make("225 my", Time("02:01:338"), Time("02:01:904"));
-	//const auto pain230 = std::vector<Sketch>({
-	//	Sketch("230 pain", Time("02:01:904"), Time("02:02:470")),
-	//	Sketch("230 pain", Time("02:02:470"), Time("02:03:036"), shift),
-	//										 });
-	//loop(4, pain230);
-	//make("235 ex", Time("02:06:433"), Time("02:06:716"));
-	//make("240 changed", Time("02:06:716"), Time("02:06:999"));
-	//make("245 bo", Time("02:06:999"), Time("02:07:282"));
-	//make("250 dy", Time("02:07:282"), Time("02:07:565"));
-	//make("255 heat", Time("02:07:565"), Time("02:08:131"));
-	//make("255 heat", Time("02:08:131"), Time("02:08:697"), shift);
-	//make("255 heat", Time("02:08:697"), Time("02:09:263"));
-	//make("255 heat", Time("02:09:263"), Time("02:09:546"), shift);
-	//make("260 a", Time("02:09:546"), Time("02:09:829"));
-	//make("265 gain", Time("02:09:829"), Time("02:10:395"));
-	//make("270 and", Time("02:10:395"), Time("02:10:678"));
-	//make("275 a", Time("02:10:678"), Time("02:10:961"));
-	//const auto gain280 = std::vector<Sketch>({
-	//	Sketch("280 gain", Time("02:10:961"), Time("02:11:527")),
-	//	Sketch("280 gain", Time("02:11:527"), Time("02:12:093"), shift)
-	//										 });
-	//loop(5, gain280);
-	//make("280 gain", Time("02:16:621"), Time("02:16:904"));
-	//make("285 su", Time("02:16:904"), Time("02:17:187"));
-	//make("290 ffo", Time("02:17:187"), Time("02:17:470"));
-	//make("295 ca", Time("02:17:470"), Time("02:17:753"));
-	//make("300 ting", Time("02:17:753"), Time("02:18:319"));
-	//make("300 ting", Time("02:18:319"), Time("02:18:885"), shift);
-	//make("300 ting", Time("02:18:885"), Time("02:19:452"));
-	//make("305 puff", Time("02:19:452"), Time("02:19:735"));
-	//make("310 of", Time("02:19:735"), Time("02:20:018"));
-	//const auto smoke315 = std::vector<Sketch>({
-	//	Sketch("315 smoke", Time("02:20:018"), Time("02:20:584")),
-	//	Sketch("315 smoke", Time("02:20:584"), Time("02:21:150"), shift)
-	//										  });
-	//loop(3, smoke315);
-	//make("315 smoke", Time("02:23:414"), Time("02:23:980"));
-	//make("315 smoke", Time("02:23:980"), Time("02:24:263"), shift);
-	//make("320 and", Time("02:24:263"), Time("02:24:546"));
-	//make("325 i", Time("02:24:546"), Time("02:24:829"));
-	//make("330 saw", Time("02:24:829"), Time("02:25:395"));
-	//make("335 the", Time("02:25:395"), Time("02:25:961"));
-	//const auto world340 = std::vector<Sketch>({
-	//	Sketch("340 world", Time("02:25:961"), Time("02:26:527")),
-	//	Sketch("340 world", Time("02:26:527"), Time("02:27:093"), shift)
-	//										  });
-	//loop(2, world340);
-	//make("340 world", Time("02:28:225"), Time("02:28:791")),
-	//make("345 turn", Time("02:28:791"), Time("02:29:357"));
-	//const auto red350 = std::vector<Sketch>({
-	//	Sketch("350 red", Time("02:29:357"), Time("02:29:923")),
-	//	Sketch("350 red", Time("02:29:923"), Time("02:30:489"))
-	//										  });
-	//loop(4, red350);
+	make("205 push", Time("01:58:791"), Time("01:59:074"));
+	make("210 ing", Time("01:59:074"), Time("01:59:357"));
+	make("215 a", Time("01:59:357"), Time("01:59:640"));
+	make("220 side", Time("01:59:640"), Time("02:00:206"));
+	make("220 side", Time("02:00:206"), Time("02:00:772"), shift);
+	make("220 side", Time("02:00:772"), Time("02:01:338"));
+	make("225 my", Time("02:01:338"), Time("02:01:904"));
+	const auto pain230 = std::vector<Sketch>({
+		Sketch("230 pain", Time("02:01:904"), Time("02:02:470")),
+		Sketch("230 pain", Time("02:02:470"), Time("02:03:036"), shift),
+											 });
+	loop(4, pain230);
+	make("235 ex", Time("02:06:433"), Time("02:06:716"));
+	make("240 changed", Time("02:06:716"), Time("02:06:999"));
+	make("245 bo", Time("02:06:999"), Time("02:07:282"));
+	make("250 dy", Time("02:07:282"), Time("02:07:565"));
+	make("255 heat", Time("02:07:565"), Time("02:08:131"));
+	make("255 heat", Time("02:08:131"), Time("02:08:697"), shift);
+	make("255 heat", Time("02:08:697"), Time("02:09:263"));
+	make("255 heat", Time("02:09:263"), Time("02:09:546"), shift);
+	make("260 a", Time("02:09:546"), Time("02:09:829"));
+	make("265 gain", Time("02:09:829"), Time("02:10:395"));
+	make("270 and", Time("02:10:395"), Time("02:10:678"));
+	make("275 a", Time("02:10:678"), Time("02:10:961"));
+	const auto gain280 = std::vector<Sketch>({
+		Sketch("280 gain", Time("02:10:961"), Time("02:11:527")),
+		Sketch("280 gain", Time("02:11:527"), Time("02:12:093"), shift)
+											 });
+	loop(5, gain280);
+	make("280 gain", Time("02:16:621"), Time("02:16:904"));
+	make("285 su", Time("02:16:904"), Time("02:17:187"));
+	make("290 ffo", Time("02:17:187"), Time("02:17:470"));
+	make("295 ca", Time("02:17:470"), Time("02:17:753"));
+	make("300 ting", Time("02:17:753"), Time("02:18:319"));
+	make("300 ting", Time("02:18:319"), Time("02:18:885"), shift);
+	make("300 ting", Time("02:18:885"), Time("02:19:452"));
+	make("305 puff", Time("02:19:452"), Time("02:19:735"));
+	make("310 of", Time("02:19:735"), Time("02:20:018"));
+	const auto smoke315 = std::vector<Sketch>({
+		Sketch("315 smoke", Time("02:20:018"), Time("02:20:584")),
+		Sketch("315 smoke", Time("02:20:584"), Time("02:21:150"), shift)
+											  });
+	loop(3, smoke315);
+	make("315 smoke", Time("02:23:414"), Time("02:23:980"));
+	make("315 smoke", Time("02:23:980"), Time("02:24:263"), shift);
+	make("320 and", Time("02:24:263"), Time("02:24:546"));
+	make("325 i", Time("02:24:546"), Time("02:24:829"));
+	make("330 saw", Time("02:24:829"), Time("02:25:395"));
+	make("335 the", Time("02:25:395"), Time("02:25:961"));
+	const auto world340 = std::vector<Sketch>({
+		Sketch("340 world", Time("02:25:961"), Time("02:26:527")),
+		Sketch("340 world", Time("02:26:527"), Time("02:27:093"), shift)
+											  });
+	loop(2, world340);
+	make("340 world", Time("02:28:225"), Time("02:28:791")),
+	make("345 turn", Time("02:28:791"), Time("02:29:357"));
+	const auto red350 = std::vector<Sketch>({
+		Sketch("350 red", Time("02:29:357"), Time("02:29:923")),
+		Sketch("350 red", Time("02:29:923"), Time("02:30:489"))
+											  });
+	loop(4, red350);
 
 	// Lyric 3
 	make("360 dri", Time("04:04:168"), Time("04:04:452"));
@@ -478,6 +478,97 @@ void Sketch::render() {
 		Sketch("480 core", Time("04:32:187"), Time("04:32:753")),
 		Sketch("480 core", Time("04:32:753"), Time("04:33:319"), shift)
 											 });
-	make("480 core", Time("04:43:508"), Time("04:44:074")),
+	make("480 core", Time("04:43:508"), Time("04:44:074"));
 	loop(10, core480);
+
+	//Lyric4
+	make("490 i", Time("04:44:074"), Time("04:44:640"));
+	make("495 dont", Time("04:44:640"), Time("04:45:206"));
+	make("500 know", Time("04:45:206"), Time("04:45:772"));
+	make("500 know", Time("04:45:772"), Time("04:46:338"), shift);
+	make("500 know", Time("04:46:338"), Time("04:46:904"));
+	make("505 when", Time("04:46:904"), Time("04:47:470"));
+	make("510 i", Time("04:47:470"), Time("04:48:319"));
+	make("515 lost", Time("04:48:319"), Time("04:49:168"));
+	make("520 my", Time("04:49:168"), Time("04:49:735"));
+	const auto key525 = std::vector<Sketch>({
+		Sketch("525 key", Time("04:49:735"), Time("04:50:301")),
+		Sketch("525 key", Time("04:50:301"), Time("04:50:867"), shift)
+											});
+	loop(6, key525);
+	make("530 take", Time("04:56:527"), Time("04:57:659"));
+	make("535 a", Time("04:57:659"), Time("04:58:791"));
+	make("540 vow", Time("04:58:791"), Time("04:59:357"));
+	make("540 vow", Time("04:59:357"), Time("04:59:923"), shift);
+	make("540 vow", Time("04:59:923"), Time("05:00:489"));
+	make("545 and", Time("05:00:489"), Time("05:01:055"));
+	make("550 just", Time("05:01:055"), Time("05:02:187"));
+	make("555 kill", Time("05:02:187"), Time("05:03:319"));
+	const auto me560 = std::vector<Sketch>({
+		Sketch("560 me", Time("05:03:319"), Time("05:03:885")),
+		Sketch("560 me", Time("05:03:885"), Time("05:04:452"), shift)
+											});
+	loop(4, me560);
+	const auto pause1565 = std::vector<Sketch>({
+		Sketch("565 pause1", Time("05:07:848"), Time("05:08:414")),
+		Sketch("565 pause1", Time("05:08:414"), Time("05:08:980"), shift)
+										   });
+	loop(4, pause1565);
+	const auto pause2570 = std::vector<Sketch>({
+		Sketch("570 pause2", Time("05:12:376"), Time("05:12:942")),
+		Sketch("570 pause2", Time("05:12:942"), Time("05:13:508"), shift)
+										   });
+	loop(4, pause2570);
+	const auto pause3560 = std::vector<Sketch>({
+		Sketch("575 pause3", Time("05:16:904"), Time("05:17:470")),
+		Sketch("575 pause3", Time("05:17:470"), Time("05:18:036"), shift)
+										   });
+	loop(3, pause3560);
+	make("580 i", Time("05:20:301"), Time("05:20:867"));
+	make("585 dont", Time("05:20:867"), Time("05:21:433"));
+	make("590 know", Time("05:21:433"), Time("05:21:999"));
+	make("590 know", Time("05:21:999"), Time("05:22:565"), shift);
+	make("590 know", Time("05:22:565"), Time("05:23:131"));
+	make("595 when", Time("05:23:131"), Time("05:23:697"));
+	make("600 i", Time("05:23:697"), Time("05:24:546"));
+	make("605 lost", Time("05:24:546"), Time("05:25:395"));
+	make("610 my", Time("05:25:395"), Time("05:25:961"));
+	const auto key615 = std::vector<Sketch>({
+		Sketch("615 key", Time("05:25:961"), Time("05:26:527")),
+		Sketch("615 key", Time("05:26:527"), Time("05:27:093"), shift)
+											});
+	loop(6, key615);
+	make("625 take", Time("05:32:753"), Time("05:33:885"));
+	make("630 a", Time("05:33:885"), Time("05:35:018"));
+	make("635 vow", Time("05:35:018"), Time("05:35:584"));
+	make("635 vow", Time("05:35:584"), Time("05:36:150"), shift);
+	make("635 vow", Time("05:36:150"), Time("05:36:716"));
+	make("640 and", Time("05:36:716"), Time("05:37:282"));
+	make("645 just", Time("05:37:282"), Time("05:38:414"));
+	make("650 kill", Time("05:38:414"), Time("05:39:546"));
+	const auto me655 = std::vector<Sketch>({
+		Sketch("655 me", Time("05:39:546"), Time("05:40:112")),
+		Sketch("655 me", Time("05:40:112"), Time("05:40:678"), shift)
+											});
+	loop(7, me655);
+	make("660 collapse1", Time("05:47:470"), Time("05:48:036"));
+	make("665 collapse2", Time("05:48:036"), Time("05:48:602"));
+	const auto collapse3670 = std::vector<Sketch>({
+		Sketch("670 collapse3", Time("05:48:602"), Time("05:49:168")),
+		Sketch("670 collapse3", Time("05:49:168"), Time("05:49:735"), shift)
+												  });
+	loop(8, collapse3670);
+	const auto eyesOpen675 = std::vector<Sketch>({
+		Sketch("675 eyes open", Time("06:31:055"), Time("06:31:621")),
+		Sketch("675 eyes open", Time("06:31:621"), Time("06:32:187"), shift)
+												  });
+	loop(3, eyesOpen675);
+	make("675 eyes open", Time("06:34:452"), Time("06:34:735"), shift);
+	const auto eyesClosed680 = std::vector<Sketch>({
+		Sketch("680 eyes closed", Time("06:34:735"), Time("06:35:301")),
+		Sketch("680 eyes closed", Time("06:35:301"), Time("06:35:867"), shift)
+												   });
+	loop(2, eyesClosed680);
+	make("680 eyes closed", Time("06:36:735"), Time("06:37:565"));
+	make("680 eyes closed", Time("06:37:565"), Time("06:35:867"), shift);
 }
