@@ -4,11 +4,8 @@
 #include "SpriteCollection.hpp"
 
 SpriteCollection::SpriteCollection(std::vector<Sprite *> sprites)
-	: sprites(sprites) {
+	: sprites(sprites), position{ sprites[0]->position }, scale{ sprites[0]->scale } {
 	size = sprites.size();
-
-	position = sprites[0]->position;
-	scale = sprites[0]->scale;
 }
 
 

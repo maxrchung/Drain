@@ -43,7 +43,7 @@ private:
 					 const bool drawOut = false,
 					 const bool fadeIn = false,
 					 const bool fadeOut = false);
-	static void loop(int times, std::vector<Sketch> v);
+	static void loop(std::vector<Sketch>& v, int times);
 	void draw(Bezier b);    // make() breaks the .txt up into 4-dim beziers and calls draw
 	void getTransform(float *xshift, float *yshift, float *xscale, float *yscale);
 	bool inBounds(const Vector2& point); // Check if point is within bounds
