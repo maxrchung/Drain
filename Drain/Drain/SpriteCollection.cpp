@@ -3,7 +3,7 @@
 
 #include "SpriteCollection.hpp"
 
-SpriteCollection::SpriteCollection(std::vector<Sprite *> sprites)
+SpriteCollection::SpriteCollection(const std::vector<Sprite *>& sprites)
 	: sprites(sprites) {
 	size = sprites.size();
 
