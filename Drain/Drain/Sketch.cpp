@@ -270,7 +270,7 @@ void Sketch::make(const std::string& pointMapPath, const Time& startTime, const 
 
 void Sketch::render() {
 	std::cout << "Rendering Sketch..." << std::endl;
-	const auto shift = 4.6f;
+	const auto shift = 4.4f;
 
 	// Lyric 1
 	auto start = Time("00:00:489").ms - Timing::whole;
