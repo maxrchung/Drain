@@ -17,7 +17,7 @@ public:
 	Sketch(const std::string& pointMapPath,
 		   const Time& startTime,
 		   const Time& endTime,
-		   const float resolution = 4.5f,
+		   const float resolution = defaultResolution,
 		   const bool dynamic = true,
 		   const Path& brush = Path::Taper,
 		   const int margin = 0,
@@ -33,7 +33,7 @@ private:
 	static void make(const std::string& pointMapPath,
 					 const Time& startTime,
 					 const Time& endTime,
-					 const float resolution = 4.5f,
+					 const float resolution = defaultResolution,
 					 const bool dynamic = true,
 					 const Path& brush = Path::Taper,
 					 const int margin = 0,
@@ -44,11 +44,13 @@ private:
 					 const bool fadeIn = false,
 					 const bool fadeOut = false);
 	static void loop(std::vector<Sketch>& v, int times);
-	void draw(Bezier b);    // make() breaks the .txt up into 4-dim beziers and calls draw
+	static constexpr float defaultResolution = 4.5f;
+	static constexpr float shift = 4.0f;
+	void draw(Bezier& b);    // make() breaks the .txt up into 4-dim beziers and calls draw
 	void getTransform(float *xshift, float *yshift, float *xscale, float *yscale);
 	bool inBounds(const Vector2& point); // Check if point is within bounds
-	int constResolution(Bezier b);
-	int dynamicResolution(Bezier b);
+	int constResolution(Bezier& b);
+	int dynamicResolution(Bezier& b);
 	int make();
 	const std::string pointMapPath;
 	const bool fadeIn;

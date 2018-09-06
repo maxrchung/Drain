@@ -40,7 +40,7 @@ bool Sketch::inBounds(const Vector2& point) {
 	return false;
 }
 
-void Sketch::draw(Bezier b) {
+void Sketch::draw(Bezier& b) {
 	if (dynamic) {
 		if (!Sketch::dynamicResolution(b))
 			return;
@@ -105,7 +105,7 @@ void Sketch::draw(Bezier b) {
 	points.clear();
 }
 
-int Sketch::constResolution(Bezier b) {
+int Sketch::constResolution(Bezier& b) {
 	// original linear resolution, returns numPoints
 	int numPoints = b.length / resolution;	// truncate
 	if (numPoints < 2) // nothing to be drawn
@@ -127,7 +127,7 @@ s createS(double pos, double secondDeriv) {
 	return ans;
 }
 
-int Sketch::dynamicResolution(Bezier b) {
+int Sketch::dynamicResolution(Bezier& b) {
 	int numPoints = b.length / resolution; // precheck if bezier is "short"
 	if (numPoints < 2) // nothing to be drawn
 		return 0;
@@ -270,7 +270,6 @@ void Sketch::make(const std::string& pointMapPath, const Time& startTime, const 
 
 void Sketch::render() {
 	std::cout << "Rendering Sketch..." << std::endl;
-	const auto shift = 4.4f;
 
 	// Lyric 1
 	auto start = Time("00:00:489").ms - Timing::whole;
@@ -350,12 +349,9 @@ void Sketch::render() {
 	make("185 to", Time("00:50:867"), Time("00:51:433"));
 	make("185 to", Time("00:51:433"), Time("00:51:716"), shift);
 	make("190 your", Time("00:51:716"), Time("00:51:999"));
-	auto voice195 = std::vector<Sketch>({
-		Sketch("195 voice", Time("00:51:999"), Time("00:52:565")),
-		Sketch("195 voice", Time("00:52:565"), Time("00:53:131"), shift)
-										});
-	loop(voice195, 2);
+	make("195 voice", Time("00:51:999"), Time("00:54:263"), defaultResolution, true, Path::Taper, 0, 1, Easing::Linear, false, false, false, true);
 	// Lyric 2
+	make("205 push", Time("01:57:659"), Time("01:58:791"), shift, true, Path::Taper, 0, 1, Easing::Linear, false, false, true, false);
 	make("205 push", Time("01:58:791"), Time("01:59:074"));
 	make("210 ing", Time("01:59:074"), Time("01:59:357"));
 	make("215 a", Time("01:59:357"), Time("01:59:640"));
@@ -410,14 +406,11 @@ void Sketch::render() {
 		Sketch("340 world", Time("02:26:527"), Time("02:27:093"), shift)
 										});
 	loop(world340, 2);
-	make("340 world", Time("02:28:225"), Time("02:28:791")),
-		make("345 turn", Time("02:28:791"), Time("02:29:357"));
-	auto red350 = std::vector<Sketch>({
-		Sketch("350 red", Time("02:29:357"), Time("02:29:923")),
-		Sketch("350 red", Time("02:29:923"), Time("02:30:489"))
-									  });
-	loop(red350, 4);
+	make("340 world", Time("02:28:225"), Time("02:28:791"));
+	make("345 turn", Time("02:28:791"), Time("02:29:357"));
+	Sketch("350 red", Time("02:29:357"), Time("02:33:885"), defaultResolution, true, Path::Taper, 0, 1, Easing::Linear, false, false, false, true);
 	// Lyric 3
+	make("360 dri", Time("04:02:187"), Time("04:04:168"), shift, true, Path::Taper, 0, 1, Easing::Linear, false, false, true, false);
 	make("360 dri", Time("04:04:168"), Time("04:04:452"));
 	make("365 pping", Time("04:04:452"), Time("04:05:018"));
 	make("365 pping", Time("04:05:018"), Time("04:05:584"), shift);
@@ -547,14 +540,12 @@ void Sketch::render() {
 		Sketch("655 me", Time("05:39:546"), Time("05:40:112")),
 		Sketch("655 me", Time("05:40:112"), Time("05:40:678"), shift)
 									 });
-	loop(me655, 7);
-	make("660 collapse1", Time("05:47:470"), Time("05:48:036"));
-	make("665 collapse2", Time("05:48:036"), Time("05:48:602"));
-	auto collapse3670 = std::vector<Sketch>({
-		Sketch("670 collapse3", Time("05:48:602"), Time("05:49:168")),
-		Sketch("670 collapse3", Time("05:49:168"), Time("05:49:735"), shift)
-											});
-	loop(collapse3670, 8);
+	loop(me655, 6);
+	make("660 collapse1", Time("05:46:338"), Time("05:46:904"));
+	make("665 collapse2", Time("05:46:904"), Time("05:47:470"));
+	make("670 collapse3", Time("05:47:470"), Time("05:57:659"), defaultResolution, false, Path::Taper, 0, 1, Easing::Linear, false, false, false, true);
+	// Last
+	make("675 eyes open", Time("06:24:829"), Time("06:31:055"), shift, true, Path::Taper, 0, 1, Easing::Linear, false, false, true, false);
 	auto eyesOpen675 = std::vector<Sketch>({
 		Sketch("675 eyes open", Time("06:31:055"), Time("06:31:621")),
 		Sketch("675 eyes open", Time("06:31:621"), Time("06:32:187"), shift)
@@ -566,6 +557,6 @@ void Sketch::render() {
 		Sketch("680 eyes closed", Time("06:35:301"), Time("06:35:867"), shift)
 											 });
 	loop(eyesClosed680, 2);
-	make("680 eyes closed", Time("06:36:735"), Time("06:37:565"));
-	make("680 eyes closed", Time("06:37:565"), Time("06:35:867"), shift);
+	make("680 eyes closed", Time("06:36:999"), Time("06:37:565"));
+	make("680 eyes closed", Time("06:37:565"), Time("06:37:848"), shift);
 }
