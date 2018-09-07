@@ -41,7 +41,8 @@ int main() {
 #endif
 
 	// BubbleGenerator shit
-	BubbleGenerator::BubbleGenerator();
+	BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
+	std::vector<Sprite *> bubbles = bubGen.GetSplatBubbles();
 	BubbleGenerator::BubbleGenerator(true, false);
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
