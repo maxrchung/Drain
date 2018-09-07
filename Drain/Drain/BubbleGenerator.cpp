@@ -2,8 +2,6 @@
 
 BubbleGenerator::BubbleGenerator(bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
 	: isMouth{ isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
-	// TODO: mouth bubbles: 2 parameters .. (startTime, vector position..) with set duration, etc
-	// TODO: mouth bubble add randomness: randomish position, etc. 
 	// TODO: remember 2 do color
 
 	if (isMouth) { 
@@ -43,6 +41,8 @@ void BubbleGenerator::DrawBubble() {
 		std::vector<float> moveTimes = GetBubbleTiming();
 		Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(startPos.x, startPos.y));
 		ScaleBubbleSize(sprite, moveTimes);
+
+		TrackAllBubbles(sprite);
 
 		if (willSplatter && (splatterTime.ms >= moveTimes[0] && splatterTime.ms <= moveTimes[1])) { // Checks whether bubble is visible during splatterTime
 			SplatterPos(sprite, moveTimes);
@@ -256,6 +256,10 @@ void BubbleGenerator::SplatterPos(Sprite* sprite, std::vector<float> moveTimes) 
 
 void BubbleGenerator::TrackSplatBubbles(Sprite* sprite) {
 	splattingBubbles.push_back(sprite);
+}
+
+void BubbleGenerator::TrackAllBubbles(Sprite* sprite) {
+	sprites.push_back(sprite);
 }
 
 std::vector<Sprite*> BubbleGenerator::GetSplatBubbles() {

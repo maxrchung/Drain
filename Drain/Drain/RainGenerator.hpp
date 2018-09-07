@@ -33,6 +33,7 @@ public:
 	Vector2 FreezePos();
 	float SlowRainBeforeFreeze(float actualDropStart, float actualDropTotalTime, bool& freezeFlag);
 	void TrackRainDrop(Sprite* sprite, float actualDropStart, float actualDropEnd, float newSize, float spriteEndPosX, float spriteEndPosY);
+	void TrackAllRainDrops(Sprite* sprite);
 	float RandomRainVelocity(float minDropTime, float veloDelta);
 	float RandomRainTilt(Sprite* sprite);
 	Vector2 NewEndCoords(Sprite* sprite, float spriteEndPosX, float spriteEndPosY, float xCoordMax);

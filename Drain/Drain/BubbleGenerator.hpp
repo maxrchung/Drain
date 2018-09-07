@@ -10,6 +10,11 @@
 class BubbleGenerator {
 public:
 	BubbleGenerator(bool isMouth = false, Vector2 mouthBubblePos = { 0, 0 }, Time mouthBubbleStartTime = Time("00:00:000"), bool willSplatter = true);
+	std::vector<Sprite*> GetSplatBubbles();
+
+	std::vector<Sprite *> sprites;
+
+private:
 	void SwitchToMouthBubble();
 	void BubbleController();
 	void DrawBubble();
@@ -21,10 +26,8 @@ public:
 	void ScaleBubbleSize(Sprite* sprite, std::vector<float> moveTimes);
 	void VelocityController();
 	void SplatterPos(Sprite* sprite, std::vector<float> moveTimes);
-	std::vector<Sprite*> GetSplatBubbles();
-
-private:
 	void TrackSplatBubbles(Sprite* sprite);
+	void TrackAllBubbles(Sprite* sprite);
 
 	Time startTime = Time("01:58:790");
 	Time endTime = Time("02:33:890");
