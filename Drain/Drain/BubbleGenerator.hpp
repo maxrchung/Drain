@@ -5,16 +5,18 @@
 #include "RandomRange.hpp"
 #include "Storyboard.hpp"
 #include "Time.hpp"
+#include "Timing.hpp"
 
 class BubbleGenerator {
 public:
-	BubbleGenerator(bool isMouth = false, bool willSplatter = true);
+	BubbleGenerator(bool isMouth = false, Vector2 mouthBubblePos = { 0, 0 }, Time mouthBubbleStartTime = Time("00:00:000"), bool willSplatter = true);
 	void SwitchToMouthBubble();
 	void BubbleController();
 	void DrawBubble();
 	void MoveBubble(Sprite* sprite, std::vector<float> moveTimes, bool isSplat = false);
 	Vector2 GetBubbleStartPos();
 	std::vector<float> GetBubbleTiming();
+	float GetRandomSideMovement();
 	float RandomBubbleSpeed();
 	void ScaleBubbleSize(Sprite* sprite, std::vector<float> moveTimes);
 	void VelocityController();
@@ -51,11 +53,12 @@ private:
 
 	/* Mouth timing and shit are placeholders, should be edited with the actual values later*/
 	bool isMouth;
-	Time mouthStartTime = Time("02:10:790");
-	Time mouthEndTime = Time("02:35:890"); // If this is before splatterTime Bubblegen will get stuck in an infinite loop. maybe fix l8r lol
-	float mouthX = 0;
-	float mouthY = 0;
+	Time mouthBubblePeriod = Time(Timing::whole * 16);
+	Time mouthStartTime;
+	Time mouthEndTime; // If this is before splatterTime Bubblegen will get stuck in an infinite loop. maybe fix l8r lol
+	float mouthX;
+	float mouthY;
 	const float mouthBubbleMaxSize = 0.7;
 	const float mouthBubbleMinSize = 0.2;
-	float mouthBubbleCount = 7;
+	float mouthBubbleCount = 5;
 };

@@ -1,10 +1,10 @@
 #include "BubbleGenerator.hpp"
 
-BubbleGenerator::BubbleGenerator(bool isMouth, bool willSplatter)
-	: isMouth{ isMouth }, willSplatter{ willSplatter } {
-	// TODO: mouth bubbles stuff + implement splatterTime stuffs
-
-	// FIX: Bubbles stopping before endTime is reached, because endTime becomes splatterTime maybe? IDK.  if (willSplatter && (splat etc... is never reached . thats 
+BubbleGenerator::BubbleGenerator(bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
+	: isMouth{ isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
+	// TODO: mouth bubbles: 2 parameters .. (startTime, vector position..) with set duration, etc
+	// TODO: mouth bubble add randomness: randomish position, etc. 
+	// TODO: remember 2 do color
 
 	if (isMouth) { 
 		SwitchToMouthBubble();
@@ -21,12 +21,13 @@ void BubbleGenerator::SwitchToMouthBubble() {
 	maxSize = mouthBubbleMaxSize;
 	minSize = mouthBubbleMinSize;
 	startTime = mouthStartTime;
-	endTime = mouthEndTime;
+	endTime = mouthEndTime = mouthStartTime.ms + mouthBubblePeriod.ms;
 	bubbleCount = mouthBubbleCount;
 	totalTime = static_cast<float>(endTime.ms - startTime.ms);
 	moveTotalTime = totalTime / bubbleCount;
 	moveStartTime = startTime.ms;
 	moveEndTime = startTime.ms + moveTotalTime;
+	willSplatter = false; // Because mouth bubbles do not splatter
 }
 
 // Handles the overall creation of bubbles
@@ -61,8 +62,12 @@ Vector2 BubbleGenerator::GetBubbleStartPos() {
 		startPos.y = screenBottom - ((rainLength / 2) * maxSize);
 	}
 	else {
-		startPos.x = mouthX;
-		startPos.y = mouthY;
+		float xMouthVariance = 25;
+		float yMouthVariance = 13;
+		float xMouthDelta = RandomRange::calculate(-xMouthVariance, xMouthVariance);
+		float yMouthDelta = RandomRange::calculate(-yMouthVariance, yMouthVariance);
+		startPos.x = mouthX + xMouthDelta;
+		startPos.y = mouthY + yMouthDelta;
 	}
 
 	return startPos;
@@ -102,7 +107,7 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes, b
 
 	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
 	float oneDirMoveLength = sideMoveLength / 2;
-	float xSideDelta = 30;
+	float xSideDelta = GetRandomSideMovement();
 
 	float sideMoveTotalTime = (endMove - startMove) / sideMoveTimes;
 	float oneDirTime = sideMoveTotalTime / 2; // Time for bubble to move in one direction, either left or right
@@ -141,6 +146,23 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes, b
 		startSideMove += oneDirTime;
 		endSideMove += oneDirTime;
 	}
+}
+
+// Returns a random value for the x variation in a bubble's movement
+float BubbleGenerator::GetRandomSideMovement() {
+	float xSideMaxDelta = 40;
+	float xSideMinDelta = 5;
+	float xSideRandomizer = xSideMaxDelta - xSideMinDelta;
+	float xSideDeltaDelta = RandomRange::calculate(0, xSideRandomizer);
+	float negOrPos;
+
+	do {
+		negOrPos = RandomRange::calculate(-1, 1);
+	} while (negOrPos == 0);
+
+	float xSideDelta = negOrPos * (xSideMinDelta + xSideDeltaDelta);
+
+	return xSideDelta;
 }
 
 // Returns the actual total time(ms) it takes for a bubble to float to the top of the screen; Smaller bubble sizes (slower speed) are made more probable for visual effect

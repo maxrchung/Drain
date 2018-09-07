@@ -24,10 +24,10 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
-	//Text::render();
-	//Sketch::render();
-	//Splatter::render();
-	//Drip::render();
+	Text::render();
+	Sketch::render();
+	Splatter::render();
+	Drip::render();
 
 	// RainGenerator shit
 	RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
@@ -41,9 +41,13 @@ int main() {
 #endif
 
 	// BubbleGenerator shit
+#if 1
 	BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 	std::vector<Sprite *> bubbles = bubGen.GetSplatBubbles();
-	BubbleGenerator::BubbleGenerator(true, false);
+	Vector2 pos = { 50, 50 };
+	BubbleGenerator::BubbleGenerator(true, pos, Time("02:10:790"));
+	BubbleGenerator::BubbleGenerator(true, pos, Time("01:10:790"));
+#endif
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
