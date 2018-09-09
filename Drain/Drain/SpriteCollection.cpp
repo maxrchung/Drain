@@ -3,9 +3,16 @@
 
 #include "SpriteCollection.hpp"
 
-SpriteCollection::SpriteCollection(std::vector<Sprite *> sprites)
-	: sprites(sprites), position{ sprites[0]->position }, scale{ sprites[0]->scale } {
-	size = sprites.size();
+SpriteCollection::SpriteCollection(std::vector<Sprite *> sprites, std::vector<Vector2> location)
+	: sprites(sprites), position{ sprites[0]->position }, scale{ sprites[0]->scale}, location{location} {
+		size = sprites.size();
+}
+
+SpriteCollection::SpriteCollection(Sprite *sprite)
+	: position{sprite->position}, scale{sprite->scale} {
+		size = 1;
+		this->sprites.push_back(sprite);
+		location.push_back(Vector2(0, 0));
 }
 
 

@@ -24,21 +24,26 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
-	//Text::render();
-	//Sketch::render();
-	//Splatter::render();
-	//Drip::render();
-
+	/*
+	Text::render();
+	Sketch::render();
+	Splatter::render();
+	Drip::render();
+	*/
 	// RainGenerator shit
 	RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
-#if 0
+	if(1) {
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
-		Walker walk_boi = Walker::Walker(raindrops);
+		std::vector<SpriteCollection> coll_raindrops;
+		for(auto drop: raindrops) {
+			coll_raindrops.push_back(drop);
+		}
+		Walker walk_boi = Walker::Walker(coll_raindrops);
 		walk_boi.walk(1000, Time("01:30:489"), Time("01:57:659"));
-#endif
+	}
 
 	// BubbleGenerator shit
 	BubbleGenerator::BubbleGenerator();

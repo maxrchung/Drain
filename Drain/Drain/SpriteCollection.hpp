@@ -9,7 +9,8 @@
 
 class SpriteCollection {
 public:
-	SpriteCollection(std::vector<Sprite *> sprites);
+	SpriteCollection(std::vector<Sprite *> sprites, std::vector<Vector2> location);
+	SpriteCollection(Sprite *sprites);
 	~SpriteCollection();
 
 	//number of sprites in collection
