@@ -128,12 +128,18 @@ s createS(double pos, double secondDeriv) {
 }
 
 int Sketch::dynamicResolution(Bezier& b) {
-	int numPoints = b.length / resolution; // precheck if bezier is "short"
+	points.push_back(b.findPosition(0));
+	points.push_back(b.findPosition(0.25 + (rand() % 20 / 100.0f)));
+	points.push_back(b.findPosition(0.55 + (rand() % 20 / 100.0f)));
+	points.push_back(b.findPosition(1.0f));
+	return 1;
+	int numPoints = b.length / this->resolution; // precheck if bezier is "short"
 	if (numPoints < 2) // nothing to be drawn
 		return 0;
 	// find average 2nd derivative along bezier to determine "resolution"
 	auto derivs = std::vector<double>();
-	for (double i = 0.001; i < 1; i += 1 / static_cast<float>(numPoints)) {
+	const auto step = 1 / static_cast<float>(numPoints);
+	for (double i = 0.001; i < 1; i += step) {
 		auto tmp = b.find2ndDerivative(i);
 		derivs.push_back(std::abs(tmp.x) + std::abs(tmp.y));
 	}
@@ -408,7 +414,7 @@ void Sketch::render() {
 	loop(world340, 2);
 	make("340 world", Time("02:28:225"), Time("02:28:791"));
 	make("345 turn", Time("02:28:791"), Time("02:29:357"));
-	Sketch("350 red", Time("02:29:357"), Time("02:33:885"), defaultResolution, true, Path::Taper, 0, 1, Easing::Linear, false, false, false, true);
+	make("350 red", Time("02:29:357"), Time("02:33:885"), defaultResolution, true, Path::Taper, 0, 1, Easing::Linear, false, false, false, true);
 	// Lyric 3
 	make("360 dri", Time("04:02:187"), Time("04:04:168"), shift, true, Path::Taper, 0, 1, Easing::Linear, false, false, true, false);
 	make("360 dri", Time("04:04:168"), Time("04:04:452"));

@@ -25,12 +25,12 @@ int main() {
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
 	//Text::render();
-	//Sketch::render();
+	Sketch::render();
 	//Splatter::render();
 	//Drip::render();
 
 	// RainGenerator shit
-	RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
+	//RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
 #if 0
@@ -41,8 +41,8 @@ int main() {
 #endif
 
 	// BubbleGenerator shit
-	BubbleGenerator::BubbleGenerator();
-	BubbleGenerator::BubbleGenerator(true, false);
+	//BubbleGenerator::BubbleGenerator();
+	//BubbleGenerator::BubbleGenerator(true, false);
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
