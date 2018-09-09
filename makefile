@@ -1,5 +1,5 @@
 LDFLAGS = -lm
-FLAGS = -w -fpermissive -Wnarrowing 
+FLAGS = -w -fpermissive -Wnarrowing -D LINUX
 CC = g++ -MMD -g
 
 STORY = main

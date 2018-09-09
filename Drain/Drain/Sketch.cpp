@@ -174,6 +174,11 @@ int Sketch::dynamicResolution(Bezier& b) {
 
 int Sketch::make() {
 	// returns 0 upon success
+
+	#if LINUX
+	pointMapPath = "Drain/Drain/" + pointMapPath;
+	#endif
+	std::cout << pointMapPath << "\n";
 	std::size_t pos = pointMapPath.find(".txt");
 	if (pos == std::string::npos)
 		return 1;  // error if path doesn't contain .txt

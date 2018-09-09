@@ -21,9 +21,9 @@ public:
 	float fov = 90;
 
 	std::vector<raindrop> raindrops;
-	std::vector<SpriteCollection *> sprites;
+	std::vector<SpriteCollection> sprites;
 
-	Walker(std::vector<SpriteCollection *> sprites);
+	Walker(std::vector<SpriteCollection> sprites);
 
 	void walk(float distance, Time startTime, Time endTime);
 

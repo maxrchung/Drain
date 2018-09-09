@@ -5,7 +5,7 @@
 
 #include <cmath>
 
-Walker::Walker(std::vector<SpriteCollection *> sprites)
+Walker::Walker(std::vector<SpriteCollection> sprites)
 	: sprites{sprites} {
 }
 
@@ -23,7 +23,7 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 
 	//move those boys
 	moveSprites(distance, startTime, endTime);
-  
+
 	return;
 }
 
@@ -33,21 +33,21 @@ void Walker::moveCurrent(float distance, Time startTime, Time endTime) {
 	int total_time = endTime.ms - startTime.ms;
 
 	for(auto & drop : sprites) {
-		if(inScreen(drop->position)) {
-			Vector2 start_coord = drop->position;
+		if(inScreen(drop.position)) {
+			Vector2 start_coord = drop.position;
 			Vector2 end_coord = findProjection(Vector2::Zero, start_coord);
 
 			float ratio_traveled = (end_coord - start_coord).Magnitude() / (end_coord.Magnitude());
 
-			float start_scale = drop->scale;
+			float start_scale = drop.scale;
 			float end_scale = start_scale * (1 + ratio_traveled);
 		
 			int int_end_time = int_start_time + w_rand(1000, total_time);
 			if(int_end_time > endTime.ms)
 				int_end_time = endTime.ms;
 
-			drop->Move(int_start_time, int_end_time, start_coord, end_coord);
-			drop->Scale(int_start_time, int_end_time, start_scale, end_scale);
+			drop.MoveAndScale(int_start_time, int_end_time, start_coord, end_coord, start_scale, end_scale);
+			
 		}
 
 	}
@@ -80,11 +80,9 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 
 		Vector2 end_coord = findProjection(Vector2::Zero, start_coord);
 
-		Sprite *sprite = Storyboard::CreateSprite(spriteImage, start_coord);
+		SpriteCollection sprite = SpriteCollection(Storyboard::CreateSprite(spriteImage, start_coord));
 
-
-		sprite->Move(int_start_time, int_end_time, start_coord, end_coord);
-		sprite->Scale(int_start_time, int_end_time, start_scale, end_scale);
+		sprite.MoveAndScale(int_start_time, int_end_time, start_coord, end_coord, start_scale, end_scale);
 	}
 }
 
