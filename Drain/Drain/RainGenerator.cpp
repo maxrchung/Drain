@@ -62,6 +62,7 @@ void RainGenerator::DrawRain() {
 		}
 
 		float rainSize = ScaleRainSize(sprite, actualDropTotalTime, minDropTime, actualDropStart);
+		TrackAllRainDrops(sprite);
 
 		if (willFreeze && (freezeTime.ms >= actualDropStart && freezeTime.ms <= actualDropEnd)) { // Tracks raindrop sprite from vector if drop is visible on the screen during freezeTime
 			TrackRainDrop(sprite, actualDropStart, actualDropEnd, rainSize, spriteEndPosX, spriteEndPosY);
@@ -135,6 +136,10 @@ void RainGenerator::TrackRainDrop(Sprite* sprite, float actualDropStart, float a
 	rainDrop.endY = spriteEndPosY;
 
 	rainDrops.push_back(rainDrop);
+}
+
+void RainGenerator::TrackAllRainDrops(Sprite* sprite) {
+	sprites.push_back(sprite);
 }
 
 // Returns the actual total time(ms) it takes for a drop to fall across the screen.. Smaller rain sizes (slower velocity) are made more probable for visual effect

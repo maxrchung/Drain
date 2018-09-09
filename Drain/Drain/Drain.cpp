@@ -31,11 +31,13 @@ int main() {
 	Drip::render();
 	*/
 	// RainGenerator shit
-	RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
+	RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
+	Swatch::colorFgToBgSprites(firstRain.sprites, Time("00:05:580").ms, Time("00:51:716").ms);
 	
 	//Walker shit I guess
 	if(1) {
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
+		Swatch::colorFgToBgSprites(gen.sprites, Time("01:03:319").ms, Time("01:30:489").ms);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
 		std::vector<SpriteCollection> coll_raindrops;
 		for(auto drop: raindrops) {
@@ -46,8 +48,16 @@ int main() {
 	}
 
 	// BubbleGenerator shit
-	BubbleGenerator::BubbleGenerator();
-	BubbleGenerator::BubbleGenerator(true, false);
+#if 1
+	BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
+	Swatch::colorFgToBgSprites(bubGen.sprites, Time("01:58:790").ms, Time("02:33:890").ms);
+	std::vector<Sprite *> bubbles = bubGen.GetSplatBubbles();
+
+	// mouth bubble tests
+	Vector2 pos = { 50, 50 };
+	BubbleGenerator::BubbleGenerator(true, pos, Time("02:10:790"));
+	BubbleGenerator::BubbleGenerator(true, pos, Time("01:10:790"));
+#endif
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
