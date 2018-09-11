@@ -19,8 +19,7 @@ public:
 	//sprites
 	std::vector<Sprite *> sprites;
 
-	//location of each sprite relative to the first sprite
-	//location[0] should always be (0, 0)
+	//location of each sprite relative to position
 	std::vector<Vector2> location;
 
 	//coordinate of the first sprite

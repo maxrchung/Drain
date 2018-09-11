@@ -81,7 +81,6 @@ void SpriteCollection::Rotate(int startTime, int endTime, float startRotate, flo
 void SpriteCollection::Scale(int startTime, int endTime, float startScale, float endScale, Easing easing, int precision) {
 	for (auto& sprite : sprites) {
 		sprite->Scale(startTime, endTime, startScale, endScale, easing, precision);
-
 	}
 
 	for (int i = 0; i < size; ++i) {
