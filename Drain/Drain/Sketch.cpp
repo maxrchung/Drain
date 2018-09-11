@@ -129,47 +129,46 @@ s createS(double pos, double secondDeriv) {
 
 int Sketch::dynamicResolution(Bezier& b) {
 	points.push_back(b.findPosition(0));
-	points.push_back(b.findPosition(0.25 + (rand() % 20 / 100.0f)));
-	points.push_back(b.findPosition(0.55 + (rand() % 20 / 100.0f)));
+	points.push_back(b.findPosition(RandomRange::calculate(30, 70, 100)));
 	points.push_back(b.findPosition(1.0f));
 	return 1;
-	int numPoints = b.length / this->resolution; // precheck if bezier is "short"
-	if (numPoints < 2) // nothing to be drawn
-		return 0;
-	// find average 2nd derivative along bezier to determine "resolution"
-	auto derivs = std::vector<double>();
-	const auto step = 1 / static_cast<float>(numPoints);
-	for (double i = 0.001; i < 1; i += step) {
-		auto tmp = b.find2ndDerivative(i);
-		derivs.push_back(std::abs(tmp.x) + std::abs(tmp.y));
-	}
-	auto resolution = std::accumulate(derivs.begin(), derivs.end(), 0) / numPoints; // average of 2nd derivs
-	resolution /= this->resolution; // scale the generated resolution with resolution arg
-	auto ans = 1;
-	auto steps = std::vector<s>();
-	steps.push_back(createS(0.001, derivs[0]));
-	for (double i = 0.001;;) {
-		auto tmp = b.find2ndDerivative(i);
-		auto dist = resolution / (std::abs(tmp.x) + std::abs(tmp.y) + 1);
-		// if points are too close together, don't add it
-		if (dist < 0.001) {
-			i += dist;
-			break;
-		}
-		i += dist;
-		if (i > 1.0 - 0.001)
-			break;
-		steps.push_back(createS(i, std::abs(tmp.x) + std::abs(tmp.y)));
-	}
-	steps.push_back(createS(0.999, derivs[derivs.size() - 1]));
-	if (numPoints < steps.size()) { // if constRes results in fewer points, use constRes
-		return constResolution(b);
-	}
-	for (auto& step : steps) {
-		points.push_back(b.findPosition(step.pos));
-		ans++;
-	}
-	return ans + 1;
+	//int numPoints = b.length / this->resolution; // precheck if bezier is "short"
+	//if (numPoints < 2) // nothing to be drawn
+	//	return 0;
+	//// find average 2nd derivative along bezier to determine "resolution"
+	//auto derivs = std::vector<double>();
+	//const auto step = 1 / static_cast<float>(numPoints);
+	//for (double i = 0.001; i < 1; i += step) {
+	//	auto tmp = b.find2ndDerivative(i);
+	//	derivs.push_back(std::abs(tmp.x) + std::abs(tmp.y));
+	//}
+	//auto resolution = std::accumulate(derivs.begin(), derivs.end(), 0) / numPoints; // average of 2nd derivs
+	//resolution /= this->resolution; // scale the generated resolution with resolution arg
+	//auto ans = 1;
+	//auto steps = std::vector<s>();
+	//steps.push_back(createS(0.001, derivs[0]));
+	//for (double i = 0.001;;) {
+	//	auto tmp = b.find2ndDerivative(i);
+	//	auto dist = resolution / (std::abs(tmp.x) + std::abs(tmp.y) + 1);
+	//	// if points are too close together, don't add it
+	//	if (dist < 0.001) {
+	//		i += dist;
+	//		break;
+	//	}
+	//	i += dist;
+	//	if (i > 1.0 - 0.001)
+	//		break;
+	//	steps.push_back(createS(i, std::abs(tmp.x) + std::abs(tmp.y)));
+	//}
+	//steps.push_back(createS(0.999, derivs[derivs.size() - 1]));
+	//if (numPoints < steps.size()) { // if constRes results in fewer points, use constRes
+	//	return constResolution(b);
+	//}
+	//for (auto& step : steps) {
+	//	points.push_back(b.findPosition(step.pos));
+	//	ans++;
+	//}
+	//return ans + 1;
 }
 
 int Sketch::make() {
