@@ -4,6 +4,7 @@
 #include "Path.hpp"
 #include "RandomRange.hpp"
 #include "Storyboard.hpp"
+#include "Swatch.hpp"
 #include "Time.hpp"
 #include "Timing.hpp"
 
@@ -28,6 +29,7 @@ private:
 	void SplatterPos(Sprite* sprite, std::vector<float> moveTimes);
 	void TrackSplatBubbles(Sprite* sprite);
 	void TrackAllBubbles(Sprite* sprite);
+	void ColorBubbles(Sprite* sprite, float startTime, float endTime);
 
 	Time startTime = Time("01:58:790");
 	Time endTime = Time("02:33:890");

@@ -2,6 +2,7 @@
 #include <vector>
 #include "RandomRange.hpp"
 #include "Sprite.hpp"
+#include "Swatch.hpp"
 #include "Time.hpp"
 #include "Timing.hpp"
 
@@ -41,6 +42,8 @@ public:
 	std::vector<Sprite*> sprites;
 
 private:
+	void ColorRain(Sprite * sprite, float startTime, float endTime);
+
 	int rainCount = 50;
 	const int dropCount;
 	const Time startTime;
