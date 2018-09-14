@@ -1,3 +1,4 @@
+#include "Bubble.hpp"
 #include "BubbleGenerator.hpp"
 #include "Math.hpp"
 #include "Path.hpp"
@@ -35,7 +36,7 @@ int main() {
 	Swatch::colorFgToBgSprites(firstRain.sprites, Time("00:05:580").ms, Time("00:51:716").ms);
 	
 	//Walker shit I guess
-	if(1) {
+	if(0) {
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		Swatch::colorFgToBgSprites(gen.sprites, Time("01:03:319").ms, Time("01:30:489").ms);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
@@ -47,8 +48,19 @@ int main() {
 		walk_boi.walk(1000, Time("01:30:489"), Time("01:57:659"));
 	}
 
+	if(1) {
+		Bubble bub = Bubble();
+		int start_time = Time("01:30:489").ms;
+		int end_time = Time("01:57:659").ms;
+
+		Vector2 start_pos = {0, 0};
+		Vector2 end_pos = {100, 100};
+		bub.Move(start_time, end_time, start_pos, end_pos);
+
+	}
+
 	// BubbleGenerator shit
-#if 1
+#if 0
 	BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 	Swatch::colorFgToBgSprites(bubGen.sprites, Time("01:58:790").ms, Time("02:33:890").ms);
 	std::vector<Sprite *> bubbles = bubGen.GetSplatBubbles();

@@ -3,8 +3,8 @@
 
 #include "SpriteCollection.hpp"
 
-SpriteCollection::SpriteCollection(std::vector<Sprite *> sprites, std::vector<Vector2> location)
-	: sprites(sprites), position{ sprites[0]->position }, scale{ sprites[0]->scale}, location{location} {
+SpriteCollection::SpriteCollection(std::vector<Sprite *> sprites, std::vector<Vector2> location, std::vector<float> scale)
+	: sprites(sprites), scale_total{sprites[0]->scale}, position{ sprites[0]->position }, location{location}, scale{scale} {
 		size = sprites.size();
 }
 
@@ -79,21 +79,18 @@ void SpriteCollection::Rotate(int startTime, int endTime, float startRotate, flo
 
 
 void SpriteCollection::Scale(int startTime, int endTime, float startScale, float endScale, Easing easing, int precision) {
-	for (auto& sprite : sprites) {
-		sprite->Scale(startTime, endTime, startScale, endScale, easing, precision);
-	}
-
 	for (int i = 0; i < size; ++i) {
+		sprites[i]->Scale(startTime, endTime, startScale * this->scale[i], endScale * this->scale[i], easing, precision);
 		sprites[i]->Move(startTime, endTime, this->location[i] * startScale + position, this->location[i] * endScale + position);
 	}
 }
 
 
 void SpriteCollection::ScaleVector(int startTime, int endTime, float startX, float startY, float endX, float endY, Easing easing, int precision) {
-	for (auto& sprite : sprites) {
-		sprite->ScaleVector(startTime, endTime, startX, startY, endX, endY, easing, precision);
-	}
+
 	for (int i = 0; i < size; ++i) {
+		sprites[i]->ScaleVector(startTime, endTime, startX * this->scale[i], startY * this->scale[i], endX * this->scale[i], endY * this->scale[i], easing, precision);
+
 		Vector2 startPos(location[i].x * startX + position.x, location[i].y * startY + position.y);
 		Vector2 endPos(location[i].x * endX + position.x, location[i].y * endY + position.y);
 
@@ -107,11 +104,9 @@ void SpriteCollection::ScaleVector(int startTime, int endTime, Vector2 startScal
 	float endX = endScale.x;
 	float startY = startScale.y;
 	float endY = endScale.y;
-	
-	for (auto& sprite : sprites) {
-		sprite->ScaleVector(startTime, endTime, startX, startY, endX, endY, easing, precision);
-	}
+
 	for (int i = 0; i < size; ++i) {
+		sprites[i]->ScaleVector(startTime, endTime, startX * this->scale[i], startY * this->scale[i], endX * this->scale[i], endY * this->scale[i], easing, precision);
 		Vector2 startPos = startScale * location[i] + position;
 		Vector2 endPos = endScale * location[i] + position;
 
@@ -121,12 +116,9 @@ void SpriteCollection::ScaleVector(int startTime, int endTime, Vector2 startScal
 
 //if there is a move and a scale, and if the move and scale both start and end at the same time
 void SpriteCollection::MoveAndScale(int startTime, int endTime, Vector2 startPos, Vector2 endPos, float startScale, float endScale, Easing easing, int precision) {
-	for(auto &sprite : sprites) {
-		sprite->Scale(startTime, endTime, startScale, endScale, easing, precision);
-	}
+	for(int i = 0; i < size; ++i) {
+		sprites[i]->Scale(startTime, endTime, startScale * this->scale[i], endScale * this->scale[i], easing, precision);
 
-
-	for (int i = 0; i < size; ++i) {
 		Vector2 start = this->location[i] * startScale + startPos;
 		Vector2 end = this->location[i] * endScale + endPos;
 
