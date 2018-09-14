@@ -2,7 +2,7 @@
 
 BubbleGenerator::BubbleGenerator(bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
 	: isMouth{ isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
-	// TODO: remember 2 do color
+	// TODO: bbbles pop individually, one by one? one more bub gen seciotn 
 
 	if (isMouth) { 
 		SwitchToMouthBubble();
@@ -43,6 +43,10 @@ void BubbleGenerator::DrawBubble() {
 		ScaleBubbleSize(sprite, moveTimes);
 
 		TrackAllBubbles(sprite);
+
+		if (isMouth) { // default bubbles are colored by spriteCollection
+			ColorBubbles(sprite, moveTimes[0], moveTimes[1]);
+		}
 
 		if (willSplatter && (splatterTime.ms >= moveTimes[0] && splatterTime.ms <= moveTimes[1])) { // Checks whether bubble is visible during splatterTime
 			SplatterPos(sprite, moveTimes);
@@ -252,6 +256,10 @@ void BubbleGenerator::SplatterPos(Sprite* sprite, std::vector<float> moveTimes) 
 	TrackSplatBubbles(sprite); // Save the sprite to a sprite vector which is used by walker boi
 
 	splatEndY = splatterPos.y;
+}
+
+void BubbleGenerator::ColorBubbles(Sprite* sprite, float startTime, float endTime) {
+	Swatch::colorFgToFgSprites({ sprite }, startTime, endTime);
 }
 
 void BubbleGenerator::TrackSplatBubbles(Sprite* sprite) {

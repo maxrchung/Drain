@@ -64,6 +64,8 @@ void RainGenerator::DrawRain() {
 		float rainSize = ScaleRainSize(sprite, actualDropTotalTime, minDropTime, actualDropStart);
 		TrackAllRainDrops(sprite);
 
+		ColorRain(sprite, actualDropStart, actualDropEnd);
+
 		if (willFreeze && (freezeTime.ms >= actualDropStart && freezeTime.ms <= actualDropEnd)) { // Tracks raindrop sprite from vector if drop is visible on the screen during freezeTime
 			TrackRainDrop(sprite, actualDropStart, actualDropEnd, rainSize, spriteEndPosX, spriteEndPosY);
 			Vector2 freezePos = FreezePos();
@@ -248,4 +250,8 @@ void RainGenerator::VelocityController() {
 	// Increments time after row of rain is finished falling
 	dropStartTime += dropTotalTime;
 	dropEndTime = dropStartTime + dropTotalTime;
+}
+
+void RainGenerator::ColorRain(Sprite * sprite, float startTime, float endTime) {
+	Swatch::colorFgToFgSprites({ sprite }, startTime, endTime);
 }
