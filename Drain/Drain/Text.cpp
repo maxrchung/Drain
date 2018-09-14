@@ -280,7 +280,7 @@ void Text::render() {
 		  }, Time("03:23:697").ms, Time("03:28:225").ms);
 	place({
 		"with exhaustion",
-		"we barely met the night's end",
+		"we barely met the night's end",
 		"to catch the day's start",
 		  }, Time("03:28:225").ms, Time("03:32:753").ms);
 	place({

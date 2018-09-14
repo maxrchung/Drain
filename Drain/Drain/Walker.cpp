@@ -1,4 +1,5 @@
 #include "Storyboard.hpp"
+#include "Swatch.hpp"
 #include "Path.hpp"
 
 #include "Walker.hpp"
@@ -47,7 +48,7 @@ void Walker::moveCurrent(float distance, Time startTime, Time endTime) {
 				int_end_time = endTime.ms;
 
 			drop.MoveAndScale(int_start_time, int_end_time, start_coord, end_coord, start_scale, end_scale);
-			
+			Swatch::colorFgToFgSprites(drop.sprites , int_start_time, int_end_time);
 		}
 
 	}
