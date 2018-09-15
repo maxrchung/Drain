@@ -9,31 +9,31 @@ Bubble::Bubble()
 }
 
 
-void Bubble::Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing = Easing::Linear) {
+void Bubble::Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing) {
 	this->sprites.Move(startTime, endTime, startPos, endPos, easing);
 	return;
 }
 
 
-void Bubble::MoveX(int startTime, int endTime, float startX, float endX, Easing easing = Easing::Linear) {
+void Bubble::MoveX(int startTime, int endTime, float startX, float endX, Easing easing) {
 	this->sprites.MoveX(startTime, endTime, startX, endX, easing);
 	return;
 }
 
 
-void Bubble::MoveY(int startTime, int endTime, float startY, float endY, Easing easing = Easing::Linear) {
+void Bubble::MoveY(int startTime, int endTime, float startY, float endY, Easing easing) {
 	this->sprites.MoveX(startTime, endTime, startY, endY, easing);
 	return;
 }
 
 
-void Bubble::Scale(int startTime, int endTime, float startScale, float endScale, Easing easing = Easing::Linear, int precision = 3) {
+void Bubble::Scale(int startTime, int endTime, float startScale, float endScale, Easing easing, int precision) {
 	this->sprites.Scale(startTime, endTime, startScale, endScale, easing, precision);
 	return;
 }
 
 
-void Bubble::MoveAndScale(int startTime, int endTime, Vector2 startPos,Vector2 endPos,float startScale, float endScale, Easing easing = Easing::Linear, int precision = 3) {
+void Bubble::MoveAndScale(int startTime, int endTime, Vector2 startPos,Vector2 endPos,float startScale, float endScale, Easing easing, int precision) {
 	this->sprites.MoveAndScale(startTime, endTime, startPos, endPos, startScale, endScale, easing, precision);
 	return;
 }
