@@ -40,7 +40,7 @@ void Walker::moveCurrent(float distance, Time startTime, Time endTime) {
 
 			float ratio_traveled = (end_coord - start_coord).Magnitude() / (end_coord.Magnitude());
 
-			float start_scale = drop.scale;
+			float start_scale = drop.scale_total;
 			float end_scale = start_scale * (1 + ratio_traveled);
 		
 			int int_end_time = int_start_time + w_rand(1000, total_time);

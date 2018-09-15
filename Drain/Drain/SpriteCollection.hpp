@@ -9,7 +9,7 @@
 
 class SpriteCollection {
 public:
-	SpriteCollection(std::vector<Sprite *> sprites, std::vector<Vector2> location);
+	SpriteCollection(std::vector<Sprite *> sprites, std::vector<Vector2> location, std::vector<float> scale);
 	SpriteCollection(Sprite *sprites);
 	~SpriteCollection();
 
@@ -22,10 +22,13 @@ public:
 	//location of each sprite relative to position
 	std::vector<Vector2> location;
 
+	//scale of each sprite
+	std::vector<float> scale;
+
 	//coordinate of the first sprite
 	//will act as the position of the collection
 	Vector2& position;
-	float& scale;
+	float& scale_total;
 
 	void Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing = Easing::Linear);
 	void MoveX(int startTime, int endTime, float startX, float endX, Easing easing = Easing::Linear);

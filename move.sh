@@ -1,6 +1,10 @@
 #!/bin/bash
 
-smbclient //192.168.0.100/drain -U rrysato@gmail.com -c 'put "ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb"'
+echo 'Moving...'
+
+#smbclient //192.168.86.29/drain -U rrysato@gmail.com -c 'put "ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb"'
+
+smbclient //68.5.236.116/drain -U rrysato@gmail.com -c 'put "ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb"'
 
 #mount /dev/sde1
 #cp 'ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb' ~/Mount/e/
