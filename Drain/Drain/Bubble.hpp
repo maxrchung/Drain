@@ -8,8 +8,6 @@ class Bubble {
 public:
 	Bubble();
 
-	Vector2& position;
-	
 	void Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing = Easing::Linear);
 	void MoveX(int startTime, int endTime, float startX, float endX, Easing easing = Easing::Linear);
 	void MoveY(int startTime, int endTime, float startY, float endY, Easing easing = Easing::Linear);
@@ -21,8 +19,11 @@ public:
 	void colorBgToFgSprites(const int startTime, const int endTime);
 	void colorFgToBgSprites(const int startTime, const int endTime);
 	void colorFgToFgSprites(const int startTime, const int endTime);
-private:
+
 	SpriteCollection sprites;
+
+private:
+
 
 	int highlight_count;
 	SpriteCollection create_sprites();
