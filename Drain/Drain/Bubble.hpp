@@ -19,8 +19,11 @@ public:
 	void colorBgToFgSprites(const int startTime, const int endTime);
 	void colorFgToBgSprites(const int startTime, const int endTime);
 	void colorFgToFgSprites(const int startTime, const int endTime);
-private:
+
 	SpriteCollection sprites;
+
+private:
+
 
 	int highlight_count;
 	SpriteCollection create_sprites();

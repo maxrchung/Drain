@@ -118,7 +118,11 @@ std::vector<Character> Text::createCharacters(const std::string& lyric) {
 	return characters;
 }
 void Text::render() {
+	// Uncomment for banner use only
+	//draw("drain", Vector2::Zero, Time("00:03:000").ms, Time("00:03:000").ms + Timing::whole * 4);
+
 	std::cout << "Rendering Text..." << std::endl;
+
 	// Lyric 1
 	draw("suffocating", Vector2::Zero, Time("00:05:584").ms, Time("00:06:999").ms);
 	draw("puff of smoke", Vector2::Zero, Time("00:08:131").ms, Time("00:09:475").ms);

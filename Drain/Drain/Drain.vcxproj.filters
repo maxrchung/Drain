@@ -57,9 +57,6 @@
     <ClCompile Include="Path.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
-    <ClCompile Include="Raindrop.cpp">
-      <Filter>Source Files\Utility</Filter>
-    </ClCompile>
     <ClCompile Include="Math.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
@@ -120,11 +117,11 @@
     <ClCompile Include="BubbleGenerator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bubble.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Raindrop.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Character.hpp">
       <Filter>Header Files\Text</Filter>
     </ClInclude>
