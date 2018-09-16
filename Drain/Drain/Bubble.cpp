@@ -34,7 +34,7 @@ void Bubble::Scale(int startTime, int endTime, float startScale, float endScale,
 }
 
 
-void Bubble::MoveAndScale(int startTime, int endTime, Vector2 startPos,Vector2 endPos,float startScale, float endScale, Easing easing = Easing::Linear, int precision = 3) {
+void Bubble::MoveAndScale(int startTime, int endTime, Vector2 startPos,Vector2 endPos,float startScale, float endScale, Easing easing, int precision) {
 	this->sprites.MoveAndScale(startTime, endTime, startPos, endPos, startScale, endScale, easing, precision);
 	return;
 }
