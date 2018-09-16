@@ -13,9 +13,9 @@
 class BubbleGenerator {
 public:
 	BubbleGenerator(bool isMouth = false, Vector2 mouthBubblePos = { 0, 0 }, Time mouthBubbleStartTime = Time("00:00:000"), bool willSplatter = true);
-	std::vector<Sprite*> GetSplatBubbles();
+	std::vector<Bubble*> GetSplatBubbles();
 
-	std::vector<Bubble *> allSprites;
+	std::vector<Bubble*> allSprites;
 
 private:
 	void SwitchToMouthBubble();
@@ -31,7 +31,7 @@ private:
 	void ScaleBubbleSize(Sprite* sprite, std::vector<float> moveTimes);
 	void VelocityController();
 	void SplatterPos(Bubble* sprites, std::vector<float> moveTimes);
-	void TrackSplatBubbles(Sprite* sprite);
+	void TrackSplatBubbles(Bubble* sprites);
 	void TrackAllBubbles(Bubble* sprites);
 	void ColorBubbles(Sprite* sprite, float startTime, float endTime);
 	Bubble* CreateBubbleSprites();
@@ -60,7 +60,7 @@ private:
 	float minSize = 0.2f;
 	const float rainLength = 102; // because a.png is 102x102
 
-	std::vector<Sprite*> splattingBubbles;
+	std::vector<Bubble*> splattingBubbles;
 
 	/* Mouth timing and shit are placeholders, should be edited with the actual values later*/
 	bool isMouth;
