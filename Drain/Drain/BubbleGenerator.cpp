@@ -138,10 +138,7 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 	float startSideMove = startMove + 1; // +1 to avoid conflict with sprite->Move
 	float endSideMove = startSideMove + oneDirTime;
 
-	int leftOrRight = RandomRange::calculate(0, 1); // 0 = left 1 = right
-	if (leftOrRight == 0) { // didnt know how to randomize btwn -1 and 1 so ye
-		leftOrRight = -1;
-	}
+	int leftOrRight = RandomRange::calculate(0, 1) * 2 - 1; // randomly chooses either 1 or -1; -1 = left 1 = right
 
 	if (leftOrRight == -1) { // So bubbles won't always start moving to the same side
 		sprites->MoveX(startSideMove, endSideMove, sprites->sprites.position.x, sprites->sprites.position.x - xSideDelta, Easing::SineOut);
@@ -154,11 +151,8 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 	endSideMove += oneDirTime;
 
 	for (int i = 0; i < oneDirMoveTimes - 1; i++) {
-		if ((i % 2) == 0) { // Change direction every other iteration
-			leftOrRight *= -1;
-		}
-
 		if ((i % 2) == 0) { // Bubble moving inwards
+			leftOrRight *= -1; // Change direction every other iteration
 			sprites->MoveX(startSideMove, endSideMove, sprites->sprites.position.x, sprites->sprites.position.x + (xSideDelta * leftOrRight), Easing::SineIn);
 		}
 		else if ((i % 2) == 1) { // Bubble moving outwards
@@ -197,10 +191,7 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes, b
 	float startSideMove = startMove + 1; // +1 to avoid conflict with sprite->Move
 	float endSideMove = startSideMove + oneDirTime;
 
-	int leftOrRight = RandomRange::calculate(0, 1); // 0 = left 1 = right
-	if (leftOrRight == 0) { // didnt know how to randomize btwn -1 and 1 so ye
-		leftOrRight = -1;
-	}
+	int leftOrRight = RandomRange::calculate(0, 1) * 2 - 1; // randomly chooses either 1 or -1; -1 = left 1 = right
 
 	if (leftOrRight == -1) { // So bubbles won't always start moving to the same side
 		sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x - xSideDelta, Easing::SineOut);
@@ -213,12 +204,9 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes, b
 	endSideMove += oneDirTime;
 
 	for (int i = 0; i < oneDirMoveTimes - 1; i++) {
-		if ((i % 2) == 0) { // Change direction every other iteration
-			leftOrRight *= -1;
-		}
-
 		if ((i % 2) == 0) { // Bubble moving inwards
 			sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + (xSideDelta * leftOrRight), Easing::SineIn);
+			leftOrRight *= -1; // Change direction every other iteration
 		}
 		else if ((i % 2) == 1) { // Bubble moving outwards
 			sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + (xSideDelta * leftOrRight), Easing::SineOut);
