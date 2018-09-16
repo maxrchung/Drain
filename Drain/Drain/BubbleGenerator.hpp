@@ -1,8 +1,10 @@
 #pragma once
 #include <vector>
+#include "Bubble.hpp"
 #include "Easing.hpp"
 #include "Path.hpp"
 #include "RandomRange.hpp"
+#include "SpriteCollection.hpp"
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
 #include "Time.hpp"
@@ -13,23 +15,27 @@ public:
 	BubbleGenerator(bool isMouth = false, Vector2 mouthBubblePos = { 0, 0 }, Time mouthBubbleStartTime = Time("00:00:000"), bool willSplatter = true);
 	std::vector<Sprite*> GetSplatBubbles();
 
-	std::vector<Sprite *> sprites;
+	std::vector<Bubble *> allSprites;
 
 private:
 	void SwitchToMouthBubble();
 	void BubbleController();
 	void DrawBubble();
+	void MoveBubble(Bubble* sprites, std::vector<float> moveTimes, bool isSplat = false);
 	void MoveBubble(Sprite* sprite, std::vector<float> moveTimes, bool isSplat = false);
 	Vector2 GetBubbleStartPos();
 	std::vector<float> GetBubbleTiming();
 	float GetRandomSideMovement();
 	float RandomBubbleSpeed();
+	void ScaleBubbleSize(Bubble* sprites, std::vector<float> moveTimes);
 	void ScaleBubbleSize(Sprite* sprite, std::vector<float> moveTimes);
 	void VelocityController();
-	void SplatterPos(Sprite* sprite, std::vector<float> moveTimes);
+	void SplatterPos(Bubble* sprites, std::vector<float> moveTimes);
 	void TrackSplatBubbles(Sprite* sprite);
-	void TrackAllBubbles(Sprite* sprite);
+	void TrackAllBubbles(Bubble* sprites);
 	void ColorBubbles(Sprite* sprite, float startTime, float endTime);
+	Bubble* CreateBubbleSprites();
+	Sprite* CreateBubbleSprites(Vector2 startPos);
 
 	Time startTime = Time("01:58:790");
 	Time endTime = Time("02:33:890");

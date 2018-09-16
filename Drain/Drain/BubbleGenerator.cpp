@@ -39,23 +39,43 @@ void BubbleGenerator::DrawBubble() {
 	for (int i = 0; i < bubbleCount; ++i) {
 		Vector2 startPos = GetBubbleStartPos();
 		std::vector<float> moveTimes = GetBubbleTiming();
-		Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(startPos.x, startPos.y));
-		ScaleBubbleSize(sprite, moveTimes);
+		// Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(startPos.x, startPos.y));
 
-		TrackAllBubbles(sprite);
+		if (isMouth) {
+			Sprite* sprites = CreateBubbleSprites(startPos);
+			ScaleBubbleSize(sprites, moveTimes);
+		}
+		else {
+			Bubble* sprites = CreateBubbleSprites();
+			ScaleBubbleSize(sprites, moveTimes);
+		}
+
+		TrackAllBubbles(sprites);
 
 		if (isMouth) { // default bubbles are colored by spriteCollection
-			ColorBubbles(sprite, moveTimes[0], moveTimes[1]);
+			ColorBubbles(sprites, moveTimes[0], moveTimes[1]);
 		}
 
 		if (willSplatter && (splatterTime.ms >= moveTimes[0] && splatterTime.ms <= moveTimes[1])) { // Checks whether bubble is visible during splatterTime
-			SplatterPos(sprite, moveTimes);
-			MoveBubble(sprite, moveTimes, true);
+			SplatterPos(sprites, moveTimes);
+			MoveBubble(sprites, moveTimes, true);
 		}
 		else {
-			MoveBubble(sprite, moveTimes);
+			MoveBubble(sprites, moveTimes);
 		}
 	}
+}
+
+// Create Bubble object which will contain the layered bubble sprites
+Bubble* BubbleGenerator::CreateBubbleSprites() {
+	Bubble bubbleObj = Bubble();
+	return &bubbleObj;
+}
+
+// mouth bubble version, only single sprite
+Sprite* BubbleGenerator::CreateBubbleSprites(Vector2 startPos) {
+	Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(startPos.x, startPos.y));
+	return sprite;
 }
 
 // Returns position of where bubble should be spawned
@@ -93,7 +113,66 @@ std::vector<float> BubbleGenerator::GetBubbleTiming() {
 	return {adjustedStartTime, adjustedEndTime};
 }
 
-// Handles all bubble movement from bottom of screen to top including side movement
+// Handles all bubble movement from bottom of screen to top including side movement (default bubble ver.)
+void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, bool isSplat) {
+	float endMove;
+	if (!isSplat) {
+		endY = screenTop + ((rainLength / 2) * maxSize);
+		endMove = moveTimes[1];
+	}
+	else {
+		endY = splatEndY;
+		endMove = splatterTime.ms;
+	}
+
+	float startMove = moveTimes[0];
+
+	sprites->Move(startMove, endMove, sprites->position, Vector2(sprites->position.x, endY)); // Handles only vertical movement
+
+	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
+	float oneDirMoveLength = sideMoveLength / 2;
+	float xSideDelta = GetRandomSideMovement();
+
+	float sideMoveTotalTime = (endMove - startMove) / sideMoveTimes;
+	float oneDirTime = sideMoveTotalTime / 2; // Time for bubble to move in one direction, either left or right
+	float oneDirMoveTimes = sideMoveTimes * 2;
+
+	float startSideMove = startMove + 1; // +1 to avoid conflict with sprite->Move
+	float endSideMove = startSideMove + oneDirTime;
+
+	int leftOrRight = RandomRange::calculate(0, 1); // 0 = left 1 = right
+	if (leftOrRight == 0) { // didnt know how to randomize btwn -1 and 1 so ye
+		leftOrRight = -1;
+	}
+
+	if (leftOrRight == -1) { // So bubbles won't always start moving to the same side
+		sprites->MoveX(startSideMove, endSideMove, sprites->position.x, sprites->position.x - xSideDelta, Easing::SineOut);
+	}
+	else if (leftOrRight == 1) {
+		sprites->MoveX(startSideMove, endSideMove, sprites->position.x, sprites->position.x + xSideDelta, Easing::SineOut);
+	}
+
+	startSideMove += oneDirTime;
+	endSideMove += oneDirTime;
+
+	for (int i = 0; i < oneDirMoveTimes - 1; i++) {
+		if ((i % 2) == 0) { // Change direction every other iteration
+			leftOrRight *= -1;
+		}
+
+		if ((i % 2) == 0) { // Bubble moving inwards
+			sprites->MoveX(startSideMove, endSideMove, sprites->position.x, sprites->position.x + (xSideDelta * leftOrRight), Easing::SineIn);
+		}
+		else if ((i % 2) == 1) { // Bubble moving outwards
+			sprites->MoveX(startSideMove, endSideMove, sprites->position.x, sprites->position.x + (xSideDelta * leftOrRight), Easing::SineOut);
+		}
+
+		startSideMove += oneDirTime;
+		endSideMove += oneDirTime;
+	}
+}
+
+// Handles all bubble movement from bottom of screen to top including side movement (mouth bubble ver.)
 void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes, bool isSplat) {
 	float endMove;
 	if (!isSplat) {
@@ -196,7 +275,31 @@ float BubbleGenerator::RandomBubbleSpeed() {
 	return adjustedTotalTime;
 }
 
-// Scales bubbles to appropriate size based on speed
+// Scales bubbles to appropriate size based on speed (default bubble ver.)
+void BubbleGenerator::ScaleBubbleSize(Bubble* sprites, std::vector<float> moveTimes) {
+	float adjustedSize;
+
+	float adjustedTotalTime = moveTimes[1] - moveTimes[0];
+	float veloRatio = adjustedTotalTime / moveTotalTime;
+	float bubbleScale = maxSize - veloRatio;
+
+	if (bubbleScale < 0) { // Ensures adjustedSize isn't a negative number; negative sizes would be fked
+		float remainder = -bubbleScale;
+		float minSizeScaler = maxSize - remainder;
+		adjustedSize = minSize * minSizeScaler;
+	}
+	else {
+		adjustedSize = bubbleScale * bubbleScale; // Multiplies scale by itself so image scales off total area instead of side length
+
+		if (adjustedSize < minSize) { // So that bubbles that are too small don't exist
+			adjustedSize = minSize;
+		}
+	}
+
+	sprites->Scale(moveTimes[0], moveTimes[0], adjustedSize, adjustedSize);
+}
+
+// Scales bubbles to appropriate size based on speed (mouth bubble ver.)
 void BubbleGenerator::ScaleBubbleSize(Sprite* sprite, std::vector<float> moveTimes) {
 	float adjustedSize;
 
@@ -233,10 +336,10 @@ void BubbleGenerator::VelocityController() {
 	moveEndTime += moveTotalTime;
 }
 
-// Gets the appropriate x and y positions for a bubble that will splatter
-void BubbleGenerator::SplatterPos(Sprite* sprite, std::vector<float> moveTimes) {
+// Gets the appropriate x and y positions for a bubble that will splatter (default bubble ver.)
+void BubbleGenerator::SplatterPos(Bubble* sprites, std::vector<float> moveTimes) {
 	Vector2 splatterPos;
-	float startX = sprite->position.x;
+	float startX = sprites->position.x;
 	float endX = startX;
 	float startY = screenBottom - ((rainLength / 2) * maxSize);
 	float endY = screenTop + ((rainLength / 2) * maxSize);
@@ -253,7 +356,7 @@ void BubbleGenerator::SplatterPos(Sprite* sprite, std::vector<float> moveTimes) 
 	splatterPos.x = startX + splatterDiffX; // Currently useless, keeping it in case I need it later
 	splatterPos.y = startY + splatterDiffY;
 
-	TrackSplatBubbles(sprite); // Save the sprite to a sprite vector which is used by walker boi
+	TrackSplatBubbles(sprites); // Save the sprite to a sprite vector, will be used by splat boi
 
 	splatEndY = splatterPos.y;
 }
@@ -266,8 +369,8 @@ void BubbleGenerator::TrackSplatBubbles(Sprite* sprite) {
 	splattingBubbles.push_back(sprite);
 }
 
-void BubbleGenerator::TrackAllBubbles(Sprite* sprite) {
-	sprites.push_back(sprite);
+void BubbleGenerator::TrackAllBubbles(Bubble* sprites) {
+	allSprites.push_back(sprites);
 }
 
 std::vector<Sprite*> BubbleGenerator::GetSplatBubbles() {
