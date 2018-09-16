@@ -6,7 +6,7 @@
 #include <vector>
 
 Bubble::Bubble()
-	: sprites(create_sprites()) {
+	: sprites(create_sprites()), position{sprites.position} {
 }
 
 

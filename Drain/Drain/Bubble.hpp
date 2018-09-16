@@ -8,6 +8,8 @@ class Bubble {
 public:
 	Bubble();
 
+	Vector2& position;
+	
 	void Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing = Easing::Linear);
 	void MoveX(int startTime, int endTime, float startX, float endX, Easing easing = Easing::Linear);
 	void MoveY(int startTime, int endTime, float startY, float endY, Easing easing = Easing::Linear);
