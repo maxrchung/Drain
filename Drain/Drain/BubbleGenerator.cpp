@@ -282,6 +282,7 @@ void BubbleGenerator::ScaleBubbleSize(Bubble* sprites, std::vector<float> moveTi
 		}
 	}
 
+	//std::cout << sprites->sprites.size << "\n";
 	sprites->Scale(moveTimes[0], moveTimes[0], adjustedSize, adjustedSize);
 }
 

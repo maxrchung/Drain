@@ -6,7 +6,7 @@
 #include <vector>
 
 Bubble::Bubble()
-	: sprites(create_sprites()){
+	: sprites(create_sprites()) {
 }
 
 
@@ -59,6 +59,7 @@ void Bubble::colorFgToBgSprites(const int startTime, const int endTime) {
 SpriteCollection Bubble::create_sprites() {
 	this->min_highlight = 2;
 	this->max_highlight = 5;
+	this->sprite_size = 100;
 	this->highlight_count = w_rand(this->min_highlight, this->max_highlight);
 
 	std::vector<Sprite *> sprite_vector;
@@ -76,12 +77,12 @@ SpriteCollection Bubble::create_sprites() {
 		offset.y = (this->sprite_size / 2) * w_rand(-1, 1);
 
 		Sprite *sprite = Storyboard::CreateSprite(getPath(Path::Circle), offset);
-		sprite_vector.push_back(sprite);
 
+		sprite_vector.push_back(sprite);
 		scale.push_back(w_rand(0.05, 0.2));
 		location.push_back(offset);
 	}
-
+	
 	return SpriteCollection(sprite_vector, location, scale);
 }
 

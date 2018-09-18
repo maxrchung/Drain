@@ -35,7 +35,7 @@ int main() {
 	RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
-	if(1) {
+	if(0) {
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
 		std::vector<SpriteCollection> coll_raindrops;
@@ -46,7 +46,7 @@ int main() {
 		walk_boi.walk(1000, Time("01:30:489"), Time("01:57:659"));
 	}
 
-	if(1) {
+	if(0) {
 		Bubble bub = Bubble();
 		int start_time = Time("01:30:489").ms;
 		int end_time = Time("01:57:659").ms;
@@ -58,7 +58,7 @@ int main() {
 	}
 
 	// BubbleGenerator shit
-	if (0) {
+	if (1) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		// mouth bubble tests
 		Vector2 pos = { 50, 50 };

@@ -30,7 +30,7 @@ private:
 
 	float w_rand(float min, float max);
 
-	int const sprite_size = 100;
+	int sprite_size = 100;
 
 	int max_highlight;
 	int min_highlight;
