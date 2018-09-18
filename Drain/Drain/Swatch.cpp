@@ -3,8 +3,8 @@
 #include <algorithm>
 const Color Swatch::white = Color(255, 255, 255);
 const Color Swatch::black = Color(0, 0, 0);
-const Color Swatch::offwhite = Color(218, 236, 236);
-const Color Swatch::water = Color(114, 187, 180);
+const Color Swatch::offwhite = Color(156, 184, 192);
+const Color Swatch::water = Color(70, 101, 110);
 const Color Swatch::blood = Color(170, 0, 0);
 const Color Swatch::eerie = Color(27, 27, 27);
 const std::vector<Color> Swatch::colors = {
