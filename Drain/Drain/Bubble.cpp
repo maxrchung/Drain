@@ -23,7 +23,7 @@ void Bubble::MoveX(int startTime, int endTime, float startX, float endX, Easing 
 
 
 void Bubble::MoveY(int startTime, int endTime, float startY, float endY, Easing easing) {
-	this->sprites.MoveX(startTime, endTime, startY, endY, easing);
+	this->sprites.MoveY(startTime, endTime, startY, endY, easing);
 	return;
 }
 
