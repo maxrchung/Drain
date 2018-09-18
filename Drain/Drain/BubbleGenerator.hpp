@@ -21,7 +21,7 @@ private:
 	void SwitchToMouthBubble();
 	void BubbleController();
 	void DrawBubble();
-	void MoveBubble(Bubble* sprites, std::vector<float> moveTimes, bool isSplat = false);
+	void MoveBubble(Bubble* sprites, std::vector<float> moveTimes, Vector2 startPos, bool isSplat = false);
 	void MoveBubble(Sprite* sprite, std::vector<float> moveTimes, bool isSplat = false);
 	Vector2 GetBubbleStartPos();
 	std::vector<float> GetBubbleTiming();

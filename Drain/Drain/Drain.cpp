@@ -58,12 +58,12 @@ int main() {
 	}
 
 	// BubbleGenerator shit
-	if (0) {
+	if (1) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		// mouth bubble tests
 		Vector2 pos = { 50, 50 };
-		BubbleGenerator::BubbleGenerator(true, pos, Time("02:10:790"));
-		BubbleGenerator::BubbleGenerator(true, pos, Time("01:10:790"));
+		//BubbleGenerator::BubbleGenerator(true, pos, Time("02:10:790"));
+		//BubbleGenerator::BubbleGenerator(true, pos, Time("01:10:790"));
 	}
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt

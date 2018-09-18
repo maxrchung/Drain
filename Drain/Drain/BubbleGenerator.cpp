@@ -2,7 +2,8 @@
 
 BubbleGenerator::BubbleGenerator(bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
 	: isMouth{ isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
-	// TODO: bbbles pop individually, one by one? one more bub gen seciotn 
+	// TODO: bbbles pop individually, one by one? one more bub gen seciotn
+	// FIX: give start pos to bubble,. splattertime error
 
 	if (isMouth) { 
 		SwitchToMouthBubble();
@@ -12,6 +13,10 @@ BubbleGenerator::BubbleGenerator(bool isMouth, Vector2 mouthBubblePos, Time mout
 		BubbleController();
 	}
 
+	//test
+	//Bubble* meme = new Bubble();
+	//meme->Move(Time("00:01:200").ms, Time("00:03:800").ms, meme->sprites.position, Vector2(meme->sprites.position.x, meme->sprites.position.y + 200));
+	//meme->MoveX(Time("00:01:000").ms, Time("00:03:600").ms, meme->sprites.position.x, meme->sprites.position.x + 200);
 }
 
 // Switches appropriate variables if instance of class is mouth bubble instead of default bubble
@@ -55,10 +60,10 @@ void BubbleGenerator::DrawBubble() {
 
 			if (willSplatter && (splatterTime.ms >= moveTimes[0] && splatterTime.ms <= moveTimes[1])) { // Checks whether bubble is visible during splatterTime
 				SplatterPos(sprites, moveTimes);
-				MoveBubble(sprites, moveTimes, true);
+				MoveBubble(sprites, moveTimes, startPos, true);
 			}
 			else {
-				MoveBubble(sprites, moveTimes);
+				MoveBubble(sprites, moveTimes, startPos);
 			}
 		}
 	}
@@ -66,8 +71,7 @@ void BubbleGenerator::DrawBubble() {
 
 // Create Bubble object which will contain the layered bubble sprites
 Bubble* BubbleGenerator::CreateBubbleSprites() {
-	Bubble bubbleObj = Bubble();
-	return &bubbleObj;
+	return new Bubble();
 }
 
 // mouth bubble version, only single sprite
@@ -112,7 +116,7 @@ std::vector<float> BubbleGenerator::GetBubbleTiming() {
 }
 
 // Handles all bubble movement from bottom of screen to top including side movement (default bubble ver.)
-void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, bool isSplat) {
+void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, Vector2 startPos, bool isSplat) {
 	float endMove;
 	if (!isSplat) {
 		endY = screenTop + ((rainLength / 2) * maxSize);
@@ -125,7 +129,7 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 
 	float startMove = moveTimes[0];
 
-	sprites->Move(startMove, endMove, sprites->sprites.position, Vector2(sprites->sprites.position.x, endY)); // Handles only vertical movement
+	sprites->Move(startMove, endMove, startPos, Vector2(startPos.x, endY)); // Handles only vertical movement
 
 	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
 	float oneDirMoveLength = sideMoveLength / 2;
@@ -141,10 +145,10 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 	int leftOrRight = RandomRange::calculate(0, 1) * 2 - 1; // randomly chooses either 1 or -1; -1 = left 1 = right
 
 	if (leftOrRight == -1) { // So bubbles won't always start moving to the same side
-		sprites->MoveX(startSideMove, endSideMove, sprites->sprites.position.x, sprites->sprites.position.x - xSideDelta, Easing::SineOut);
+		sprites->MoveX(startSideMove, endSideMove, startPos.x, startPos.x - xSideDelta, Easing::SineOut);
 	}
 	else if (leftOrRight == 1) {
-		sprites->MoveX(startSideMove, endSideMove, sprites->sprites.position.x, sprites->sprites.position.x + xSideDelta, Easing::SineOut);
+		sprites->MoveX(startSideMove, endSideMove, startPos.x, startPos.x + xSideDelta, Easing::SineOut);
 	}
 
 	startSideMove += oneDirTime;
@@ -205,8 +209,8 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes, b
 
 	for (int i = 0; i < oneDirMoveTimes - 1; i++) {
 		if ((i % 2) == 0) { // Bubble moving inwards
-			sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + (xSideDelta * leftOrRight), Easing::SineIn);
 			leftOrRight *= -1; // Change direction every other iteration
+			sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + (xSideDelta * leftOrRight), Easing::SineIn);
 		}
 		else if ((i % 2) == 1) { // Bubble moving outwards
 			sprite->MoveX(startSideMove, endSideMove, sprite->position.x, sprite->position.x + (xSideDelta * leftOrRight), Easing::SineOut);
