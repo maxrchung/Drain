@@ -129,7 +129,7 @@ s createS(double pos, double secondDeriv) {
 
 int Sketch::dynamicResolution(Bezier& b) {
 	points.push_back(b.findPosition(0));
-	points.push_back(b.findPosition(RandomRange::calculate(30, 70, 100)));
+	points.push_back(b.findPosition(RandomRange::calculate(40, 60, 100)));
 	points.push_back(b.findPosition(1.0f));
 	return 1;
 	//int numPoints = b.length / this->resolution; // precheck if bezier is "short"
@@ -287,7 +287,9 @@ void Sketch::render() {
 		Sketch("000 eyes closed", Time(start), Time("00:00:489")),
 		Sketch("000 eyes closed", Time("00:00:489"), Time("00:01:055"), shift)
 											 });
-	loop(eyesClosed000, 4);
+	loop(eyesClosed000, 3);
+	make("001 eyes quarter open", Time("00:03:319"), Time("00:03:885"));
+	make("002 eyes half open", Time("00:03:885"), Time("00:04:452"));
 	make("005 eyes open", Time("00:04:452"), Time("00:05:018"));
 	make("005 eyes open", Time("00:05:018"), Time("00:05:584"), shift);
 	make("010 su", Time("00:05:584"), Time("00:05:867"));
@@ -560,8 +562,10 @@ void Sketch::render() {
 		Sketch("675 eyes open", Time("06:31:055"), Time("06:31:621")),
 		Sketch("675 eyes open", Time("06:31:621"), Time("06:32:187"), shift)
 										   });
-	loop(eyesOpen675, 3);
-	make("675 eyes open", Time("06:34:452"), Time("06:34:735"), shift);
+	loop(eyesOpen675, 2);
+	make("675 eyes open", Time("06:33:319"), Time("06:34:168"));
+	make("676 eyes half open", Time("06:34:168"), Time("06:34:452"));
+	make("677 eyes quarter open", Time("06:34:452"), Time("06:34:735"));
 	auto eyesClosed680 = std::vector<Sketch>({
 		Sketch("680 eyes closed", Time("06:34:735"), Time("06:35:301")),
 		Sketch("680 eyes closed", Time("06:35:301"), Time("06:35:867"), shift)
