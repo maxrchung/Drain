@@ -20,10 +20,11 @@ public:
 	void colorFgToBgSprites(const int startTime, const int endTime);
 	void colorFgToFgSprites(const int startTime, const int endTime);
 
+	void fixScale(int startTime, int endTime);
 	SpriteCollection sprites;
 
 private:
-
+	float scale = 0;
 
 	int highlight_count;
 	SpriteCollection create_sprites();
