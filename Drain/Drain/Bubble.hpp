@@ -20,17 +20,18 @@ public:
 	void colorFgToBgSprites(const int startTime, const int endTime);
 	void colorFgToFgSprites(const int startTime, const int endTime);
 
+	void fixScale(int startTime, int endTime);
 	SpriteCollection sprites;
 
 private:
-
+	float scale = 0;
 
 	int highlight_count;
 	SpriteCollection create_sprites();
 
 	float w_rand(float min, float max);
 
-	int const sprite_size = 100;
+	int sprite_size = 100;
 
 	int max_highlight;
 	int min_highlight;
