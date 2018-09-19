@@ -14,9 +14,11 @@ BubbleGenerator::BubbleGenerator(bool isMouth, Vector2 mouthBubblePos, Time mout
 	}
 
 	//test
-	//Bubble* meme = new Bubble();
-	//meme->Move(Time("00:01:200").ms, Time("00:03:800").ms, meme->sprites.position, Vector2(meme->sprites.position.x, meme->sprites.position.y + 200));
-	//meme->MoveX(Time("00:01:000").ms, Time("00:03:600").ms, meme->sprites.position.x, meme->sprites.position.x + 200);
+	Bubble* meme = new Bubble();
+	Vector2 startPos = { 0,0 };
+	float endY = startPos.y + 200;
+	meme->MoveY(Time("00:01:000").ms, Time("00:03:600").ms, startPos.y, startPos.y + 200);
+	//meme->MoveX(Time("00:01:200").ms, Time("00:03:800").ms, startPos.x, startPos.x + 200);
 }
 
 // Switches appropriate variables if instance of class is mouth bubble instead of default bubble
