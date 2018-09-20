@@ -35,7 +35,7 @@ int main() {
 	RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
-	if(1) {
+	if(0) {
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
 		std::vector<SpriteCollection> coll_raindrops;
@@ -46,14 +46,22 @@ int main() {
 		walk_boi.walk(1000, Time("01:30:489"), Time("01:57:659"));
 	}
 
-	if(1) {
-		Bubble bub = Bubble();
-		int start_time = Time("01:30:489").ms;
-		int end_time = Time("01:57:659").ms;
+	//testing bubbles
+	if(0) {
+		for(int i = 0; i < 20; ++i) {
+			Bubble bub = Bubble();
+			int start_time = Time("01:30:489").ms;
+			int end_time = Time("01:57:659").ms;
+			float rx = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.x - (Vector2::ScreenSize.x / 2);
+			float ry = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.y - (Vector2::ScreenSize.y / 2);
+			float sx = ((float)std::rand() / RAND_MAX) * 2 - 1;
+			float sy = ((float)std::rand() / RAND_MAX) * 2 - 1;
+			Vector2 start_pos = {0, 0};
+			Vector2 end_pos = {rx, ry};
 
-		Vector2 start_pos = {0, 0};
-		Vector2 end_pos = {100, 100};
-		bub.Move(start_time, end_time, start_pos, end_pos);
+			bub.MoveAndScale(start_time, end_time, start_pos, end_pos, sx, sy);
+			bub.colorBgToBgSprites(start_time, end_time);
+		}
 
 	}
 
@@ -62,8 +70,8 @@ int main() {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		// mouth bubble tests
 		Vector2 pos = { 50, 50 };
-		BubbleGenerator::BubbleGenerator(true, pos, Time("02:10:790"));
-		BubbleGenerator::BubbleGenerator(true, pos, Time("01:10:790"));
+		//BubbleGenerator::BubbleGenerator(true, pos, Time("02:10:790"));
+		//BubbleGenerator::BubbleGenerator(true, pos, Time("01:10:790"));
 	}
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
