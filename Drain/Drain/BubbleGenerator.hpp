@@ -12,13 +12,14 @@
 
 class BubbleGenerator {
 public:
-	BubbleGenerator(bool isMouth = false, Vector2 mouthBubblePos = { 0, 0 }, Time mouthBubbleStartTime = Time("00:00:000"), bool willSplatter = true);
+	BubbleGenerator(bool isSecondSection = false, bool isMouth = false, Vector2 mouthBubblePos = { 0, 0 }, Time mouthBubbleStartTime = Time("00:00:000"), bool willSplatter = true);
 	std::vector<Bubble*> GetSplatBubbles();
 
 	std::vector<Bubble*> allSprites;
 
 private:
 	void SwitchToMouthBubble();
+	void SwitchToSecondSection();
 	void BubbleController();
 	void DrawBubble();
 	void MoveBubble(Bubble* sprites, std::vector<float> moveTimes, Vector2 startPos, bool isSplat = false);
@@ -38,10 +39,9 @@ private:
 	Sprite* CreateBubbleSprites(Vector2 startPos);
 
 	Time startTime = Time("01:58:790");
-	Time endTime = Time("02:33:890");
-	const Time constEndTime = Time("02:33:890");
+	Time endTime = Time("02:36:890");
 	bool willSplatter;
-	Time splatterTime = Time("02:25:890"); // Not the correct time edit later <---------
+	Time splatterTime = Time("02:33:885");
 	float acceleration = 1.07;
 	float bubbleCount = 9;
 	float minMoveTime = 750.0f; // Edit to cap max bubble velocity
@@ -72,4 +72,6 @@ private:
 	const float mouthBubbleMaxSize = 0.7;
 	const float mouthBubbleMinSize = 0.2;
 	float mouthBubbleCount = 5;
+
+	bool isSecondSection;
 };
