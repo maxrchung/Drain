@@ -49,7 +49,7 @@ void Bubble::MoveAndScale(int startTime, int endTime, Vector2 startPos,Vector2 e
 }
 
 
-void Bubble::colorBgToBgSprites(const int startTime, const int endTime) {
+void Bubble::Color(const int startTime, const int endTime) {
 	Swatch::colorFgToFgSprites({sprites.sprites[0]}, startTime, endTime);
 	for(int i = 1; i < highlight_count + 1; ++i) {
 		Swatch::colorBgToBgSprites({sprites.sprites[i]}, startTime, endTime);
@@ -57,7 +57,7 @@ void Bubble::colorBgToBgSprites(const int startTime, const int endTime) {
 }
 
 
-void Bubble::colorFgToBgSprites(const int startTime, const int endTime) {
+void Bubble::Fade(const int startTime, const int endTime) {
 	Swatch::colorFgToBgSprites({sprites.sprites[0]}, startTime, endTime);
 	for(int i = 1; i < highlight_count + 1; ++i) {
 		Swatch::colorBgToBgSprites({sprites.sprites[i]}, startTime, endTime);

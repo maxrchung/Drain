@@ -15,10 +15,8 @@ public:
 
 	void MoveAndScale(int startTime, int endTime, Vector2 startPos, Vector2 endPos, float startScale, float endScale, Easing easing = Easing::Linear, int precision = 3);
 
-	void colorBgToBgSprites(const int startTime, const int endTime);
-	void colorBgToFgSprites(const int startTime, const int endTime);
-	void colorFgToBgSprites(const int startTime, const int endTime);
-	void colorFgToFgSprites(const int startTime, const int endTime);
+	void Color(const int startTime, const int endTime);
+	void Fade(const int startTime, const int endTime);
 
 	void fixScale(int startTime, int endTime);
 	SpriteCollection sprites;

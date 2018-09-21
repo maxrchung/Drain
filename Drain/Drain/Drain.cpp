@@ -60,7 +60,7 @@ int main() {
 			Vector2 end_pos = {rx, ry};
 
 			bub.MoveAndScale(start_time, end_time, start_pos, end_pos, sx, sy);
-			bub.colorBgToBgSprites(start_time, end_time);
+			bub.Color(start_time, end_time);
 		}
 
 	}
