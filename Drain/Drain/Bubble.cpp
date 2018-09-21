@@ -6,13 +6,13 @@
 #include <vector>
 
 Bubble::Bubble()
-	: sprites(create_sprites()) {
+	: sprites{create_sprites()}, highlight_oblong{std::vector<Vector2>()} {
 }
 
 
 void Bubble::Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing) {
 	if(!scale)
-		fixScale(startTime, endTime);
+		fixScale(startTime, startTime);
 
 	this->sprites.Move(startTime, endTime, startPos, endPos, easing);
 	return;
@@ -21,7 +21,7 @@ void Bubble::Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, 
 
 void Bubble::MoveX(int startTime, int endTime, float startX, float endX, Easing easing) {
 	if(!scale)
-		fixScale(startTime, endTime);
+		fixScale(startTime, startTime);
 
 	this->sprites.MoveX(startTime, endTime, startX, endX, easing);
 	return;
@@ -30,7 +30,7 @@ void Bubble::MoveX(int startTime, int endTime, float startX, float endX, Easing 
 
 void Bubble::MoveY(int startTime, int endTime, float startY, float endY, Easing easing) {
 	if(!scale)
-		fixScale(startTime, endTime);
+		fixScale(startTime, startTime);
 
 	this->sprites.MoveY(startTime, endTime, startY, endY, easing);
 	return;
@@ -74,9 +74,6 @@ void Bubble::fixScale(int startTime, int endTime) {
 
 
 SpriteCollection Bubble::create_sprites() {
-	this->min_highlight = 5;
-	this->max_highlight = 9;
-	this->sprite_size = 100;
 	this->highlight_count = w_rand(this->min_highlight, this->max_highlight);
 
 	std::vector<Sprite *> sprite_vector;
@@ -84,7 +81,15 @@ SpriteCollection Bubble::create_sprites() {
 	std::vector<float> scale;
 
 	//main bubble
-	sprite_vector.push_back(Storyboard::CreateSprite(getPath(Path::Circle)));
+	Sprite *bubble = Storyboard::CreateSprite(getPath(Path::Circle));
+	sprite_vector.push_back(bubble);
+
+	Vector2 oblong_scale = Vector2(w_rand(min_oblong_range, max_oblong_range), w_rand(min_oblong_range, max_oblong_range));
+	this->highlight_oblong.push_back(oblong_scale);
+
+	//this->highlight_oblong.push_back(Vector2(w_rand(min_oblong_range, max_oblong_range), w_rand(min_oblong_range, max_oblong_range)));
+	//this->oblong = {w_rand(min_oblong_range, max_oblong_range), w_rand(min_oblong_range, max_oblong_range)};
+
 	location.push_back({0, 0});
 	scale.push_back(1);
 
@@ -94,8 +99,12 @@ SpriteCollection Bubble::create_sprites() {
 		offset.x = (this->sprite_size / 2) * w_rand(-range, range);
 		offset.y = (this->sprite_size / 2) * w_rand(-range, range);
 
+		oblong_scale  = Vector2(w_rand(min_oblong_range, max_oblong_range), w_rand(min_oblong_range, max_oblong_range));
+		//Vector2 highlight_thing = Vector2(w_rand(min_oblong_range, max_oblong_range), w_rand(min_oblong_range, max_oblong_range));
+		//highlight_oblong[i] = highlight_thing;
+		this->highlight_oblong.push_back(oblong_scale);
 		Sprite *sprite = Storyboard::CreateSprite(getPath(Path::Circle), offset);
-		float s = w_rand(0.02, 0.2);
+		float s = w_rand(0.02, 0.1);
 		scale.push_back(s);
 		sprite_vector.push_back(sprite);
 

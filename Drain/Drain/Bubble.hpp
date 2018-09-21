@@ -24,13 +24,19 @@ public:
 private:
 	float scale = 0;
 
+	Vector2 oblong;
 	int highlight_count;
+	std::vector<Vector2> highlight_oblong;
+
 	SpriteCollection create_sprites();
 
 	float w_rand(float min, float max);
 
-	int sprite_size = 100;
+	static const int sprite_size = 100;
 
-	int max_highlight;
-	int min_highlight;
+	static const int min_highlight = 5;
+	static const int max_highlight = 9;
+
+	static const float min_oblong_range = 0.01;
+	static const float max_oblong_range = 0.05;
 };
