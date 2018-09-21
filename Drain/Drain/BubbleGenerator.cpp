@@ -1,12 +1,17 @@
 #include "BubbleGenerator.hpp"
 
-BubbleGenerator::BubbleGenerator(bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
-	: isMouth{ isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
+BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
+	: isSecondSection{ isSecondSection }, isMouth { isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
 	// TODO: bbbles pop individually, one by one? one more bub gen seciotn
-	// FIX: give start pos to bubble,. splattertime error
+	// TODO: bubbles precise timing lol, 2nd section bubble, bubble slow before freeze
+	// FIX: sprite sizes wt f
 
 	if (isMouth) { 
 		SwitchToMouthBubble();
+	}
+
+	if (isSecondSection) {
+		SwitchToSecondSection();
 	}
 
 	while (moveEndTime < endTime.ms) {
@@ -15,8 +20,10 @@ BubbleGenerator::BubbleGenerator(bool isMouth, Vector2 mouthBubblePos, Time mout
 
 	//test
 	//Bubble* meme = new Bubble();
-	//meme->Move(Time("00:01:200").ms, Time("00:03:800").ms, meme->sprites.position, Vector2(meme->sprites.position.x, meme->sprites.position.y + 200));
-	//meme->MoveX(Time("00:01:000").ms, Time("00:03:600").ms, meme->sprites.position.x, meme->sprites.position.x + 200);
+	//Vector2 startPos = { 0,0 };
+	//float endY = startPos.y + 200;
+	//meme->MoveY(Time("00:01:000").ms, Time("00:03:600").ms, startPos.y, startPos.y + 200);
+	////meme->MoveX(Time("00:01:200").ms, Time("00:03:800").ms, startPos.x, startPos.x + 200);
 }
 
 // Switches appropriate variables if instance of class is mouth bubble instead of default bubble
@@ -31,6 +38,13 @@ void BubbleGenerator::SwitchToMouthBubble() {
 	moveStartTime = startTime.ms;
 	moveEndTime = startTime.ms + moveTotalTime;
 	willSplatter = false; // Because mouth bubbles do not splatter
+}
+
+// second section of default bubble, only 2 exist currently but change l8r if more
+void BubbleGenerator::SwitchToSecondSection() {
+	startTime = Time("03:10:112").ms;
+	endTime = Time("03:23:016").ms;
+	splatterTime = Time("03:19:168").ms;
 }
 
 // Handles the overall creation of bubbles
@@ -129,7 +143,7 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 
 	float startMove = moveTimes[0];
 
-	sprites->Move(startMove, endMove, startPos, Vector2(startPos.x, endY)); // Handles only vertical movement
+	sprites->MoveY(startMove, endMove, startPos.y, endY); // Handles only vertical movement
 
 	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
 	float oneDirMoveLength = sideMoveLength / 2;
@@ -182,7 +196,7 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes, b
 
 	float startMove = moveTimes[0];
 
-	sprite->Move(startMove, endMove, sprite->position, Vector2(sprite->position.x, endY)); // Handles only vertical movement
+	sprite->MoveY(startMove, endMove, sprite->position.y, endY); // Handles only vertical movement
 
 	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
 	float oneDirMoveLength = sideMoveLength / 2;
