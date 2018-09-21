@@ -184,7 +184,7 @@ void Text::render() {
 	place({
 		"trust in me",
 		"follow me",
-		"and you'll find peace",
+		"and you'll find peace,",
 		"i promised",
 		  }, Time("01:44:074").ms, Time("01:48:602").ms);
 	place({
@@ -210,8 +210,7 @@ void Text::render() {
 	draw("turn red", Vector2::Zero, Time("02:28:791").ms, Time("02:32:753").ms);
 	// Poem 2
 	place({
-		"your voice",
-		"pierced the falling rain",
+		"your voice pierced the rain",
 		"singing, screaming in song"
 		  }, Time("02:33:885").ms, Time("02:38:414").ms);
 	place({
@@ -220,8 +219,7 @@ void Text::render() {
 		"crying in its sweet dream",
 		  }, Time("02:38:414").ms, Time("02:42:949").ms);
 	place({
-		"you and i",
-		"laughed",
+		"you and i laughed",
 		"stumbled through alleyways",
 		"exploring every nook"
 		  }, Time("02:42:949").ms, Time("02:47:470").ms);
@@ -232,9 +230,9 @@ void Text::render() {
 		"night after night",
 		  }, Time("02:47:470").ms, Time("02:51:999").ms);
 	place({
-		"a signal",
-		"shining high in the sky",
-		"to return back",
+		"until a light",
+		"cusping the sky",
+		"signaled a return",
 		"to daily life",
 		  }, Time("02:51:999").ms, Time("02:56:527").ms);
 	place({
@@ -245,7 +243,7 @@ void Text::render() {
 		  }, Time("02:56:527").ms, Time("03:01:055").ms);
 	place({
 		"in hiding we bid our time",
-		"waiting for the next opportunity",
+		"waiting for the next chance",
 		"to sneak out in the rain",
 		  }, Time("03:01:055").ms, Time("03:05:584").ms);
 	place({
@@ -298,7 +296,7 @@ void Text::render() {
 	place({
 		"every dark corner",
 		"hid encroaching fears",
-		"so we ran, ran away",
+		"forcing us to run away",
 		"down frantic paths",
 		  }, Time("03:41:810").ms, Time("03:46:338").ms);
 	place({
@@ -312,7 +310,7 @@ void Text::render() {
 		"swallowed you whole",
 		  }, Time("03:48:602").ms, Time("03:53:131").ms);
 	place({
-		"a panic, struggle",
+		"a panic, a struggle",
 		"pulling you up",
 		"but we broke apart",
 		"and lost touch",
@@ -349,17 +347,17 @@ void Text::render() {
 	place({
 		"it wasn't until evening",
 		"that i returned to the city",
-		"and where your body laid",
+		"where your body laid",
 		"was a shard of your soul",
 		  }, Time("05:57:659").ms, Time("06:02:187").ms);
 	place({
-		"a memory of feeling",
+		"a memory, of feeling",
 		"of thought and prayer",
 		"a moment of bliss",
-		"that you so longed for",
+		"that you captured",
 		  }, Time("06:02:187").ms, Time("06:06:716").ms);
 	place({
-		"looking up",
+		"above",
 		"clouds gathered in the sky",
 		"the first drops",
 		"dotted the landscape",
@@ -371,7 +369,8 @@ void Text::render() {
 		"in the wet glow",
 		  }, Time("06:11:244").ms, Time("06:15:772").ms);
 	place({
-		"i reached, for all the pieces",
+		"i reached",
+		"for all the sharp pieces",
 		"pooled them to my cut hands",
 		  }, Time("06:15:772").ms, Time("06:20:301").ms);
 	place({
@@ -380,7 +379,7 @@ void Text::render() {
 		"was it worth it",
 		  }, Time("06:20:301").ms, Time("06:24:829").ms);
 	place({
-		"i kissed the sharp fragments",
+		"i kissed the fragments",
 		"then consume them all",
 		  }, Time("06:24:829").ms, Time("06:31:055").ms);
 	// Lyric 4
