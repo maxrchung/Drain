@@ -15,10 +15,8 @@ public:
 
 	void MoveAndScale(int startTime, int endTime, Vector2 startPos, Vector2 endPos, float startScale, float endScale, Easing easing = Easing::Linear, int precision = 3);
 
-	void colorBgToBgSprites(const int startTime, const int endTime);
-	void colorBgToFgSprites(const int startTime, const int endTime);
-	void colorFgToBgSprites(const int startTime, const int endTime);
-	void colorFgToFgSprites(const int startTime, const int endTime);
+	void Color(const int startTime, const int endTime);
+	void Fade(const int startTime, const int endTime);
 
 	void fixScale(int startTime, int endTime);
 	SpriteCollection sprites;
@@ -26,13 +24,19 @@ public:
 private:
 	float scale = 0;
 
+	Vector2 oblong;
 	int highlight_count;
+	std::vector<Vector2> highlight_oblong;
+
 	SpriteCollection create_sprites();
 
 	float w_rand(float min, float max);
 
-	int sprite_size = 100;
+	static const int sprite_size = 100;
 
-	int max_highlight;
-	int min_highlight;
+	static const int min_highlight = 5;
+	static const int max_highlight = 9;
+
+	static constexpr float min_oblong_range = 0.01f;
+	static constexpr float max_oblong_range = 0.05f;
 };
