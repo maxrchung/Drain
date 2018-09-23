@@ -3,8 +3,7 @@
 BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
 	: isSecondSection{ isSecondSection }, isMouth { isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
 	// TODO: bbbles pop individually, one by one? one more bub gen seciotn
-	// TODO: bubbles precise timing lol, 2nd section bubble, bubble slow before freeze
-	// FIX: sprite sizes wt f
+	// TODO: bubbles precise timing lol, 2nd section bubble, bubble slow before freeze dsflkfds bubble co lo ur, mouth bubble d
 
 	if (isMouth) { 
 		SwitchToMouthBubble();
@@ -14,16 +13,12 @@ BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mou
 		SwitchToSecondSection();
 	}
 
+	//int iteration_count = 0;
+
 	while (moveEndTime < endTime.ms) {
 		BubbleController();
+		//std::cout << ++iteration_count << "\n";
 	}
-
-	//test
-	//Bubble* meme = new Bubble();
-	//Vector2 startPos = { 0,0 };
-	//float endY = startPos.y + 200;
-	//meme->MoveY(Time("00:01:000").ms, Time("00:03:600").ms, startPos.y, startPos.y + 200);
-	////meme->MoveX(Time("00:01:200").ms, Time("00:03:800").ms, startPos.x, startPos.x + 200);
 }
 
 // Switches appropriate variables if instance of class is mouth bubble instead of default bubble
@@ -40,11 +35,17 @@ void BubbleGenerator::SwitchToMouthBubble() {
 	willSplatter = false; // Because mouth bubbles do not splatter
 }
 
-// second section of default bubble, only 2 exist currently but change l8r if more
+// Second section of default bubble, only 2 exist currently but change the switch method later if this fact changes
 void BubbleGenerator::SwitchToSecondSection() {
 	startTime = Time("03:10:112").ms;
 	endTime = Time("03:23:016").ms;
 	splatterTime = Time("03:19:168").ms;
+	totalTime = static_cast<float>(endTime.ms - startTime.ms);
+	moveTotalTime = totalTime / bubbleCount;
+	moveStartTime = startTime.ms;
+	moveEndTime = startTime.ms + moveTotalTime;
+	bubbleCount = 3;
+	acceleration = 1.01;
 }
 
 // Handles the overall creation of bubbles
@@ -58,7 +59,6 @@ void BubbleGenerator::DrawBubble() {
 	for (int i = 0; i < bubbleCount; ++i) {
 		Vector2 startPos = GetBubbleStartPos();
 		std::vector<float> moveTimes = GetBubbleTiming();
-		// Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(startPos.x, startPos.y));
 
 		if (isMouth) {
 			Sprite* sprites = CreateBubbleSprites(startPos);
@@ -121,12 +121,36 @@ std::vector<float> BubbleGenerator::GetBubbleTiming() {
 	float adjustedEndTime = 0;
 
 	do { // Ensures drops don't fall outside of time section & freezeTime
+		if (willSplatter) {
+			bool overflowed = TimeOverflowCheck(timeVariance, adjustedTotalTime);
+			if (overflowed) {
+				float latestEndTime = splatterTime.ms + adjustedTotalTime;
+				float adjustedStartTime = latestEndTime - adjustedTotalTime;
+
+				return { adjustedStartTime, latestEndTime };
+			}
+		}
+
 		float moveTimeDelta = timeVariance * RandomRange::calculate(-10000, 10000, 10000);
 		adjustedStartTime = moveStartTime + moveTimeDelta;
 		adjustedEndTime = adjustedStartTime + adjustedTotalTime;
 	} while (adjustedStartTime < startTime.ms || ((adjustedEndTime > (splatterTime.ms + adjustedTotalTime)) && willSplatter) || ((adjustedEndTime > endTime.ms) && !willSplatter));
 
 	return {adjustedStartTime, adjustedEndTime};
+}
+
+// Prevents getting stuck in an infinite loop in timing
+bool BubbleGenerator::TimeOverflowCheck(float timeVariance, float adjustedTotalTime) {
+	float earliestStartTime = moveStartTime - timeVariance;
+	float earliestEndTime = earliestStartTime + adjustedTotalTime;
+	float latestEndTime = splatterTime.ms + adjustedTotalTime;
+
+	if (earliestEndTime > latestEndTime) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 // Handles all bubble movement from bottom of screen to top including side movement (default bubble ver.)

@@ -68,7 +68,7 @@ int main() {
 	// BubbleGenerator shit
 	if (1) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
-		//BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true); broken lmao il lfix later
+		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
 		// mouth bubble tests
 		Vector2 pos = { 50, 50 };
 		//BubbleGenerator::BubbleGenerator(false, true, pos, Time("02:10:790"));

@@ -26,6 +26,7 @@ private:
 	void MoveBubble(Sprite* sprite, std::vector<float> moveTimes, bool isSplat = false);
 	Vector2 GetBubbleStartPos();
 	std::vector<float> GetBubbleTiming();
+	bool TimeOverflowCheck(float timeVariance, float adjustedTotalTime);
 	float GetRandomSideMovement();
 	float RandomBubbleSpeed();
 	void ScaleBubbleSize(Bubble* sprites, std::vector<float> moveTimes);
@@ -62,7 +63,7 @@ private:
 
 	std::vector<Bubble*> splattingBubbles;
 
-	/* Mouth timing and shit are placeholders, should be edited with the actual values later*/
+	// Mouth timing and shit are placeholders, should be edited with the actual values later
 	bool isMouth;
 	Time mouthBubblePeriod = Time(Timing::whole * 16);
 	Time mouthStartTime;
@@ -71,7 +72,7 @@ private:
 	float mouthY;
 	const float mouthBubbleMaxSize = 0.7;
 	const float mouthBubbleMinSize = 0.2;
-	float mouthBubbleCount = 5;
+	float mouthBubbleCount = 5; // amount of bubbles that are initially spawned
 
 	bool isSecondSection;
 };
