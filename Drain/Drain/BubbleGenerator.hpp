@@ -23,10 +23,12 @@ private:
 	void SwitchToSecondSection();
 	void BubbleController();
 	void DrawBubble();
-	void MoveBubble(Bubble* sprites, std::vector<float> moveTimes, Vector2 startPos, bool isSplat = false);
+	void MoveBubble(Bubble* sprites, std::vector<float> moveTimes, Vector2 startPos, Easing easing, bool isSplat = false);
 	void MoveBubble(Sprite* sprite, std::vector<float> moveTimes, bool isSplat = false);
 	Vector2 GetBubbleStartPos();
 	std::vector<float> GetBubbleTiming();
+	bool TimeOverflowCheck(float timeVariance, float adjustedTotalTime);
+	void SlowBubbleBeforeSplat(float startTime, float& endTime, float totalTime, bool& splatFlag);
 	float GetRandomSideMovement();
 	float RandomBubbleSpeed();
 	void ScaleBubbleSize(Bubble* sprites, std::vector<float> moveTimes);
@@ -43,6 +45,8 @@ private:
 	Time endTime = Time("02:36:890");
 	bool willSplatter;
 	Time splatterTime = Time("02:33:885");
+	Time slowPeriod = Time(Timing::whole * 4);
+	float maxSlow = 5;
 	float acceleration = 1.07;
 	float bubbleCount = 9;
 	float minMoveTime = 750.0f; // Edit to cap max bubble velocity
@@ -63,7 +67,7 @@ private:
 
 	std::vector<Bubble*> splattingBubbles;
 
-	/* Mouth timing and shit are placeholders, should be edited with the actual values later*/
+	// Mouth timing and shit are placeholders, should be edited with the actual values later
 	static void drawMouthBubbles(const float x, const float y, const std::string& startTime);
 	bool isMouth;
 	Time mouthBubblePeriod = Time(Timing::whole * 4);

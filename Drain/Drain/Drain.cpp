@@ -25,7 +25,6 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
-	
 	//Text::render();
 	Sketch::render(); 
 	//Splatter::render();
@@ -65,9 +64,9 @@ int main() {
 	}
 
 	// BubbleGenerator shit
-	if (0) {
-		//BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
-		//BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true); broken lmao il lfix later
+	if (1) {
+		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
+		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
 	}
 
 	BubbleGenerator::renderMouthBubbles();
