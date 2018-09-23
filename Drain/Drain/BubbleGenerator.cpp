@@ -3,7 +3,8 @@
 BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
 	: isSecondSection{ isSecondSection }, isMouth { isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
 	// TODO: bbbles pop individually, one by one? one more bub gen seciotn
-	// TODO: bubbles precise timing lol, 2nd section bubble, bubble slow before freeze dsflkfds bubble co lo ur, mouth bubble d
+	// TODO: bubble color, mouth bubble
+	// FIX: not enough splatbubbles on screen
 
 	if (isMouth) { 
 		SwitchToMouthBubble();
@@ -13,11 +14,8 @@ BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mou
 		SwitchToSecondSection();
 	}
 
-	//int iteration_count = 0;
-
 	while (moveEndTime < endTime.ms) {
 		BubbleController();
-		//std::cout << ++iteration_count << "\n";
 	}
 }
 
@@ -41,10 +39,10 @@ void BubbleGenerator::SwitchToSecondSection() {
 	endTime = Time("03:23:016").ms;
 	splatterTime = Time("03:19:168").ms;
 	totalTime = static_cast<float>(endTime.ms - startTime.ms);
-	moveTotalTime = totalTime / bubbleCount;
+	moveTotalTime = totalTime / bubbleCount; // Controls the base velocity of bubbles
 	moveStartTime = startTime.ms;
 	moveEndTime = startTime.ms + moveTotalTime;
-	bubbleCount = 3;
+	bubbleCount = 2;
 	acceleration = 1.01;
 }
 
@@ -59,8 +57,10 @@ void BubbleGenerator::DrawBubble() {
 	for (int i = 0; i < bubbleCount; ++i) {
 		Vector2 startPos = GetBubbleStartPos();
 		std::vector<float> moveTimes = GetBubbleTiming();
+		bool slowFlag = false;
+		SlowBubbleBeforeSplat(moveTimes[0], moveTimes[1], moveTimes[1] - moveTimes[0], slowFlag);
 
-		if (isMouth) {
+		if (isMouth) { // mouth bubble movement
 			Sprite* sprites = CreateBubbleSprites(startPos);
 			ScaleBubbleSize(sprites, moveTimes);
 			ColorBubbles(sprites, moveTimes[0], moveTimes[1]);
@@ -72,12 +72,19 @@ void BubbleGenerator::DrawBubble() {
 			ScaleBubbleSize(sprites, moveTimes);
 			TrackAllBubbles(sprites);
 
-			if (willSplatter && (splatterTime.ms >= moveTimes[0] && splatterTime.ms <= moveTimes[1])) { // Checks whether bubble is visible during splatterTime
+			auto easing = Easing::Linear;
+
+			if (willSplatter && (splatterTime.ms >= moveTimes[0] && splatterTime.ms <= moveTimes[1])) { // Checks whether bubble is visible during splatterTime, if so, move it to where it will splat
 				SplatterPos(sprites, moveTimes);
-				MoveBubble(sprites, moveTimes, startPos, true);
+
+				if (slowFlag) {
+					easing = Easing::Linear; // should be quad ill change it later when my splatbubbles isnt broken
+				}
+
+				MoveBubble(sprites, moveTimes, startPos, easing, true);
 			}
-			else {
-				MoveBubble(sprites, moveTimes, startPos);
+			else { // normal bubble movement; bottom to top
+				MoveBubble(sprites, moveTimes, startPos, easing);
 			}
 		}
 	}
@@ -153,8 +160,28 @@ bool BubbleGenerator::TimeOverflowCheck(float timeVariance, float adjustedTotalT
 	}
 }
 
+// Copy pasted from RainGenerator.cpp, tweaked to use references instead of returning values
+void BubbleGenerator::SlowBubbleBeforeSplat(float startTime, float& endTime, float totalTime, bool& slowFlag) {
+	float slowStartTime = splatterTime.ms - slowPeriod.ms;
+	float timeFromStartSlow = startTime - slowStartTime;
+	float slowRatio = timeFromStartSlow / slowPeriod.ms;
+
+	if (startTime >= slowStartTime) { // Slows down drops a certain time before splatterTime
+		float adjustedTotalTime = totalTime + (totalTime * (maxSlow * slowRatio));
+		float adjustedEndTime = startTime + adjustedTotalTime;
+
+		slowFlag = true;
+		endTime = adjustedEndTime;
+	}
+	else { // Won't increase adjustedDropEnd until it's time to slow down bubbles
+		float adjustedEndTime = startTime + totalTime;
+
+		endTime = adjustedEndTime;
+	}
+}
+
 // Handles all bubble movement from bottom of screen to top including side movement (default bubble ver.)
-void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, Vector2 startPos, bool isSplat) {
+void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, Vector2 startPos, Easing easing, bool isSplat) {
 	float endMove;
 	if (!isSplat) {
 		endY = screenTop + ((rainLength / 2) * maxSize);
@@ -167,7 +194,7 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 
 	float startMove = moveTimes[0];
 
-	sprites->MoveY(startMove, endMove, startPos.y, endY); // Handles only vertical movement
+	sprites->MoveY(startMove, endMove, startPos.y, endY, easing); // Handles only vertical movement
 
 	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
 	float oneDirMoveLength = sideMoveLength / 2;
