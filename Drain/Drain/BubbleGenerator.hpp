@@ -13,6 +13,7 @@
 class BubbleGenerator {
 public:
 	BubbleGenerator(bool isSecondSection = false, bool isMouth = false, Vector2 mouthBubblePos = { 0, 0 }, Time mouthBubbleStartTime = Time("00:00:000"), bool willSplatter = true);
+	static void renderMouthBubbles();
 	std::vector<Bubble*> GetSplatBubbles();
 
 	std::vector<Bubble*> allSprites;
@@ -63,15 +64,16 @@ private:
 	std::vector<Bubble*> splattingBubbles;
 
 	/* Mouth timing and shit are placeholders, should be edited with the actual values later*/
+	static void drawMouthBubbles(const float x, const float y, const std::string& startTime);
 	bool isMouth;
-	Time mouthBubblePeriod = Time(Timing::whole * 16);
+	Time mouthBubblePeriod = Time(Timing::whole * 4);
 	Time mouthStartTime;
 	Time mouthEndTime; // If this is before splatterTime Bubblegen will get stuck in an infinite loop. maybe fix l8r lol
 	float mouthX;
 	float mouthY;
-	const float mouthBubbleMaxSize = 0.7;
+	const float mouthBubbleMaxSize = 0.55;
 	const float mouthBubbleMinSize = 0.2;
-	float mouthBubbleCount = 5;
+	float mouthBubbleCount = 3;
 
 	bool isSecondSection;
 };

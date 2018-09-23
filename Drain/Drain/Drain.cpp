@@ -25,14 +25,14 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
-	/*
-	Text::render();
-	Sketch::render();
-	Splatter::render();
-	Drip::render();
-	*/
+	
+	//Text::render();
+	Sketch::render(); 
+	//Splatter::render();
+	//Drip::render();
+	
 	// RainGenerator shit
-	RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
+	//RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
 	if(0) {
@@ -62,18 +62,15 @@ int main() {
 			bub.MoveAndScale(start_time, end_time, start_pos, end_pos, sx, sy);
 			bub.Color(start_time, end_time);
 		}
-
 	}
 
 	// BubbleGenerator shit
-	if (1) {
-		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
+	if (0) {
+		//BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		//BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true); broken lmao il lfix later
-		// mouth bubble tests
-		Vector2 pos = { 50, 50 };
-		//BubbleGenerator::BubbleGenerator(false, true, pos, Time("02:10:790"));
-		//BubbleGenerator::BubbleGenerator(false, true, pos, Time("01:10:790"));
 	}
+
+	BubbleGenerator::renderMouthBubbles();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb

@@ -6,16 +6,18 @@ BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mou
 	// TODO: bubbles precise timing lol, 2nd section bubble, bubble slow before freeze
 	// FIX: sprite sizes wt f
 
-	if (isMouth) { 
+	if (isMouth) {
 		SwitchToMouthBubble();
+		DrawBubble();
 	}
+	else {
+		if (isSecondSection) {
+			SwitchToSecondSection();
+		}
 
-	if (isSecondSection) {
-		SwitchToSecondSection();
-	}
-
-	while (moveEndTime < endTime.ms) {
-		BubbleController();
+		while (moveEndTime < endTime.ms) {
+			BubbleController();
+		}
 	}
 
 	//test
@@ -34,7 +36,7 @@ void BubbleGenerator::SwitchToMouthBubble() {
 	endTime = mouthEndTime = mouthStartTime.ms + mouthBubblePeriod.ms;
 	bubbleCount = mouthBubbleCount;
 	totalTime = static_cast<float>(endTime.ms - startTime.ms);
-	moveTotalTime = totalTime / bubbleCount;
+	moveTotalTime = totalTime;
 	moveStartTime = startTime.ms;
 	moveEndTime = startTime.ms + moveTotalTime;
 	willSplatter = false; // Because mouth bubbles do not splatter
@@ -57,10 +59,9 @@ void BubbleGenerator::BubbleController() {
 void BubbleGenerator::DrawBubble() {
 	for (int i = 0; i < bubbleCount; ++i) {
 		Vector2 startPos = GetBubbleStartPos();
-		std::vector<float> moveTimes = GetBubbleTiming();
-		// Sprite* sprite = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(startPos.x, startPos.y));
 
 		if (isMouth) {
+			std::vector<float> moveTimes = std::vector<float>({ moveStartTime, moveEndTime - RandomRange::calculate(0, 1000)});
 			Sprite* sprites = CreateBubbleSprites(startPos);
 			ScaleBubbleSize(sprites, moveTimes);
 			ColorBubbles(sprites, moveTimes[0], moveTimes[1]);
@@ -68,6 +69,7 @@ void BubbleGenerator::DrawBubble() {
 			MoveBubble(sprites, moveTimes);
 		}
 		else {
+			std::vector<float> moveTimes = GetBubbleTiming();
 			Bubble* sprites = CreateBubbleSprites();
 			ScaleBubbleSize(sprites, moveTimes);
 			TrackAllBubbles(sprites);
@@ -102,8 +104,8 @@ Vector2 BubbleGenerator::GetBubbleStartPos() {
 		startPos.y = screenBottom - ((rainLength / 2) * maxSize);
 	}
 	else {
-		float xMouthVariance = 25;
-		float yMouthVariance = 13;
+		float xMouthVariance = 10;
+		float yMouthVariance = 10;
 		float xMouthDelta = RandomRange::calculate(-xMouthVariance, xMouthVariance);
 		float yMouthDelta = RandomRange::calculate(-yMouthVariance, yMouthVariance);
 		startPos.x = mouthX + xMouthDelta;
@@ -380,4 +382,71 @@ void BubbleGenerator::TrackAllBubbles(Bubble* sprites) {
 
 std::vector<Bubble*> BubbleGenerator::GetSplatBubbles() {
 	return splattingBubbles;
+}
+
+void BubbleGenerator::renderMouthBubbles() {
+	// push
+	drawMouthBubbles(328, 247, "01:58:791");
+	// ing
+	drawMouthBubbles(316, 255, "01:59:074");
+	// a
+	drawMouthBubbles(302, 267, "01:59:357");
+	// side
+	drawMouthBubbles(318, 247, "01:59:640");
+	// my
+	drawMouthBubbles(321, 267, "02:01:338");
+	// pain
+	drawMouthBubbles(321, 267, "02:01:904");
+	// ex
+	drawMouthBubbles(325, 253, "02:06:433");
+	// change
+	drawMouthBubbles(305, 242, "02:06:716");
+	// bo
+	drawMouthBubbles(317, 239, "02:06:999");
+	// dy
+	drawMouthBubbles(325, 234, "02:07:282");
+	// heat
+	drawMouthBubbles(307, 234, "02:07:565");
+	// a
+	drawMouthBubbles(319, 246, "02:09:546");
+	// gain
+	drawMouthBubbles(314, 237, "02:09:829");
+	// and
+	drawMouthBubbles(328, 229, "02:10:395");
+	// a
+	drawMouthBubbles(304, 225, "02:10:678");
+	// gain
+	drawMouthBubbles(323, 217, "02:10:961");
+	// su
+	drawMouthBubbles(309, 213, "02:16:904");
+	// ffo
+	drawMouthBubbles(315, 213, "02:16:904");
+	// ca
+	drawMouthBubbles(328, 216, "02:17:470");
+	// ting
+	drawMouthBubbles(323, 211, "02:17:753");
+	// puff
+	drawMouthBubbles(322, 194, "02:19:452");
+	// of
+	drawMouthBubbles(320, 197, "02:19:735");
+	// smoke
+	drawMouthBubbles(313, 204, "02:20:018");
+	// and
+	drawMouthBubbles(330, 203, "02:24:263");
+	// i
+	drawMouthBubbles(311, 213, "02:24:546");
+	// saw
+	drawMouthBubbles(321, 217, "02:24:829");
+	// the
+	drawMouthBubbles(311, 211, "02:25:395");
+	// world
+	drawMouthBubbles(312, 217, "02:25:961");
+	// turn
+	drawMouthBubbles(325, 211, "02:28:791");
+	// red
+	drawMouthBubbles(328, 211, "02:29:357");
+}
+
+void BubbleGenerator::drawMouthBubbles(const float x, const float y, const std::string& startTime) {
+	BubbleGenerator(false, true, Vector2(x - 320 , 240 - y), Time(startTime), false);
 }
