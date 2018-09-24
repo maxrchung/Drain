@@ -369,7 +369,7 @@ void Text::render() {
 		"in the wet glow",
 		  }, Time("06:11:244").ms, Time("06:15:772").ms);
 	place({
-		"i reached",
+		"i reached out",
 		"for all the sharp pieces",
 		"pooled them to my cut hands",
 		  }, Time("06:15:772").ms, Time("06:20:301").ms);
