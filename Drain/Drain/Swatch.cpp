@@ -3,8 +3,8 @@
 #include <algorithm>
 const Color Swatch::white = Color(255, 255, 255);
 const Color Swatch::black = Color(0, 0, 0);
-const Color Swatch::offwhite = Color(218, 236, 236);
-const Color Swatch::water = Color(114, 187, 180);
+const Color Swatch::offwhite = Color(156, 184, 192);
+const Color Swatch::water = Color(70, 101, 110);
 const Color Swatch::blood = Color(170, 0, 0);
 const Color Swatch::eerie = Color(27, 27, 27);
 const std::vector<Color> Swatch::colors = {
@@ -164,12 +164,19 @@ void Swatch::colorFgToFgSprites(const std::vector<Sprite*>& sprites, const int s
 	colorSprites(sprites, startTime, endTime, fgTimings, fgTimings);
 }
 void Swatch::colorSprites(const std::vector<Sprite*>& sprites, const int startTime, const int endTime, const std::vector<SwatchTiming>& startTimings, const std::vector<SwatchTiming>& endTimings) {
-	// Find start timing
-	const auto startIterator = std::find_if(startTimings.begin(), startTimings.end(), [startTime](const SwatchTiming& timing) {
-		const auto contained = timing.contains(startTime);
-		return contained;
-	});
-	const auto startIndex = startIterator - startTimings.begin();
+	int startIndex;
+	// Handle special case if startTime comes before first startTime
+	if (startTime < startTimings[0].startTime) {
+		startIndex = 0;
+	}
+	else {
+		// Find start timing
+		const auto startIterator = std::find_if(startTimings.begin(), startTimings.end(), [startTime](const SwatchTiming& timing) {
+			const auto contained = timing.contains(startTime);
+			return contained;
+		});
+		startIndex = startIterator - startTimings.begin();
+	}
 	// Progress through timings and color depending on start/end times
 	for (auto index = startIndex; index < startTimings.size(); ++index) {
 		const auto& timing = startTimings[index];

@@ -1,3 +1,4 @@
+#include "Bubble.hpp"
 #include "BubbleGenerator.hpp"
 #include "Math.hpp"
 #include "Path.hpp"
@@ -25,26 +26,50 @@ int main() {
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
 	//Text::render();
-	Sketch::render();
+	Sketch::render(); 
 	//Splatter::render();
-    //Drip::render();
-
+	//Drip::render();
+	
 	// RainGenerator shit
-	//RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
+	//RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
-	if(0) { //lmao
-		RainGenerator gen = RainGenerator(Time("01:03:32"), Time("01:31:00"), true, 1.03f);
-		//std::vector<Sprite *> raindrops = gen.FreezeRain();
-		std::vector<Sprite *> raindrops;
-		Sprite *temp_raindrop = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(10, 10));
-		//raindrops.push_back(temp_raindrop);
-		Walker walk_boi = Walker::Walker(raindrops);
-		walk_boi.walk(100, Time("01:32:00"), Time("01:42:00"));
+	if(0) {
+		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
+		std::vector<Sprite *> raindrops = gen.FreezeRain();
+		std::vector<SpriteCollection> coll_raindrops;
+		for(auto drop: raindrops) {
+			coll_raindrops.push_back(drop);
+		}
+		Walker walk_boi = Walker::Walker(coll_raindrops);
+		walk_boi.walk(1000, Time("01:30:489"), Time("01:57:659"));
+	}
+
+	//testing bubbles
+	if(0) {
+		for(int i = 0; i < 20; ++i) {
+			Bubble bub = Bubble();
+			int start_time = Time("01:30:489").ms;
+			int end_time = Time("01:57:659").ms;
+			float rx = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.x - (Vector2::ScreenSize.x / 2);
+			float ry = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.y - (Vector2::ScreenSize.y / 2);
+			float sx = ((float)std::rand() / RAND_MAX) * 2 - 1;
+			float sy = ((float)std::rand() / RAND_MAX) * 2 - 1;
+			Vector2 start_pos = {0, 0};
+			Vector2 end_pos = {rx, ry};
+
+			bub.MoveAndScale(start_time, end_time, start_pos, end_pos, sx, sy);
+			bub.Color(start_time, end_time);
+		}
 	}
 
 	// BubbleGenerator shit
-	//BubbleGenerator::BubbleGenerator();
+	if (1) {
+		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
+		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
+	}
+
+	BubbleGenerator::renderMouthBubbles();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb

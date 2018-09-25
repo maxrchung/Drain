@@ -127,6 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BlankStroke.cpp" />
+    <ClCompile Include="Bubble.cpp" />
     <ClCompile Include="BubbleGenerator.cpp" />
     <ClCompile Include="CCWEndEighthStroke.cpp" />
     <ClCompile Include="CCWQuarterStroke.cpp" />
@@ -144,7 +145,6 @@
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="PointStroke.cpp" />
-    <ClCompile Include="Raindrop.cpp" />
     <ClCompile Include="RainGenerator.cpp" />
     <ClCompile Include="RandomRange.cpp" />
     <ClCompile Include="Sketch.cpp" />
@@ -156,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlankStroke.hpp" />
+    <ClInclude Include="Bubble.hpp" />
     <ClInclude Include="BubbleGenerator.hpp" />
     <ClInclude Include="CCWEndEighthStroke.hpp" />
     <ClInclude Include="CCWQuarterStroke.hpp" />
@@ -177,7 +178,6 @@
     <ClInclude Include="Text.hpp" />
     <ClInclude Include="Path.hpp" />
     <ClInclude Include="PointStroke.hpp" />
-    <ClInclude Include="Raindrop.hpp" />
     <ClInclude Include="Stroke.hpp" />
     <ClInclude Include="SwatchTiming.hpp" />
     <ClInclude Include="Timing.hpp" />

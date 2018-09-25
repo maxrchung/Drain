@@ -17,58 +17,63 @@ public:
 	Sketch(const std::string& pointMapPath,
 		   const Time& startTime,
 		   const Time& endTime,
-		   const int thickness,
-		   const float resolution,
-		   const bool dynamic,
+		   const float resolution = defaultResolution,
+		   const bool dynamic = true,
 		   const Path& brush = Path::Taper,
-		   const int margin = 5,
+		   const int margin = 0,
+		   const int thickness = 1,
 		   const Easing& easing = Easing::Linear,
 		   const bool drawIn = false,
 		   const bool drawOut = false,
 		   const bool fadeIn = false,
 		   const bool fadeOut = false);
 	static void render();
-	int times;  // times to loop visibility on and off
-	int relStart; // delay between start of loop and start of this sketch
-	int hiddenDur;  // time this sketch is hidden (used in loops)
 private:
-	const int make();
 	// Helper that calls make()
-	static void draw(const std::string& pointMapPath,
+	static void make(const std::string& pointMapPath,
 					 const Time& startTime,
 					 const Time& endTime,
-					 const int thickness,
-					 const float resolution,
-					 const bool dynamic,
+					 const float resolution = defaultResolution,
+					 const bool dynamic = true,
 					 const Path& brush = Path::Taper,
-					 const int margin = 5,
+					 const int margin = 0,
+					 const int thickness = 1,
 					 const Easing& easing = Easing::Linear,
 					 const bool drawIn = false,
 					 const bool drawOut = false,
 					 const bool fadeIn = false,
 					 const bool fadeOut = false);
+	static void loop(std::vector<Sketch>& v, int times);
+	static constexpr float defaultResolution = 4.5f;
+	static constexpr float shift = 4.0f;
+	void draw(Bezier& b);    // make() breaks the .txt up into 4-dim beziers and calls draw
+	void getTransform(float *xshift, float *yshift, float *xscale, float *yscale);
+	bool inBounds(const Vector2& point); // Check if point is within bounds
+	int constResolution(Bezier& b);
+	int dynamicResolution(Bezier& b);
+	int make();
 	const std::string pointMapPath;
-	const int thickness;
-	const float resolution;
-	const bool dynamic;
-	const int margin;
-	const Path brush;
-	std::string brushPath;
-	const Time startTime;
-	const Time endTime;
-	int visDur;
-	const Easing easing;
-	const bool drawIn;
-	const bool drawOut;
 	const bool fadeIn;
 	const bool fadeOut;
-	std::vector<Vector2> points;
-	void draw(Bezier b);    // make() breaks the .txt up into 4-dim beziers and calls draw
-	int constResolution(Bezier b);
-	void getTransform(float *xshift, float *yshift, float *xscale, float *yscale);
-	int totalLines; // should be the same as sprites.size()
-	std::vector<Sprite*> sprites;
+	const bool drawIn;
+	const bool drawOut;
+	const bool dynamic;
+	const Easing easing;
+	const float resolution;
+	const int boundsBorder = 5;
+	const int margin;
+	const int thickness;
+	const Path brush;
+	const std::string brushPath;
+	const Time endTime;
+	const Time startTime;
 	int count;  // number of ; in .txt (curves)
-	int dynamicResolution(Bezier b);
-	static void loop(int times, std::vector<Sketch> v);
+	int totalLines;
+	int visDur;
+	int loopEndTime;
+	int times;  // times to loop visibility on and off
+	int relStart; // delay between start of loop and start of this sketch
+	int hiddenDur;  // time this sketch is hidden (used in loops)
+	std::vector<Vector2> points;
+	std::vector<Sprite*> sprites;
 };

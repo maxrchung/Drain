@@ -1,5 +1,5 @@
 LDFLAGS = -lm
-FLAGS = -w -fpermissive -Wnarrowing 
+FLAGS = -w -fpermissive -Wnarrowing -D LINUX
 CC = g++ -MMD -g
 
 STORY = main
@@ -18,8 +18,8 @@ S2RYH   := $(wildcard Drain/S2RYBRUH/*.hpp)
 
 OUT = drain
 
-all: S2RYOBJ2 DRAINOBJ2 link
-	./drain
+all: S2RYOBJ2 DRAINOBJ2 cstuff link
+	./drain && ./move.sh
 
 $(DRAINDIR)/%.o: $(DRAINDIR)/%.cpp
 	$(CC) $(FLAGS) -IDrain/S2RYBRUH/ -c $< -o $@
@@ -29,8 +29,9 @@ DRAINOBJ2: $(DRAINSRC:.cpp=.o)
 $(S2RYDIR)/%.o: $(S2RYDIR)/%.cpp
 	$(CC) $(FLAGS) -c $< -o $@
 
-$(S2RYDIR)/%.o: $(S2RYDIR)/%.c
-	gcc -MMD -c $< -o $@
+cstuff: $(S2RYDIR)/kiss_fft.c $(S2RYDIR)/kiss_fftr.c
+	gcc -MMD -c -IDrain/S2RYBRUH $(S2RYDIR)/kiss_fft.c -o $(S2RYDIR)/kiss_fft.o
+	gcc -MMD -c -IDrain/S2RYBRUH $(S2RYDIR)/kiss_fftr.c -o $(S2RYDIR)/kiss_fftr.o
 
 S2RYOBJ2: $(S2RYSRC:.cpp=.o)
 
@@ -42,6 +43,3 @@ clean:
 
 cleanall:
 	del $(CUROS)
-
-hardlink:
-	ln Drain/Drain/*.hpp Drain/S2RYBRUH/*.hpp

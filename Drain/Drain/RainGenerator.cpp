@@ -42,7 +42,8 @@ void RainGenerator::DrawRain() {
 		float totalVariance = actualDropTotalTime * 8;
 		float dropTimeDelta = RandomRange::calculate(-totalVariance, totalVariance); // This way drop timing of rain will vary based on totalVariance
 		float actualDropStart = dropStartTime + dropTimeDelta;
-		float actualDropEnd = SlowRainBeforeFreeze(actualDropStart, actualDropTotalTime);
+		bool freezeFlag = false;
+		float actualDropEnd = SlowRainBeforeFreeze(actualDropStart, actualDropTotalTime, freezeFlag);
 
 		if (actualDropStart < startTime.ms || actualDropStart > freezeTime.ms || (!willFreeze && actualDropStart > endTime.ms)) { // Ensures drops don't fall outside of time section & freezeTime
 			continue;
@@ -61,6 +62,9 @@ void RainGenerator::DrawRain() {
 		}
 
 		float rainSize = ScaleRainSize(sprite, actualDropTotalTime, minDropTime, actualDropStart);
+		TrackAllRainDrops(sprite);
+
+		ColorRain(sprite, actualDropStart, actualDropEnd);
 
 		if (willFreeze && (freezeTime.ms >= actualDropStart && freezeTime.ms <= actualDropEnd)) { // Tracks raindrop sprite from vector if drop is visible on the screen during freezeTime
 			TrackRainDrop(sprite, actualDropStart, actualDropEnd, rainSize, spriteEndPosX, spriteEndPosY);
@@ -68,7 +72,11 @@ void RainGenerator::DrawRain() {
 			sprite->Move(actualDropStart, freezeTime.ms, sprite->position, Vector2(freezePos.x, freezePos.y));
 		}
 		else { // If this particular raindrop isn't being frozen, drop it to the bottom of the screen
-			sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(spriteEndPosX, spriteEndPosY));
+			auto easing = Easing::Linear;
+			if (freezeFlag) {
+				easing = Easing::QuadOut;
+			}
+			sprite->Move(actualDropStart, actualDropEnd, sprite->position, Vector2(spriteEndPosX, spriteEndPosY), easing);
 		}
 	}
 }
@@ -101,7 +109,7 @@ std::vector<Sprite*> RainGenerator::FreezeRain() {
 	return rainSprites;
 }
 
-float RainGenerator::SlowRainBeforeFreeze(float actualDropStart, float actualDropTotalTime) {
+float RainGenerator::SlowRainBeforeFreeze(float actualDropStart, float actualDropTotalTime, bool& freezeFlag) {
 	float slowStartTime = freezeTime.ms - slowPeriod.ms;
 	float timeFromStartSlow = actualDropStart - slowStartTime;
 	float slowRatio = timeFromStartSlow / slowPeriod.ms;
@@ -109,7 +117,7 @@ float RainGenerator::SlowRainBeforeFreeze(float actualDropStart, float actualDro
 	if (actualDropStart >= slowStartTime) { // Slows down drops a certain time before freezeTime
 		float realActualDropTotalTime = actualDropTotalTime + (actualDropTotalTime * (maxSlow * slowRatio));
 		float actualDropEnd = actualDropStart + realActualDropTotalTime;
-
+		freezeFlag = true;
 		return actualDropEnd;
 	}
 	else { // Won't increase actualDropEnd until it's time to slow down rain drops
@@ -130,6 +138,10 @@ void RainGenerator::TrackRainDrop(Sprite* sprite, float actualDropStart, float a
 	rainDrop.endY = spriteEndPosY;
 
 	rainDrops.push_back(rainDrop);
+}
+
+void RainGenerator::TrackAllRainDrops(Sprite* sprite) {
+	sprites.push_back(sprite);
 }
 
 // Returns the actual total time(ms) it takes for a drop to fall across the screen.. Smaller rain sizes (slower velocity) are made more probable for visual effect
@@ -238,4 +250,8 @@ void RainGenerator::VelocityController() {
 	// Increments time after row of rain is finished falling
 	dropStartTime += dropTotalTime;
 	dropEndTime = dropStartTime + dropTotalTime;
+}
+
+void RainGenerator::ColorRain(Sprite * sprite, float startTime, float endTime) {
+	Swatch::colorFgToFgSprites({ sprite }, startTime, endTime);
 }
