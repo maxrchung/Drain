@@ -238,8 +238,8 @@ void Text::render() {
 	place({
 		"lost in the morning fog",
 		"we parted ways",
-		"separated by our",
-		"different worlds",
+		"separated by",
+		"our different worlds",
 		  }, Time("02:56:527").ms, Time("03:01:055").ms);
 	place({
 		"in hiding we bid our time",
