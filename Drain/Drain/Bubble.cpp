@@ -97,8 +97,8 @@ SpriteCollection Bubble::create_sprites() {
 
 	for(int i = 0; i < highlight_count; ++i) {
 		float range = 0.5;
-		Vector2 offset = Vector2((this->sprite_size / 2) * w_rand(-range, range),
-					 (this->sprite_size / 2) * w_rand(-range, range));
+		Vector2 offset = Vector2(w_rand(-range, range),
+					 w_rand(-range, range));
 
 		oblong_scale  = Vector2(w_rand(min_oblong_range, max_oblong_range),
 					w_rand(min_oblong_range, max_oblong_range));

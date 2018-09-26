@@ -73,7 +73,7 @@ int main() {
 	// BubbleGenerator shit
 	if (1) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
-		//BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
+		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
 	}
 
 	BubbleGenerator::renderMouthBubbles();
