@@ -54,6 +54,7 @@ void Bubble::Color(const int startTime, const int endTime) {
 	for(int i = 1; i < highlight_count + 1; ++i) {
 		Swatch::colorBgToBgSprites({sprites.sprites[i]}, startTime, endTime);
 	}
+	return;
 }
 
 
@@ -62,14 +63,18 @@ void Bubble::Fade(const int startTime, const int endTime) {
 	for(int i = 1; i < highlight_count + 1; ++i) {
 		Swatch::colorBgToBgSprites({sprites.sprites[i]}, startTime, endTime);
 	}
+	return;
 }
 
 
 void Bubble::fixScale(int startTime, int endTime) {
+	/*
 	for(int i = 0; i < this->sprites.scale.size(); ++i) {
 		this->sprites.sprites[i]->Scale(startTime, endTime, this->sprites.scale[i], this->sprites.scale[i]);
 	}
 	this->scale = 1;
+	return;
+	*/
 }
 
 
@@ -87,21 +92,17 @@ SpriteCollection Bubble::create_sprites() {
 	Vector2 oblong_scale = Vector2(w_rand(min_oblong_range, max_oblong_range), w_rand(min_oblong_range, max_oblong_range));
 	this->highlight_oblong.push_back(oblong_scale);
 
-	//this->highlight_oblong.push_back(Vector2(w_rand(min_oblong_range, max_oblong_range), w_rand(min_oblong_range, max_oblong_range)));
-	//this->oblong = {w_rand(min_oblong_range, max_oblong_range), w_rand(min_oblong_range, max_oblong_range)};
-
 	location.push_back({0, 0});
 	scale.push_back(1);
 
 	for(int i = 0; i < highlight_count; ++i) {
-		Vector2 offset = Vector2::Zero;
-		float range = 0.75;
-		offset.x = (this->sprite_size / 2) * w_rand(-range, range);
-		offset.y = (this->sprite_size / 2) * w_rand(-range, range);
+		float range = 0.5;
+		Vector2 offset = Vector2((this->sprite_size / 2) * w_rand(-range, range),
+					 (this->sprite_size / 2) * w_rand(-range, range));
 
-		oblong_scale  = Vector2(w_rand(min_oblong_range, max_oblong_range), w_rand(min_oblong_range, max_oblong_range));
-		//Vector2 highlight_thing = Vector2(w_rand(min_oblong_range, max_oblong_range), w_rand(min_oblong_range, max_oblong_range));
-		//highlight_oblong[i] = highlight_thing;
+		oblong_scale  = Vector2(w_rand(min_oblong_range, max_oblong_range),
+					w_rand(min_oblong_range, max_oblong_range));
+
 		this->highlight_oblong.push_back(oblong_scale);
 		Sprite *sprite = Storyboard::CreateSprite(getPath(Path::Circle), offset);
 		float s = w_rand(0.02, 0.1);

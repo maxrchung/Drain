@@ -3,6 +3,7 @@
 #include "Swatch.hpp"
 #include <random>
 #include <ctime>
+#include <numeric>
 
 #define SPRITE_SIZE 100.0
 
@@ -33,20 +34,35 @@ Sprite * Drip::drawRect(int offset, float growDur, Easing easing)
     return s;
 }
 
+// checks if there are still gaps on screen
+bool Drip::ScreenIsNotFilled(){
+    // todo
+    return false;
+}
+
 // returns number of sprites drawn
-int Drip::make() {
+int Drip::make(bool fillScreen) {
     std::default_random_engine generator(time(0));
-    std::uniform_real_distribution<float> uniform(-100, 100);
+    std::uniform_real_distribution<float> uniformPosition(-Vector2::ScreenSize.x / 2, Vector2::ScreenSize.x / 2);
+    std::uniform_real_distribution<float> uniformSize(1, xSize);
     int numColumns = std::ceil(Vector2::ScreenSize.x / SPRITE_SIZE);
-    drawRect(0, speedFactor, Easing::Linear);
+    // drawRect(0, speedFactor, Easing::Linear);
+    auto columnXPositions = std::vector<int>();
+    auto columnXSizes = std::vector<int>();
+    if (fillScreen){
+        while (ScreenIsNotFilled()) {
+            columnXPositions.push_back((int)uniformPosition(generator));
+            columnXSizes.push_back((int)uniformSize(generator));
+        }
+    }
     return 0;
 }
 
 void Drip::render() {
     std::cout << "Rendering Drip..." << std::endl;
     // drip to cover screen 04:04:168 - 04:44:074
-    Drip(Time("04:04:168"), Time("04:44:074"), 1, 0, 1500).make();
+    Drip(Time("04:04:168"), Time("04:44:074"), 1, 0, 1500).make(true);
     // 3D drip slower 05:39:000 - 06:06:000
-    Drip(Time("05:39:000"), Time("06:06:000"), 1, 0, 4000).make();
+    Drip(Time("05:39:000"), Time("06:06:000"), 1, 0, 4000).make(false);
 }
 

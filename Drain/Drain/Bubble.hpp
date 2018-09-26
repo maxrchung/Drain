@@ -19,6 +19,8 @@ public:
 	void Fade(const int startTime, const int endTime);
 
 	void fixScale(int startTime, int endTime);
+
+	std::vector<Vector2> highlight_oblong;
 	SpriteCollection sprites;
 
 private:
@@ -26,7 +28,7 @@ private:
 
 	Vector2 oblong;
 	int highlight_count;
-	std::vector<Vector2> highlight_oblong;
+
 
 	SpriteCollection create_sprites();
 

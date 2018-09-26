@@ -40,6 +40,7 @@ Sprite * Splatter::draw(Vector2 pos, int offset, float size,
             s->Fade(startTime.ms + offset, endTime.ms, fadeFrom, fadeTo, easing);
     }
     Swatch::colorFgToFgSprites({ s }, startTime.ms + offset, endTime.ms); // color will determine Sprite lifetime
+    sprites.push_back(s);
     return s;
 }
 
