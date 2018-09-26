@@ -25,5 +25,7 @@ private:
     Sprite * drawRect(int offset,
         float growDur,      // duration of drip in ms
         Easing easing = Easing::Linear);
-    int make();
+    int make(bool fillScreen);
+    bool ScreenIsNotFilled();
+
 };

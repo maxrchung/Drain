@@ -22,6 +22,7 @@ public:
         const int type,
         const Sketch * bubble);   // Sketch is a placeholder, replace with AirBubble
     static void render();
+    std::vector<Sprite*> sprites;
 private:
     const Time startTime;
     const Time endTime;
