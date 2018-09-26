@@ -70,5 +70,5 @@ void CWStartEighthStroke::place(const Vector2& position,
 	colorBgSprites({ inner }, startTime, endTime);
 	colorFgSprites({ outer, startPoint, endPoint }, startTime, endTime);
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(endPosition - center);
-	rotateSprites({ outer, inner, horizontalCover, verticalCover }, startTime, rotation);
+	rotateSprites({ outer, inner }, startTime, rotation);
 }

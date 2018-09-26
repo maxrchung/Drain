@@ -12,12 +12,12 @@ public:
 	static void render();
 private:
 	static void draw(const std::string& lyric,
-					 const Vector2& center,
-					 const int startTime,
-					 const int endTime);
+					 const std::string& pStartTime,
+					 const std::string& pEndTime,
+					 const Vector2& center = Vector2::Zero);
 	static void place(const std::vector<std::string>& stanza,
-					  const int startTime,
-					  const int endTime);
+					  const std::string& pStartTime,
+					  const std::string& pEndTime);
 	static const RandomRange poemScale;
 	static const RandomRange poemSpacing;
 	static constexpr float lyricScale = 22.0f;

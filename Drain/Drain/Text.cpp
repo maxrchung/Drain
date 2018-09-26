@@ -5,9 +5,11 @@
 const RandomRange Text::poemScale = RandomRange(8, 12);
 const RandomRange Text::poemSpacing = RandomRange(10, 26);
 void Text::draw(const std::string& lyric,
-				const Vector2& center,
-				const int startTime,
-				const int endTime) {
+				const std::string& pStartTime,
+				const std::string& pEndTime,
+				const Vector2& center) {
+	const auto startTime = Time(pStartTime).ms;
+	const auto endTime = Time(pEndTime).ms;
 	const auto characters = createCharacters(lyric);
 	const auto totalWidth = calculateWidth(characters, lyricScale);
 	auto left = Vector2(center.x - (totalWidth / 2.0f), center.y);
@@ -20,8 +22,10 @@ void Text::draw(const std::string& lyric,
 	}
 }
 void Text::place(const std::vector<std::string>& stanza,
-				 const int startTime,
-				 const int endTime) {
+				 const std::string& pStartTime,
+				 const std::string& pEndTime) {
+	const auto startTime = Time(pStartTime).ms;
+	const auto endTime = Time(pEndTime).ms;
 	std::vector<std::vector<Character>> lines;
 	std::for_each(stanza.begin(), stanza.end(), [&](const auto& line) {
 		lines.push_back(createCharacters(line));
@@ -119,271 +123,272 @@ std::vector<Character> Text::createCharacters(const std::string& lyric) {
 }
 void Text::render() {
 	// Uncomment for banner use only
-	//draw("drain", Vector2::Zero, Time("00:03:000").ms, Time("00:03:000").ms + Timing::whole * 4);
+	//const auto bannerEndTime = Time(3000 + Timing::whole * 4).format;
+	//draw("drain", "00:03:000", bannerEndTime;
 
 	std::cout << "Rendering Text..." << std::endl;
 
 	// Lyric 1
-	draw("suffocating", Vector2::Zero, Time("00:05:584").ms, Time("00:06:999").ms);
-	draw("puff of smoke", Vector2::Zero, Time("00:08:131").ms, Time("00:09:475").ms);
-	draw("i took your breath in", Vector2::Zero, Time("00:14:357").ms, Time("00:16:055").ms);
-	draw("and you spoke", Vector2::Zero, Time("00:17:187").ms, Time("00:18:602").ms);
-	draw("and i saw the world", Vector2::Zero, Time("00:21:999").ms, Time("00:25:678").ms);
-	draw("turn white", Vector2::Zero, Time("00:26:527").ms, Time("00:35:159").ms);
-	draw("are you still calling me", Vector2::Zero, Time("00:36:716").ms, Time("00:38:697").ms);
-	draw("i melt", Vector2::Zero, Time("00:40:395").ms, Time("00:49:168").ms);
-	draw("into", Vector2::Zero, Time("00:49:452").ms, Time("00:50:867").ms);
-	draw("your voice", Vector2::Zero, Time("00:51:716").ms, Time("00:52:565").ms);
+	draw("suffocating", "00:05:584", "00:06:999");
+	draw("puff of smoke", "00:08:131", "00:09:475");
+	draw("i took your breath in", "00:14:357", "00:16:055");
+	draw("and you spoke", "00:17:187", "00:18:602");
+	draw("and i saw the world", "00:21:999", "00:25:678");
+	draw("turn white", "00:26:527", "00:35:159");
+	draw("are you still calling me", "00:36:716", "00:38:697");
+	draw("i melt", "00:40:395", "00:49:168");
+	draw("into", "00:49:452", "00:50:867");
+	draw("your voice", "00:51:716", "00:52:565");
 	// Credits
 	place({
 		"song:",
 		"drain"
-		  }, Time("01:03:319").ms, Time("01:05:584").ms);
+		  }, "01:03:319", "01:05:584");
 	place({
 		"artist:",
 		"electrocutica"
-		  }, Time("01:05:584").ms, Time("01:07:848").ms);
+		  }, "01:05:584", "01:07:848");
 	place({
 		"mapper:",
 		"fartownik"
-		  }, Time("01:07:848").ms, Time("01:10:112").ms);
+		  }, "01:07:848", "01:10:112");
 	place({
 		"storyboarders:",
-		"szvx",
+		"s2vx",
+		"naranja sagged",
 		"niseboi",
 		"xenocidel",
-		"naranja sagged",
 		"dicingdice"
-		  }, Time("01:10:112").ms, Time("01:12:187").ms);
+		  }, "01:10:112", "01:12:187");
 	// Poem 1
 	place({
 		"chained and bound",
 		"in a corner of empty space",
 		"you whispered against the wall",
 		"pleas, pleas of help",
-		  }, Time("01:12:376").ms, Time("01:21:433").ms);
+		  }, "01:12:376", "01:21:433");
 	place({
 		"a torrent of blurs outside",
 		"the whole world passed by",
 		"as you cried",
 		"cried and cried",
-		  }, Time("01:21:433").ms, Time("01:30:489").ms);
+		  }, "01:21:433", "01:30:489");
 	place({
 		"drowning",
 		"dangling in the abyss",
 		"your fingers outstretched",
 		"searching, for anything",
 		"anyone out there",
-		  }, Time("01:30:489").ms, Time("01:39:546").ms);
+		  }, "01:30:489", "01:39:546");
 	place({
 		"i reached out",
 		"and we touched.",
 		"for a second",
 		"forming a bond",
-		  }, Time("01:39:546").ms, Time("01:44:074").ms);
+		  }, "01:39:546", "01:44:074");
 	place({
 		"trust in me",
 		"follow me",
 		"and you'll find peace,",
 		"i promised",
-		  }, Time("01:44:074").ms, Time("01:48:602").ms);
+		  }, "01:44:074", "01:48:602");
 	place({
 		"so began our nights",
 		"of running away",
 		"trips of respite",
 		"far away",
-		  }, Time("01:48:602").ms, Time("01:53:131").ms);
+		  }, "01:48:602", "01:53:131");
 	place({
 		"through city streets",
 		"and rainy nights",
 		"we splashed and danced",
 		"atop puddles",
-		  }, Time("01:53:131").ms, Time("01:57:659").ms);
+		  }, "01:53:131", "01:57:659");
 	// Lyric 2
-	draw("pushing aside", Vector2::Zero, Time("01:58:791").ms, Time("02:00:489").ms);
-	draw("my pain", Vector2::Zero, Time("02:01:338").ms, Time("02:05:584").ms);
-	draw("exchanged body heat", Vector2::Zero, Time("02:06:338").ms, Time("02:08:414").ms);
-	draw("again and again", Vector2::Zero, Time("02:09:475").ms, Time("02:14:640").ms);
-	draw("suffocating", Vector2::Zero, Time("02:16:904").ms, Time("02:18:744").ms);
-	draw("puff of smoke", Vector2::Zero, Time("02:19:452").ms, Time("02:21:150").ms);
-	draw("and i saw the world", Vector2::Zero, Time("02:24:263").ms, Time("02:27:659").ms);
-	draw("turn red", Vector2::Zero, Time("02:28:791").ms, Time("02:32:753").ms);
+	draw("pushing aside", "01:58:791", "02:00:489");
+	draw("my pain", "02:01:338", "02:05:584");
+	draw("exchanged body heat", "02:06:338", "02:08:414");
+	draw("again and again", "02:09:475", "02:14:640");
+	draw("suffocating", "02:16:904", "02:18:744");
+	draw("puff of smoke", "02:19:452", "02:21:150");
+	draw("and i saw the world", "02:24:263", "02:27:659");
+	draw("turn red", "02:28:791", "02:32:753");
 	// Poem 2
 	place({
 		"your voice pierced the rain",
 		"singing, screaming in song"
-		  }, Time("02:33:885").ms, Time("02:38:414").ms);
+		  }, "02:33:885", "02:38:414");
 	place({
 		"for a few moments then",
 		"we forgot the sad world",
 		"crying in its sweet dream",
-		  }, Time("02:38:414").ms, Time("02:42:949").ms);
+		  }, "02:38:414", "02:42:949");
 	place({
 		"you and i laughed",
 		"stumbled through alleyways",
 		"exploring every nook"
-		  }, Time("02:42:949").ms, Time("02:47:470").ms);
+		  }, "02:42:949", "02:47:470");
 	place({
 		"clasping tightly",
 		"i dragged us along",
 		"in a frenzied daze",
 		"night after night",
-		  }, Time("02:47:470").ms, Time("02:51:999").ms);
+		  }, "02:47:470", "02:51:999");
 	place({
 		"until a light",
 		"cusping the sky",
 		"signaled a return",
 		"to daily life",
-		  }, Time("02:51:999").ms, Time("02:56:527").ms);
+		  }, "02:51:999", "02:56:527");
 	place({
 		"lost in the morning fog",
 		"we parted ways",
 		"separated by our",
 		"different worlds",
-		  }, Time("02:56:527").ms, Time("03:01:055").ms);
+		  }, "02:56:527", "03:01:055");
 	place({
 		"in hiding we bid our time",
 		"waiting for the next chance",
 		"to sneak out in the rain",
-		  }, Time("03:01:055").ms, Time("03:05:584").ms);
+		  }, "03:01:055", "03:05:584");
 	place({
 		"night by night",
 		"we met each other",
 		"night by night",
 		"we escaped",
-		  }, Time("03:05:584").ms, Time("03:10:112").ms);
+		  }, "03:05:584", "03:10:112");
 	place({
 		"counting the moons",
 		"from crescent to full",
 		"every adventure",
 		"one to remember",
-		  }, Time("03:10:112").ms, Time("03:14:640").ms);
+		  }, "03:10:112", "03:14:640");
 	place({
 		"through the seasons",
 		"time passed",
 		"the sun rose sooner",
 		"and our time, shorter",
-		  }, Time("03:14:640").ms, Time("03:19:168").ms);
+		  }, "03:14:640", "03:19:168");
 	place({
 		"runs became walks",
 		"laughs became smiles",
 		"now we took shelter",
 		"from the pouring nights",
-		  }, Time("03:19:168").ms, Time("03:23:697").ms);
+		  }, "03:19:168", "03:23:697");
 	place({
 		"a toll, a price to pay",
 		"with your mind and body",
 		"a cost and affordance",
 		"for each trip",
-		  }, Time("03:23:697").ms, Time("03:28:225").ms);
+		  }, "03:23:697", "03:28:225");
 	place({
 		"with exhaustion",
 		"we barely met the night's end",
 		"to catch the day's start",
-		  }, Time("03:28:225").ms, Time("03:32:753").ms);
+		  }, "03:28:225", "03:32:753");
 	place({
 		"but one night",
 		"we failed to make it back",
 		"lost in the maze",
 		"of winding streets",
-		  }, Time("03:32:753").ms, Time("03:37:282").ms);
+		  }, "03:32:753", "03:37:282");
 	place({
 		"as the day broke",
 		"ghosts and demons",
 		"evil of all kind",
 		"spawned from the shadows",
-		  }, Time("03:37:282").ms, Time("03:41:810").ms);
+		  }, "03:37:282", "03:41:810");
 	place({
 		"every dark corner",
 		"hid encroaching fears",
 		"forcing us to run away",
 		"down frantic paths",
-		  }, Time("03:41:810").ms, Time("03:46:338").ms);
+		  }, "03:41:810", "03:46:338");
 	place({
 		"around corners and bends",
 		"a storm of movements",
-		  }, Time("03:46:338").ms, Time("03:48:602").ms);
+		  }, "03:46:338", "03:48:602");
 	place({
 		"with a misstep",
 		"you tumbled to the floor",
 		"and a swarm of shadows",
 		"swallowed you whole",
-		  }, Time("03:48:602").ms, Time("03:53:131").ms);
+		  }, "03:48:602", "03:53:131");
 	place({
 		"a panic, a struggle",
 		"pulling you up",
 		"but we broke apart",
 		"and lost touch",
-		  }, Time("03:53:131").ms, Time("03:57:659").ms);
+		  }, "03:53:131", "03:57:659");
 	place({
 		"a final scream",
 		"left your lips",
 		"before the void took you",
 		"and i ran, ran away",
-		  }, Time("03:57:659").ms, Time("04:04:168").ms);
+		  }, "03:57:659", "04:04:168");
 	// Lyric 3
-	draw("dripping", Vector2::Zero, Time("04:04:168").ms, Time("04:05:805").ms);
-	draw("trickling", Vector2::Zero, Time("04:06:433").ms, Time("04:07:211").ms);
-	draw("dribbling", Vector2::Zero, Time("04:08:697").ms, Time("04:09:475").ms);
-	draw("a little more", Vector2::Zero, Time("04:12:942").ms, Time("04:14:640").ms);
-	draw("give me some more", Vector2::Zero, Time("04:17:470").ms, Time("04:19:168").ms);
-	draw("dripping", Vector2::Zero, Time("04:22:282").ms, Time("04:23:060").ms);
-	draw("trickling", Vector2::Zero, Time("04:24:546").ms, Time("04:25:324").ms);
-	draw("dribbling", Vector2::Zero, Time("04:26:739").ms, Time("04:27:588").ms);
-	draw("into my core", Vector2::Zero, Time("04:31:055").ms, Time("04:36:574").ms);
-	draw("i don't know", Vector2::Zero, Time("04:44:074").ms, Time("04:46:338").ms);
-	draw("when i lost", Vector2::Zero, Time("04:46:904").ms, Time("04:48:815").ms);
-	draw("my key", Vector2::Zero, Time("04:49:239").ms, Time("04:55:749").ms);
-	draw("take a vow", Vector2::Zero, Time("04:56:527").ms, Time("04:59:923").ms);
-	draw("and just", Vector2::Zero, Time("05:00:560").ms, Time("05:01:763").ms);
-	draw("kill me", Vector2::Zero, Time("05:02:187").ms, Time("05:08:838").ms);
-	draw("i don't know", Vector2::Zero, Time("05:20:301").ms, Time("05:22:565").ms);
-	draw("when i lost", Vector2::Zero, Time("05:23:131").ms, Time("05:24:970").ms);
-	draw("my key", Vector2::Zero, Time("05:25:395").ms, Time("05:31:621").ms);
-	draw("take a vow", Vector2::Zero, Time("05:32:753").ms, Time("05:36:150").ms);
-	draw("and just", Vector2::Zero, Time("05:36:857").ms, Time("05:37:989").ms);
-	draw("kill me", Vector2::Zero, Time("05:38:414").ms, Time("05:49:735").ms);
+	draw("dripping", "04:04:168", "04:05:805");
+	draw("trickling", "04:06:433", "04:07:211");
+	draw("dribbling", "04:08:697", "04:09:475");
+	draw("a little more", "04:12:942", "04:14:640");
+	draw("give me some more", "04:17:470", "04:19:168");
+	draw("dripping", "04:22:282", "04:23:060");
+	draw("trickling", "04:24:546", "04:25:324");
+	draw("dribbling", "04:26:739", "04:27:588");
+	draw("into my core", "04:31:055", "04:36:574");
+	draw("i don't know", "04:44:074", "04:46:338");
+	draw("when i lost", "04:46:904", "04:48:815");
+	draw("my key", "04:49:239", "04:55:749");
+	draw("take a vow", "04:56:527", "04:59:923");
+	draw("and just", "05:00:560", "05:01:763");
+	draw("kill me", "05:02:187", "05:08:838");
+	draw("i don't know", "05:20:301", "05:22:565");
+	draw("when i lost", "05:23:131", "05:24:970");
+	draw("my key", "05:25:395", "05:31:621");
+	draw("take a vow", "05:32:753", "05:36:150");
+	draw("and just", "05:36:857", "05:37:989");
+	draw("kill me", "05:38:414", "05:49:735");
 	// Poem 3
 	place({
 		"it wasn't until evening",
 		"that i returned to the city",
 		"where your body laid",
 		"was a shard of your soul",
-		  }, Time("05:57:659").ms, Time("06:02:187").ms);
+		  }, "05:57:659", "06:02:187");
 	place({
 		"a memory, of feeling",
 		"of thought and prayer",
 		"a moment of bliss",
 		"that you captured",
-		  }, Time("06:02:187").ms, Time("06:06:716").ms);
+		  }, "06:02:187", "06:06:716");
 	place({
 		"above",
 		"clouds gathered in the sky",
 		"the first drops",
 		"dotted the landscape",
-		  }, Time("06:06:716").ms, Time("06:11:244").ms);
+		  }, "06:06:716", "06:11:244");
 	place({
 		"more and more",
 		"fragments of you appeared",
 		"twinkling and sparkling",
 		"in the wet glow",
-		  }, Time("06:11:244").ms, Time("06:15:772").ms);
+		  }, "06:11:244", "06:15:772");
 	place({
 		"i reached out",
 		"for all the sharp pieces",
 		"pooled them to my cut hands",
-		  }, Time("06:15:772").ms, Time("06:20:301").ms);
+		  }, "06:15:772", "06:20:301");
 	place({
 		"was it right",
 		"was it good",
 		"was it worth it",
-		  }, Time("06:20:301").ms, Time("06:24:829").ms);
+		  }, "06:20:301", "06:24:829");
 	place({
 		"i kissed the fragments",
 		"then consume them all",
-		  }, Time("06:24:829").ms, Time("06:31:055").ms);
+		  }, "06:24:829", "06:31:055");
 	// Lyric 4
-	draw("when the wall broke down", Vector2::Zero, Time("06:31:055").ms, Time("06:32:329").ms);
-	draw("you were there", Vector2::Zero, Time("06:32:895").ms, Time("06:33:885").ms);
-	draw("but i was on my own", Vector2::Zero, Time("06:34:735").ms, Time("06:35:725").ms);
+	draw("when the wall broke down", "06:31:055", "06:32:329");
+	draw("you were there", "06:32:895", "06:33:885");
+	draw("but i was on my own", "06:34:735", "06:35:725");
 }
