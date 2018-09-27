@@ -20,13 +20,11 @@ public:
 
 	void fixScale(int startTime, int endTime);
 
-	std::vector<Vector2> highlight_oblong;
+	std::vector<Vector2> oblong;
 	SpriteCollection sprites;
 
 private:
 	float scale = 0;
-
-	Vector2 oblong;
 	int highlight_count;
 
 
