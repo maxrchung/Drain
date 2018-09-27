@@ -49,7 +49,7 @@ void Bubble::Scale(int startTime, int endTime, float startScale, float endScale,
 		start += oblong[i];
 		end += oblong[i];
 
-		this->sprites.sprites[i]->ScaleVector(startTime, endTime, start, end, easing, precision);
+		this->sprites.sprites[i]->ScaleVector(startTime, endTime, start * this->sprites.scale[i], end * this->sprites.scale[i], easing, precision);
 		this->sprites.sprites[i]->Move(startTime, endTime, startPos, endPos);
 	}
 	return;
@@ -57,7 +57,17 @@ void Bubble::Scale(int startTime, int endTime, float startScale, float endScale,
 
 
 void Bubble::MoveAndScale(int startTime, int endTime, Vector2 startPos,Vector2 endPos,float startScale, float endScale, Easing easing, int precision) {
-	this->sprites.MoveAndScale(startTime, endTime, startPos, endPos, startScale, endScale, easing, precision);
+	Vector2 s_scale{startScale, startScale};
+	Vector2 e_scale{endScale, endScale};
+
+        for(int i = 0; i < this->sprites.size; ++i) {
+		this->sprites.sprites[i]->ScaleVector(startTime, endTime, (s_scale + this->oblong[i]) * this->sprites.scale[i], (e_scale + this->oblong[i])* this->sprites.scale[i], easing, precision);
+
+		Vector2 start = this->sprites.location[i] * startScale + startPos;
+		Vector2 end = this->sprites.location[i] * endScale + endPos;
+
+		this->sprites.sprites[i]->Move(startTime, endTime, start, end);
+	}
 	return;
 }
 
@@ -109,7 +119,7 @@ SpriteCollection Bubble::create_sprites() {
 	scale.push_back(1);
 
 	for(int i = 0; i < highlight_count; ++i) {
-		float range = 0.5;
+		float range = 10;
 		Vector2 offset = Vector2(w_rand(-range, range),
 					 w_rand(-range, range));
 
@@ -117,8 +127,8 @@ SpriteCollection Bubble::create_sprites() {
 					w_rand(min_oblong_range, max_oblong_range));
 
 		this->oblong.push_back(oblong_scale);
-		Sprite *sprite = Storyboard::CreateSprite(getPath(Path::Circle), offset);
-		float s = w_rand(0.02, 0.1);
+		Sprite *sprite = Storyboard::CreateSprite(getPath(Path::Circle), offset * scale[0]);
+		float s = w_rand(0.1, 0.2);
 		scale.push_back(s);
 		sprite_vector.push_back(sprite);
 
