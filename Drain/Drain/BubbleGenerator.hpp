@@ -75,7 +75,7 @@ private:
 	Time mouthEndTime; // If this is before splatterTime Bubblegen will get stuck in an infinite loop. maybe fix l8r lol
 	float mouthX;
 	float mouthY;
-	const float mouthBubbleMaxSize = 0.55;
+	const float mouthBubbleMaxSize = 0.52;
 	const float mouthBubbleMinSize = 0.2;
 	float mouthBubbleCount = 3;
 
