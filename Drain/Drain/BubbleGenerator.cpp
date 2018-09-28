@@ -2,9 +2,8 @@
 
 BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
 	: isSecondSection{ isSecondSection }, isMouth { isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
-	// TODO: bbbles pop individually, one by one? one more bub gen seciotn
-	// TODO: bubble color, mouth bubble
-	// FIX: not enough splatbubbles on screen
+	// TODO: bbbles pop individually, one by one?
+	// TODO: bubble color, moveX slow (easeing) . . .
 
 	if (isMouth) {
 		SwitchToMouthBubble();
@@ -71,18 +70,18 @@ void BubbleGenerator::DrawBubble() {
 		else {
 			std::vector<float> moveTimes = GetBubbleTiming();
 			bool slowFlag = false;
-			SlowBubbleBeforeSplat(moveTimes[0], moveTimes[1], moveTimes[1] - moveTimes[0], slowFlag);
 			Bubble* sprites = CreateBubbleSprites();
-			ScaleBubbleSize(sprites, moveTimes);
+			ScaleBubbleSize(sprites, moveTimes); // scales based on timing; dont put slowBubble before Scale or you will want to D ie
+			SlowBubbleBeforeSplat(moveTimes[0], moveTimes[1], moveTimes[1] - moveTimes[0], slowFlag);
 			TrackAllBubbles(sprites);
 
 			auto easing = Easing::Linear;
 
-			if (willSplatter && (splatterTime.ms >= moveTimes[0] && splatterTime.ms <= moveTimes[1])) { // Checks whether bubble is visible during splatterTime, if so, move it to where it will splat
+			if (willSplatter && (moveTimes[0] <= splatterTime.ms && moveTimes[1] >= splatterTime.ms)) { // Checks whether bubble is visible during splatterTime, if so, move it to where it will splat
 				SplatterPos(sprites, moveTimes);
 
 				if (slowFlag) {
-					easing = Easing::Linear; // should be quad ill change it later when my splatbubbles isnt broken
+					easing = Easing::Linear; // Planned on making it QuadOut but looks fuky b/c it doesn't work with moveX jaja
 				}
 
 				MoveBubble(sprites, moveTimes, startPos, easing, true);
