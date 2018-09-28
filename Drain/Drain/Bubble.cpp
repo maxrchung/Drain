@@ -45,6 +45,8 @@ void Bubble::Scale(int startTime, int endTime, float startScale, float endScale,
 		this->sprites.sprites[i]->ScaleVector(startTime, endTime, (start + this->oblong[i]) * this->sprites.scale[i], (end + this->oblong[i]) * this->sprites.scale[i], easing, precision);
 		this->sprites.sprites[i]->Move(startTime, endTime, startPos, endPos);
 	}
+
+	this->sprites.total_scale = {endScale, endScale};
 	return;
 }
 
@@ -61,24 +63,30 @@ void Bubble::MoveAndScale(int startTime, int endTime, Vector2 startPos,Vector2 e
 
 		this->sprites.sprites[i]->Move(startTime, endTime, start, end);
 	}
+
+	this->sprites.total_scale = {endScale, endScale};
 	return;
 }
 
 
 void Bubble::Color(const int startTime, const int endTime) {
 	Swatch::colorFgToFgSprites({sprites.sprites[0]}, startTime, endTime);
+
 	for(int i = 1; i < highlight_count + 1; ++i) {
 		Swatch::colorBgToBgSprites({sprites.sprites[i]}, startTime, endTime);
 	}
+
 	return;
 }
 
 
 void Bubble::Fade(const int startTime, const int endTime) {
 	Swatch::colorFgToBgSprites({sprites.sprites[0]}, startTime, endTime);
+
 	for(int i = 1; i < highlight_count + 1; ++i) {
 		Swatch::colorBgToBgSprites({sprites.sprites[i]}, startTime, endTime);
 	}
+
 	return;
 }
 
@@ -102,7 +110,7 @@ SpriteCollection Bubble::create_sprites() {
 
 	for(int i = 0; i < highlight_count; ++i) {
 
-		float r = w_rand(30, 33);
+		float r = w_rand(37, 40);
 		float theta = w_rand(0, 360);
 
 		float offset_x = r * cos(theta);

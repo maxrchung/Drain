@@ -58,8 +58,9 @@ int main() {
 			Vector2 start_pos = {i * 20, i * 20};
 			Vector2 end_pos = {rx, ry};
 
-			bub.Scale(start_time, end_time, sx, sx);
+			bub.Scale(start_time, start_time, sx, sx);
 			bub.Move(start_time, end_time, start_pos, end_pos);
+
 			bub.Color(start_time, end_time);
 		}
 	}

@@ -22,8 +22,9 @@ SpriteCollection::~SpriteCollection() {
 
 void SpriteCollection::Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing) {
 	for(int i = 0; i < size; ++i) {
-		Vector2 start = startPos + location[i] * total_scale;
-		Vector2 end = endPos + location[i] * total_scale;
+		Vector2 offset = location[i] * total_scale;
+		Vector2 start = startPos + offset;;
+		Vector2 end = endPos + offset;
 		sprites[i]->Move(startTime, endTime, start, end, easing);
 	}
 }
