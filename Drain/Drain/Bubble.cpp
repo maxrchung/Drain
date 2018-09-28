@@ -3,7 +3,9 @@
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
 
+#include <cmath>
 #include <vector>
+
 
 Bubble::Bubble()
 	: sprites{create_sprites()}, oblong{std::vector<Vector2>()} {
@@ -11,27 +13,18 @@ Bubble::Bubble()
 
 
 void Bubble::Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing) {
-	if(!scale)
-		fixScale(startTime, startTime);
-
 	this->sprites.Move(startTime, endTime, startPos, endPos, easing);
 	return;
 }
 
 
 void Bubble::MoveX(int startTime, int endTime, float startX, float endX, Easing easing) {
-	if(!scale)
-		fixScale(startTime, startTime);
-
 	this->sprites.MoveX(startTime, endTime, startX, endX, easing);
 	return;
 }
 
 
 void Bubble::MoveY(int startTime, int endTime, float startY, float endY, Easing easing) {
-	if(!scale)
-		fixScale(startTime, startTime);
-
 	this->sprites.MoveY(startTime, endTime, startY, endY, easing);
 	return;
 }
@@ -90,17 +83,6 @@ void Bubble::Fade(const int startTime, const int endTime) {
 }
 
 
-void Bubble::fixScale(int startTime, int endTime) {
-	/*
-	for(int i = 0; i < this->sprites.scale.size(); ++i) {
-		this->sprites.sprites[i]->Scale(startTime, endTime, this->sprites.scale[i], this->sprites.scale[i]);
-	}
-	this->scale = 1;
-	return;
-	*/
-}
-
-
 SpriteCollection Bubble::create_sprites() {
 	this->highlight_count = w_rand(this->min_highlight, this->max_highlight);
 
@@ -119,16 +101,21 @@ SpriteCollection Bubble::create_sprites() {
 	scale.push_back(1);
 
 	for(int i = 0; i < highlight_count; ++i) {
-		float range = 10;
-		Vector2 offset = Vector2(w_rand(-range, range),
-					 w_rand(-range, range));
+
+		float r = w_rand(30, 33);
+		float theta = w_rand(0, 360);
+
+		float offset_x = r * cos(theta);
+		float offset_y = r * sin(theta);
+
+		Vector2 offset{offset_x, offset_y};
 
 		oblong_scale  = Vector2(w_rand(min_oblong_range, max_oblong_range),
 					w_rand(min_oblong_range, max_oblong_range));
 
 		this->oblong.push_back(oblong_scale);
 		Sprite *sprite = Storyboard::CreateSprite(getPath(Path::Circle), offset * scale[0]);
-		float s = w_rand(0.1, 0.2);
+		float s = w_rand(0.05, 0.15);
 		scale.push_back(s);
 		sprite_vector.push_back(sprite);
 
