@@ -34,7 +34,7 @@ int main() {
 	//RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
-	if(1) {
+	if(0) {
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
 		std::vector<SpriteCollection> coll_raindrops;
@@ -46,7 +46,7 @@ int main() {
 	}
 
 	//testing bubbles
-	if(0) {
+	if(1) {
 		int start_time = Time("01:00:000").ms;
 		int end_time = Time("02:00:000").ms;
 		for(int i = 0; i < 5; ++i) {
@@ -54,24 +54,18 @@ int main() {
 			start_time += 5000;
 			float rx = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.x - (Vector2::ScreenSize.x / 2);
 			float ry = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.y - (Vector2::ScreenSize.y / 2);
-			float sx = ((float)std::rand() / RAND_MAX) * 2;
-			float sy = ((float)std::rand() / RAND_MAX) * 2;
+			float sx = (i + 1) * 0.3;
 			Vector2 start_pos = {i * 20, i * 20};
 			Vector2 end_pos = {rx, ry};
-			float rtemp = rx;
-			sx = ((float)std::rand() / RAND_MAX) * 0.8 + 0.2;
-			sy = 0.2;
-			sx = 1;
+
 			bub.Scale(start_time, end_time, sx, sx);
 			bub.Move(start_time, end_time, start_pos, end_pos);
-			//bub.Scale(start_time, start_time, 0.2, 0.2);
 			bub.Color(start_time, end_time);
-			//bub.MoveAndScale(start_time, end_time, start_pos, end_pos, sx, sy);
 		}
 	}
 
 	// BubbleGenerator shit
-	if (0) {
+	if (1) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
 	}

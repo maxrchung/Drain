@@ -42,7 +42,7 @@ void Bubble::Scale(int startTime, int endTime, float startScale, float endScale,
 		start += oblong[i];
 		end += oblong[i];
 
-		this->sprites.sprites[i]->ScaleVector(startTime, endTime, start * this->sprites.scale[i], end * this->sprites.scale[i], easing, precision);
+		this->sprites.sprites[i]->ScaleVector(startTime, endTime, (start + this->oblong[i]) * this->sprites.scale[i], (end + this->oblong[i]) * this->sprites.scale[i], easing, precision);
 		this->sprites.sprites[i]->Move(startTime, endTime, startPos, endPos);
 	}
 	return;
