@@ -20,13 +20,11 @@ public:
 
 	void fixScale(int startTime, int endTime);
 
-	std::vector<Vector2> highlight_oblong;
+	std::vector<Vector2> oblong;
 	SpriteCollection sprites;
 
 private:
 	float scale = 0;
-
-	Vector2 oblong;
 	int highlight_count;
 
 
@@ -39,6 +37,6 @@ private:
 	static const int min_highlight = 5;
 	static const int max_highlight = 9;
 
-	static constexpr float min_oblong_range = 0.01f;
-	static constexpr float max_oblong_range = 0.05f;
+	static constexpr float min_oblong_range = 0.1;
+	static constexpr float max_oblong_range = 0.15;
 };

@@ -38,8 +38,12 @@ S2RYOBJ2: $(S2RYSRC:.cpp=.o)
 link:
 	$(CC) Drain/Drain/*.o Drain/S2RYBRUH/*.o -o drain $(LDFLAGS)
 
+.PHONY: clean
 clean:
 	del $(CUROD)
 
+.PHONY: cleanall
 cleanall:
 	del $(CUROS)
+
+#-include $(DRAINSRC:.c=.d)

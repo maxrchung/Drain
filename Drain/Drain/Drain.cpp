@@ -49,34 +49,33 @@ int main() {
 	if(0) {
 		int start_time = Time("01:00:000").ms;
 		int end_time = Time("02:00:000").ms;
-		for(int i = 0; i < 20; ++i) {
+		for(int i = 0; i < 5; ++i) {
 			Bubble bub = Bubble();
 			start_time += 5000;
 			float rx = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.x - (Vector2::ScreenSize.x / 2);
 			float ry = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.y - (Vector2::ScreenSize.y / 2);
 			float sx = ((float)std::rand() / RAND_MAX) * 2;
 			float sy = ((float)std::rand() / RAND_MAX) * 2;
-			Vector2 start_pos = {0, -100};
-			bub.MoveY(start_time, end_time, start_pos.y, Vector2::ScreenSize.y);
+			Vector2 start_pos = {i * 20, i * 20};
+			Vector2 end_pos = {rx, ry};
 			float rtemp = rx;
-			for(int j = 0; j < 100; j += 2) {
-				rx = rtemp/2;
-				bub.MoveX(start_time + j * 500, start_time + (j + 1) * 500, -rx, rx, Easing::SineInOut);
-				bub.MoveX(start_time + (j + 1) * 500, start_time + (j + 2) * 500, rx, -rx, Easing::SineInOut);
-			}
-
-			bub.Scale(start_time, start_time, 0.2, 0.2);
+			sx = 0.1;
+			sy = 0.1;
+			bub.Scale(start_time, end_time, sx, sy);
+			bub.Move(start_time, end_time, start_pos, end_pos);
+			//bub.Scale(start_time, start_time, 0.2, 0.2);
 			bub.Color(start_time, end_time);
+			//bub.MoveAndScale(start_time, end_time, start_pos, end_pos, sx, sy);
 		}
 	}
 
 	// BubbleGenerator shit
 	if (1) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
-		//BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
+		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
 	}
 
-	BubbleGenerator::renderMouthBubbles();
+	//BubbleGenerator::renderMouthBubbles();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb

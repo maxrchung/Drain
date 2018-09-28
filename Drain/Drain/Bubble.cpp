@@ -6,7 +6,7 @@
 #include <vector>
 
 Bubble::Bubble()
-	: sprites{create_sprites()}, highlight_oblong{std::vector<Vector2>()} {
+	: sprites{create_sprites()}, oblong{std::vector<Vector2>()} {
 }
 
 
@@ -38,13 +38,36 @@ void Bubble::MoveY(int startTime, int endTime, float startY, float endY, Easing 
 
 
 void Bubble::Scale(int startTime, int endTime, float startScale, float endScale, Easing easing, int precision) {
-	this->sprites.Scale(startTime, endTime, startScale, endScale, easing, precision);
+	for(int i = 0; i < this->sprites.size; ++i) {
+		Vector2 start{startScale, startScale};
+		Vector2 end{endScale, endScale};
+		Vector2 temp = this->sprites.location[i];
+
+		Vector2 startPos = this->sprites.location[i] * startScale + this->sprites.position;
+		Vector2 endPos = this->sprites.location[i] * endScale + this->sprites.position;
+
+		start += oblong[i];
+		end += oblong[i];
+
+		this->sprites.sprites[i]->ScaleVector(startTime, endTime, start * this->sprites.scale[i], end * this->sprites.scale[i], easing, precision);
+		this->sprites.sprites[i]->Move(startTime, endTime, startPos, endPos);
+	}
 	return;
 }
 
 
 void Bubble::MoveAndScale(int startTime, int endTime, Vector2 startPos,Vector2 endPos,float startScale, float endScale, Easing easing, int precision) {
-	this->sprites.MoveAndScale(startTime, endTime, startPos, endPos, startScale, endScale, easing, precision);
+	Vector2 s_scale{startScale, startScale};
+	Vector2 e_scale{endScale, endScale};
+
+        for(int i = 0; i < this->sprites.size; ++i) {
+		this->sprites.sprites[i]->ScaleVector(startTime, endTime, (s_scale + this->oblong[i]) * this->sprites.scale[i], (e_scale + this->oblong[i])* this->sprites.scale[i], easing, precision);
+
+		Vector2 start = this->sprites.location[i] * startScale + startPos;
+		Vector2 end = this->sprites.location[i] * endScale + endPos;
+
+		this->sprites.sprites[i]->Move(startTime, endTime, start, end);
+	}
 	return;
 }
 
@@ -90,22 +113,22 @@ SpriteCollection Bubble::create_sprites() {
 	sprite_vector.push_back(bubble);
 
 	Vector2 oblong_scale = Vector2(w_rand(min_oblong_range, max_oblong_range), w_rand(min_oblong_range, max_oblong_range));
-	this->highlight_oblong.push_back(oblong_scale);
+	this->oblong.push_back(oblong_scale);
 
 	location.push_back({0, 0});
 	scale.push_back(1);
 
 	for(int i = 0; i < highlight_count; ++i) {
-		float range = 0.5;
-		Vector2 offset = Vector2((this->sprite_size / 2) * w_rand(-range, range),
-					 (this->sprite_size / 2) * w_rand(-range, range));
+		float range = 10;
+		Vector2 offset = Vector2(w_rand(-range, range),
+					 w_rand(-range, range));
 
 		oblong_scale  = Vector2(w_rand(min_oblong_range, max_oblong_range),
 					w_rand(min_oblong_range, max_oblong_range));
 
-		this->highlight_oblong.push_back(oblong_scale);
-		Sprite *sprite = Storyboard::CreateSprite(getPath(Path::Circle), offset);
-		float s = w_rand(0.02, 0.1);
+		this->oblong.push_back(oblong_scale);
+		Sprite *sprite = Storyboard::CreateSprite(getPath(Path::Circle), offset * scale[0]);
+		float s = w_rand(0.1, 0.2);
 		scale.push_back(s);
 		sprite_vector.push_back(sprite);
 
