@@ -111,8 +111,7 @@ void SpriteCollection::ScaleVector(int startTime, int endTime, Vector2 startScal
 //if there is a move and a scale, and if the move and scale both start and end at the same time
 void SpriteCollection::MoveAndScale(int startTime, int endTime, Vector2 startPos, Vector2 endPos, float startScale, float endScale, Easing easing, int precision) {
 	for(int i = 0; i < size; ++i) {
-		sprites[i]->Scale(startTime, endTime, startScale * this->scale[i], endScale * this->scale[i], easing, precision);
-
+		sprites[i]->Scale(startTime, endTime, startScale, endScale, easing, precision);
 		Vector2 start = this->location[i] * startScale + startPos;
 		Vector2 end = this->location[i] * endScale + endPos;
 

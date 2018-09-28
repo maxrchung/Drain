@@ -35,7 +35,7 @@ private:
 	static const int sprite_size = 100;
 
 	static const int min_highlight = 5;
-	static const int max_highlight = 9;
+	static const int max_highlight = 7;
 
 	static constexpr float min_oblong_range = 0.1;
 	static constexpr float max_oblong_range = 0.15;

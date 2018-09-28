@@ -48,7 +48,7 @@ void Walker::moveCurrent(float distance, Time startTime, Time endTime) {
 				int_end_time = endTime.ms;
 
 			drop.MoveAndScale(int_start_time, int_end_time, start_coord, end_coord, start_scale, end_scale);
-			Swatch::colorFgToFgSprites(drop.sprites , int_start_time, int_end_time);
+			Swatch::colorFgToFgSprites(drop.sprites, int_start_time, int_end_time);
 		}
 
 	}
@@ -84,6 +84,7 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 		SpriteCollection sprite = SpriteCollection(Storyboard::CreateSprite(spriteImage, start_coord));
 
 		sprite.MoveAndScale(int_start_time, int_end_time, start_coord, end_coord, start_scale, end_scale);
+		Swatch::colorFgToFgSprites(sprite.sprites, int_start_time, int_end_time);
 	}
 }
 
