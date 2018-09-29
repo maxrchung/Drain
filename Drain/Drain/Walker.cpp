@@ -66,12 +66,18 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 
 	for(int i = 0; i < count; ++i) {
 		int int_start_time = startTime.ms + i * w_rand(0, 1000);
+		int int_end_time = int_start_time + w_rand(1000, total_time);
 		if(int_start_time < startTime.ms)
 			int_start_time = startTime.ms;
-		
-		int int_end_time = int_start_time + w_rand(1000, total_time);
+
 		if(int_end_time > endTime.ms)
 			int_end_time = endTime.ms - w_rand(0, 2000);
+
+		if(int_start_time > endTime.ms) {
+			int_start_time = endTime.ms;
+			int_end_time = endTime.ms - 1000;
+		}
+
 
 		float start_scale = min_scale;
 		float end_scale = max_scale * w_rand(1, 5);

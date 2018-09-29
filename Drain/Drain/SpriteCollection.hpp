@@ -28,7 +28,7 @@ public:
 	//coordinate of the first sprite
 	//will act as the position of the collection
 	Vector2& position;
-	float& scale_total;
+	Vector2 total_scale;
 
 	void Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing = Easing::Linear);
 	void MoveX(int startTime, int endTime, float startX, float endX, Easing easing = Easing::Linear);
