@@ -7,7 +7,7 @@
 #include <vector>
 
 
-Bubble::Bubble(bool outline = 1)
+Bubble::Bubble(bool outline)
 	: sprites{create_sprites(outline)} {
 }
 

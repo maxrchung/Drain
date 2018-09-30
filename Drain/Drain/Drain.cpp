@@ -55,7 +55,7 @@ int main() {
 			float rx = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.x - (Vector2::ScreenSize.x / 2);
 			float ry = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.y - (Vector2::ScreenSize.y / 2);
 			float sx = (i + 1) * 0.3;
-			Vector2 start_pos = {i * 20, i * 20};
+			Vector2 start_pos = {i * 20.0f, i * 20.0f};
 			Vector2 end_pos = {rx, ry};
 
 			bub.Scale(start_time, start_time, sx, sx);
@@ -71,7 +71,7 @@ int main() {
 		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
 	}
 
-	//BubbleGenerator::renderMouthBubbles();
+	BubbleGenerator::renderMouthBubbles();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
