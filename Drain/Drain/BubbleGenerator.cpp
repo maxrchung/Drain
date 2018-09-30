@@ -96,7 +96,7 @@ void BubbleGenerator::DrawBubble() {
 
 // Create Bubble object which will contain the layered bubble sprites
 Bubble* BubbleGenerator::CreateBubbleSprites() {
-	return new Bubble();
+	return new Bubble(1);
 }
 
 // mouth bubble version, only single sprite

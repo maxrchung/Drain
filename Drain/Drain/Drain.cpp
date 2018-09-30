@@ -50,7 +50,7 @@ int main() {
 		int start_time = Time("01:00:000").ms;
 		int end_time = Time("02:00:000").ms;
 		for(int i = 0; i < 5; ++i) {
-			Bubble bub = Bubble();
+			Bubble bub = Bubble(1);
 			start_time += 5000;
 			float rx = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.x - (Vector2::ScreenSize.x / 2);
 			float ry = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.y - (Vector2::ScreenSize.y / 2);

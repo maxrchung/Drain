@@ -46,4 +46,4 @@ clean:
 cleanall:
 	del $(CUROS)
 
-#-include $(DRAINSRC:.c=.d)
+-include $(DRAINSRC:.cpp=.d)
