@@ -31,6 +31,6 @@ private:
 
 	static const int sprite_size = 100;
 
-	static const int min_highlight = 0;
-	static const int max_highlight = 0;
+	static const int min_highlight = 2;
+	static const int max_highlight = 5;
 };

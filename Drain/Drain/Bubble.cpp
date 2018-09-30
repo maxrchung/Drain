@@ -65,7 +65,11 @@ void Bubble::Fade(const int startTime, const int endTime) {
 
 
 SpriteCollection Bubble::create_sprites(bool outline) {
-	this->highlight_count = w_rand(this->min_highlight, this->max_highlight);
+	if(outline) {
+		this->highlight_count = 0;
+	} else {
+		this->highlight_count = w_rand(this->min_highlight, this->max_highlight);
+	}
 
 	std::vector<Sprite *> sprite_vector;
 	std::vector<Vector2> location;
