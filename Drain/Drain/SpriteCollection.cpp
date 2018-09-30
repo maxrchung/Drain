@@ -9,7 +9,7 @@ SpriteCollection::SpriteCollection(std::vector<Sprite *> sprites, std::vector<Ve
 }
 
 SpriteCollection::SpriteCollection(Sprite *sprite)
-	: position{sprite->position}, scale{sprite->scale} {
+	: position{ sprite->position }, scale{ sprite->scale }, total_scale{1} {
 		size = 1;
 		this->sprites.push_back(sprite);
 		location.push_back(Vector2(0, 0));
