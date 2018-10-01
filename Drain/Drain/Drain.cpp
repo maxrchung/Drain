@@ -66,14 +66,14 @@ int main() {
 	}
 
 	// BubbleGenerator shit
-	if (1) {
+	if (0) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
 		BubbleGenerator::renderMouthBubbles();
 	}
 
 	if (1) {
-		const auto bubbleCount = 10;
+		const auto bubbleCount = 19;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
 		for (int i = 0; i < bubbleCount; ++i) {
 			bubbles[i] = new Bubble();
@@ -87,6 +87,23 @@ int main() {
 							 position, position);
 		}
 		Splatter::renderFirstGradualPop(bubbles);
+	}
+
+	if (1) {
+		const auto bubbleCount = 19;
+		auto bubbles = std::vector<Bubble*>(bubbleCount);
+		for (int i = 0; i < bubbleCount; ++i) {
+			bubbles[i] = new Bubble();
+			const auto scale = RandomRange::calculate(25, 125, 100.0f);
+			const auto startTime = Time("03:19:168").ms - 1000;
+			const auto endTime = Time("03:19:168").ms;
+			const auto position = Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200));
+			bubbles[i]->Scale(startTime, startTime, scale, scale);
+			bubbles[i]->Move(startTime,
+							 endTime,
+							 position, position);
+		}
+		Splatter::renderSecondAllPop(bubbles);
 	}
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt

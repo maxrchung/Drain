@@ -25,7 +25,7 @@ Splatter::Splatter(const Time& startTime, const Time& endTime,
     const float size, const int numDrops, const int type, Bubble* const bubble)   // replace with AirBubble
     : Splatter(startTime, endTime, size, numDrops, type, bubble->sprites.position)   // replace 0,0 with bubble->loc
 {
-	bubble->Fade(startTime.ms, startTime.ms + bubbleFadeTime);
+	bubble->Fade(startTime.ms, startTime.ms + bubbleFadeInTime);
 }
 
 // returns and draws a single circle at pos after offset ms
@@ -41,13 +41,8 @@ Sprite * Splatter::draw(Vector2 pos, int offset, float size,
     }
     else
         s->Scale(startTime.ms + offset, startTime.ms + offset, size, size); // scale to proper size instantaneously
-    if (fadeInDur != 0){
-        if (startTime.ms + offset + fadeInDur < endTime.ms)
-            s->Fade(startTime.ms + offset, startTime.ms + offset + fadeInDur, fadeFrom, fadeTo, easing);
-        else
-            s->Fade(startTime.ms + offset, endTime.ms, fadeFrom, fadeTo, easing);
-    }
     Swatch::colorFgToFgSprites({ s }, startTime.ms + offset, endTime.ms); // color will determine Sprite lifetime
+	Swatch::colorFgToBgSprites({ s }, endTime.ms, endTime.ms + splatterFadeOutTime + RandomRange::calculate(-Timing::quarter, Timing::quarter));
     sprites.push_back(s);
     return s;
 }
@@ -120,22 +115,47 @@ void Splatter::make(const Time& startTime,
 					const Time& endTime,
 					Bubble* const bubble) {
 	const auto size = bubble->sprites.total_scale.x;
-	Splatter(startTime, endTime, 0.5f, 400, 2, bubble).make();
+	Splatter(startTime, endTime, 0.25f, 400, 1, bubble).make();
 }
 
 void Splatter::renderFirstGradualPop(std::vector<Bubble*>& bubbles) {
 	const auto startTime = Time("02:33:885").ms;
 	const auto endTime = Time("03:10:112").ms;
 	const auto totalTime = endTime - startTime;
-	const auto timePerBubble = static_cast<float>(totalTime) / bubbles.size();
-
-	for (int i = 0; i < bubbles.size(); ++i) {
-		const auto splatterStartTime = startTime + i * timePerBubble;
-		const auto splatterEndTime = splatterStartTime + timePerBubble;
-		make(splatterStartTime, endTime, bubbles[i]);
+	const auto splatterTimes = std::vector<Time>({
+		Time("02:33:885"),
+		Time("02:38:414"),
+		Time("02:42:942"),
+		Time("02:47:470"),
+		Time("02:52:140"),
+		Time("02:56:527"),
+		Time("03:01:055"),
+		Time("03:05:584")
+												 });
+	int splattersPerTime;
+	if (bubbles.size() % splatterTimes.size() == 0) {
+		splattersPerTime = bubbles.size() / splatterTimes.size();
+	}
+	// Add 1 if not even division
+	else {
+		splattersPerTime = bubbles.size() / splatterTimes.size() + 1;
+	}
+	for (const auto& splatterTime : splatterTimes) {
+		for (int j = 0; j < splattersPerTime; ++j) {
+			if (!bubbles.empty()) {
+				const auto endTime = splatterTime.ms + splatterAliveTime;
+				make(splatterTime.ms, endTime, bubbles.back());
+				bubbles.pop_back();
+			}
+		}
 	}
 }
 
-void Splatter::renderSecondAllPop(std::vector<Bubble*>& bubbles) {
-
+std::vector<SpriteCollection> Splatter::renderSecondAllPop(std::vector<Bubble*>& bubbles) {
+	const auto splatterTime = Time("03:19:168").ms;
+	auto splatters = std::vector<SpriteCollection>();
+	for (const auto bubble : bubbles) {
+		make(splatterTime, splatterTime, bubble);
+	}
+	return splatters;
 }

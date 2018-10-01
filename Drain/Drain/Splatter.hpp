@@ -24,7 +24,7 @@ public:
 			 Bubble* const bubble);   // Sketch is a placeholder, replace with AirBubble
 	static void render();
 	static void renderFirstGradualPop(std::vector<Bubble*>& bubbles);
-	static void renderSecondAllPop(std::vector<Bubble*>& bubbles);
+	static std::vector<SpriteCollection> renderSecondAllPop(std::vector<Bubble*>& bubbles);
 	std::vector<Sprite*> sprites;
 private:
 	const Time startTime;
@@ -48,7 +48,9 @@ private:
 					 Bubble* const bubble);
 	int make();
 
-	static constexpr float bubbleFadeTime = Timing::half;
+	static constexpr float bubbleFadeInTime = Timing::half;
+	static constexpr float splatterAliveTime = Timing::whole * 8;
+	static constexpr float splatterFadeOutTime = Timing::half;
 	static std::default_random_engine generator;
 	static std::exponential_distribution<double> exp;    // mean of the exp distribution = 1 / 3.5
 	static std::gamma_distribution<double> gamma;
