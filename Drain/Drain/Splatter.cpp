@@ -1,8 +1,15 @@
+#include "Path.hpp"
 #include "Splatter.hpp"
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
-#include <random>
 #include <ctime>
+
+std::default_random_engine Splatter::generator = std::default_random_engine(time(0));
+std::exponential_distribution<double> Splatter::exp = std::exponential_distribution<double>(3.5);    // mean of the exp distribution = 1 / 3.5
+std::gamma_distribution<double> Splatter::gamma = std::gamma_distribution<double>(2, 2);
+std::normal_distribution<double> Splatter::normal = std::normal_distribution<double>(4.5, 4.1); // mean, std dev
+std::normal_distribution<double> Splatter::normal2 = std::normal_distribution<double>(4.5, 4.2); // mean, std dev
+std::uniform_real_distribution<double> Splatter::uniform = std::uniform_real_distribution<double>(-1, 1); // uniform distribution between -1 and 1
 
 // standalone, defined by centerPos Vector2
 Splatter::Splatter(const Time& startTime, const Time& endTime,
@@ -15,9 +22,10 @@ Splatter::Splatter(const Time& startTime, const Time& endTime,
 
 // position defined by existing AirBubble
 Splatter::Splatter(const Time& startTime, const Time& endTime,
-    const float size, const int numDrops, const int type, const Sketch * bubble)   // replace with AirBubble
-    : Splatter(startTime, endTime, size, numDrops, type, Vector2(0,0))   // replace 0,0 with bubble->loc
+    const float size, const int numDrops, const int type, Bubble* const bubble)   // replace with AirBubble
+    : Splatter(startTime, endTime, size, numDrops, type, bubble->sprites.position)   // replace 0,0 with bubble->loc
 {
+	bubble->Fade(startTime.ms, startTime.ms + bubbleFadeTime);
 }
 
 // returns and draws a single circle at pos after offset ms
@@ -49,12 +57,6 @@ int Splatter::make() {
     // main droplet will grow from 80% to 100% of its size over 1/2 of its lifespan
     auto centerPoint = draw(centerPos, 0, sizeFactor, 0, 0, 1, totalDur * 0.5, 0.8, Easing::EasingOut);
     int ans = 1;
-    std::default_random_engine generator(time(0));
-    std::exponential_distribution<double> exp(3.5);    // mean of the exp distribution = 1 / 3.5
-    std::gamma_distribution<double> gamma(2, 2);
-    std::normal_distribution<double> normal(4.5, 4.1); // mean, std dev
-    std::normal_distribution<double> normal2(4.5, 4.2); // mean, std dev
-    std::uniform_real_distribution<double> uniform(-1, 1); // uniform distribution between -1 and 1
     for (int i = 1; i < numDrops; i++) {
         // offset 'easing' is an exponential exp
         auto expRandomPoint = exp(generator);
@@ -112,4 +114,28 @@ void Splatter::render() {
     Splatter(Time("04:00:000"), Time("04:05:000"), 0.5, 1000, 2, Vector2(50, 50)).make();
     Splatter(Time("04:01:000"), Time("04:05:000"), 0.3, 300, 1, Vector2(-10, -100)).make();
     Splatter(Time("04:02:000"), Time("04:05:000"), 0.2, 300, 1, Vector2(-130, 0)).make();
+}
+
+void Splatter::make(const Time& startTime,
+					const Time& endTime,
+					Bubble* const bubble) {
+	const auto size = bubble->sprites.total_scale.x;
+	Splatter(startTime, endTime, 0.5f, 400, 2, bubble).make();
+}
+
+void Splatter::renderFirstGradualPop(std::vector<Bubble*>& bubbles) {
+	const auto startTime = Time("02:33:885").ms;
+	const auto endTime = Time("03:10:112").ms;
+	const auto totalTime = endTime - startTime;
+	const auto timePerBubble = static_cast<float>(totalTime) / bubbles.size();
+
+	for (int i = 0; i < bubbles.size(); ++i) {
+		const auto splatterStartTime = startTime + i * timePerBubble;
+		const auto splatterEndTime = splatterStartTime + timePerBubble;
+		make(splatterStartTime, endTime, bubbles[i]);
+	}
+}
+
+void Splatter::renderSecondAllPop(std::vector<Bubble*>& bubbles) {
+
 }

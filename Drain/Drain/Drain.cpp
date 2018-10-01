@@ -46,7 +46,7 @@ int main() {
 	}
 
 	//testing bubbles
-	if(1) {
+	if(0) {
 		int start_time = Time("01:00:000").ms;
 		int end_time = Time("02:00:000").ms;
 		for(int i = 0; i < 5; ++i) {
@@ -69,9 +69,25 @@ int main() {
 	if (1) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
+		BubbleGenerator::renderMouthBubbles();
 	}
 
-	BubbleGenerator::renderMouthBubbles();
+	if (1) {
+		const auto bubbleCount = 10;
+		auto bubbles = std::vector<Bubble*>(bubbleCount);
+		for (int i = 0; i < bubbleCount; ++i) {
+			bubbles[i] = new Bubble();
+			const auto scale = RandomRange::calculate(25, 125, 100.0f);
+			const auto startTime = Time("02:33:885").ms - 1000;
+			const auto endTime = Time("02:33:885").ms;
+			const auto position = Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200));
+			bubbles[i]->Scale(startTime, startTime, scale, scale);
+			bubbles[i]->Move(startTime,
+							 endTime,
+							 position, position);
+		}
+		Splatter::renderFirstGradualPop(bubbles);
+	}
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
