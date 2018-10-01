@@ -10,20 +10,22 @@ std::gamma_distribution<double> Splatter::gamma = std::gamma_distribution<double
 std::normal_distribution<double> Splatter::normal = std::normal_distribution<double>(4.5, 4.1); // mean, std dev
 std::normal_distribution<double> Splatter::normal2 = std::normal_distribution<double>(4.5, 4.2); // mean, std dev
 std::uniform_real_distribution<double> Splatter::uniform = std::uniform_real_distribution<double>(-1, 1); // uniform distribution between -1 and 1
+std::uniform_real_distribution<double> Splatter::uniformAngle = std::uniform_real_distribution<double>(0, 359); // uniform distribution between 0 and 359 (degrees)
 
 // standalone, defined by centerPos Vector2
 Splatter::Splatter(const Time& startTime, const Time& endTime,
-    const float size, const int numDrops, const int type, const Vector2 centerPos)
+    const float size, const int numDrops, const int type, const int satelliteSpawnTime, const Vector2 centerPos)
     : startTime{ startTime }, endTime{ endTime },
-    sizeFactor{ size }, numDrops{ numDrops }, type { type }, centerPos { centerPos }
+    sizeFactor{ size }, numDrops{ numDrops }, type{ type },
+    satelliteSpawnTime{ satelliteSpawnTime }, centerPos { centerPos }
 {
     totalDur = endTime.ms - startTime.ms;
 }
 
 // position defined by existing AirBubble
 Splatter::Splatter(const Time& startTime, const Time& endTime,
-    const float size, const int numDrops, const int type, Bubble* const bubble)   // replace with AirBubble
-    : Splatter(startTime, endTime, size, numDrops, type, bubble->sprites.position)   // replace 0,0 with bubble->loc
+    const float size, const int numDrops, const int type, const int satelliteSpawnTime, Bubble* const bubble)   // replace with AirBubble
+    : Splatter(startTime, endTime, size, numDrops, type, satelliteSpawnTime, bubble->sprites.position)   // replace 0,0 with bubble->loc
 {
 	bubble->Fade(startTime.ms, startTime.ms + bubbleFadeTime);
 }
@@ -67,7 +69,7 @@ int Splatter::make() {
         while (expRandomPoint > 1.0) {  // in the off chance that RNG returns more than 1, roll again
             expRandomPoint = exp(generator);
         }
-        auto offset = expRandomPoint * 2200; // satellite droplets will spawn in for 2 seconds
+        auto offset = expRandomPoint * satelliteSpawnTime; // satellite droplets will spawn in for 2 seconds
         offset -= 200;  // shift left 200ms
         if (offset < 0) {
             offset = 0; // so we can have some satellites spawn instantly
@@ -87,14 +89,21 @@ int Splatter::make() {
             // todo: ideally would like to also scale based on expRP so closer satellites appear first
             pos = centerPos + Vector2(neg * normalRP, neg2 * normalRP2) * gammaRP * neg3 * 10;
             // todo: size is dropping off too fast with distance
-            size = sizeFactor / (100 * (centerPos.DistanceBetween(pos) / 50 - sizeFactor));
+            size = sizeFactor / (SPRITE_SIZE * (centerPos.DistanceBetween(pos) / 50 - sizeFactor));
+            break;
+        case 3:
+            // use polar coordinates and don't have stupid weird ways to calculate stuff
+            auto angle = uniformAngle(generator);
+            auto dist = expRandomPoint * SPRITE_SIZE;   // dist away from centerPoint the satellite will be drawn
+            pos = centerPos + Vector2(dist * cosf(angle * DEG_TO_RAD), dist * sinf(angle * DEG_TO_RAD));
+            size = sizeFactor / dist / MAX_SATELLITE_SIZE_FACTOR;
             break;
         }
-        if (size > 0.25 * sizeFactor) {     // limit size of satellites to 1/4 of that of the centerPoint
-            size = 0.25 * sizeFactor;
+        if (size > MAX_SATELLITE_SIZE_FACTOR * sizeFactor) {     // limit size of satellites to 1/4 of that of the centerPoint
+            size = MAX_SATELLITE_SIZE_FACTOR * sizeFactor;
         }
         // distance between divided by 100 to take into account 100px radius image, allow some overlap
-        if (size < 0.01 || pos.DistanceBetween(centerPos) / 100 < (sizeFactor / 2 + size / 2) * 0.75){
+        if (size < MIN_SATELLITE_SIZE || pos.DistanceBetween(centerPos) / SPRITE_SIZE < (sizeFactor / 2 + size / 2) * MAX_SATELLITE_SIZE_FACTOR){
             continue;   // calculated satellite droplet is miniscule or is completely engulfed by the centerPoint
         }
         if (expRandomPoint > 0.7)   // cap expRandomPoint so we can have it fade to a max of opacity 1
@@ -111,16 +120,16 @@ void Splatter::render() {
     std::cout << "Rendering Splatter..." << std::endl;
     // sprite size is 100px radius circle, sizeFactor scales this size, so 0.2 = 20px radius
     // numDrops is an upper bound
-    Splatter(Time("04:00:000"), Time("04:05:000"), 0.5, 1000, 2, Vector2(50, 50)).make();
-    Splatter(Time("04:01:000"), Time("04:05:000"), 0.3, 300, 1, Vector2(-10, -100)).make();
-    Splatter(Time("04:02:000"), Time("04:05:000"), 0.2, 300, 1, Vector2(-130, 0)).make();
+    Splatter(Time("04:00:000"), Time("04:05:000"), 0.5, 1000, 2, 2000, Vector2(50, 50)).make();
+    Splatter(Time("04:01:000"), Time("04:05:000"), 0.3, 300, 1, 2000, Vector2(-10, -100)).make();
+    Splatter(Time("04:02:000"), Time("04:05:000"), 0.2, 300, 1, 2000, Vector2(-130, 0)).make();
 }
 
 void Splatter::make(const Time& startTime,
 					const Time& endTime,
 					Bubble* const bubble) {
 	const auto size = bubble->sprites.total_scale.x;
-	Splatter(startTime, endTime, 0.5f, 400, 2, bubble).make();
+	Splatter(startTime, endTime, 0.5f, 400, 3, 500, bubble).make();
 }
 
 void Splatter::renderFirstGradualPop(std::vector<Bubble*>& bubbles) {
