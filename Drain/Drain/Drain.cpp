@@ -95,8 +95,8 @@ int main() {
 		for (int i = 0; i < bubbleCount; ++i) {
 			bubbles[i] = new Bubble();
 			const auto scale = RandomRange::calculate(25, 125, 100.0f);
-			const auto startTime = Time("03:19:168").ms - 1000;
-			const auto endTime = Time("03:19:168").ms;
+			const auto startTime = Time("03:18:036").ms - 1000;
+			const auto endTime = Time("03:18:036").ms;
 			const auto position = Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200));
 			bubbles[i]->Scale(startTime, startTime, scale, scale);
 			bubbles[i]->Move(startTime,
