@@ -113,6 +113,11 @@ SpriteCollection Splatter::make(const Time& startTime,
 	return collection;
 }
 
+SpriteCollection Splatter::makeSplatter(const Time& startTime, const Vector2& centerPos, const float size) {
+	const auto collection = Splatter(startTime, startTime, size, 300, 0, centerPos, false).make();
+	return collection;
+}
+
 void Splatter::renderFirstGradualPop(std::vector<Bubble*>& bubbles) {
 	const auto splatterTimes = std::vector<Time>({
 		Time("02:33:885"),

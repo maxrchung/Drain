@@ -25,6 +25,8 @@ public:
 			 const int satelliteSpawnTime,
 			 Bubble* const bubble,
 			 const bool fadeOut = true);
+	// For Royce to make a new frozen splatter
+	static SpriteCollection makeSplatter(const Time& startTime, const Vector2& centerPos, const float size);
 	static void render();
 	static void renderFirstGradualPop(std::vector<Bubble*>& bubbles);
 	static std::vector<SpriteCollection> renderSecondAllPop(std::vector<Bubble*>& bubbles);
