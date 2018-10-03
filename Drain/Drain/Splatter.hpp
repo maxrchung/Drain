@@ -25,8 +25,11 @@ public:
 			 const int satelliteSpawnTime,
 			 Bubble* const bubble,
 			 const bool fadeOut = true);
-	// For Royce to make a new frozen splatter
-	static SpriteCollection makeSplatter(const Time& startTime, const Vector2& centerPos, const float size);
+	// For Royce to make a new frozen splatter during walking phase
+	// startTime: The time for the splatter to appear
+	// centerPos: Center position of the splatter
+	// scale: Scale value of the 100px image for center dot
+	static SpriteCollection makeWalkerSplatter(const Time& startTime, const Vector2& centerPos, const float scale);
 	static void render();
 	static void renderFirstGradualPop(std::vector<Bubble*>& bubbles);
 	static std::vector<SpriteCollection> renderSecondAllPop(std::vector<Bubble*>& bubbles);

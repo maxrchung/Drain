@@ -113,8 +113,8 @@ SpriteCollection Splatter::make(const Time& startTime,
 	return collection;
 }
 
-SpriteCollection Splatter::makeSplatter(const Time& startTime, const Vector2& centerPos, const float size) {
-	const auto collection = Splatter(startTime, startTime, size, 300, 0, centerPos, false).make();
+SpriteCollection Splatter::makeWalkerSplatter(const Time& startTime, const Vector2& centerPos, const float scale) {
+	const auto collection = Splatter(startTime, startTime, scale, 300, 0, centerPos, false).make();
 	return collection;
 }
 
