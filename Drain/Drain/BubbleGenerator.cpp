@@ -2,6 +2,7 @@
 
 BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
 	: isSecondSection{ isSecondSection }, isMouth { isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
+	// PRIORITY: moveX slow (easeing]
 	// TODO: bbbles pop individually, one by one?
 	// TODO: bubble color, moveX slow (easeing) . . .
 
@@ -252,8 +253,8 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes, b
 
 	sprite->MoveY(startMove, endMove, sprite->position.y, endY); // Handles only vertical movement
 
+	// Following code handles X movement
 	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
-	float oneDirMoveLength = sideMoveLength / 2;
 	float xSideDelta = GetRandomSideMovement();
 
 	float sideMoveTotalTime = (endMove - startMove) / sideMoveTimes;
