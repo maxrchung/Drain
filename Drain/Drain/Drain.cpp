@@ -72,7 +72,7 @@ int main() {
 		BubbleGenerator::renderMouthBubbles();
 	}
 
-	if (1) {
+	if (0) {
 		const auto bubbleCount = 19;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
 		for (int i = 0; i < bubbleCount; ++i) {
@@ -106,9 +106,9 @@ int main() {
 		auto splatters = Splatter::renderSecondAllPop(bubbles);
 		for (auto& splatter : splatters) {
 			splatter.Move(Time("03:19:168").ms,
-						  Time("03:19:168").ms + 1000,
-						  splatter.position,
-						  splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+				      Time("03:19:168").ms + 1000,
+				      splatter.position,
+				      splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
 		}
 	}
 

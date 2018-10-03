@@ -108,7 +108,7 @@ SpriteCollection Splatter::make(const Time& startTime,
 								const int spawnTime,
 								Bubble* const bubble,
 								const bool fadeOut) {
-	const auto size = bubble->sprites.total_scale.x;
+	const auto size = bubble->sprites.total_scale;
 	const auto collection = Splatter(startTime, endTime, size, 300, spawnTime, bubble, fadeOut).make();
 	return collection;
 }
