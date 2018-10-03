@@ -103,7 +103,13 @@ int main() {
 							 endTime,
 							 position, position);
 		}
-		Splatter::renderSecondAllPop(bubbles);
+		auto splatters = Splatter::renderSecondAllPop(bubbles);
+		for (auto& splatter : splatters) {
+			splatter.Move(Time("03:19:168").ms,
+						  Time("03:19:168").ms + 1000,
+						  splatter.position,
+						  splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+		}
 	}
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt

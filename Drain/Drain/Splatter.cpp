@@ -80,12 +80,15 @@ SpriteCollection Splatter::make() {
 	}
 	std::cout << ans << std::endl;
 
-	auto locations = std::vector<Vector2>(sprites.size() - 1);
-	auto scales = std::vector<float>(sprites.size() - 1);
-	const auto center = sprites[0]->position;
+	auto locations = std::vector<Vector2>();
+	auto scales = std::vector<float>();
+	const auto centerPos = sprites[0]->position;
+	const auto centerScale = sprites[0]->scale;
+	locations.push_back(Vector2::Zero);
+	scales.push_back(1);
 	for (int i = 1; i < sprites.size(); ++i) {
-		locations.push_back(sprites[i]->position);
-		scales.push_back(sprites[i]->scale);
+		locations.push_back(sprites[i]->position - centerPos);
+		scales.push_back(sprites[i]->scale * centerScale);
 	}
 	const auto collection = SpriteCollection(sprites, locations, scales);
 	return collection;
