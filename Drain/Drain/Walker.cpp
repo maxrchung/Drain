@@ -40,7 +40,7 @@ void Walker::moveCurrent(float distance, Time startTime, Time endTime) {
 
 			float ratio_traveled = (end_coord - start_coord).Magnitude() / (end_coord.Magnitude());
 
-			float start_scale = drop.scale_total;
+			float start_scale = drop.scale[0];
 			float end_scale = start_scale * (1 + ratio_traveled);
 		
 			int int_end_time = int_start_time + w_rand(1000, total_time);
@@ -48,7 +48,7 @@ void Walker::moveCurrent(float distance, Time startTime, Time endTime) {
 				int_end_time = endTime.ms;
 
 			drop.MoveAndScale(int_start_time, int_end_time, start_coord, end_coord, start_scale, end_scale);
-			Swatch::colorFgToFgSprites(drop.sprites , int_start_time, int_end_time);
+			Swatch::colorFgToFgSprites(drop.sprites, int_start_time, int_end_time);
 		}
 
 	}
@@ -66,12 +66,19 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 
 	for(int i = 0; i < count; ++i) {
 		int int_start_time = startTime.ms + i * w_rand(0, 1000);
+		int int_end_time = int_start_time + w_rand(1000, total_time);
 		if(int_start_time < startTime.ms)
 			int_start_time = startTime.ms;
-		
-		int int_end_time = int_start_time + w_rand(1000, total_time);
+
 		if(int_end_time > endTime.ms)
 			int_end_time = endTime.ms - w_rand(0, 2000);
+
+		if(int_start_time > endTime.ms) {
+			int_start_time = endTime.ms;
+			int_end_time = endTime.ms - 1000;
+			break;
+		}
+
 
 		float start_scale = min_scale;
 		float end_scale = max_scale * w_rand(1, 5);
@@ -84,6 +91,7 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 		SpriteCollection sprite = SpriteCollection(Storyboard::CreateSprite(spriteImage, start_coord));
 
 		sprite.MoveAndScale(int_start_time, int_end_time, start_coord, end_coord, start_scale, end_scale);
+		Swatch::colorFgToFgSprites(sprite.sprites, int_start_time, int_end_time);
 	}
 }
 
@@ -141,22 +149,20 @@ Vector2 Walker::findProjection(Vector2 a, Vector2 b) {
 	Vector2 out = Vector2::Zero;
 
 	Vector2 slopeV = b - a;
-	Vector2 mid = Vector2::ScreenSize/2;
-
 	float slope = slopeV.y / slopeV.x;
-
 	float size_offset = this->sprite_size * this->max_scale * 5;
 
+	Vector2 mid;
 	if(slopeV.y < 0) {
 		mid.y = -Vector2::ScreenSize.y/2 - size_offset;
 	} else {
-		mid.y += size_offset;
+		mid.y = Vector2::ScreenSize.y/2 + size_offset;
 	}
 
 	if(slopeV.x < 0) {
 		mid.x = -Vector2::ScreenSize.x/2 - size_offset;
 	} else {
-		mid.y += size_offset;
+		mid.x = Vector2::ScreenSize.x/2 + size_offset;
 	}
 
 	switch((!!slopeV.y) | (!!slopeV.x << 1)) {

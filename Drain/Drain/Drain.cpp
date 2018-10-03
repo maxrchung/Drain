@@ -50,32 +50,61 @@ int main() {
 		int start_time = Time("01:00:000").ms;
 		int end_time = Time("02:00:000").ms;
 		for(int i = 0; i < 5; ++i) {
-			Bubble bub = Bubble();
+			Bubble bub = Bubble(1);
 			start_time += 5000;
 			float rx = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.x - (Vector2::ScreenSize.x / 2);
 			float ry = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.y - (Vector2::ScreenSize.y / 2);
-			float sx = ((float)std::rand() / RAND_MAX) * 2;
-			float sy = ((float)std::rand() / RAND_MAX) * 2;
-			Vector2 start_pos = {i * 20, i * 20};
+			float sx = (i + 1) * 0.3;
+			Vector2 start_pos = {i * 20.0f, i * 20.0f};
 			Vector2 end_pos = {rx, ry};
-			float rtemp = rx;
-			sx = 0.1;
-			sy = 0.1;
-			bub.Scale(start_time, end_time, sx, sy);
+
+			bub.Scale(start_time, start_time, sx, sx);
 			bub.Move(start_time, end_time, start_pos, end_pos);
-			//bub.Scale(start_time, start_time, 0.2, 0.2);
+
 			bub.Color(start_time, end_time);
-			//bub.MoveAndScale(start_time, end_time, start_pos, end_pos, sx, sy);
 		}
 	}
 
 	// BubbleGenerator shit
-	if (1) {
+	if (0) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
+		BubbleGenerator::renderMouthBubbles();
 	}
 
-	//BubbleGenerator::renderMouthBubbles();
+	if (1) {
+		const auto bubbleCount = 19;
+		auto bubbles = std::vector<Bubble*>(bubbleCount);
+		for (int i = 0; i < bubbleCount; ++i) {
+			bubbles[i] = new Bubble();
+			const auto scale = RandomRange::calculate(25, 125, 100.0f);
+			const auto startTime = Time("02:33:885").ms - 1000;
+			const auto endTime = Time("02:33:885").ms;
+			const auto position = Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200));
+			bubbles[i]->Scale(startTime, startTime, scale, scale);
+			bubbles[i]->Move(startTime,
+							 endTime,
+							 position, position);
+		}
+		Splatter::renderFirstGradualPop(bubbles);
+	}
+
+	if (1) {
+		const auto bubbleCount = 19;
+		auto bubbles = std::vector<Bubble*>(bubbleCount);
+		for (int i = 0; i < bubbleCount; ++i) {
+			bubbles[i] = new Bubble();
+			const auto scale = RandomRange::calculate(25, 125, 100.0f);
+			const auto startTime = Time("03:18:036").ms - 1000;
+			const auto endTime = Time("03:18:036").ms;
+			const auto position = Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200));
+			bubbles[i]->Scale(startTime, startTime, scale, scale);
+			bubbles[i]->Move(startTime,
+							 endTime,
+							 position, position);
+		}
+		Splatter::renderSecondAllPop(bubbles);
+	}
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb

@@ -72,6 +72,7 @@ void BubbleGenerator::DrawBubble() {
 			std::vector<float> moveTimes = GetBubbleTiming();
 			bool slowFlag = false;
 			Bubble* sprites = CreateBubbleSprites();
+			sprites->Color(moveTimes[0], moveTimes[1]);
 			ScaleBubbleSize(sprites, moveTimes); // scales based on timing; dont put slowBubble before Scale or you will want to D ie
 			SlowBubbleBeforeSplat(moveTimes[0], moveTimes[1], moveTimes[1] - moveTimes[0], slowFlag);
 			TrackAllBubbles(sprites);
@@ -96,7 +97,7 @@ void BubbleGenerator::DrawBubble() {
 
 // Create Bubble object which will contain the layered bubble sprites
 Bubble* BubbleGenerator::CreateBubbleSprites() {
-	return new Bubble();
+	return new Bubble(1);
 }
 
 // mouth bubble version, only single sprite

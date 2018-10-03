@@ -202,6 +202,14 @@ void Swatch::colorSprites(const std::vector<Sprite*>& sprites, const int startTi
 		std::for_each(sprites.begin(), sprites.end(), [&](Sprite* const sprite) {
 			sprite->Color(localStartTime, localEndTime, startColor, endColor);
 		});
+		if(startColor.r > 255 || startColor.g > 255 || startColor.b > 255) {
+			printf("%d\n", endTime);
+			std::cout << startColor.r << " " << startColor.g << " " << startColor.b << "\n";
+		}
+		if(endColor.r > 255 || endColor.g > 255 || endColor.b > 255) {
+			printf("%d\n", endTime);
+			std::cout << endColor.r << " " << startColor.g << " " << startColor.b << "\n";
+		}
 		if (endColoring) {
 			break;
 		}

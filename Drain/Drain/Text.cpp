@@ -237,7 +237,7 @@ void Text::render() {
 	place({
 		"until a light",
 		"cusping the sky",
-		"signaled a return",
+		"signaled us back",
 		"to daily life",
 		  }, "02:51:999", "02:56:527");
 	place({
@@ -287,7 +287,7 @@ void Text::render() {
 		"to catch the day's start",
 		  }, "03:28:225", "03:32:753");
 	place({
-		"but one night",
+		"until one night",
 		"we failed to make it back",
 		"lost in the maze",
 		"of winding streets",
@@ -301,7 +301,7 @@ void Text::render() {
 	place({
 		"every dark corner",
 		"hid encroaching fears",
-		"forcing us to run away",
+		"forcing us to escape",
 		"down frantic paths",
 		  }, "03:41:810", "03:46:338");
 	place({
@@ -362,8 +362,8 @@ void Text::render() {
 		"that you captured",
 		  }, "06:02:187", "06:06:716");
 	place({
-		"above",
-		"clouds gathered in the sky",
+		"clouds gathered above",
+		"sprinkling the sky",
 		"the first drops",
 		"dotted the landscape",
 		  }, "06:06:716", "06:11:244");

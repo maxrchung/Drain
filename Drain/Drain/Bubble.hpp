@@ -6,7 +6,7 @@
 
 class Bubble {
 public:
-	Bubble();
+	Bubble(bool outline = 1);
 
 	void Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing = Easing::Linear);
 	void MoveX(int startTime, int endTime, float startX, float endX, Easing easing = Easing::Linear);
@@ -20,23 +20,17 @@ public:
 
 	void fixScale(int startTime, int endTime);
 
-	std::vector<Vector2> oblong;
 	SpriteCollection sprites;
 
 private:
 	float scale = 0;
 	int highlight_count;
 
-
-	SpriteCollection create_sprites();
-
+	SpriteCollection create_sprites(bool outline);
 	float w_rand(float min, float max);
 
 	static const int sprite_size = 100;
 
-	static const int min_highlight = 5;
-	static const int max_highlight = 9;
-
-	static constexpr float min_oblong_range = 0.1;
-	static constexpr float max_oblong_range = 0.15;
+	static const int min_highlight = 2;
+	static const int max_highlight = 5;
 };
