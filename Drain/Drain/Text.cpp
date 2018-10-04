@@ -181,7 +181,7 @@ void Text::render() {
 		"anyone out there",
 		  }, "01:30:489", "01:39:546");
 	place({
-		"i reached out",
+		"i reached",
 		"and we touched.",
 		"for a second",
 		"forming a bond",
@@ -243,13 +243,12 @@ void Text::render() {
 	place({
 		"lost in the morning fog",
 		"we parted ways",
-		"separated by",
-		"our different worlds",
+		"separated by different worlds",
 		  }, "02:56:527", "03:01:055");
 	place({
 		"in hiding we bid our time",
 		"waiting for the next chance",
-		"to sneak out in the rain",
+		"to drench in the rain",
 		  }, "03:01:055", "03:05:584");
 	place({
 		"night by night",
@@ -284,16 +283,16 @@ void Text::render() {
 	place({
 		"with exhaustion",
 		"we barely met the night's end",
-		"to catch the day's start",
+		"to find the day's start",
 		  }, "03:28:225", "03:32:753");
 	place({
 		"until one night",
-		"we failed to make it back",
+		"we failed to return",
 		"lost in the maze",
 		"of winding streets",
 		  }, "03:32:753", "03:37:282");
 	place({
-		"as the day broke",
+		"as day broke",
 		"ghosts and demons",
 		"evil of all kind",
 		"spawned from the shadows",
@@ -301,7 +300,7 @@ void Text::render() {
 	place({
 		"every dark corner",
 		"hid encroaching fears",
-		"forcing us to escape",
+		"pushing us to escape",
 		"down frantic paths",
 		  }, "03:41:810", "03:46:338");
 	place({
@@ -315,7 +314,7 @@ void Text::render() {
 		"swallowed you whole",
 		  }, "03:48:602", "03:53:131");
 	place({
-		"a panic, a struggle",
+		"a panic, struggle",
 		"pulling you up",
 		"but we broke apart",
 		"and lost touch",
@@ -374,7 +373,7 @@ void Text::render() {
 		"in the wet glow",
 		  }, "06:11:244", "06:15:772");
 	place({
-		"i reached out",
+		"i reached",
 		"for all the sharp pieces",
 		"pooled them to my cut hands",
 		  }, "06:15:772", "06:20:301");
