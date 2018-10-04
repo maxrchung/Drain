@@ -362,8 +362,8 @@ void Text::render() {
 		  }, "06:02:187", "06:06:716");
 	place({
 		"clouds gathered above",
-		"sprinkling the sky",
 		"the first drops",
+		"sprinkling the sky",
 		"dotted the landscape",
 		  }, "06:06:716", "06:11:244");
 	place({
