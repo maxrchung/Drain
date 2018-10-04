@@ -310,14 +310,14 @@ void Text::render() {
 	place({
 		"with a misstep",
 		"you tumbled to the floor",
-		"and a swarm of shadows",
+		"where a swarm of shadows",
 		"swallowed you whole",
 		  }, "03:48:602", "03:53:131");
 	place({
 		"a panic, struggle",
 		"pulling you up",
 		"but we broke apart",
-		"and lost touch",
+		"lost touch",
 		  }, "03:53:131", "03:57:659");
 	place({
 		"a final scream",
