@@ -7,16 +7,17 @@
 
 #define SPRITE_SIZE 100.0
 
-Drip::Drip(const Time& startTime, const Time& endTime,
-    const float xSize, const float xPos, const float speedFactor)
-    : startTime{ startTime }, endTime{ endTime },
-    xSize{ xSize }, xPos { xPos }, speedFactor { speedFactor }
-{
-    totalDur = endTime.ms - startTime.ms;
+Drip::Drip(const Time& startTime, const Time& endTime, const float xSize, const float xPos, const float speedFactor)
+	: startTime{ startTime }, 
+	endTime{ endTime }, 
+	xSize{ xSize }, 
+	xPos { xPos }, 
+	speedFactor { speedFactor },
+	totalDur{ endTime.ms - startTime.ms } {
 }
 
 // returns and draws a single rectangle after offset ms at xPos growing down
-Sprite * Drip::drawRect(int offset, float growDur, Easing easing)
+Sprite* Drip::drawRect(int offset, float growDur, Easing easing)
 {
     auto s = Storyboard::CreateSprite(getPath(Path::Column), Vector2(xPos, 240), Layer::Foreground, Origin::TopCentre);
     const float ySizeStart = 0;
@@ -35,7 +36,7 @@ Sprite * Drip::drawRect(int offset, float growDur, Easing easing)
 }
 
 // checks if there are still gaps on screen
-bool Drip::ScreenIsNotFilled(){
+bool Drip::screenIsNotFilled(){
     // todo
     return false;
 }
@@ -50,7 +51,7 @@ int Drip::make(bool fillScreen) {
     auto columnXPositions = std::vector<int>();
     auto columnXSizes = std::vector<int>();
     if (fillScreen){
-        while (ScreenIsNotFilled()) {
+        while (screenIsNotFilled()) {
             columnXPositions.push_back((int)uniformPosition(generator));
             columnXSizes.push_back((int)uniformSize(generator));
         }
@@ -66,3 +67,8 @@ void Drip::render() {
     Drip(Time("05:39:000"), Time("06:06:000"), 1, 0, 4000).make(false);
 }
 
+void Drip::renderFirstFill() {
+}
+
+void Drip::renderSecondDrips() {
+}

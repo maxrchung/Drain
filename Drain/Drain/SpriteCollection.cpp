@@ -23,7 +23,7 @@ SpriteCollection::~SpriteCollection() {
 void SpriteCollection::Move(int startTime, int endTime, Vector2 startPos, Vector2 endPos, Easing easing) {
 	for(int i = 0; i < size; ++i) {
 		Vector2 offset = location[i] * total_scale;
-		Vector2 start = startPos + offset;;
+		Vector2 start = startPos + offset;
 		Vector2 end = endPos + offset;
 		sprites[i]->Move(startTime, endTime, start, end, easing);
 	}
@@ -32,14 +32,14 @@ void SpriteCollection::Move(int startTime, int endTime, Vector2 startPos, Vector
 
 void SpriteCollection::MoveX(int startTime, int endTime, float startX, float endX, Easing easing) {
 	for(int i = 0; i < size; ++i) {
-		sprites[i]->MoveX(startTime, endTime, startX + location[i].x * total_scale.x, endX + location[i].x * total_scale.x, easing);
+		sprites[i]->MoveX(startTime, endTime, startX + location[i].x * total_scale, endX + location[i].x * total_scale, easing);
 	}
 }
 
 
 void SpriteCollection::MoveY(int startTime, int endTime, float startY, float endY, Easing easing) {
 	for(int i = 0; i < size; ++i) {
-		sprites[i]->MoveY(startTime, endTime, startY + location[i].y * total_scale.x, endY + location[i].y * total_scale.x, easing);
+		sprites[i]->MoveY(startTime, endTime, startY + location[i].y * total_scale, endY + location[i].y * total_scale, easing);
 	}
 }
 
@@ -79,7 +79,7 @@ void SpriteCollection::Scale(int startTime, int endTime, float startScale, float
 		sprites[i]->Move(startTime, endTime, this->location[i] * startScale + position, this->location[i] * endScale + position);
 	}
 
-	this->total_scale = {endScale, endScale};
+	this->total_scale = endScale;
 }
 
 
@@ -93,8 +93,6 @@ void SpriteCollection::ScaleVector(int startTime, int endTime, float startX, flo
 
 		sprites[i]->Move(startTime, endTime, startPos, endPos);
 	}
-
-	this->total_scale = {endX, endY};
 }
 
 
@@ -111,8 +109,6 @@ void SpriteCollection::ScaleVector(int startTime, int endTime, Vector2 startScal
 
 		sprites[i]->Move(startTime, endTime, startPos, endPos);
 	}
-
-	this->total_scale = endScale;
 }
 
 //if there is a move and a scale, and if the move and scale both start and end at the same time
@@ -125,7 +121,7 @@ void SpriteCollection::MoveAndScale(int startTime, int endTime, Vector2 startPos
 		sprites[i]->Move(startTime, endTime, start, end);
 	}
 
-	this->total_scale = {endScale, endScale};
+	this->total_scale = endScale;
 }
 
 void SpriteCollection::Color(int startTime, int endTime, int startR, int startG, int startB, int endR, int endG, int endB, Easing easing, int precision) {

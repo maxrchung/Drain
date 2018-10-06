@@ -27,8 +27,6 @@ int main() {
 		
 	//Text::render();
 	//Sketch::render(); 
-	//Splatter::render();
-	//Drip::render();
 	
 	// RainGenerator shit
 	//RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
@@ -72,6 +70,7 @@ int main() {
 		BubbleGenerator::renderMouthBubbles();
 	}
 
+	// First splatter section
 	if (1) {
 		const auto bubbleCount = 19;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
@@ -89,6 +88,7 @@ int main() {
 		Splatter::renderFirstGradualPop(bubbles);
 	}
 
+	// Second splatter section transitioning to walker
 	if (1) {
 		const auto bubbleCount = 19;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
@@ -103,8 +103,26 @@ int main() {
 							 endTime,
 							 position, position);
 		}
-		Splatter::renderSecondAllPop(bubbles);
+		auto splatters = Splatter::renderSecondAllPop(bubbles);
+		for (auto& splatter : splatters) {
+			splatter.Move(Time("03:19:168").ms,
+				      Time("03:19:168").ms + 1000,
+				      splatter.position,
+				      splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+		}
+
+		for (int i = 0; i < 4; ++i) {
+			auto splatter = Splatter::makeWalkerSplatter(Time("04:00:000"), Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)), RandomRange::calculate(5, 10, 10));
+			splatter.Move(Time("04:00:000").ms,
+						  Time("04:00:000").ms + 1000,
+						  splatter.position,
+						  splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+		}
 	}
+
+	// Drip
+	Drip::renderFirstFill();
+	Drip::renderSecondDrips();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
