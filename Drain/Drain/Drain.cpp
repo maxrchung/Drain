@@ -25,6 +25,14 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
+	// BubbleGenerator shit
+	// Bubbles moved right above background so that text and sketch can appear normally above them
+	if (0) {
+		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
+		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
+		BubbleGenerator::renderMouthBubbles();
+	}
+
 	//Text::render();
 	//Sketch::render(); 
 	
@@ -63,15 +71,8 @@ int main() {
 		}
 	}
 
-	// BubbleGenerator shit
-	if (0) {
-		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
-		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
-		BubbleGenerator::renderMouthBubbles();
-	}
-
 	// First splatter section
-	if (1) {
+	if (0) {
 		const auto bubbleCount = 19;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
 		for (int i = 0; i < bubbleCount; ++i) {
@@ -89,7 +90,7 @@ int main() {
 	}
 
 	// Second splatter section transitioning to walker
-	if (1) {
+	if (0) {
 		const auto bubbleCount = 19;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
 		for (int i = 0; i < bubbleCount; ++i) {
