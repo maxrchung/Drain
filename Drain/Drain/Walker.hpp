@@ -8,24 +8,13 @@
 
 #include <vector>
 
-typedef struct raindrop {
-	Sprite *sprite;
-	Vector3 position;
-	float size;
-} raindrop;
-
 
 class Walker {
 public:
-	//field of view
-	float fov = 90;
-
-	std::vector<raindrop> raindrops;
-	std::vector<SpriteCollection> sprites;
-
 	Walker(std::vector<SpriteCollection> sprites);
+	virtual void walk(float distance, Time startTime, Time endTime, float density);
 
-	void walk(float distance, Time startTime, Time endTime);
+	std::vector<SpriteCollection> sprites;
 
 private:
 	float w_rand(float min, float max);
@@ -33,31 +22,17 @@ private:
 	//check if the given 3d coordinate is on screen
 	bool inScreen(Vector2 a);
 
-	//convert 2d to 3d
-	Vector3 twoToThree(Sprite *sprite, float size);
-
-	//convert 3d to 2d
-	Vector3 threeToTwo(Vector3 coordinates, float size);
-
 	//given a line between the Vector2s b and a, find the point at
 	//which is crosses the screen
 	Vector2 findProjection(Vector2 a, Vector2 b);
 
-	//find the point at which to start drawing point
-	Vector2 findAppearPoint(Vector3 a, Vector3 b, float size);
-
 	//move sprites from RainGenerator
-	void moveCurrent(float distance, Time startTime, Time endTime);
+	virtual void moveCurrent(float distance, Time startTime, Time endTime);
 
 	//move the sprites
-	void moveSprites(float distance, Time startTime, Time endTime);
+	virtual void moveSprites(float distance, Time startTime, Time endTime, float density);
 
-	SpriteCollection create(void);
-
-	//the maximum distance that any sprite will be drawn
-	//the minimum distance that a sprite will be drawn
-	const float max_distance = 100;
-	const float min_distance = 1;
+	virtual SpriteCollection create(void);
 
 	//size in pixels
 	const uint8_t sprite_size = 100;
@@ -73,11 +48,4 @@ private:
 	//sizes of the raindrop
 	const float minSize = 10;
 	const float maxSize = 100;
-};
-
-class Walker_obj {
-public:
-	virtual SpriteCollection create();
-
-	virtual void MoveAndScale(int startTime, int endTime, Vector2 start_pos, Vector2 end_pos, float start_scale, float end_scale);
 };

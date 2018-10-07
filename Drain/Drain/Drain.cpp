@@ -49,7 +49,7 @@ int main() {
 			coll_raindrops.push_back(drop);
 		}
 		Walker walk_boi = Walker::Walker(coll_raindrops);
-		walk_boi.walk(1000, Time("01:30:489"), Time("01:57:659"));
+		walk_boi.walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
 	}
 
 	//testing bubbles
@@ -91,7 +91,7 @@ int main() {
 	}
 
 	// Second splatter section transitioning to walker
-	if (0) {
+	if (1) {
 		const auto bubbleCount = 19;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
 		for (int i = 0; i < bubbleCount; ++i) {
