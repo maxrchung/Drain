@@ -51,7 +51,9 @@ private:
 
 	//move the sprites
 	void moveSprites(float distance, Time startTime, Time endTime);
-	
+
+	SpriteCollection create(void);
+
 	//the maximum distance that any sprite will be drawn
 	//the minimum distance that a sprite will be drawn
 	const float max_distance = 100;
@@ -71,4 +73,11 @@ private:
 	//sizes of the raindrop
 	const float minSize = 10;
 	const float maxSize = 100;
+};
+
+class Walker_obj {
+public:
+	virtual SpriteCollection create();
+
+	virtual void MoveAndScale(int startTime, int endTime, Vector2 start_pos, Vector2 end_pos, float start_scale, float end_scale);
 };

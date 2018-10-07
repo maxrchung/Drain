@@ -58,8 +58,6 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 
 	int total_time = endTime.ms - startTime.ms;
 
-	std::string spriteImage = getPath(Path::Circle);
-
 	const float sizeX = Vector2::ScreenSize.x/2 * 0.4;
 	const float sizeY = Vector2::ScreenSize.y/2 * 0.4;
 	int count = distance * (total_time/1000);
@@ -87,8 +85,7 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 					       w_rand(-sizeY, sizeY));
 
 		Vector2 end_coord = findProjection(Vector2::Zero, start_coord);
-
-		SpriteCollection sprite = SpriteCollection(Storyboard::CreateSprite(spriteImage, start_coord));
+		SpriteCollection sprite = this->create();
 
 		sprite.MoveAndScale(int_start_time, int_end_time, start_coord, end_coord, start_scale, end_scale);
 		Swatch::colorFgToFgSprites(sprite.sprites, int_start_time, int_end_time);
@@ -218,6 +215,11 @@ Vector2 Walker::findAppearPoint(Vector3 a, Vector3 b, float size) {
 	return out;
 }
 
+
+SpriteCollection Walker::create(void) {
+	std::string spriteImage = getPath(Path::Circle);
+	return SpriteCollection(Storyboard::CreateSprite(spriteImage, {0, 0}));
+}
 
 float Walker::w_rand(float min, float max) {
 	float out = (float)rand() / RAND_MAX;

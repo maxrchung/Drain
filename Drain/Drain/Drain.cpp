@@ -10,6 +10,7 @@
 #include "Walker.hpp"
 #include "Splatter.hpp"
 #include "Drip.hpp"
+
 #include <ctime>
 #include <cmath>
 #include <iostream>
@@ -32,7 +33,7 @@ int main() {
 	//RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
-	if(0) {
+	if(1) {
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
 		std::vector<SpriteCollection> coll_raindrops;
@@ -71,7 +72,7 @@ int main() {
 	}
 
 	// First splatter section
-	if (1) {
+	if (0) {
 		const auto bubbleCount = 19;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
 		for (int i = 0; i < bubbleCount; ++i) {
@@ -89,7 +90,7 @@ int main() {
 	}
 
 	// Second splatter section transitioning to walker
-	if (1) {
+	if (0) {
 		const auto bubbleCount = 19;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
 		for (int i = 0; i < bubbleCount; ++i) {
