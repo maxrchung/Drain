@@ -283,7 +283,7 @@ void Text::render() {
 	place({
 		"with exhaustion",
 		"we barely met the night's end",
-		"to find the day's start",
+		"to catch the day's start",
 		  }, "03:28:225", "03:32:753");
 	place({
 		"until one night",

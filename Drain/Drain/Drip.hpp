@@ -1,32 +1,24 @@
 #pragma once
-#include "Sketch.hpp"
+#include "RandomRange.hpp"
+#include "Sprite.hpp"
+#include "SpriteCollection.hpp"
 #include "Time.hpp"
-#include "Vector2.hpp"
 #include <vector>
 
 class Drip {
 public:
-    // standalone, defined by pos Vector2
-    Drip(const Time& startTime,
-        const Time& endTime,
-        const float xSize,
-        const float xPos,   // center of the drip
-        const float speedFactor);
-    static void render();
 	static void renderFirstFill();
 	static void renderSecondDrips();
 
 private:
-	Sprite* drawRect(int offset,
-					  float growDur,      // duration of drip in ms
-					  Easing easing = Easing::Linear);
-	int make(bool fillScreen);
-	bool screenIsNotFilled();
+	static SpriteCollection buildSpriteCollection(Sprite* const circle, Sprite* const column);
+	static SpriteCollection draw(const int startTime, const int endTime, const float centerX, const float columnWidth, const Easing easing);
+	static std::vector<float> generatePositions(const int count);
 
-    const Time startTime;
-    const Time endTime;
-    const float xSize;
-    const float xPos;
-    const float speedFactor;
-	const int totalDur;
+	static constexpr float CIRCLE_FACTOR = 1.5f;
+	// Buffer to account for extra spacing on left and right of drips
+	static constexpr float COLUMN_WIDTH_BUFFER = 0.94f;
+	static const int COLUMN_PIXEL_SIZE = 100;
+	static const RandomRange RANDOM_VARIATION;
+	static const std::vector<int> FIRST_SPAWN_TIMES;
 };

@@ -26,6 +26,14 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
+	// BubbleGenerator shit
+	// Bubbles moved right above background so that text and sketch can appear normally above them
+	if (0) {
+		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
+		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
+		BubbleGenerator::renderMouthBubbles();
+	}
+
 	//Text::render();
 	//Sketch::render(); 
 	
@@ -62,13 +70,6 @@ int main() {
 
 			bub.Color(start_time, end_time);
 		}
-	}
-
-	// BubbleGenerator shit
-	if (0) {
-		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
-		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
-		BubbleGenerator::renderMouthBubbles();
 	}
 
 	// First splatter section
