@@ -18,15 +18,18 @@ int main() {
 	srand(time(NULL));
 	Swatch::init();
 
-	// Gets rid of beatmap background
-	Storyboard::CreateSprite("36592_serial_experiments_lain.jpg", Vector2::Zero, Layer::Background);
-	// Solid color background
-	auto const background = Storyboard::CreateSprite(getPath(Path::Pixel), Vector2::Zero, Layer::Background);
-	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
-	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
-		
-	// BubbleGenerator shit
-	// Bubbles moved right above background so that text and sketch can appear normally above them
+	// Background
+	if (0) {
+		// Gets rid of beatmap background
+		Storyboard::CreateSprite("36592_serial_experiments_lain.jpg", Vector2::Zero, Layer::Background);
+		// Solid color background
+		auto const background = Storyboard::CreateSprite(getPath(Path::Pixel), Vector2::Zero, Layer::Background);
+		background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
+		Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
+	}
+
+	// Bubble generation
+	// Moved right above background so that text and sketch can appear normally above them
 	if (0) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
@@ -34,35 +37,34 @@ int main() {
 	}
 
 	//Text::render();
+
 	//Sketch::render(); 
-	
-	// RainGenerator shit
-	//RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
-	
-	//Walker shit I guess
-	if(0) {
+
+	// Rain
+	if (0) {
+		RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
 		std::vector<SpriteCollection> coll_raindrops;
-		for(auto drop: raindrops) {
+		for (auto drop : raindrops) {
 			coll_raindrops.push_back(drop);
 		}
 		Walker walk_boi = Walker::Walker(coll_raindrops);
 		walk_boi.walk(1000, Time("01:30:489"), Time("01:57:659"));
 	}
 
-	//testing bubbles
-	if(0) {
+	// Testing bubbles
+	if (0) {
 		int start_time = Time("01:00:000").ms;
 		int end_time = Time("02:00:000").ms;
-		for(int i = 0; i < 5; ++i) {
+		for (int i = 0; i < 5; ++i) {
 			Bubble bub = Bubble(1);
 			start_time += 5000;
 			float rx = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.x - (Vector2::ScreenSize.x / 2);
 			float ry = ((float)std::rand() / RAND_MAX) * Vector2::ScreenSize.y - (Vector2::ScreenSize.y / 2);
 			float sx = (i + 1) * 0.3;
-			Vector2 start_pos = {i * 20.0f, i * 20.0f};
-			Vector2 end_pos = {rx, ry};
+			Vector2 start_pos = { i * 20.0f, i * 20.0f };
+			Vector2 end_pos = { rx, ry };
 
 			bub.Scale(start_time, start_time, sx, sx);
 			bub.Move(start_time, end_time, start_pos, end_pos);
@@ -73,6 +75,7 @@ int main() {
 
 	// First splatter section
 	if (0) {
+		// Test bubble transition
 		const auto bubbleCount = 19;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
 		for (int i = 0; i < bubbleCount; ++i) {
@@ -86,11 +89,14 @@ int main() {
 							 endTime,
 							 position, position);
 		}
+
+		// First splatter section
 		Splatter::renderFirstGradualPop(bubbles);
 	}
 
-	// Second splatter section transitioning to walker
+	// Second splatter section and walker
 	if (0) {
+		// Test bubble transition
 		const auto bubbleCount = 19;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
 		for (int i = 0; i < bubbleCount; ++i) {
@@ -104,14 +110,19 @@ int main() {
 							 endTime,
 							 position, position);
 		}
+
+		// Second splatter section
 		auto splatters = Splatter::renderSecondAllPop(bubbles);
+
+		// Test splatter walker
 		for (auto& splatter : splatters) {
 			splatter.Move(Time("03:19:168").ms,
-				      Time("03:19:168").ms + 1000,
-				      splatter.position,
-				      splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+						  Time("03:19:168").ms + 1000,
+						  splatter.position,
+						  splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
 		}
 
+		// Testing makeWalkerSplatter
 		for (int i = 0; i < 4; ++i) {
 			auto splatter = Splatter::makeWalkerSplatter(Time("04:00:000"), Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)), RandomRange::calculate(5, 10, 10));
 			splatter.Move(Time("04:00:000").ms,
@@ -122,8 +133,30 @@ int main() {
 	}
 
 	// Drip
-	Drip::renderFirstFill();
-	Drip::renderSecondDrips();
+	if (1) {
+		// First drip section
+		//Drip::renderFirstFill();
+
+		// Second drip section
+		auto drips = Drip::renderSecondDrips();
+
+		// Test drip walker
+		for (auto& drip : drips) {
+			drip.Move(Time("05:39:546").ms,
+					  Time("05:39:546").ms + 1000,
+					  drip.position,
+					  drip.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+		}
+
+		// Test makeWalkerDrip
+		for (int i = 0; i < 4; ++i) {
+			auto drip = Drip::makeWalkerDrip(Time("05:00:000"), Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)), RandomRange::calculate(20, 50));
+			drip.Move(Time("05:00:000").ms,
+					  Time("05:00:000").ms + 1000,
+					  drip.position,
+					  drip.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+		}
+	}
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
