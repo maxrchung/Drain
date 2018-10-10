@@ -25,14 +25,14 @@ int main() {
 	background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
 	Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 		
-	//Text::render();
+	Text::render();
 	//Sketch::render(); 
 	
 	// RainGenerator shit
-	//RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
+	RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 	
 	//Walker shit I guess
-	if(0) {
+	if(1) {
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
 		std::vector<SpriteCollection> coll_raindrops;
@@ -44,7 +44,7 @@ int main() {
 	}
 
 	//testing bubbles
-	if(0) {
+	if(1) {
 		int start_time = Time("01:00:000").ms;
 		int end_time = Time("02:00:000").ms;
 		for(int i = 0; i < 5; ++i) {
@@ -64,14 +64,15 @@ int main() {
 	}
 
 	// BubbleGenerator shit
-	if (0) {
+	if (1) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
+		auto splatBubbles = bubGen.GetSplatBubbles();
 		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
 		BubbleGenerator::renderMouthBubbles();
 	}
 
 	// First splatter section
-	if (1) {
+	if (0) {
 		const auto bubbleCount = 19;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
 		for (int i = 0; i < bubbleCount; ++i) {
@@ -121,8 +122,8 @@ int main() {
 	}
 
 	// Drip
-	Drip::renderFirstFill();
-	Drip::renderSecondDrips();
+	//Drip::renderFirstFill();
+	//Drip::renderSecondDrips();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
