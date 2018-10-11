@@ -6,7 +6,7 @@
 
 #include <cmath>
 
-Walker::Walker(std::vector<SpriteCollection> sprites)
+Walker::Walker(const std::vector<SpriteCollection> &sprites)
 	: sprites{sprites} {
 }
 
@@ -15,7 +15,7 @@ Walker::Walker(std::vector<SpriteCollection> sprites)
  * distance: forward distance walked, can be positive or negative?
  * startTime/endTime: specificy how long walked
  */
-void Walker::walk(float distance, Time startTime, Time endTime) {
+void Walker::walk(float distance, Time startTime, Time endTime, float density) {
 	//for every sprite
 	Vector3 temp = Vector3::Zero;
 
@@ -23,7 +23,7 @@ void Walker::walk(float distance, Time startTime, Time endTime) {
 	moveCurrent(distance, startTime, endTime);
 
 	//move those boys
-	moveSprites(distance, startTime, endTime);
+	moveSprites(distance, startTime, endTime, density);
 
 	return;
 }
@@ -54,28 +54,25 @@ void Walker::moveCurrent(float distance, Time startTime, Time endTime) {
 	}
 }
 
-void Walker::moveSprites(float distance, Time startTime, Time endTime) {
-
+void Walker::moveSprites(float distance, Time startTime, Time endTime, float density) {
 	int total_time = endTime.ms - startTime.ms;
-
-	std::string spriteImage = getPath(Path::Circle);
+	float speed = distance / total_time;
 
 	const float sizeX = Vector2::ScreenSize.x/2 * 0.4;
 	const float sizeY = Vector2::ScreenSize.y/2 * 0.4;
-	int count = distance * (total_time/1000);
+
+	int count = speed * density;
 
 	for(int i = 0; i < count; ++i) {
-		int int_start_time = startTime.ms + i * w_rand(0, 1000);
+		int int_start_time = startTime.ms + i * w_rand(0, 100);
 		int int_end_time = int_start_time + w_rand(1000, total_time);
-		if(int_start_time < startTime.ms)
-			int_start_time = startTime.ms;
 
 		if(int_end_time > endTime.ms)
 			int_end_time = endTime.ms - w_rand(0, 2000);
 
 		if(int_start_time > endTime.ms) {
-			int_start_time = endTime.ms;
-			int_end_time = endTime.ms - 1000;
+			int_start_time = endTime.ms - 1000;
+			int_end_time = endTime.ms;
 			break;
 		}
 
@@ -87,8 +84,7 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime) {
 					       w_rand(-sizeY, sizeY));
 
 		Vector2 end_coord = findProjection(Vector2::Zero, start_coord);
-
-		SpriteCollection sprite = SpriteCollection(Storyboard::CreateSprite(spriteImage, start_coord));
+		SpriteCollection sprite = this->create(int_start_time, start_coord, start_scale);
 
 		sprite.MoveAndScale(int_start_time, int_end_time, start_coord, end_coord, start_scale, end_scale);
 		Swatch::colorFgToFgSprites(sprite.sprites, int_start_time, int_end_time);
@@ -110,40 +106,6 @@ bool Walker::inScreen(Vector2 a) {
 	return out;
 }
 
-
-/*
- * convert 2d coordinates and a size into 3d coordinates
- * take sprite coordinates
- * assume location of camera being 0 0 0
- */
-Vector3 Walker::twoToThree(Sprite *sprite, float size) {
-	Vector3 out;
-
-	out.z = (size * this->sizeScale) / sprite->scale;
-
-	out.x = sprite->position.x * out.z;
-	out.y = sprite->position.y * out.z;					      
-
-	return out;
-}
-
-/*
- * convert 3d coordinates into 2d coordinates and a size
- * the Vector3 will have x and y as usual, but the z 
- * member will be the scale
- * probably not a good idea but uhh
- */
-Vector3 Walker::threeToTwo(Vector3 coordinates, float size) {
-	Vector3 out;
-
-	out.x = coordinates.x / coordinates.z;
-	out.y = coordinates.y / coordinates.z;
-
-	//scale of the image
-	out.z = (size * this->sizeScale) / coordinates.z;
-
-	return out;
-}
 
 Vector2 Walker::findProjection(Vector2 a, Vector2 b) {
 	Vector2 out = Vector2::Zero;
@@ -193,29 +155,9 @@ Vector2 Walker::findProjection(Vector2 a, Vector2 b) {
 }
 
 
-/*
- * find the point at which the raindrop becomes visible
- */
-Vector2 Walker::findAppearPoint(Vector3 a, Vector3 b, float size) {
-	Vector2 out = Vector2::Zero;
-
-	Vector3 out_3d = Vector3::Zero;
-	out_3d.z = (size * this->sizeScale) / this->min_scale;
-
-	Vector3 diff = b - a;
-
-	float x_ratio = (diff.x / diff.z);
-	float y_ratio = (diff.y / diff.z);
-
-	out_3d.x = x_ratio * (out_3d.z - a.z) + a.x;
-	out_3d.y = y_ratio * (out_3d.z - a.z) + a.y;
-
-	out_3d = threeToTwo(out_3d, size);
-
-	out.x = out_3d.x;
-	out.y = out_3d.y;
-
-	return out;
+SpriteCollection Walker::create(const Time &startTime, const Vector2& centerPos, float density) {
+	std::string spriteImage = getPath(Path::Circle);
+	return SpriteCollection(Storyboard::CreateSprite(spriteImage, {0, 0}));
 }
 
 

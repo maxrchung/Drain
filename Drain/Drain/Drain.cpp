@@ -3,6 +3,8 @@
 #include "Math.hpp"
 #include "Path.hpp"
 #include "RainGenerator.hpp"
+#include "Rain_walker.hpp"
+#include "Splatter_walker.hpp"
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
 #include "Sketch.hpp"
@@ -10,6 +12,7 @@
 #include "Walker.hpp"
 #include "Splatter.hpp"
 #include "Drip.hpp"
+
 #include <ctime>
 #include <cmath>
 #include <iostream>
@@ -30,9 +33,10 @@ int main() {
 
 	// Bubble generation
 	// Moved right above background so that text and sketch can appear normally above them
-	if (0) {
+	if (1) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
+		auto splatBubbles = bubGen.GetSplatBubbles();
 		BubbleGenerator::renderMouthBubbles();
 	}
 
@@ -53,8 +57,16 @@ int main() {
 		for (auto drop : raindrops) {
 			coll_raindrops.push_back(drop);
 		}
-		Walker walk_boi = Walker::Walker(coll_raindrops);
-		walk_boi.walk(1000, Time("01:30:489"), Time("01:57:659"));
+
+#if 0
+		//Walker &walk_boi = Rain_walker(coll_raindrops);
+		//walk_boi.walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
+#else
+		Walker *walk_boi = new Rain_walker(coll_raindrops);
+		walk_boi->walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
+#endif
+
+
 	}
 
 	// Testing bubbles
@@ -90,8 +102,8 @@ int main() {
 			const auto position = Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200));
 			bubbles[i]->Scale(startTime, startTime, scale, scale);
 			bubbles[i]->Move(startTime,
-							 endTime,
-							 position, position);
+				endTime,
+				position, position);
 		}
 
 		// First splatter section
@@ -111,29 +123,37 @@ int main() {
 			const auto position = Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200));
 			bubbles[i]->Scale(startTime, startTime, scale, scale);
 			bubbles[i]->Move(startTime,
-							 endTime,
-							 position, position);
+				endTime,
+				position, position);
 		}
 
 		// Second splatter section
 		auto splatters = Splatter::renderSecondAllPop(bubbles);
 
+		//Splatter_walker walk_splats = Splatter_walker(splatters);
+		int start_splat = Time("03:19:168").ms;
+		int end_splat = Time("04:04:168").ms;
+
+		Walker *walk_splats = new Splatter_walker(splatters);
+		walk_splats->walk(10000, start_splat, end_splat, 100);
+		/*
 		// Test splatter walker
 		for (auto& splatter : splatters) {
 			splatter.Move(Time("03:19:168").ms,
-						  Time("03:19:168").ms + 1000,
-						  splatter.position,
-						  splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+				Time("03:19:168").ms + 1000,
+				splatter.position,
+				splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
 		}
 
 		// Testing makeWalkerSplatter
 		for (int i = 0; i < 4; ++i) {
 			auto splatter = Splatter::makeWalkerSplatter(Time("04:00:000"), Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)), RandomRange::calculate(5, 10, 10));
 			splatter.Move(Time("04:00:000").ms,
-						  Time("04:00:000").ms + 1000,
-						  splatter.position,
-						  splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+				Time("04:00:000").ms + 1000,
+				splatter.position,
+				splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
 		}
+		*/
 	}
 
 	// Drip
@@ -147,18 +167,18 @@ int main() {
 		// Test drip walker
 		for (auto& drip : drips) {
 			drip.Move(Time("05:39:546").ms,
-					  Time("05:39:546").ms + 1000,
-					  drip.position,
-					  drip.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+				Time("05:39:546").ms + 1000,
+				drip.position,
+				drip.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
 		}
 
 		// Test makeWalkerDrip
 		for (int i = 0; i < 4; ++i) {
 			auto drip = Drip::makeWalkerDrip(Time("05:00:000"), Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)), RandomRange::calculate(20, 50));
 			drip.Move(Time("05:00:000").ms,
-					  Time("05:00:000").ms + 1000,
-					  drip.position,
-					  drip.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+				Time("05:00:000").ms + 1000,
+				drip.position,
+				drip.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
 		}
 	}
 

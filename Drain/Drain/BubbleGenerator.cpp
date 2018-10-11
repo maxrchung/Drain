@@ -2,7 +2,10 @@
 
 BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
 	: isSecondSection{ isSecondSection }, isMouth { isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
-	// TODO: bbbles pop individually, one by one?
+	// PRIORITY: moveX slow (easeing], 
+	// TODO: rectangle middle no stuff freezeing
+	// TODO: reverse big bubble slow and slow bubble
+	// TODO: Move lyriccs on top of bubble
 	// TODO: bubble color, moveX slow (easeing) . . .
 
 	if (isMouth) {
@@ -253,8 +256,8 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes, b
 
 	sprite->MoveY(startMove, endMove, sprite->position.y, endY); // Handles only vertical movement
 
+	// Following code handles X movement
 	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
-	float oneDirMoveLength = sideMoveLength / 2;
 	float xSideDelta = GetRandomSideMovement();
 
 	float sideMoveTotalTime = (endMove - startMove) / sideMoveTimes;
@@ -419,6 +422,38 @@ void BubbleGenerator::SplatterPos(Bubble* sprites, std::vector<float> moveTimes)
 	TrackSplatBubbles(sprites); // Save the sprite to a sprite vector, will be used by splat boi
 
 	splatEndY = splatterPos.y;
+
+	PreventCoveringLyrics(sprites);
+}
+
+// Used in SplatterPos to keep respawning randomized bubble pos until it isn't covering the lyrics
+void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites) {
+	float xAvoid = 200;
+	float yAvoid = 60;
+	float rectRight = Vector2::Midpoint.x + xAvoid;
+	float rectLeft = Vector2::Midpoint.x - xAvoid;
+	float rectTop = Vector2::Midpoint.y + yAvoid;
+	float rectBottom = Vector2::Midpoint.y - yAvoid;
+
+	// rect area check
+	if (sprites->sprites.position.x <= rectRight && sprites->sprites.position.x >= rectLeft) {
+		bool closerToRight = (sprites->sprites.position.x > Vector2::Midpoint.x);
+		if (closerToRight) {
+			sprites->sprites.position.x += xAvoid;
+		}
+		else {
+			sprites->sprites.position.x -= yAvoid;
+		}
+	}
+	if (splatEndY <= rectTop && splatEndY >= rectBottom) {
+		bool closerToBottom = (splatEndY >= Vector2::Midpoint.y);
+		if (closerToBottom) {
+			splatEndY += yAvoid;
+		}
+		else {
+			splatEndY -= yAvoid;
+		}
+	}
 }
 
 void BubbleGenerator::ColorBubbles(Sprite* sprite, float startTime, float endTime) {
