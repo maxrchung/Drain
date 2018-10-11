@@ -3,6 +3,7 @@
 #include "Math.hpp"
 #include "Path.hpp"
 #include "RainGenerator.hpp"
+#include "Rain_walker.hpp"
 #include "Splatter_walker.hpp"
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
@@ -52,9 +53,16 @@ int main() {
 		for (auto drop : raindrops) {
 			coll_raindrops.push_back(drop);
 		}
-		Walker walk_boi(coll_raindrops);
-		//Walker walk_boi = Walker::Walker(coll_raindrops);
-		walk_boi.walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
+
+#if 0
+		//Walker &walk_boi = Rain_walker(coll_raindrops);
+		//walk_boi.walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
+#else
+		Walker *walk_boi = new Rain_walker(coll_raindrops);
+		walk_boi->walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
+#endif
+
+
 	}
 
 	// Testing bubbles
@@ -117,11 +125,13 @@ int main() {
 
 		// Second splatter section
 		auto splatters = Splatter::renderSecondAllPop(bubbles);
-		Splatter_walker walk_splats(splatters);
+
 		//Splatter_walker walk_splats = Splatter_walker(splatters);
 		int start_splat = Time("03:19:168").ms;
 		int end_splat = Time("04:04:168").ms;
-		walk_splats.walk(10000, start_splat, end_splat, 100);
+
+		Walker *walk_splats = new Splatter_walker(splatters);
+		walk_splats->walk(10000, start_splat, end_splat, 100);
 		/*
 		// Test splatter walker
 		for (auto& splatter : splatters) {

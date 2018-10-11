@@ -6,7 +6,7 @@
 
 #include <cmath>
 
-Walker::Walker(std::vector<SpriteCollection> sprites)
+Walker::Walker(const std::vector<SpriteCollection> &sprites)
 	: sprites{sprites} {
 }
 

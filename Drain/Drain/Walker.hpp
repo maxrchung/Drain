@@ -4,19 +4,18 @@
 #include "SpriteCollection.hpp"
 #include "Time.hpp"
 #include "Vector2.hpp"
-#include "Vector3.hpp"
 
 #include <vector>
 
 
 class Walker {
 public:
-	Walker(std::vector<SpriteCollection> sprites);
+	Walker(const std::vector<SpriteCollection> &sprites);
 	virtual void walk(float distance, Time startTime, Time endTime, float density);
 
 	std::vector<SpriteCollection> sprites;
 
-private:
+protected:
 	float w_rand(float min, float max);
 
 	//check if the given 3d coordinate is on screen

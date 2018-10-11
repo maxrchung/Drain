@@ -4,24 +4,15 @@
 #include "SpriteCollection.hpp"
 #include "Time.hpp"
 #include "Vector2.hpp"
-#include "Vector3.hpp"
 #include "Walker.hpp"
 
 #include <vector>
 
 class Splatter_walker : public Walker {
 public:
-	Splatter_walker(std::vector<SpriteCollection> sprites);
-	//void walk(float distance, Time startTime, Time endTime, float density);
+	Splatter_walker(const std::vector<SpriteCollection> &sprites);
 
-	std::vector<SpriteCollection> sprites;
-
-private:
-
-        //void moveCurrent(float distance, Time startTime, Time endTime);
-
-	//void moveSprites(float distance, Time startTime, Time endTime, float density);
-
+protected:
 	SpriteCollection create(const Time& startTime, const Vector2& centerPos, const float scale);
 
 	const uint8_t sprite_size = 200;
