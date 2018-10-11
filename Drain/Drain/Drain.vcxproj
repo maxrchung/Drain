@@ -141,7 +141,9 @@
     <ClCompile Include="Drain.cpp" />
     <ClCompile Include="LineStroke.cpp" />
     <ClCompile Include="Drip.cpp" />
+    <ClCompile Include="Rain_walker.cpp" />
     <ClCompile Include="Splatter.cpp" />
+    <ClCompile Include="Splatter_walker.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Path.cpp" />
     <ClCompile Include="PointStroke.cpp" />
@@ -169,9 +171,11 @@
     <ClInclude Include="Drip.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="RainGenerator.hpp" />
+    <ClInclude Include="Rain_walker.hpp" />
     <ClInclude Include="RandomRange.hpp" />
     <ClInclude Include="Sketch.hpp" />
     <ClInclude Include="Splatter.hpp" />
+    <ClInclude Include="Splatter_walker.hpp" />
     <ClInclude Include="SpriteCollection.hpp" />
     <ClInclude Include="Swatch.hpp" />
     <ClInclude Include="LineStroke.hpp" />

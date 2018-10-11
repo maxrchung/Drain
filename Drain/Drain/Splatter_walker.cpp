@@ -8,6 +8,6 @@ Splatter_walker::Splatter_walker(const std::vector<SpriteCollection> &sprites)
 	: Walker(sprites) {
 }
 
-SpriteCollection create(const Time& startTime, const Vector2& centerPos, const float scale) {
+SpriteCollection Splatter_walker::create(const Time& startTime, const Vector2& centerPos, const float scale) {
 	return Splatter::makeWalkerSplatter(startTime, centerPos, scale);
 }
