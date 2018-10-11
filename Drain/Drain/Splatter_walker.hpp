@@ -11,23 +11,18 @@
 
 class Splatter_walker : public Walker {
 public:
-	void walk(float distance, Time startTime, Time endTime, float density);
+	Splatter_walker(std::vector<SpriteCollection> sprites);
+	//void walk(float distance, Time startTime, Time endTime, float density);
+
+	std::vector<SpriteCollection> sprites;
 
 private:
-	float w_rand(float min, float max);
 
-        void moveCurrent(float distance, Time startTime, Time endTime);
+        //void moveCurrent(float distance, Time startTime, Time endTime);
 
-	//move the sprites
-	void moveSprites(float distance, Time startTime, Time endTime, float density);
+	//void moveSprites(float distance, Time startTime, Time endTime, float density);
 
-	SpriteCollection create(void);
-
-	bool inScreen(Vector2 a);
-
-	//given a line between the Vector2s b and a, find the point at
-	//which is crosses the screen
-	Vector2 findProjection(Vector2 a, Vector2 b);
+	SpriteCollection create(const Time& startTime, const Vector2& centerPos, const float scale);
 
 	const uint8_t sprite_size = 200;
 

@@ -84,7 +84,7 @@ void Walker::moveSprites(float distance, Time startTime, Time endTime, float den
 					       w_rand(-sizeY, sizeY));
 
 		Vector2 end_coord = findProjection(Vector2::Zero, start_coord);
-		SpriteCollection sprite = this->create();
+		SpriteCollection sprite = this->create(int_start_time, start_coord, start_scale);
 
 		sprite.MoveAndScale(int_start_time, int_end_time, start_coord, end_coord, start_scale, end_scale);
 		Swatch::colorFgToFgSprites(sprite.sprites, int_start_time, int_end_time);
@@ -155,7 +155,7 @@ Vector2 Walker::findProjection(Vector2 a, Vector2 b) {
 }
 
 
-SpriteCollection Walker::create(void) {
+SpriteCollection Walker::create(const Time &startTime, const Vector2& centerPos, float density) {
 	std::string spriteImage = getPath(Path::Circle);
 	return SpriteCollection(Storyboard::CreateSprite(spriteImage, {0, 0}));
 }
