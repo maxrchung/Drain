@@ -11,7 +11,7 @@
 class Walker {
 public:
 	Walker(const std::vector<SpriteCollection> &sprites);
-	virtual void walk(float distance, Time startTime, Time endTime, float density);
+	void walk(float distance, Time startTime, Time endTime, float density);
 
 	std::vector<SpriteCollection> sprites;
 
