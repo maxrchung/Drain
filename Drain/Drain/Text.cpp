@@ -122,10 +122,6 @@ std::vector<Character> Text::createCharacters(const std::string& lyric) {
 	return characters;
 }
 void Text::render() {
-	// Uncomment for banner use only
-	//const auto bannerEndTime = Time(3000 + Timing::whole * 4).format;
-	//draw("drain", "00:03:000", bannerEndTime;
-
 	std::cout << "Rendering Text..." << std::endl;
 
 	// Lyric 1
@@ -390,4 +386,9 @@ void Text::render() {
 	draw("when the wall broke down", "06:31:055", "06:32:329");
 	draw("you were there", "06:32:895", "06:33:885");
 	draw("but i was on my own", "06:34:735", "06:35:725");
+}
+
+void Text::renderBanner() {
+	const auto bannerEndTime = Time(3000 + Timing::whole * 4).format;
+	draw("drain", "00:03:000", bannerEndTime);
 }

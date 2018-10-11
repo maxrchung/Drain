@@ -28,6 +28,7 @@ public:
 		   const bool fadeIn = false,
 		   const bool fadeOut = false);
 	static void render();
+	static void renderBackground();
 private:
 	// Helper that calls make()
 	static void make(const std::string& pointMapPath,

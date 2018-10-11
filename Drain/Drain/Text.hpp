@@ -10,6 +10,7 @@
 class Text {
 public:
 	static void render();
+	static void renderBanner();
 private:
 	static void draw(const std::string& lyric,
 					 const std::string& pStartTime,

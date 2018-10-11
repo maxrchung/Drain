@@ -6,8 +6,8 @@
 #include <sstream>
 namespace fs = std::experimental::filesystem;
 
-#define ROWS	480 // height
-#define COLS	854 // width
+#define ROWS	1080 // height
+#define COLS	1920 // width
 #define PI		3.14159265
 #define sqr(x)	((x)*(x))
 #define bucket_size 100
@@ -39,7 +39,7 @@ int main(int argc, char** argv)
 		max = 0;
 		memset(himage, 0, sizeof(char) * ROWS * COLS);	// init himage bg to 0
 		index_offset = 598;		// determined by finding minimum rho
-		sgm_threshold = 2;
+		sgm_threshold = 1;
 		hough_threshold = 180;	// will result in the 3 lines of the given triangle
 		char raw[68];
 		strcpy(raw, RAWFileName);

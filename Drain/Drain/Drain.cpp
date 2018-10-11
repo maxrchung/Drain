@@ -19,7 +19,7 @@ int main() {
 	Swatch::init();
 
 	// Background
-	if (0) {
+	if (1) {
 		// Gets rid of beatmap background
 		Storyboard::CreateSprite("36592_serial_experiments_lain.jpg", Vector2::Zero, Layer::Background);
 		// Solid color background
@@ -36,9 +36,13 @@ int main() {
 		BubbleGenerator::renderMouthBubbles();
 	}
 
+	//Text::renderBanner();
+
 	//Text::render();
 
-	//Sketch::render(); 
+	Sketch::renderBackground();
+
+	//Sketch::render();
 
 	// Rain
 	if (0) {
@@ -133,7 +137,7 @@ int main() {
 	}
 
 	// Drip
-	if (1) {
+	if (0) {
 		// First drip section
 		//Drip::renderFirstFill();
 
