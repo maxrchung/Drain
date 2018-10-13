@@ -576,5 +576,5 @@ void Sketch::render() {
 }
 
 void Sketch::renderBackground() {
-	make("background", Time("00:03:000"), Time("00:10:000"));
+	make("background", Time("03:00:000"), Time("03:20:000"));
 }

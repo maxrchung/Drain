@@ -6,8 +6,8 @@
 #include <sstream>
 namespace fs = std::experimental::filesystem;
 
-#define ROWS	1080 // height
-#define COLS	1920 // width
+#define ROWS	480 // height
+#define COLS	854 // width
 #define PI		3.14159265
 #define sqr(x)	((x)*(x))
 #define bucket_size 100

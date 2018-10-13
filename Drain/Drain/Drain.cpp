@@ -33,18 +33,23 @@ int main() {
 
 	// Bubble generation
 	// Moved right above background so that text and sketch can appear normally above them
-	if (1) {
+	if (0) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
 		auto splatBubbles = bubGen.GetSplatBubbles();
 		BubbleGenerator::renderMouthBubbles();
 	}
 
-	//Text::renderBanner();
+	if (1) {
+		BubbleGenerator::BubbleGenerator();
+		RainGenerator(Time("02:55:580"), Time("03:10:716"));
+		//Text::renderBanner();
+		Sketch::renderBackground();
+		Splatter::renderBackground();
+		Drip::renderBackground();
+	}
 
 	//Text::render();
-
-	Sketch::renderBackground();
 
 	//Sketch::render();
 
@@ -62,8 +67,8 @@ int main() {
 		//Walker &walk_boi = Rain_walker(coll_raindrops);
 		//walk_boi.walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
 #else
-		Walker *walk_boi = new Rain_walker(coll_raindrops);
-		walk_boi->walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
+		//Walker *walk_boi = new Rain_walker(coll_raindrops);
+		//walk_boi->walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
 #endif
 
 
@@ -134,9 +139,9 @@ int main() {
 		int start_splat = Time("03:19:168").ms;
 		int end_splat = Time("04:04:168").ms;
 
-		Walker *walk_splats = new Splatter_walker(splatters);
-		walk_splats->walk(10000, start_splat, end_splat, 100);
-		/*
+		//Walker *walk_splats = new Splatter_walker(splatters);
+		//walk_splats->walk(10000, start_splat, end_splat, 100);
+		
 		// Test splatter walker
 		for (auto& splatter : splatters) {
 			splatter.Move(Time("03:19:168").ms,
@@ -153,13 +158,13 @@ int main() {
 				splatter.position,
 				splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
 		}
-		*/
+		
 	}
 
 	// Drip
 	if (0) {
 		// First drip section
-		//Drip::renderFirstFill();
+		Drip::renderFirstFill();
 
 		// Second drip section
 		auto drips = Drip::renderSecondDrips();

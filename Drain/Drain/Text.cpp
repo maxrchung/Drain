@@ -389,6 +389,6 @@ void Text::render() {
 }
 
 void Text::renderBanner() {
-	const auto bannerEndTime = Time(3000 + Timing::whole * 4).format;
-	draw("drain", "00:03:000", bannerEndTime);
+	const auto bannerEndTime = Time(180000 + Timing::whole * 2).format;
+	draw("drain", "03:00:000", bannerEndTime);
 }
