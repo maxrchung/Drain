@@ -3,8 +3,8 @@
 #include "Math.hpp"
 #include "Path.hpp"
 #include "RainGenerator.hpp"
-#include "Rain_walker.hpp"
-#include "Splatter_walker.hpp"
+#include "RainWalker.hpp"
+#include "SplatterWalker.hpp"
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
 #include "Sketch.hpp"
@@ -21,7 +21,7 @@ int main() {
 	srand(time(NULL));
 	Swatch::init();
 
-	// Background
+	// Solid background
 	if (1) {
 		// Gets rid of beatmap background
 		Storyboard::CreateSprite("36592_serial_experiments_lain.jpg", Vector2::Zero, Layer::Background);
@@ -40,7 +40,8 @@ int main() {
 		BubbleGenerator::renderMouthBubbles();
 	}
 
-	if (1) {
+	// Rendering background image 
+	if (0) {
 		BubbleGenerator::BubbleGenerator();
 		RainGenerator(Time("02:55:580"), Time("03:10:716"));
 		//Text::renderBanner();
@@ -54,7 +55,7 @@ int main() {
 	//Sketch::render();
 
 	// Rain
-	if (0) {
+	if (1) {
 		RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
@@ -63,15 +64,8 @@ int main() {
 			coll_raindrops.push_back(drop);
 		}
 
-#if 0
-		//Walker &walk_boi = Rain_walker(coll_raindrops);
-		//walk_boi.walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
-#else
-		//Walker *walk_boi = new Rain_walker(coll_raindrops);
-		//walk_boi->walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
-#endif
-
-
+		auto const walker = new RainWalker(coll_raindrops);
+		walker->walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
 	}
 
 	// Testing bubbles

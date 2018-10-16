@@ -120,10 +120,10 @@
     <ClCompile Include="Bubble.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Rain_walker.cpp">
+    <ClCompile Include="SplatterWalker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Splatter_walker.cpp">
+    <ClCompile Include="RainWalker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -209,10 +209,10 @@
     <ClInclude Include="Bubble.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Rain_walker.hpp">
+    <ClInclude Include="SplatterWalker.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Splatter_walker.hpp">
+    <ClInclude Include="RainWalker.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

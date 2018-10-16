@@ -4,47 +4,40 @@
 #include "SpriteCollection.hpp"
 #include "Time.hpp"
 #include "Vector2.hpp"
-
 #include <vector>
-
 
 class Walker {
 public:
-	Walker(const std::vector<SpriteCollection> &sprites);
-	void walk(float distance, Time startTime, Time endTime, float density);
+	Walker(const std::vector<SpriteCollection>& sprites);
+	void walk(const float distance, const Time& startTime, const Time& endTime, const float density);
 
 	std::vector<SpriteCollection> sprites;
 
 protected:
-	float w_rand(float min, float max);
-
-	//check if the given 3d coordinate is on screen
-	virtual bool inScreen(Vector2 a);
-
+	// Helper to generate a random float
+	static float generateRandomFloat(const float min, const float max);
+	// Helper to check if a point is in the screen
+	static bool isInScreen(const Vector2& point);
 	//given a line between the Vector2s b and a, find the point at
-	//which is crosses the screen
-	virtual Vector2 findProjection(Vector2 a, Vector2 b);
+	//which it crosses the screen
+	static Vector2 findEndPoint(const Vector2& b);
 
 	//move sprites from RainGenerator
-	virtual void moveCurrent(float distance, Time startTime, Time endTime);
+	void moveCurrent(const Time& startTime, const Time& endTime);
 
 	//move the sprites
-	virtual void moveSprites(float distance, Time startTime, Time endTime, float density);
+	void moveSprites(const float distance, const Time& startTime, const Time& endTime, const float density);
 
-	virtual SpriteCollection create(const Time& startTime, const Vector2& centerPos, const float scale);
+	virtual SpriteCollection create(const Time& startTime, const Vector2& centerPos, const float scale) = 0;
 
-	//size in pixels
-	const uint8_t sprite_size = 100;
-
+private:
 	//min and max scale of the raindrop
 	//scales are for the actual sprite size
 	//i think these are the values used in rainGenerator
-	const float min_scale = 0.01;
-	const float max_scale = 0.1;
+	static constexpr float minScale = 0.01f;
+	static constexpr float maxScale = 0.1f;
+	static constexpr float sizeScale = 1.0f;
 
-	const float sizeScale = 1;
-
-	//sizes of the raindrop
-	const float minSize = 10;
-	const float maxSize = 100;
+	//size in pixels
+	static const int SPRITE_SIZE = 100;
 };

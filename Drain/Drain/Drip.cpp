@@ -208,7 +208,6 @@ SpriteCollection Drip::makeWalkerDrip(const Time& spawnTime, const Vector2& cent
 	return collection;
 }
 
-
 std::vector<SpriteCollection> Drip::renderSecondDrips() {
 	// Generate extra variations so only a portion is covered
 	const auto variations = generatePositions(SECOND_SPAWN_TIMES.size() * 4);
