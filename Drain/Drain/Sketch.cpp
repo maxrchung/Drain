@@ -574,3 +574,7 @@ void Sketch::render() {
 	make("680 eyes closed", Time("06:36:999"), Time("06:37:565"));
 	make("680 eyes closed", Time("06:37:565"), Time("06:37:848"), shift);
 }
+
+void Sketch::renderBackground() {
+	make("background", Time("03:00:000"), Time("03:20:000"));
+}

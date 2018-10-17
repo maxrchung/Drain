@@ -122,10 +122,6 @@ std::vector<Character> Text::createCharacters(const std::string& lyric) {
 	return characters;
 }
 void Text::render() {
-	// Uncomment for banner use only
-	//const auto bannerEndTime = Time(3000 + Timing::whole * 4).format;
-	//draw("drain", "00:03:000", bannerEndTime;
-
 	std::cout << "Rendering Text..." << std::endl;
 
 	// Lyric 1
@@ -282,8 +278,8 @@ void Text::render() {
 		  }, "03:23:697", "03:28:225");
 	place({
 		"with exhaustion",
-		"we barely met the nights end",
-		"to catch the days start",
+		"we barely met the night's end",
+		"to catch the day's start",
 		  }, "03:28:225", "03:32:753");
 	place({
 		"until one night",
@@ -390,4 +386,9 @@ void Text::render() {
 	draw("when the wall broke down", "06:31:055", "06:32:329");
 	draw("you were there", "06:32:895", "06:33:885");
 	draw("but i was on my own", "06:34:735", "06:35:725");
+}
+
+void Text::renderBanner() {
+	const auto bannerEndTime = Time(180000 + Timing::whole * 2).format;
+	draw("drain", "03:00:000", bannerEndTime);
 }

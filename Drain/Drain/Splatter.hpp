@@ -18,6 +18,7 @@ public:
 	// centerPos: Center position of the splatter
 	// scale: Scale value of the 100px image for center dot
 	static SpriteCollection makeWalkerSplatter(const Time& startTime, const Vector2& centerPos, const float scale);
+	static void renderBackground();
 	static void renderFirstGradualPop(std::vector<Bubble*>& bubbles);
 	static std::vector<SpriteCollection> renderSecondAllPop(std::vector<Bubble*>& bubbles);
 
