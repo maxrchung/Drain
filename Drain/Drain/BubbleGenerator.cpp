@@ -3,10 +3,8 @@
 BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
 	: isSecondSection{ isSecondSection }, isMouth { isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
 	// PRIORITY: moveX slow (easeing], 
-	// TODO: rectangle middle no stuff freezeing
 	// TODO: reverse big bubble slow and slow bubble
 	// TODO: Move lyriccs on top of bubble
-	// TODO: bubble color, moveX slow (easeing) . . .
 
 	if (isMouth) {
 		SwitchToMouthBubble();
@@ -82,7 +80,7 @@ void BubbleGenerator::DrawBubble() {
 			auto easing = Easing::Linear;
 
 			if (willSplatter && (moveTimes[0] <= splatterTime.ms && moveTimes[1] >= splatterTime.ms)) { // Checks whether bubble is visible during splatterTime, if so, move it to where it will splat
-				SplatterPos(sprites, moveTimes);
+				SplatterPos(sprites, moveTimes, startPos);
 
 				if (slowFlag) {
 					easing = Easing::Linear; // Planned on making it QuadOut but looks fuky b/c it doesn't work with moveX jaja
@@ -400,7 +398,7 @@ void BubbleGenerator::VelocityController() {
 }
 
 // Gets the appropriate x and y positions for a bubble that will splatter (default bubble ver.)
-void BubbleGenerator::SplatterPos(Bubble* sprites, std::vector<float> moveTimes) {
+void BubbleGenerator::SplatterPos(Bubble* sprites, std::vector<float> moveTimes, Vector2& startPos) {
 	Vector2 splatterPos;
 	float startX = sprites->sprites.position.x;
 	float endX = startX;
@@ -423,35 +421,58 @@ void BubbleGenerator::SplatterPos(Bubble* sprites, std::vector<float> moveTimes)
 
 	splatEndY = splatterPos.y;
 
-	PreventCoveringLyrics(sprites);
+	PreventCoveringLyrics(sprites, startPos);
 }
 
-// Used in SplatterPos to keep respawning randomized bubble pos until it isn't covering the lyrics
-void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites) {
-	float xAvoid = 200;
-	float yAvoid = 60;
-	float rectRight = Vector2::Midpoint.x + xAvoid;
-	float rectLeft = Vector2::Midpoint.x - xAvoid;
-	float rectTop = Vector2::Midpoint.y + yAvoid;
-	float rectBottom = Vector2::Midpoint.y - yAvoid;
+// Used in SplatterPos to shift bubble pos so it isn't covering the lyrics
+void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites, Vector2& startPos) {
+	float xAvoid = 160;
+	float yAvoid = 115;
+	float rectRight = xAvoid;
+	float rectLeft = -xAvoid;
+	float rectTop = yAvoid; // UpSideDown
+	float rectBottom = -yAvoid;
 
 	// rect area check
-	if (sprites->sprites.position.x <= rectRight && sprites->sprites.position.x >= rectLeft) {
-		bool closerToRight = (sprites->sprites.position.x > Vector2::Midpoint.x);
-		if (closerToRight) {
-			sprites->sprites.position.x += xAvoid;
-		}
-		else {
-			sprites->sprites.position.x -= yAvoid;
-		}
-	}
-	if (splatEndY <= rectTop && splatEndY >= rectBottom) {
+	if ((startPos.x <= rectRight && startPos.x >= rectLeft) && (splatEndY <= rectTop && splatEndY >= rectBottom)) {
+		bool closerToRight = (startPos.x > Vector2::Midpoint.x);
 		bool closerToBottom = (splatEndY >= Vector2::Midpoint.y);
-		if (closerToBottom) {
-			splatEndY += yAvoid;
+		// 4 possible states: top right, left & bottom right, left in rect area
+		if (closerToRight && closerToBottom) {
+			bool moveXnotY = (startPos.x - Vector2::Midpoint.x) > (splatEndY - Vector2::Midpoint.y);
+			if (moveXnotY) {
+				startPos.x += xAvoid;
+			}
+			else {
+				splatEndY += yAvoid;
+			}
 		}
-		else {
-			splatEndY -= yAvoid;
+		else if (!closerToRight && closerToBottom) {
+			bool moveXnotY = (Vector2::Midpoint.x - startPos.x) > (splatEndY - Vector2::Midpoint.y);
+			if (moveXnotY) {
+				startPos.x -= xAvoid;
+			}
+			else {
+				splatEndY += yAvoid;
+			}
+		}
+		else if (closerToRight && !closerToBottom) {
+			bool moveXnotY = (startPos.x - Vector2::Midpoint.x) > (Vector2::Midpoint.y - splatEndY);
+			if (moveXnotY) {
+				startPos.x += xAvoid;
+			}
+			else {
+				splatEndY -= yAvoid;
+			}
+		}
+		else if (!closerToRight && !closerToBottom) {
+			bool moveXnotY = (Vector2::Midpoint.x - startPos.x) > (Vector2::Midpoint.y - splatEndY);
+			if (moveXnotY) {
+				startPos.x += xAvoid;
+			}
+			else {
+				splatEndY += yAvoid;
+			}
 		}
 	}
 }

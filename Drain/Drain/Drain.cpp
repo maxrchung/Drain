@@ -19,7 +19,7 @@ int main() {
 	Swatch::init();
 
 	// Background
-	if (0) {
+	if (1) {
 		// Gets rid of beatmap background
 		Storyboard::CreateSprite("36592_serial_experiments_lain.jpg", Vector2::Zero, Layer::Background);
 		// Solid color background
@@ -34,10 +34,11 @@ int main() {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
 		auto splatBubbles = bubGen.GetSplatBubbles();
+		Splatter::renderFirstGradualPop(splatBubbles);
 		BubbleGenerator::renderMouthBubbles();
 	}
 
-	//Text::render();
+	Text::render();
 
 	//Sketch::render(); 
 

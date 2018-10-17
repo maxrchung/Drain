@@ -34,8 +34,8 @@ private:
 	void ScaleBubbleSize(Bubble* sprites, std::vector<float> moveTimes);
 	void ScaleBubbleSize(Sprite* sprite, std::vector<float> moveTimes);
 	void VelocityController();
-	void SplatterPos(Bubble* sprites, std::vector<float> moveTimes);
-	void PreventCoveringLyrics(Bubble* sprites);
+	void SplatterPos(Bubble* sprites, std::vector<float> moveTimes, Vector2& startPos);
+	void PreventCoveringLyrics(Bubble* sprites, Vector2& startPos);
 	void TrackSplatBubbles(Bubble* sprites);
 	void TrackAllBubbles(Bubble* sprites);
 	void ColorBubbles(Sprite* sprite, float startTime, float endTime);
