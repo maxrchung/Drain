@@ -65,7 +65,7 @@ int main() {
 		}
 
 		auto const walker = new RainWalker(coll_raindrops);
-		walker->walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
+		walker->walk(Time("01:30:489"), Time("01:57:659"), 10);
 	}
 
 	// Testing bubbles
@@ -110,9 +110,9 @@ int main() {
 	}
 
 	// Second splatter section and walker
-	if (0) {
+	if (1) {
 		// Test bubble transition
-		const auto bubbleCount = 19;
+		const auto bubbleCount = 4;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
 		for (int i = 0; i < bubbleCount; ++i) {
 			bubbles[i] = new Bubble();
@@ -129,30 +129,25 @@ int main() {
 		// Second splatter section
 		auto splatters = Splatter::renderSecondAllPop(bubbles);
 
-		//Splatter_walker walk_splats = Splatter_walker(splatters);
-		int start_splat = Time("03:19:168").ms;
-		int end_splat = Time("04:04:168").ms;
-
-		//Walker *walk_splats = new Splatter_walker(splatters);
-		//walk_splats->walk(10000, start_splat, end_splat, 100);
+		Walker* walker = new SplatterWalker(splatters);
+		walker->walk(Time("03:19:168").ms, Time("04:04:168").ms, 0.5);
 		
-		// Test splatter walker
-		for (auto& splatter : splatters) {
-			splatter.Move(Time("03:19:168").ms,
-				Time("03:19:168").ms + 1000,
-				splatter.position,
-				splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
-		}
+		//// Test splatter walker
+		//for (auto& splatter : splatters) {
+		//	splatter.Move(Time("03:19:168").ms,
+		//		Time("03:19:168").ms + 1000,
+		//		splatter.position,
+		//		splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+		//}
 
-		// Testing makeWalkerSplatter
-		for (int i = 0; i < 4; ++i) {
-			auto splatter = Splatter::makeWalkerSplatter(Time("04:00:000"), Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)), RandomRange::calculate(5, 10, 10));
-			splatter.Move(Time("04:00:000").ms,
-				Time("04:00:000").ms + 1000,
-				splatter.position,
-				splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
-		}
-		
+		//// Testing makeWalkerSplatter
+		//for (int i = 0; i < 4; ++i) {
+		//	auto splatter = Splatter::makeWalkerSplatter(Time("04:00:000"), Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)), RandomRange::calculate(5, 10, 10));
+		//	splatter.Move(Time("04:00:000").ms,
+		//		Time("04:00:000").ms + 1000,
+		//		splatter.position,
+		//		splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
+		//}
 	}
 
 	// Drip

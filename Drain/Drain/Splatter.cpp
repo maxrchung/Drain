@@ -31,11 +31,11 @@ SpriteCollection Splatter::buildSpriteCollection() {
 	const auto centerPos = sprites[0]->position;
 	const auto centerScale = sprites[0]->scale;
 	locations.push_back(Vector2::Zero);
-	scales.push_back(1);
+	scales.push_back(centerScale);
 
 	for (int i = 1; i < sprites.size(); ++i) {
 		locations.push_back(sprites[i]->position - centerPos);
-		scales.push_back(sprites[i]->scale * centerScale);
+		scales.push_back(sprites[i]->scale);
 	}
 
 	const auto collection = SpriteCollection(sprites, locations, scales);
@@ -65,7 +65,7 @@ void Splatter::draw(Vector2 pos, int offset, float size, float growDur, float gr
 }
 
 SpriteCollection Splatter::make(const Time& startTime, const Time& endTime, const int spawnTime, Bubble* const bubble, const bool fadeOut) {
-	const auto size = bubble->sprites.total_scale;
+	const auto size = bubble->sprites.overallScale;
 	const auto collection = Splatter(startTime, endTime, size, 300, spawnTime, bubble, fadeOut).make();
 	return collection;
 }
@@ -131,7 +131,6 @@ void Splatter::renderBackground() {
 		Splatter(splatterTime, endTime, size, 400, endTime.ms - splatterTime.ms, position).make();
 	}
 }
-
 
 void Splatter::renderFirstGradualPop(std::vector<Bubble*>& bubbles) {
 	const auto splatterTimes = std::vector<Time>({
