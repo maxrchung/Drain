@@ -5,6 +5,12 @@ BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mou
 	// PRIORITY: moveX slow (easeing], 
 	// TODO: reverse big bubble slow and slow bubble
 	// TODO: Move lyriccs on top of bubble
+	// TODO: scale sideMoveTimes with length of total movement being made. (sidemovetime depend on screen elngth.. .scale it jasldf  ? ?)
+	// moveX is not changing because even though moveTime is increasing, and being spliced by sideMoveTimes, it will be faster because 
+	// the end coord is being cut short. . . doing more sidemovetimes in shorter distance with the same side move length  == faster velocity
+	// visually
+	// NOTE: gotta change end X some how looolllloooo ok -> uhhhh some how scale xSideDelta 
+	// ^ did those, still broke :joy:
 
 	if (isMouth) {
 		SwitchToMouthBubble();
@@ -201,6 +207,8 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 
 	sprites->MoveY(startMove, endMove, startPos.y, endY, easing); // Handles only vertical movement
 
+	float yTotalMove = abs(startPos.y - endY);
+	float sideMoveTimes = maxSideMoveTimes * (yTotalMove / Vector2::ScreenSize.y); // Scale sideMoveTimes w/ y total movement
 	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
 	float oneDirMoveLength = sideMoveLength / 2;
 	float xSideDelta = GetRandomSideMovement();
@@ -223,6 +231,7 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 
 	startSideMove += oneDirTime;
 	endSideMove += oneDirTime;
+	bool stopFlag = false;
 
 	for (int i = 0; i < oneDirMoveTimes - 1; i++) {
 		if ((i % 2) == 0) { // Bubble moving inwards
@@ -232,9 +241,19 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 		else if ((i % 2) == 1) { // Bubble moving outwards
 			sprites->MoveX(startSideMove, endSideMove, sprites->sprites.position.x, sprites->sprites.position.x + (xSideDelta * leftOrRight), Easing::SineOut);
 		}
+		if (stopFlag) {
+			break;
+		}
 
 		startSideMove += oneDirTime;
 		endSideMove += oneDirTime;
+		if (endSideMove > endMove) {
+			float remainder = endSideMove - endMove;
+			float ratio = (oneDirTime - remainder) / oneDirTime;
+			endSideMove = endMove;
+			stopFlag = true;
+			xSideDelta *= ratio;
+		}
 	}
 }
 
@@ -255,12 +274,12 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes, b
 	sprite->MoveY(startMove, endMove, sprite->position.y, endY); // Handles only vertical movement
 
 	// Following code handles X movement
-	float sideMoveLength = Vector2::ScreenSize.y / sideMoveTimes;
+	float sideMoveLength = Vector2::ScreenSize.y / maxSideMoveTimes;
 	float xSideDelta = GetRandomSideMovement();
 
-	float sideMoveTotalTime = (endMove - startMove) / sideMoveTimes;
+	float sideMoveTotalTime = (endMove - startMove) / maxSideMoveTimes;
 	float oneDirTime = sideMoveTotalTime / 2; // Time for bubble to move in one direction, either left or right
-	float oneDirMoveTimes = sideMoveTimes * 2;
+	float oneDirMoveTimes = maxSideMoveTimes * 2;
 
 	float startSideMove = startMove + 1; // +1 to avoid conflict with sprite->Move
 	float endSideMove = startSideMove + oneDirTime;
@@ -293,7 +312,7 @@ void BubbleGenerator::MoveBubble(Sprite* sprite, std::vector<float> moveTimes, b
 
 // Returns a random value for the x variation in a bubble's movement
 float BubbleGenerator::GetRandomSideMovement() {
-	float xSideMaxDelta = 40;
+	float xSideMaxDelta = 40; // Note to self: 40
 	float xSideMinDelta = 5;
 	float xSideRandomizer = xSideMaxDelta - xSideMinDelta;
 	float xSideDeltaDelta = RandomRange::calculate(0, xSideRandomizer);
@@ -427,7 +446,7 @@ void BubbleGenerator::SplatterPos(Bubble* sprites, std::vector<float> moveTimes,
 // Used in SplatterPos to shift bubble pos so it isn't covering the lyrics
 void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites, Vector2& startPos) {
 	float xAvoid = 160;
-	float yAvoid = 115;
+	float yAvoid = 125;
 	float rectRight = xAvoid;
 	float rectLeft = -xAvoid;
 	float rectTop = yAvoid; // UpSideDown
