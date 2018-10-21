@@ -3,6 +3,8 @@
 #include "Math.hpp"
 #include "Path.hpp"
 #include "RainGenerator.hpp"
+#include "RainWalker.hpp"
+#include "SplatterWalker.hpp"
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
 #include "Sketch.hpp"
@@ -10,6 +12,7 @@
 #include "Walker.hpp"
 #include "Splatter.hpp"
 #include "Drip.hpp"
+
 #include <ctime>
 #include <cmath>
 #include <iostream>
@@ -18,7 +21,7 @@ int main() {
 	srand(time(NULL));
 	Swatch::init();
 
-	// Background
+	// Solid background
 	if (1) {
 		// Gets rid of beatmap background
 		Storyboard::CreateSprite("36592_serial_experiments_lain.jpg", Vector2::Zero, Layer::Background);
@@ -30,20 +33,29 @@ int main() {
 
 	// Bubble generation
 	// Moved right above background so that text and sketch can appear normally above them
-	if (1) {
+	if (0) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
 		auto splatBubbles = bubGen.GetSplatBubbles();
-		Splatter::renderFirstGradualPop(splatBubbles);
 		BubbleGenerator::renderMouthBubbles();
 	}
 
-	Text::render();
+	// Rendering background image 
+	if (0) {
+		BubbleGenerator::BubbleGenerator();
+		RainGenerator(Time("02:55:580"), Time("03:10:716"));
+		//Text::renderBanner();
+		Sketch::renderBackground();
+		Splatter::renderBackground();
+		Drip::renderBackground();
+	}
 
-	//Sketch::render(); 
+	//Text::render();
+
+	//Sketch::render();
 
 	// Rain
-	if (0) {
+	if (1) {
 		RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
@@ -51,8 +63,9 @@ int main() {
 		for (auto drop : raindrops) {
 			coll_raindrops.push_back(drop);
 		}
-		Walker walk_boi = Walker::Walker(coll_raindrops);
-		walk_boi.walk(1000, Time("01:30:489"), Time("01:57:659"));
+
+		auto const walker = new RainWalker(coll_raindrops);
+		walker->walk(100000, Time("01:30:489"), Time("01:57:659"), 100);
 	}
 
 	// Testing bubbles
@@ -116,6 +129,13 @@ int main() {
 		// Second splatter section
 		auto splatters = Splatter::renderSecondAllPop(bubbles);
 
+		//Splatter_walker walk_splats = Splatter_walker(splatters);
+		int start_splat = Time("03:19:168").ms;
+		int end_splat = Time("04:04:168").ms;
+
+		//Walker *walk_splats = new Splatter_walker(splatters);
+		//walk_splats->walk(10000, start_splat, end_splat, 100);
+		
 		// Test splatter walker
 		for (auto& splatter : splatters) {
 			splatter.Move(Time("03:19:168").ms,
@@ -132,12 +152,13 @@ int main() {
 				splatter.position,
 				splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
 		}
+		
 	}
 
 	// Drip
-	if (1) {
+	if (0) {
 		// First drip section
-		//Drip::renderFirstFill();
+		Drip::renderFirstFill();
 
 		// Second drip section
 		auto drips = Drip::renderSecondDrips();

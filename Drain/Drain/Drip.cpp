@@ -6,6 +6,19 @@
 
 const RandomRange Drip::PARTIAL_DRAW_RANDOM = RandomRange(25, 100, 100);
 const RandomRange Drip::RANDOM_VARIATION = RandomRange(10, 20);
+const std::vector<int> Drip::BACKGROUND_SPAWN_TIMES = std::vector<int>{
+	Time("02:55:000").ms,
+	Time("02:55:000").ms,
+	Time("02:55:000").ms,
+	Time("02:55:000").ms,
+	Time("02:55:000").ms,
+	Time("02:55:000").ms,
+	Time("02:55:000").ms,
+	Time("02:55:000").ms,
+	Time("02:55:000").ms,
+	Time("02:55:000").ms,
+	Time("03:02:000").ms
+};
 const std::vector<int> Drip::FIRST_SPAWN_TIMES = std::vector<int>{
 	Time("04:04:168").ms,
 	Time("04:04:452").ms,
@@ -128,6 +141,32 @@ std::vector<float> Drip::generatePositions(const int count) {
 	return scaledVariations;
 }
 
+void Drip::renderBackground() {
+	const auto variations = generatePositions(BACKGROUND_SPAWN_TIMES.size() * 4.0f);
+
+	auto indexes = std::vector<int>(variations.size() - 1);
+	for (int i = 0; i < variations.size() - 1; ++i) {
+		indexes[i] = i;
+	}
+	std::random_shuffle(indexes.begin(), indexes.end());
+
+	const auto endTime = BACKGROUND_SPAWN_TIMES.back();
+	for (int i = 0; i < BACKGROUND_SPAWN_TIMES.size() - 1; ++i) {
+		const auto startTime = BACKGROUND_SPAWN_TIMES[i];
+		const auto index = indexes.back();
+		indexes.pop_back();
+		const auto left = variations[index];
+		const auto right = variations[index + 1];
+		const auto middle = (right + left) / 2.0f;
+		if (middle < -170.0f || middle > 170.0f) {
+			draw(startTime, endTime, left, right, true);
+		}
+		else {
+			--i;
+		}
+	}
+}
+
 void Drip::renderFirstFill() {
 	const auto variations = generatePositions(FIRST_SPAWN_TIMES.size());
 
@@ -168,7 +207,6 @@ SpriteCollection Drip::makeWalkerDrip(const Time& spawnTime, const Vector2& cent
 	const auto collection = buildSpriteCollection(circle, column);
 	return collection;
 }
-
 
 std::vector<SpriteCollection> Drip::renderSecondDrips() {
 	// Generate extra variations so only a portion is covered

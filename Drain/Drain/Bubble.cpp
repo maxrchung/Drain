@@ -76,14 +76,14 @@ SpriteCollection Bubble::create_sprites(bool outline) {
 	std::vector<float> scale;
 
 	//main bubble
-	Sprite *bubble = Storyboard::CreateSprite(getPath(Path::Circle));
+	Sprite *bubble = Storyboard::CreateSprite(getPath(Path::Circle), Vector2::Zero, Layer::Background);
 	sprite_vector.push_back(bubble);
 
 	location.push_back({0, 0});
 	scale.push_back(1);
 
 	//inner highlight thing
-	Sprite *inner = Storyboard::CreateSprite(getPath(Path::Circle));
+	Sprite *inner = Storyboard::CreateSprite(getPath(Path::Circle), Vector2::Zero, Layer::Background);
 	sprite_vector.push_back(inner);
 	float min_o = -3;
 	float max_o = 3;

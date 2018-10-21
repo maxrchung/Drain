@@ -12,6 +12,7 @@ public:
 	// center: Center of the drip dot
 	// columnWidth: How wide to scale the column, note that this is not exact due to anti-aliased borders and added buffer space
 	static SpriteCollection makeWalkerDrip(const Time& spawnTime, const Vector2& center, const float columnWidth);
+	static void renderBackground();
 	static void renderFirstFill();
 	static std::vector<SpriteCollection> renderSecondDrips();
 
@@ -26,6 +27,7 @@ private:
 	static const int COLUMN_PIXEL_SIZE = 100;
 	static const RandomRange PARTIAL_DRAW_RANDOM;
 	static const RandomRange RANDOM_VARIATION;
+	static const std::vector<int> BACKGROUND_SPAWN_TIMES;
 	static const std::vector<int> FIRST_SPAWN_TIMES;
 	static const std::vector<int> SECOND_SPAWN_TIMES;
 };

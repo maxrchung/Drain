@@ -10,15 +10,14 @@ std::uniform_real_distribution<double> Splatter::UNIFORM_ANGLE = std::uniform_re
 
 // standalone, defined by centerPos Vector2
 Splatter::Splatter(const Time& startTime, const Time& endTime, const float size, const int numDrops, const int satelliteSpawnTime, const Vector2 centerPos, const bool fadeOut)
-	: fadeOut{ fadeOut }, 
+	: fadeOut{ fadeOut },
 	startTime{ startTime },
-	endTime{ endTime }, 
+	endTime{ endTime },
 	centerPos{ centerPos },
-	sizeFactor{ size }, 
-	numDrops{ numDrops }, 
-	satelliteSpawnTime{ satelliteSpawnTime }, 
-	totalDur{ endTime.ms - startTime.ms } {
-}
+	sizeFactor{ size },
+	numDrops{ numDrops },
+	satelliteSpawnTime{ satelliteSpawnTime },
+	totalDur{ endTime.ms - startTime.ms } {}
 
 // position defined by existing AirBubble
 Splatter::Splatter(const Time& startTime, const Time& endTime, const float size, const int numDrops, const int satelliteSpawnTime, Bubble* const bubble, const bool fadeOut)   // replace with AirBubble
@@ -116,6 +115,23 @@ SpriteCollection Splatter::makeWalkerSplatter(const Time& startTime, const Vecto
 	const auto collection = Splatter(startTime, startTime, scale, 300, 0, centerPos, false).make();
 	return collection;
 }
+
+void Splatter::renderBackground() {
+	const auto splatterTime = Time("02:55:036");
+	const auto endTime = Time("03:04:168");
+	auto splatters = std::vector<SpriteCollection>();
+
+	for (int i = 0; i < 15; ++i) {
+		Vector2 position;
+		while ((position.x > -150 && position.x < 120) &&
+			(position.y > -190 && position.y < 90)) {
+			position = Vector2(RandomRange::calculate(-427, 427), RandomRange::calculate(-240, 240));
+		}
+		const auto size = RandomRange::calculate(5, 10, 10);
+		Splatter(splatterTime, endTime, size, 400, endTime.ms - splatterTime.ms, position).make();
+	}
+}
+
 
 void Splatter::renderFirstGradualPop(std::vector<Bubble*>& bubbles) {
 	const auto splatterTimes = std::vector<Time>({
