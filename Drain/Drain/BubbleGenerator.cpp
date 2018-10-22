@@ -2,15 +2,7 @@
 
 BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
 	: isSecondSection{ isSecondSection }, isMouth { isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
-	// PRIORITY: moveX slow (easeing], 
 	// TODO: reverse big bubble slow and slow bubble
-	// TODO: Move lyriccs on top of bubble
-	// TODO: scale sideMoveTimes with length of total movement being made. (sidemovetime depend on screen elngth.. .scale it jasldf  ? ?)
-	// moveX is not changing because even though moveTime is increasing, and being spliced by sideMoveTimes, it will be faster because 
-	// the end coord is being cut short. . . doing more sidemovetimes in shorter distance with the same side move length  == faster velocity
-	// visually
-	// NOTE: gotta change end X some how looolllloooo ok -> uhhhh some how scale xSideDelta 
-	// ^ did those, still broke :joy:
 
 	if (isMouth) {
 		SwitchToMouthBubble();
@@ -25,7 +17,12 @@ BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mou
 			BubbleController();
 		}
 	}
-	////meme->MoveX(Time("00:01:200").ms, Time("00:03:800").ms, startPos.x, startPos.x + 200);
+
+	/*Vector2 startPos;
+	startPos.x = 0;
+	startPos.y = -200;
+	Sprite* meme = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(startPos.x, startPos.y));
+	meme->MoveY(Time("00:01:200").ms, Time("00:03:800").ms, startPos.y, 200);*/
 }
 
 // Switches appropriate variables if instance of class is mouth bubble instead of default bubble
@@ -234,6 +231,13 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 	bool stopFlag = false;
 
 	for (int i = 0; i < oneDirMoveTimes - 1; i++) {
+		if (endSideMove > endMove) { // Makes sure moveX does not move after splatterTime (freeze)
+			float remainder = endSideMove - endMove;
+			float ratio = (oneDirTime - remainder) / oneDirTime;
+			endSideMove = endMove;
+			stopFlag = true;
+			xSideDelta *= ratio;
+		}
 		if ((i % 2) == 0) { // Bubble moving inwards
 			leftOrRight *= -1; // Change direction every other iteration
 			sprites->MoveX(startSideMove, endSideMove, sprites->sprites.position.x, sprites->sprites.position.x + (xSideDelta * leftOrRight), Easing::SineIn);
@@ -247,13 +251,6 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 
 		startSideMove += oneDirTime;
 		endSideMove += oneDirTime;
-		if (endSideMove > endMove) {
-			float remainder = endSideMove - endMove;
-			float ratio = (oneDirTime - remainder) / oneDirTime;
-			endSideMove = endMove;
-			stopFlag = true;
-			xSideDelta *= ratio;
-		}
 	}
 }
 
@@ -335,19 +332,29 @@ float BubbleGenerator::RandomBubbleSpeed() {
 	float sectionLength = moveTotalTime / sections;
 	float randNum = RandomRange::calculate(0, 10000, 1000);
 
-	if (randNum >= 0 && randNum <= 5) { // Gets speed of bubbles based on number randNum which ranges from 1-10
+	/*float s1 = 5;
+	float s2 = 7;
+	float s3 = 8.7;
+	float s4 = 9.6;*/
+
+	float s1 = .3;
+	float s2 = 1.2;
+	float s3 = 2.9;
+	float s4 = 4.9;
+
+	if (randNum >= 0 && randNum <= s1) { // Gets speed of bubbles based on number randNum which ranges from 1-10
 		adjustedTotalTime = RandomRange::calculate(sectionLength * 4, moveTotalTime);
 	}
-	else if (randNum > 5 && randNum <= 7) {
+	else if (randNum > s1 && randNum <= s2) {
 		adjustedTotalTime = RandomRange::calculate(sectionLength * 3, sectionLength * 4);
 	}
-	else if (randNum > 7 && randNum <= 8.7) {
+	else if (randNum > s2 && randNum <= s3) {
 		adjustedTotalTime = RandomRange::calculate(sectionLength * 2, sectionLength * 3);
 	}
-	else if (randNum > 8.7 && randNum <= 9.6) {
+	else if (randNum > s3 && randNum <= s4) {
 		adjustedTotalTime = RandomRange::calculate(sectionLength, sectionLength * 2);
 	}
-	else if (randNum > 9.6 && randNum <= 10) {
+	else if (randNum > s4 && randNum <= 10) {
 		adjustedTotalTime = RandomRange::calculate(minMoveTime, sectionLength);
 	}
 
@@ -360,7 +367,8 @@ void BubbleGenerator::ScaleBubbleSize(Bubble* sprites, std::vector<float> moveTi
 
 	float adjustedTotalTime = moveTimes[1] - moveTimes[0];
 	float veloRatio = adjustedTotalTime / moveTotalTime;
-	float bubbleScale = maxSize - veloRatio;
+	//float bubbleScale = maxSize - veloRatio; uncomment to reverse speed/size relationship
+	float bubbleScale = veloRatio;
 
 	if (bubbleScale < 0) { // Ensures adjustedSize isn't a negative number; negative sizes would be fked
 		float remainder = -bubbleScale;
@@ -373,8 +381,12 @@ void BubbleGenerator::ScaleBubbleSize(Bubble* sprites, std::vector<float> moveTi
 		if (adjustedSize < minSize) { // So that bubbles that are too small don't exist
 			adjustedSize = minSize;
 		}
+		else if (adjustedSize > maxSize) {
+			adjustedSize = maxSize;
+		}
 	}
 
+	std::cout << adjustedSize << "\n";
 	//std::cout << sprites->sprites.size << "\n";
 	sprites->Scale(moveTimes[0], moveTimes[0], adjustedSize, adjustedSize);
 }
@@ -445,20 +457,20 @@ void BubbleGenerator::SplatterPos(Bubble* sprites, std::vector<float> moveTimes,
 
 // Used in SplatterPos to shift bubble pos so it isn't covering the lyrics
 void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites, Vector2& startPos) {
-	float xAvoid = 160;
-	float yAvoid = 125;
+	float xAvoid = 185;
+	float yAvoid = 135;
 	float rectRight = xAvoid;
 	float rectLeft = -xAvoid;
-	float rectTop = yAvoid; // UpSideDown
+	float rectTop = yAvoid;
 	float rectBottom = -yAvoid;
 
 	// rect area check
 	if ((startPos.x <= rectRight && startPos.x >= rectLeft) && (splatEndY <= rectTop && splatEndY >= rectBottom)) {
-		bool closerToRight = (startPos.x > Vector2::Midpoint.x);
-		bool closerToBottom = (splatEndY >= Vector2::Midpoint.y);
+		bool closerToRight = startPos.x >= 0;
+		bool closerToBottom = splatEndY <= 0; // not closerToTop because I thought the Y coordinate was inverted... .
 		// 4 possible states: top right, left & bottom right, left in rect area
 		if (closerToRight && closerToBottom) {
-			bool moveXnotY = (startPos.x - Vector2::Midpoint.x) > (splatEndY - Vector2::Midpoint.y);
+			bool moveXnotY = startPos.x > splatEndY;
 			if (moveXnotY) {
 				startPos.x += xAvoid;
 			}
@@ -467,7 +479,7 @@ void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites, Vector2& startPos) 
 			}
 		}
 		else if (!closerToRight && closerToBottom) {
-			bool moveXnotY = (Vector2::Midpoint.x - startPos.x) > (splatEndY - Vector2::Midpoint.y);
+			bool moveXnotY = -startPos.x > splatEndY;
 			if (moveXnotY) {
 				startPos.x -= xAvoid;
 			}
@@ -476,7 +488,7 @@ void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites, Vector2& startPos) 
 			}
 		}
 		else if (closerToRight && !closerToBottom) {
-			bool moveXnotY = (startPos.x - Vector2::Midpoint.x) > (Vector2::Midpoint.y - splatEndY);
+			bool moveXnotY = startPos.x > -splatEndY;
 			if (moveXnotY) {
 				startPos.x += xAvoid;
 			}
@@ -485,7 +497,7 @@ void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites, Vector2& startPos) 
 			}
 		}
 		else if (!closerToRight && !closerToBottom) {
-			bool moveXnotY = (Vector2::Midpoint.x - startPos.x) > (Vector2::Midpoint.y - splatEndY);
+			bool moveXnotY = -startPos.x > -splatEndY;
 			if (moveXnotY) {
 				startPos.x += xAvoid;
 			}

@@ -47,9 +47,9 @@ private:
 	bool willSplatter;
 	Time splatterTime = Time("02:33:885");
 	Time slowPeriod = Time(Timing::whole * 4);
-	float maxSlow = 5;
+	float maxSlow = 7; // was 5
 	float acceleration = 1.07;
-	float bubbleCount = 9;
+	float bubbleCount = 11; // was 9
 	float minMoveTime = 750.0f; // Edit to cap max bubble velocity
 	float screenBottom = -Vector2::ScreenSize.y / 2; 
 	float screenTop = Vector2::ScreenSize.y / 2;
@@ -62,8 +62,8 @@ private:
 	float moveEndTime = startTime.ms + moveTotalTime;
 	int maxSideMoveTimes = 2; // Amount of times a bubble moves to the sides
 
-	float maxSize = 1.0f;
-	float minSize = 0.2f;
+	float maxSize = 0.6f;
+	float minSize = 0.125f;
 	const float rainLength = 102; // because a.png is 102x102
 
 	std::vector<Bubble*> splattingBubbles;
