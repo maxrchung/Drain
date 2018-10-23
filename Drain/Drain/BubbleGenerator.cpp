@@ -2,7 +2,6 @@
 
 BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mouthBubblePos, Time mouthBubbleStartTime, bool willSplatter)
 	: isSecondSection{ isSecondSection }, isMouth { isMouth }, willSplatter{ willSplatter }, mouthX{ mouthBubblePos.x }, mouthY{ mouthBubblePos.y }, mouthStartTime{ mouthBubbleStartTime } {
-	// TODO: reverse big bubble slow and slow bubble
 
 	if (isMouth) {
 		SwitchToMouthBubble();
@@ -18,11 +17,9 @@ BubbleGenerator::BubbleGenerator(bool isSecondSection, bool isMouth, Vector2 mou
 		}
 	}
 
-	/*Vector2 startPos;
-	startPos.x = 0;
-	startPos.y = -200;
-	Sprite* meme = Storyboard::CreateSprite(getPath(Path::Circle), Vector2(startPos.x, startPos.y));
-	meme->MoveY(Time("00:01:200").ms, Time("00:03:800").ms, startPos.y, 200);*/
+	/*for (int i = 0; i < 3; ++i) {
+		printf("I am going to Sharetea later, around closing time. Do you (Benia) still need \na pickup? I presume not anymore because it appears that you are on campus. \nAlso, anyone here is welcome to come! I'm driving of course\n\n\n");
+	}*/
 }
 
 // Switches appropriate variables if instance of class is mouth bubble instead of default bubble
@@ -332,11 +329,6 @@ float BubbleGenerator::RandomBubbleSpeed() {
 	float sectionLength = moveTotalTime / sections;
 	float randNum = RandomRange::calculate(0, 10000, 1000);
 
-	/*float s1 = 5;
-	float s2 = 7;
-	float s3 = 8.7;
-	float s4 = 9.6;*/
-
 	float s1 = .3;
 	float s2 = 1.2;
 	float s3 = 2.9;
@@ -367,7 +359,6 @@ void BubbleGenerator::ScaleBubbleSize(Bubble* sprites, std::vector<float> moveTi
 
 	float adjustedTotalTime = moveTimes[1] - moveTimes[0];
 	float veloRatio = adjustedTotalTime / moveTotalTime;
-	//float bubbleScale = maxSize - veloRatio; uncomment to reverse speed/size relationship
 	float bubbleScale = veloRatio;
 
 	if (bubbleScale < 0) { // Ensures adjustedSize isn't a negative number; negative sizes would be fked
@@ -386,8 +377,6 @@ void BubbleGenerator::ScaleBubbleSize(Bubble* sprites, std::vector<float> moveTi
 		}
 	}
 
-	std::cout << adjustedSize << "\n";
-	//std::cout << sprites->sprites.size << "\n";
 	sprites->Scale(moveTimes[0], moveTimes[0], adjustedSize, adjustedSize);
 }
 
@@ -457,8 +446,8 @@ void BubbleGenerator::SplatterPos(Bubble* sprites, std::vector<float> moveTimes,
 
 // Used in SplatterPos to shift bubble pos so it isn't covering the lyrics
 void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites, Vector2& startPos) {
-	float xAvoid = 185;
-	float yAvoid = 135;
+	float xAvoid = 205;
+	float yAvoid = 115;
 	float rectRight = xAvoid;
 	float rectLeft = -xAvoid;
 	float rectTop = yAvoid;
@@ -470,24 +459,6 @@ void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites, Vector2& startPos) 
 		bool closerToBottom = splatEndY <= 0; // not closerToTop because I thought the Y coordinate was inverted... .
 		// 4 possible states: top right, left & bottom right, left in rect area
 		if (closerToRight && closerToBottom) {
-			bool moveXnotY = startPos.x > splatEndY;
-			if (moveXnotY) {
-				startPos.x += xAvoid;
-			}
-			else {
-				splatEndY += yAvoid;
-			}
-		}
-		else if (!closerToRight && closerToBottom) {
-			bool moveXnotY = -startPos.x > splatEndY;
-			if (moveXnotY) {
-				startPos.x -= xAvoid;
-			}
-			else {
-				splatEndY += yAvoid;
-			}
-		}
-		else if (closerToRight && !closerToBottom) {
 			bool moveXnotY = startPos.x > -splatEndY;
 			if (moveXnotY) {
 				startPos.x += xAvoid;
@@ -496,10 +467,28 @@ void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites, Vector2& startPos) 
 				splatEndY -= yAvoid;
 			}
 		}
-		else if (!closerToRight && !closerToBottom) {
+		else if (!closerToRight && closerToBottom) {
 			bool moveXnotY = -startPos.x > -splatEndY;
 			if (moveXnotY) {
+				startPos.x -= xAvoid;
+			}
+			else {
+				splatEndY -= yAvoid;
+			}
+		}
+		else if (closerToRight && !closerToBottom) {
+			bool moveXnotY = startPos.x > splatEndY;
+			if (moveXnotY) {
 				startPos.x += xAvoid;
+			}
+			else {
+				splatEndY += yAvoid;
+			}
+		}
+		else if (!closerToRight && !closerToBottom) {
+			bool moveXnotY = -startPos.x > splatEndY;
+			if (moveXnotY) {
+				startPos.x -= xAvoid;
 			}
 			else {
 				splatEndY += yAvoid;

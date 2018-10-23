@@ -47,9 +47,9 @@ private:
 	bool willSplatter;
 	Time splatterTime = Time("02:33:885");
 	Time slowPeriod = Time(Timing::whole * 4);
-	float maxSlow = 7; // was 5
+	float maxSlow = 6; // was 5
 	float acceleration = 1.07;
-	float bubbleCount = 11; // was 9
+	float bubbleCount = 10; // was 9
 	float minMoveTime = 750.0f; // Edit to cap max bubble velocity
 	float screenBottom = -Vector2::ScreenSize.y / 2; 
 	float screenTop = Vector2::ScreenSize.y / 2;
@@ -68,12 +68,11 @@ private:
 
 	std::vector<Bubble*> splattingBubbles;
 
-	// Mouth timing and shit are placeholders, should be edited with the actual values later
 	static void drawMouthBubbles(const float x, const float y, const std::string& startTime);
 	bool isMouth;
 	Time mouthBubblePeriod = Time(Timing::whole * 4);
 	Time mouthStartTime;
-	Time mouthEndTime; // If this is before splatterTime Bubblegen will get stuck in an infinite loop. maybe fix l8r lol
+	Time mouthEndTime;
 	float mouthX;
 	float mouthY;
 	const float mouthBubbleMaxSize = 0.52;
