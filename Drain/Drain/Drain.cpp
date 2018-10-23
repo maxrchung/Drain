@@ -1,17 +1,18 @@
 #include "Bubble.hpp"
 #include "BubbleGenerator.hpp"
+#include "Drip.hpp"
+#include "DripWalker.hpp"
 #include "Math.hpp"
 #include "Path.hpp"
 #include "RainGenerator.hpp"
 #include "RainWalker.hpp"
+#include "Splatter.hpp"
 #include "SplatterWalker.hpp"
 #include "Storyboard.hpp"
 #include "Swatch.hpp"
 #include "Sketch.hpp"
 #include "Text.hpp"
 #include "Walker.hpp"
-#include "Splatter.hpp"
-#include "Drip.hpp"
 
 #include <ctime>
 #include <cmath>
@@ -55,7 +56,7 @@ int main() {
 	//Sketch::render();
 
 	// Rain
-	if (1) {
+	if (0) {
 		RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
@@ -110,7 +111,7 @@ int main() {
 	}
 
 	// Second splatter section and walker
-	if (1) {
+	if (0) {
 		// Test bubble transition
 		const auto bubbleCount = 4;
 		auto bubbles = std::vector<Bubble*>(bubbleCount);
@@ -131,49 +132,18 @@ int main() {
 
 		Walker* walker = new SplatterWalker(splatters);
 		walker->walk(Time("03:19:168").ms, Time("04:04:168").ms, 0.5);
-		
-		//// Test splatter walker
-		//for (auto& splatter : splatters) {
-		//	splatter.Move(Time("03:19:168").ms,
-		//		Time("03:19:168").ms + 1000,
-		//		splatter.position,
-		//		splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
-		//}
-
-		//// Testing makeWalkerSplatter
-		//for (int i = 0; i < 4; ++i) {
-		//	auto splatter = Splatter::makeWalkerSplatter(Time("04:00:000"), Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)), RandomRange::calculate(5, 10, 10));
-		//	splatter.Move(Time("04:00:000").ms,
-		//		Time("04:00:000").ms + 1000,
-		//		splatter.position,
-		//		splatter.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
-		//}
 	}
 
 	// Drip
-	if (0) {
+	if (1) {
 		// First drip section
-		Drip::renderFirstFill();
+		//Drip::renderFirstFill();
 
 		// Second drip section
 		auto drips = Drip::renderSecondDrips();
 
-		// Test drip walker
-		for (auto& drip : drips) {
-			drip.Move(Time("05:39:546").ms,
-				Time("05:39:546").ms + 1000,
-				drip.position,
-				drip.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
-		}
-
-		// Test makeWalkerDrip
-		for (int i = 0; i < 4; ++i) {
-			auto drip = Drip::makeWalkerDrip(Time("05:00:000"), Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)), RandomRange::calculate(20, 50));
-			drip.Move(Time("05:00:000").ms,
-				Time("05:00:000").ms + 1000,
-				drip.position,
-				drip.position + Vector2(RandomRange::calculate(-200, 200), RandomRange::calculate(-200, 200)));
-		}
+		Walker* walker = new DripWalker(drips);
+		walker->walk(Time("05:39:546").ms, Time("05:57:659").ms, 1.0);
 	}
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt

@@ -30,27 +30,14 @@ Vector2 Walker::findEndPoint(const Vector2& startPosition, const float offset) {
 		mid.x = Vector2::ScreenSize.x / 2 + offset;
 	}
 
-	switch ((!!slopeVector.y) | (!!slopeVector.x << 1)) {
-		case 0:
-			break;
+	endPosition.y = slope * mid.x + startPosition.y;
+	endPosition.x = (mid.y - startPosition.y) / slope;
+	if (std::abs(endPosition.y) > Vector2::ScreenSize.y / 2) {
+		endPosition.y = mid.y;
+	}
 
-		case 1:
-			endPosition.x = mid.x;
-			break;
-
-		case 2:
-			endPosition.y = mid.y;
-			break;
-
-		case 3:
-			endPosition.y = slope * mid.x + startPosition.y;
-			endPosition.x = (mid.y - startPosition.y) / slope;
-			if (std::abs(endPosition.y) > Vector2::ScreenSize.y / 2)
-				endPosition.y = mid.y;
-
-			if (std::abs(endPosition.x) > Vector2::ScreenSize.x / 2)
-				endPosition.x = mid.x;
-			break;
+	if (std::abs(endPosition.x) > Vector2::ScreenSize.x / 2) {
+		endPosition.x = mid.x;
 	}
 
 	return endPosition;

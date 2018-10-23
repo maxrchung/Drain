@@ -70,9 +70,9 @@ SpriteCollection Drip::buildSpriteCollection(Sprite* const circle, Sprite* const
 	const auto centerPos = circle->position;
 	const auto centerScale = circle->scale;
 	locations.push_back(Vector2::Zero);
-	scales.push_back(1);
+	scales.push_back(centerScale);
 	locations.push_back(column->position - centerPos);
-	scales.push_back(column->scale * centerScale);
+	scales.push_back(column->scale);
 
 	const auto collection = SpriteCollection({ circle, column }, locations, scales);
 	return collection;
@@ -196,7 +196,7 @@ SpriteCollection Drip::makeWalkerDrip(const Time& spawnTime, const Vector2& cent
 	const auto circle = Storyboard::CreateSprite(getPath(Path::Circle), center, Layer::Foreground);
 	const auto column = Storyboard::CreateSprite(getPath(Path::Column), Vector2(center.x, top), Layer::Foreground, Origin::TopCentre);
 
-	const auto circleScale = CIRCLE_FACTOR * columnWidth / COLUMN_PIXEL_SIZE;
+	const auto circleScale = circleDiameter / COLUMN_PIXEL_SIZE;
 	circle->Scale(spawnTime.ms, spawnTime.ms, circleScale, circleScale);
 	circle->Move(spawnTime.ms, spawnTime.ms, Vector2(center.x, top), center);
 

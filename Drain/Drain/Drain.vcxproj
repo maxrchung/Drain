@@ -137,6 +137,7 @@
     <ClCompile Include="CWEndEighthStroke.cpp" />
     <ClCompile Include="CWQuarterStroke.cpp" />
     <ClCompile Include="CWStartEighthStroke.cpp" />
+    <ClCompile Include="DripWalker.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="Drain.cpp" />
     <ClCompile Include="LineStroke.cpp" />
@@ -169,6 +170,7 @@
     <ClInclude Include="CWQuarterStroke.hpp" />
     <ClInclude Include="CWStartEighthStroke.hpp" />
     <ClInclude Include="Drip.hpp" />
+    <ClInclude Include="DripWalker.hpp" />
     <ClInclude Include="Math.hpp" />
     <ClInclude Include="RainGenerator.hpp" />
     <ClInclude Include="RainWalker.hpp" />
