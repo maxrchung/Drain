@@ -17,5 +17,5 @@ protected:
 	void moveCurrent(const Time& startTime, const Time& endTime);
 	void moveSprites(const Time& startTime, const Time& endTime, const float spawnsPerSecond);
 private:
-	static constexpr float offset = 300.0f;
+	static constexpr float offset = 200.0f;
 };
