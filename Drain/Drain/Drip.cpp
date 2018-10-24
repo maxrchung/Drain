@@ -44,7 +44,7 @@ const std::vector<int> Drip::FIRST_SPAWN_TIMES = std::vector<int>{
 	Time("04:31:338").ms,
 	Time("04:31:904").ms,
 	Time("04:32:187").ms,
-	Time("04:44:074").ms, // Screen covered
+	Time("04:42:942").ms, // Screen covered
 };
 const std::vector<int> Drip::SECOND_SPAWN_TIMES = std::vector<int>{
 	Time("05:20:301").ms,

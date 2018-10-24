@@ -481,9 +481,11 @@ void Sketch::render() {
 		Sketch("480 core", Time("04:32:187"), Time("04:32:753")),
 		Sketch("480 core", Time("04:32:753"), Time("04:33:319"), shift)
 									   });
-	make("480 core", Time("04:43:508"), Time("04:44:074"));
-	loop(core480, 10);
+	loop(core480, 9);
+	make("480 core", Time("04:42:376"), Time("04:42:942"));
 	//Lyric4
+	make("490 i", Time("04:42:942"), Time("04:43:508"));
+	make("490 i", Time("04:43:508"), Time("04:44:074"), shift);
 	make("490 i", Time("04:44:074"), Time("04:44:640"));
 	make("495 dont", Time("04:44:640"), Time("04:45:206"));
 	make("500 know", Time("04:45:206"), Time("04:45:772"));

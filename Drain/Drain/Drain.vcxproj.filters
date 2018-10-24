@@ -37,6 +37,18 @@
     <Filter Include="Source Files\Text\Stroke">
       <UniqueIdentifier>{e1787740-0242-4e1a-894a-a904a17be3ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Walker">
+      <UniqueIdentifier>{35b552f5-924c-46dc-a5cc-94decedf00cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Effects">
+      <UniqueIdentifier>{b500da38-d066-4e9c-b307-dd580efa2bfc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Effects">
+      <UniqueIdentifier>{0c2e6af6-2b3f-4988-bc9a-3c045f964bcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Walker">
+      <UniqueIdentifier>{62f17cc6-cf67-4e9b-9288-1a5374e388f6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Drain.cpp">
@@ -75,9 +87,6 @@
     <ClCompile Include="CCWStartEighthStroke.cpp">
       <Filter>Source Files\Text\Stroke</Filter>
     </ClCompile>
-    <ClCompile Include="RainGenerator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SpriteCollection.cpp">
       <Filter>Source Files\Utility</Filter>
     </ClCompile>
@@ -86,9 +95,6 @@
     </ClCompile>
     <ClCompile Include="BlankStroke.cpp">
       <Filter>Source Files\Text\Stroke</Filter>
-    </ClCompile>
-    <ClCompile Include="Sketch.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CWStartEighthStroke.cpp">
       <Filter>Source Files\Text\Stroke</Filter>
@@ -102,32 +108,38 @@
     <ClCompile Include="SwatchTiming.cpp">
       <Filter>Source Files\Utility\Swatch</Filter>
     </ClCompile>
-    <ClCompile Include="Walker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Text.cpp">
       <Filter>Source Files\Text</Filter>
     </ClCompile>
-    <ClCompile Include="Splatter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Drip.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BubbleGenerator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Bubble.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DripWalker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SplatterWalker.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Walker</Filter>
     </ClCompile>
     <ClCompile Include="RainWalker.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Walker</Filter>
+    </ClCompile>
+    <ClCompile Include="SplatterWalker.cpp">
+      <Filter>Source Files\Walker</Filter>
+    </ClCompile>
+    <ClCompile Include="Walker.cpp">
+      <Filter>Source Files\Walker</Filter>
+    </ClCompile>
+    <ClCompile Include="Splatter.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Sketch.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="RainGenerator.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Drip.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="BubbleGenerator.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Bubble.cpp">
+      <Filter>Source Files\Effects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -167,9 +179,6 @@
     <ClInclude Include="CCWEndEighthStroke.hpp">
       <Filter>Header Files\Text\Stroke</Filter>
     </ClInclude>
-    <ClInclude Include="RainGenerator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SpriteCollection.hpp">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
@@ -178,9 +187,6 @@
     </ClInclude>
     <ClInclude Include="BlankStroke.hpp">
       <Filter>Header Files\Text\Stroke</Filter>
-    </ClInclude>
-    <ClInclude Include="Sketch.hpp">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CWStartEighthStroke.hpp">
       <Filter>Header Files\Text\Stroke</Filter>
@@ -194,32 +200,38 @@
     <ClInclude Include="SwatchTiming.hpp">
       <Filter>Header Files\Utility\Swatch</Filter>
     </ClInclude>
-    <ClInclude Include="Walker.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Text.hpp">
       <Filter>Header Files\Text</Filter>
     </ClInclude>
-    <ClInclude Include="Splatter.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Drip.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BubbleGenerator.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bubble.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DripWalker.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Walker</Filter>
     </ClInclude>
     <ClInclude Include="RainWalker.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Walker</Filter>
     </ClInclude>
     <ClInclude Include="SplatterWalker.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Walker</Filter>
+    </ClInclude>
+    <ClInclude Include="Walker.hpp">
+      <Filter>Header Files\Walker</Filter>
+    </ClInclude>
+    <ClInclude Include="Bubble.hpp">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="BubbleGenerator.hpp">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Drip.hpp">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="RainGenerator.hpp">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Sketch.hpp">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Splatter.hpp">
+      <Filter>Header Files\Effects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
