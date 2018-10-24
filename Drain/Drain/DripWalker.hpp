@@ -21,5 +21,5 @@ protected:
 private:
 	static void specialScale(SpriteCollection& collection, const int startTime, const int endTime, const Vector2& startPos, const Vector2& endPos, const float scaleTo, const Easing& easing = Easing::Linear, const int precision = 3);
 	static constexpr float COLUMN_PIXEL_SIZE = 100.0f;
-	static constexpr float OFFSET = 50.0f;
+	static constexpr float OFFSET = 70.0f;
 };

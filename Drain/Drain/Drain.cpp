@@ -31,23 +31,8 @@ int main() {
 		Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 	}
 
-	// Bubble generation
-	// Moved right above background so that text and sketch can appear normally above them
-	if (1) {
-		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
-		BubbleGenerator::renderMouthBubbles();
-		auto splatBubbles = bubGen.GetSplatBubbles();
-		Splatter::renderFirstGradualPop(splatBubbles);
-
-		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
-		auto splatBubbles2 = bubGen2.GetSplatBubbles();
-		auto splatters = Splatter::renderSecondAllPop(splatBubbles2);
-		Walker* walker = new SplatterWalker(splatters);
-		walker->walk(Time("03:19:168").ms, Time("04:04:168").ms, 0.5);
-	}
-
-	Text::render();
-	Sketch::render();
+	//Text::render();
+	//Sketch::render();
 
 	// Rain
 	if (1) {
@@ -60,6 +45,22 @@ int main() {
 		}
 		auto const walker = new RainWalker(coll_raindrops);
 		walker->walk(Time("01:30:489"), Time("01:57:659"), 10);
+	}
+
+	// Bubble generation
+	// Moved right above background so that text and sketch can appear normally above them
+	if (1) {
+		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
+		BubbleGenerator::renderMouthBubbles();
+		auto splatBubbles = bubGen.GetSplatBubbles();
+		Splatter::renderFirstGradualPop(splatBubbles);
+
+		BubbleGenerator bubGen2 = BubbleGenerator::BubbleGenerator(true);
+		auto splatBubbles2 = bubGen2.GetSplatBubbles();
+		auto splatters = Splatter::renderSecondAllPop(splatBubbles2);
+		Walker* walker = new SplatterWalker(splatters);
+		// Commented hack so it's not a hack anymore: artifically add to endtime to account for spawning rate
+		walker->walk(Time("03:19:168").ms, Time("04:06:716").ms, 1.0);
 	}
 
 	// Drip
