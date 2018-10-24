@@ -40,7 +40,7 @@ void BubbleGenerator::SwitchToMouthBubble() {
 void BubbleGenerator::SwitchToSecondSection() {
 	startTime = Time("03:10:112").ms;
 	endTime = Time("03:23:016").ms;
-	splatterTime = Time("03:19:168").ms;
+	splatterTime = Time("03:18:036").ms;
 	totalTime = static_cast<float>(endTime.ms - startTime.ms);
 	moveTotalTime = totalTime / bubbleCount; // Controls the base velocity of bubbles
 	moveStartTime = startTime.ms;
@@ -446,7 +446,7 @@ void BubbleGenerator::SplatterPos(Bubble* sprites, std::vector<float> moveTimes,
 
 // Used in SplatterPos to shift bubble pos so it isn't covering the lyrics
 void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites, Vector2& startPos) {
-	float xAvoid = 205;
+	float xAvoid = 210;
 	float yAvoid = 115;
 	float rectRight = xAvoid;
 	float rectLeft = -xAvoid;
