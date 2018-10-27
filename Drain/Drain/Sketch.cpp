@@ -64,7 +64,7 @@ void Sketch::draw(Bezier& b) {
 			dist *= 0.8;  // maybe want to scale with length of dist but this is fine for now
 		}
 		float angle = atan(-(points[i + 1].y - points[i].y) / (points[i + 1].x - points[i].x + 0.001)); // negate y because osu!
-		auto line = Storyboard::CreateSprite(brushPath, mpoints[i]);    // the actual line being drawn
+		auto line = Storyboard::CreateSprite(brushPath, mpoints[i], Layer::Background);    // the actual line being drawn
 		sprites.push_back(line);    // add it to the global sprites list
 		if (std::abs(angle) > 0.01)    // only include a rotation command if the angle is significant
 			line->Rotate(startTime.ms, startTime.ms, angle, angle);

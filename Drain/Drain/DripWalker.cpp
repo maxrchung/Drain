@@ -83,7 +83,7 @@ void DripWalker::moveSprites(const Time& startTime, const Time& endTime, const f
 
 		const auto startScale = 1;
 		const auto ratioTraveled = (endPosition - startPosition).Magnitude() / (endPosition.Magnitude());
-		const auto scaleTo = generateRandomFloat(20.0f, 50.0f);
+		const auto scaleTo = generateRandomFloat(40.0f, 60.0f);
 
 		specialScale(sprite, moveStartTime, moveEndTime, startPosition, endPosition, scaleTo, Easing::EasingOut);
 		Swatch::colorFgToFgSprites(sprite.sprites, moveStartTime, moveEndTime);

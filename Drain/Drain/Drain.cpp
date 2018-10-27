@@ -41,6 +41,9 @@ int main() {
 		Drip::renderBackground();
 	}
 
+	Text::render();
+	Sketch::render();
+
 	// Rain
 	if (1) {
 		RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
@@ -67,7 +70,7 @@ int main() {
 		auto splatters = Splatter::renderSecondAllPop(splatBubbles2);
 		Walker* walker = new SplatterWalker(splatters);
 		// Commented hack so it's not a hack anymore: artifically add to endtime to account for spawning rate
-		walker->walk(Time("03:19:168").ms, Time("04:12:376").ms, 1.0);
+		walker->walk(Time("03:19:168").ms, Time("04:12:376").ms, 2);
 	}
 
 	// Drip
@@ -78,11 +81,8 @@ int main() {
 		// Second drip section
 		auto drips = Drip::renderSecondDrips();
 		Walker* walker = new DripWalker(drips);
-		walker->walk(Time("05:39:546").ms, Time("06:15:206").ms, 1.5);
+		walker->walk(Time("05:39:546").ms, Time("06:15:206").ms, 3);
 	}
-
-	Text::render();
-	Sketch::render();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb
