@@ -1,5 +1,6 @@
 #include "Drip.hpp"
 #include "DripWalker.hpp"
+#include "Math.hpp"
 #include "Swatch.hpp"
 #include "Vector2.hpp"
 
@@ -8,7 +9,7 @@ DripWalker::DripWalker(const std::vector<SpriteCollection> &sprites)
 	: Walker(sprites) {}
 
 SpriteCollection DripWalker::create(const Time& startTime, const Vector2& centerPos) {
-	return Drip::makeWalkerDrip(startTime, centerPos, generateRandomFloat(10.0f, 20.0f));
+	return Drip::makeWalkerDrip(startTime, centerPos, generateRandomFloat(1.0f, 1.0f));
 }
 
 Vector2 DripWalker::findDripEndPoint(const Vector2& startPosition, const float offset) {
@@ -40,7 +41,7 @@ void DripWalker::moveCurrent(const Time& startTime, const Time& endTime) {
 
 			const auto ratioTraveled = (endPosition - startPosition).Magnitude() / (endPosition.Magnitude());
 			//const auto endScale = startScale * (1 + ratioTraveled);
-			const auto scaleTo = 4;
+			const auto scaleTo = 3;
 
 			auto moveEndTime = startTime.ms + generateRandomFloat(1000, totalTime);
 			if (moveEndTime > endTime.ms) {
@@ -72,17 +73,19 @@ void DripWalker::moveSprites(const Time& startTime, const Time& endTime, const f
 			break;
 		}
 
-		const auto startPosition = Vector2(generateRandomFloat(-size.x, size.x),
-										   generateRandomFloat(-size.y, size.y));
+		const auto negative = (rand() % 2 ? -1 : 1);
+		const auto startPosition = 
+			Vector2(negative * generateRandomFloat(size.x * 0.1f, size.x), 0)
+			.Rotate(generateRandomFloat(-Math::pi / 4.0f, Math::pi / 4.0f));
 
 		const auto endPosition = findDripEndPoint(startPosition, OFFSET);
 		auto sprite = create(moveStartTime, startPosition);
 
 		const auto startScale = 1;
 		const auto ratioTraveled = (endPosition - startPosition).Magnitude() / (endPosition.Magnitude());
-		const auto scaleTo = startScale * (1 + ratioTraveled);
+		const auto scaleTo = generateRandomFloat(20.0f, 50.0f);
 
-		specialScale(sprite, moveStartTime, moveEndTime, startPosition, endPosition, scaleTo);
+		specialScale(sprite, moveStartTime, moveEndTime, startPosition, endPosition, scaleTo, Easing::EasingOut);
 		Swatch::colorFgToFgSprites(sprite.sprites, moveStartTime, moveEndTime);
 	}
 }
@@ -95,7 +98,7 @@ void DripWalker::specialScale(SpriteCollection& collection, const int startTime,
 
 	Vector2 circleStartPos = collection.location[0] + startPos;
 	Vector2 circleEndPos = collection.location[0] + endPos;
-	circle->Move(startTime, endTime, circleStartPos, circleEndPos);
+	circle->Move(startTime, endTime, circleStartPos, circleEndPos, easing);
 
 	auto const column = collection.sprites[1];
 	const auto columnStartScale = column->scaleVector;
@@ -116,5 +119,5 @@ void DripWalker::specialScale(SpriteCollection& collection, const int startTime,
 
 	column->ScaleVector(startTime, scaleEndTime, columnStartScale, columnEndScale, easing, precision);
 
-	column->MoveX(startTime, endTime, columnStartPos.x, columnEndPos.x);
+	column->MoveX(startTime, endTime, columnStartPos.x, columnEndPos.x, easing);
 }

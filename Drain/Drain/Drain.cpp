@@ -60,7 +60,7 @@ int main() {
 		auto splatters = Splatter::renderSecondAllPop(splatBubbles2);
 		Walker* walker = new SplatterWalker(splatters);
 		// Commented hack so it's not a hack anymore: artifically add to endtime to account for spawning rate
-		walker->walk(Time("03:19:168").ms, Time("04:06:716").ms, 1.0);
+		walker->walk(Time("03:19:168").ms, Time("04:12:376").ms, 1.0);
 	}
 
 	// Drip
@@ -71,14 +71,14 @@ int main() {
 		// Second drip section
 		auto drips = Drip::renderSecondDrips();
 		Walker* walker = new DripWalker(drips);
-		walker->walk(Time("05:39:546").ms, Time("05:57:659").ms, 1.0);
+		walker->walk(Time("05:39:546").ms, Time("06:15:206").ms, 1.0);
 	}
 
 	// Rendering background image 
 	if (0) {
 		BubbleGenerator::BubbleGenerator();
 		RainGenerator(Time("02:55:580"), Time("03:10:716"));
-		//Text::renderBanner();
+		Text::renderBanner();
 		Sketch::renderBackground();
 		Splatter::renderBackground();
 		Drip::renderBackground();
