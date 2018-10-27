@@ -40,7 +40,7 @@ void BubbleGenerator::SwitchToMouthBubble() {
 void BubbleGenerator::SwitchToSecondSection() {
 	startTime = Time("03:10:112").ms;
 	endTime = Time("03:23:016").ms;
-	splatterTime = Time("03:19:168").ms;
+	splatterTime = Time("03:18:036").ms;
 	totalTime = static_cast<float>(endTime.ms - startTime.ms);
 	moveTotalTime = totalTime / bubbleCount; // Controls the base velocity of bubbles
 	moveStartTime = startTime.ms;
@@ -324,23 +324,24 @@ float BubbleGenerator::GetRandomSideMovement() {
 // Returns the actual total time(ms) it takes for a bubble to float to the top of the screen; Smaller bubble sizes (slower speed) are made more probable for visual effect
 float BubbleGenerator::RandomBubbleSpeed() {
 	float adjustedTotalTime;
-	static const float sections = 5; // How many different "sections" of velocity are to be sorted by probability
+	static const float sections = 3; // How many different "sections" of velocity are to be sorted by probability
 	static const float veloDelta = 10;
 	float sectionLength = moveTotalTime / sections;
+
 	float randNum = RandomRange::calculate(0, 10000, 1000);
 
-	float s1 = .3;
-	float s2 = 1.2;
-	float s3 = 2.9;
-	float s4 = 4.9;
+	/*float s1 = .3;
+	float s2 = 1.2;*/
+	float s3 = 1.5;
+	float s4 = 6;
 
-	if (randNum >= 0 && randNum <= s1) { // Gets speed of bubbles based on number randNum which ranges from 1-10
-		adjustedTotalTime = RandomRange::calculate(sectionLength * 4, moveTotalTime);
-	}
-	else if (randNum > s1 && randNum <= s2) {
-		adjustedTotalTime = RandomRange::calculate(sectionLength * 3, sectionLength * 4);
-	}
-	else if (randNum > s2 && randNum <= s3) {
+	//if (randNum >= 0 && randNum <= s1) { // Gets speed of bubbles based on number randNum which ranges from 1-10
+	//	adjustedTotalTime = RandomRange::calculate(sectionLength * 4, moveTotalTime);
+	//}
+	//else if (randNum > s1 && randNum <= s2) {
+	//	adjustedTotalTime = RandomRange::calculate(sectionLength * 3, sectionLength * 4);
+	//}
+	if (randNum >= 0 && randNum <= s3) {
 		adjustedTotalTime = RandomRange::calculate(sectionLength * 2, sectionLength * 3);
 	}
 	else if (randNum > s3 && randNum <= s4) {
@@ -348,6 +349,10 @@ float BubbleGenerator::RandomBubbleSpeed() {
 	}
 	else if (randNum > s4 && randNum <= 10) {
 		adjustedTotalTime = RandomRange::calculate(minMoveTime, sectionLength);
+	}
+
+	if (adjustedTotalTime < minMoveTime) {
+		adjustedTotalTime = RandomBubbleSpeed(); // Now this is what I'm talking about doggy.
 	}
 
 	return adjustedTotalTime;
@@ -406,7 +411,7 @@ void BubbleGenerator::ScaleBubbleSize(Sprite* sprite, std::vector<float> moveTim
 
 // Adjust bubble velocity and density according to acceleration constant after each iteration of DrawBubble
 void BubbleGenerator::VelocityController() {
-	if (moveTotalTime >= minMoveTime) { // Ensures bubble doesn't move faster than minDropTime
+	if (moveTotalTime / 3 >= minMoveTime) { // Ensures bubble doesn't move faster than minDropTime
 		moveTotalTime *= (2.0f - acceleration);
 	}
 
@@ -446,7 +451,7 @@ void BubbleGenerator::SplatterPos(Bubble* sprites, std::vector<float> moveTimes,
 
 // Used in SplatterPos to shift bubble pos so it isn't covering the lyrics
 void BubbleGenerator::PreventCoveringLyrics(Bubble* sprites, Vector2& startPos) {
-	float xAvoid = 205;
+	float xAvoid = 210;
 	float yAvoid = 115;
 	float rectRight = xAvoid;
 	float rectLeft = -xAvoid;

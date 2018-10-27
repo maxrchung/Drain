@@ -31,7 +31,7 @@ int main() {
 		Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 	}
 
-	//Text::render();
+	Text::render();
 	//Sketch::render();
 
 	// Rain
@@ -75,7 +75,7 @@ int main() {
 	}
 
 	// Rendering background image 
-	if (0) {
+	if (1) {
 		BubbleGenerator::BubbleGenerator();
 		RainGenerator(Time("02:55:580"), Time("03:10:716"));
 		Text::renderBanner();
