@@ -31,8 +31,15 @@ int main() {
 		Swatch::colorBgToBgSprites({ background }, 0, Timing::songEnd);
 	}
 
-	Text::render();
-	//Sketch::render();
+	// Rendering background image 
+	if (0) {
+		BubbleGenerator::BubbleGenerator();
+		RainGenerator(Time("02:55:580"), Time("03:10:716"));
+		Text::renderBanner();
+		Sketch::renderBackground();
+		Splatter::renderBackground();
+		Drip::renderBackground();
+	}
 
 	// Rain
 	if (1) {
@@ -71,18 +78,11 @@ int main() {
 		// Second drip section
 		auto drips = Drip::renderSecondDrips();
 		Walker* walker = new DripWalker(drips);
-		walker->walk(Time("05:39:546").ms, Time("06:15:206").ms, 1.0);
+		walker->walk(Time("05:39:546").ms, Time("06:15:206").ms, 1.5);
 	}
 
-	// Rendering background image 
-	if (1) {
-		BubbleGenerator::BubbleGenerator();
-		RainGenerator(Time("02:55:580"), Time("03:10:716"));
-		Text::renderBanner();
-		Sketch::renderBackground();
-		Splatter::renderBackground();
-		Drip::renderBackground();
-	}
+	Text::render();
+	Sketch::render();
 
 	// Put storyboard osb path inside of StoryboardInputPath.txt
 	// e.g. X:\osu!\Songs\774573 ELECTROCUTICA feat Luschka - Drain -Re_Act Mix-\ELECTROCUTICA feat. Luschka - Drain -ReAct Mix- (fartownik).osb

@@ -23,7 +23,7 @@ private:
 
 	static constexpr float CIRCLE_FACTOR = 1.5f;
 	// Buffer to account for extra spacing on left and right of drips
-	static constexpr float COLUMN_WIDTH_BUFFER = 0.94f;
+	static constexpr float COLUMN_WIDTH_BUFFER = 0.92f;
 	static const int COLUMN_PIXEL_SIZE = 100;
 	static const RandomRange PARTIAL_DRAW_RANDOM;
 	static const RandomRange RANDOM_VARIATION;
