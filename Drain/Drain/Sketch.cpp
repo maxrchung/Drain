@@ -129,7 +129,8 @@ s createS(double pos, double secondDeriv) {
 
 int Sketch::dynamicResolution(Bezier& b) {
 	points.push_back(b.findPosition(0));
-	points.push_back(b.findPosition(RandomRange::calculate(40, 60, 100)));
+	points.push_back(b.findPosition(RandomRange::calculate(30, 40, 100)));
+	points.push_back(b.findPosition(RandomRange::calculate(60, 70, 100)));
 	points.push_back(b.findPosition(1.0f));
 	return 1;
 	//int numPoints = b.length / this->resolution; // precheck if bezier is "short"
