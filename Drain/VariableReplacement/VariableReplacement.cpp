@@ -1,4 +1,5 @@
 #include <fstream>
+#include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
@@ -27,39 +28,50 @@ std::pair<std::string, std::string> addVariable(const std::string& variable) {
 
 int main() {
 	const auto variables = std::vector<std::pair<std::string, std::string>>({
-		// Sketch
-		addVariable(R"(Sprite,Foreground,Centre,"j",)"),
-		addVariable(R"(",320,240)"),
-		addVariable(" L,"),
-		addVariable("  F,0,0,566,1"),
-		addVariable("  F,0,566,,1,0"),
-		addVariable("  F,0,1132,,0,1"),
-		
 		// General
-		addVariable(R"(Sprite,Background,Centre,")"),
-		addVariable(R"(Sprite,Background,BottomLeft,")"),
-		addVariable(R"(Sprite,Background,TopLeft,")"),
-		addVariable(R"(Sprite,Background,CentreLeft,")"),
-		addVariable(R"(Sprite,Background,BottomRight,")"),
-		addVariable(R"(Sprite,Foreground,Centre,")"),
+		addVariable(R"(Sprite,Foreground,Centre,"a",)"),
+		addVariable(R"(Sprite,Foreground,Centre,"k",)"),
+		addVariable(R"(Sprite,Foreground,TopCentre,"k",)"),
+		addVariable(R"(Sprite,Background,BottomLeft,"d",)"),
+		addVariable(R"(Sprite,Background,BottomLeft,"e",)"),
+		addVariable(R"(Sprite,Background,BottomLeft,"f",)"),
+		addVariable(R"(Sprite,Background,BottomLeft,"g",)"),
+		addVariable(R"(Sprite,Background,BottomLeft,"h",)"),
+		addVariable(R"(Sprite,Background,BottomLeft,"i",)"),
+		addVariable(R"(Sprite,Background,BottomRight,"b",)"),
+		addVariable(R"(Sprite,Background,Centre,"a",)"),
+		addVariable(R"(Sprite,Background,Centre,"j",)"),
+		addVariable(R"(Sprite,Background,CentreLeft,"c",)"),
+		addVariable(R"(Sprite,Background,TopLeft,"b",)"),
+		addVariable("0,0,0"),
 		addVariable("27,27,27"),
-		addVariable("114,187,180"),
-		addVariable("218,236,236"),
+		addVariable("70,101,110"),
+		addVariable("156,184,192"),
 		addVariable("170,0,0"),
 		addVariable("255,255,255"),
-		addVariable("0,0,0"),
-		addVariable(" V,0,"),
 		addVariable(" C,0,"),
-		addVariable(" S,0,"),
-		addVariable(" R,0,"),
+		addVariable(" F,0,"),
 		addVariable(" M,0,"),
+		addVariable(" M,1,"),
+		addVariable(" MX,1,"),
 		addVariable(" MX,15,"),
 		addVariable(" MX,16,"),
 		addVariable(" MY,15,"),
 		addVariable(" MY,16,"),
-		addVariable(" V,16,"),
+		addVariable(" R,0,"),
+		addVariable(" S,0,"),
+		addVariable(" S,1,"),
+		addVariable(" V,0,"),
+		addVariable(" V,1,"),
 		addVariable(" V,15,"),
-		addVariable(" F,0,"),
+		addVariable(" V,16,"),
+
+		// Sketch
+		addVariable(R"("320,240)"),
+		addVariable(" L,"),
+		addVariable("  F,0,0,566,1"),
+		addVariable("  F,0,566,,1,0"),
+		addVariable("  F,0,1132,,0,1"),
 																			});
 
 	// swag
