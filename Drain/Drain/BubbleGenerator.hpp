@@ -24,6 +24,7 @@ private:
 	void BubbleController();
 	void DrawBubble();
 	void MoveBubble(Bubble* sprites, std::vector<float> moveTimes, Vector2 startPos, Easing easing, bool isSplat = false);
+	void StopXMovementAfterSplatter(float &endSideMove, bool &stopFlag, float &xSideDelta, float endMove, float oneDirTime);
 	void MoveBubble(Sprite* sprite, std::vector<float> moveTimes, bool isSplat = false);
 	Vector2 GetBubbleStartPos();
 	std::vector<float> GetBubbleTiming();

@@ -216,24 +216,27 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 
 	int leftOrRight = RandomRange::calculate(0, 1) * 2 - 1; // randomly chooses either 1 or -1; -1 = left 1 = right
 
+	bool stopFlag = false;
+
 	if (leftOrRight == -1) { // So bubbles won't always start moving to the same side
+		if (endSideMove > endMove) { // Makes sure moveX does not move after splatterTime (freeze)
+			StopXMovementAfterSplatter(endSideMove, stopFlag, xSideDelta, endMove, oneDirTime);
+		}
 		sprites->MoveX(startSideMove, endSideMove, startPos.x, startPos.x - xSideDelta, Easing::SineOut);
 	}
 	else if (leftOrRight == 1) {
+		if (endSideMove > endMove) { // Makes sure moveX does not move after splatterTime (freeze)
+			StopXMovementAfterSplatter(endSideMove, stopFlag, xSideDelta, endMove, oneDirTime);
+		}
 		sprites->MoveX(startSideMove, endSideMove, startPos.x, startPos.x + xSideDelta, Easing::SineOut);
 	}
 
 	startSideMove += oneDirTime;
 	endSideMove += oneDirTime;
-	bool stopFlag = false;
 
 	for (int i = 0; i < oneDirMoveTimes - 1; i++) {
 		if (endSideMove > endMove) { // Makes sure moveX does not move after splatterTime (freeze)
-			float remainder = endSideMove - endMove;
-			float ratio = (oneDirTime - remainder) / oneDirTime;
-			endSideMove = endMove;
-			stopFlag = true;
-			xSideDelta *= ratio;
+			StopXMovementAfterSplatter(endSideMove, stopFlag, xSideDelta, endMove, oneDirTime);
 		}
 		if ((i % 2) == 0) { // Bubble moving inwards
 			leftOrRight *= -1; // Change direction every other iteration
@@ -249,6 +252,14 @@ void BubbleGenerator::MoveBubble(Bubble* sprites, std::vector<float> moveTimes, 
 		startSideMove += oneDirTime;
 		endSideMove += oneDirTime;
 	}
+}
+
+void BubbleGenerator::StopXMovementAfterSplatter(float &endSideMove, bool &stopFlag, float &xSideDelta, float endMove, float oneDirTime) {
+	float remainder = endSideMove - endMove;
+	float ratio = (oneDirTime - remainder) / oneDirTime;
+	endSideMove = endMove;
+	stopFlag = true;
+	xSideDelta *= ratio;
 }
 
 // Handles all bubble movement from bottom of screen to top including side movement (mouth bubble ver.)
