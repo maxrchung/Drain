@@ -24,7 +24,7 @@ int main() {
 	// Solid background
 	if (1) {
 		// Gets rid of beatmap background
-		Storyboard::CreateSprite("36592_serial_experiments_lain.jpg", Vector2::Zero, Layer::Background);
+		Storyboard::CreateSprite("background.png", Vector2::Zero, Layer::Background);
 		// Solid color background
 		auto const background = Storyboard::CreateSprite(getPath(Path::Pixel), Vector2::Zero, Layer::Background);
 		background->ScaleVector(0, 0, Vector2::ScreenSize, Vector2::ScreenSize, Easing::Linear, 0);
@@ -41,11 +41,11 @@ int main() {
 		Drip::renderBackground();
 	}
 
-	Text::render();
-	Sketch::render();
+	//Text::render();
+	//Sketch::render();
 
 	// Rain
-	if (1) {
+	if (0) {
 		RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
@@ -74,7 +74,7 @@ int main() {
 	}
 
 	// Drip
-	if (1) {
+	if (0) {
 		// First drip section
 		Drip::renderFirstFill();
 
