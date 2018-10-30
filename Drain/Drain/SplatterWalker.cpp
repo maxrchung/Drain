@@ -9,7 +9,7 @@ SplatterWalker::SplatterWalker(const std::vector<SpriteCollection> &sprites)
 }
 
 SpriteCollection SplatterWalker::create(const Time& startTime, const Vector2& centerPos) {
-	return Splatter::makeWalkerSplatter(startTime, centerPos, generateRandomFloat(0.01f, 0.05f));
+	return Splatter::makeWalkerSplatter(startTime, centerPos, 1.0f);
 }
 
 void SplatterWalker::moveCurrent(const Time& startTime, const Time& endTime) {
@@ -59,7 +59,7 @@ void SplatterWalker::moveSprites(const Time& startTime, const Time& endTime, con
 		const auto endPosition = findEndPoint(startPosition, offset);
 		auto sprite = create(moveStartTime, startPosition);
 
-		const auto startScale = 1;
+		const auto startScale = generateRandomFloat(0.01f, 0.05f);
 		const auto endScale = generateRandomFloat(1.0f, 1.5f);
 
 		sprite.MoveAndScale(moveStartTime, moveEndTime, startPosition, endPosition, startScale, endScale);

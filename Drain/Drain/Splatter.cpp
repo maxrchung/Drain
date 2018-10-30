@@ -113,6 +113,11 @@ SpriteCollection Splatter::make() {
 
 SpriteCollection Splatter::makeWalkerSplatter(const Time& startTime, const Vector2& centerPos, const float scale) {
 	const auto collection = Splatter(startTime, startTime, scale, 300, 0, centerPos, false).make();
+	// Some ppretty extreme hacking to remove the setup Scale command we set to initially position the Splatter
+	// osu! sometimes has a rendering bug that briefly displays this initial position, and we don't want this
+	for (auto& sprite : collection.sprites) {
+		sprite->commands.clear();
+	}
 	return collection;
 }
 
