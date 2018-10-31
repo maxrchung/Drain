@@ -41,11 +41,11 @@ int main() {
 		Drip::renderBackground();
 	}
 
-	//Text::render();
-	//Sketch::render();
+	Text::render();
+	Sketch::render();
 
 	// Rain
-	if (0) {
+	if (1) {
 		RainGenerator firstRain = RainGenerator::RainGenerator(Time("00:05:580"), Time("00:51:716"));
 		RainGenerator gen = RainGenerator(Time("01:03:319"), Time("01:30:489"), true, 1.03f);
 		std::vector<Sprite *> raindrops = gen.FreezeRain();
@@ -74,7 +74,7 @@ int main() {
 	}
 
 	// Drip
-	if (0) {
+	if (1) {
 		// First drip section
 		Drip::renderFirstFill();
 
