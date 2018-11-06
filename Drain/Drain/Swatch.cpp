@@ -79,19 +79,161 @@ const std::vector<Time> Swatch::fastTimes = {
 std::vector<SwatchTiming> Swatch::bgTimings = {
 	SwatchTiming(0, Time("00:27:093").ms, offwhite, offwhite),
 	SwatchTiming(Time("00:27:093").ms, Time("00:35:018").ms, offwhite, water),
-	SwatchTiming(Time("00:35:018").ms, Time("02:29:357").ms, water, water),
+	SwatchTiming(Time("00:35:018").ms, Time("00:54:263").ms, water, water),
+	SwatchTiming(Time("00:54:263").ms, Time("01:03:319").ms, water, eerie),
+
+	SwatchTiming(Time("01:03:319").ms, Time("01:03:602").ms, water, water),
+	SwatchTiming(Time("01:03:602").ms, Time("01:05:584").ms, eerie, eerie),
+
+	SwatchTiming(Time("01:05:584").ms, Time("01:05:867").ms, water, water),
+	SwatchTiming(Time("01:05:867").ms, Time("01:07:848").ms, eerie, eerie),
+
+	SwatchTiming(Time("01:07:848").ms, Time("01:08:131").ms, water, water),
+	SwatchTiming(Time("01:08:131").ms, Time("01:10:112").ms, eerie, eerie),
+
+	SwatchTiming(Time("01:10:112").ms, Time("01:10:301").ms, water, water),
+	SwatchTiming(Time("01:10:301").ms, Time("01:10:489").ms, eerie, eerie),
+	SwatchTiming(Time("01:10:489").ms, Time("01:10:678").ms, water, water),
+	SwatchTiming(Time("01:10:678").ms, Time("01:10:867").ms, eerie, eerie),
+	SwatchTiming(Time("01:10:867").ms, Time("01:11:055").ms, water, water),
+	SwatchTiming(Time("01:11:055").ms, Time("01:11:244").ms, eerie, eerie),
+	SwatchTiming(Time("01:11:244").ms, Time("01:11:433").ms, water, water),
+	SwatchTiming(Time("01:11:433").ms, Time("01:11:621").ms, eerie, eerie),
+	SwatchTiming(Time("01:11:621").ms, Time("01:11:810").ms, water, water),
+	SwatchTiming(Time("01:11:810").ms, Time("01:11:999").ms, eerie, eerie),
+	SwatchTiming(Time("01:11:999").ms, Time("01:12:187").ms, water, water),
+	SwatchTiming(Time("01:12:187").ms, Time("01:12:376").ms, eerie, eerie),
+
+	SwatchTiming(Time("01:12:376").ms, Time("01:12:659").ms, water, water),
+	SwatchTiming(Time("01:12:659").ms, Time("01:14:640").ms, eerie, eerie),
+
+	SwatchTiming(Time("01:14:640").ms, Time("01:14:923").ms, water, water),
+	SwatchTiming(Time("01:14:923").ms, Time("01:16:904").ms, eerie, eerie),
+
+	SwatchTiming(Time("01:16:904").ms, Time("01:17:187").ms, water, water),
+	SwatchTiming(Time("01:17:187").ms, Time("01:19:168").ms, eerie, eerie),
+
+	SwatchTiming(Time("01:19:168").ms, Time("01:19:357").ms, water, water),
+	SwatchTiming(Time("01:19:357").ms, Time("01:19:546").ms, eerie, eerie),
+	SwatchTiming(Time("01:19:546").ms, Time("01:19:735").ms, water, water),
+	SwatchTiming(Time("01:19:735").ms, Time("01:19:923").ms, eerie, eerie),
+	SwatchTiming(Time("01:19:923").ms, Time("01:20:112").ms, water, water),
+	SwatchTiming(Time("01:20:112").ms, Time("01:20:301").ms, eerie, eerie),
+	SwatchTiming(Time("01:20:301").ms, Time("01:20:489").ms, water, water),
+	SwatchTiming(Time("01:20:489").ms, Time("01:20:678").ms, eerie, eerie),
+	SwatchTiming(Time("01:20:678").ms, Time("01:20:867").ms, water, water),
+	SwatchTiming(Time("01:20:867").ms, Time("01:21:055").ms, eerie, eerie),
+	SwatchTiming(Time("01:21:055").ms, Time("01:21:244").ms, water, water),
+	SwatchTiming(Time("01:21:244").ms, Time("01:21:433").ms, eerie, eerie),
+
+	SwatchTiming(Time("01:21:433").ms, Time("01:21:716").ms, water, water),
+	SwatchTiming(Time("01:21:716").ms, Time("01:23:697").ms, eerie, eerie),
+
+	SwatchTiming(Time("01:23:697").ms, Time("01:23:980").ms, water, water),
+	SwatchTiming(Time("01:23:980").ms, Time("01:25:961").ms, eerie, eerie),
+
+	SwatchTiming(Time("01:25:961").ms, Time("01:26:244").ms, water, water),
+	SwatchTiming(Time("01:26:244").ms, Time("01:28:225").ms, eerie, eerie),
+
+	SwatchTiming(Time("01:28:225").ms, Time("01:28:414").ms, water, water),
+	SwatchTiming(Time("01:28:414").ms, Time("01:28:602").ms, eerie, eerie),
+	SwatchTiming(Time("01:28:602").ms, Time("01:28:791").ms, water, water),
+	SwatchTiming(Time("01:28:791").ms, Time("01:28:980").ms, eerie, eerie),
+	SwatchTiming(Time("01:28:980").ms, Time("01:29:168").ms, water, water),
+	SwatchTiming(Time("01:29:168").ms, Time("01:29:357").ms, eerie, eerie),
+	SwatchTiming(Time("01:29:357").ms, Time("01:29:546").ms, water, water),
+	SwatchTiming(Time("01:29:546").ms, Time("01:29:735").ms, eerie, eerie),
+	SwatchTiming(Time("01:29:735").ms, Time("01:29:923").ms, water, water),
+	SwatchTiming(Time("01:29:923").ms, Time("01:30:112").ms, eerie, eerie),
+	SwatchTiming(Time("01:30:112").ms, Time("01:30:301").ms, water, water),
+	SwatchTiming(Time("01:30:301").ms, Time("01:30:489").ms, eerie, eerie),
+
+	SwatchTiming(Time("01:30:489").ms, Time("02:29:357").ms, water, water),
+
 	SwatchTiming(Time("02:29:357").ms, Time("02:33:885").ms, water, eerie),
-	SwatchTiming(Time("02:33:885").ms, Time("04:42:942").ms, eerie, eerie),
-	SwatchTiming(Time("04:42:942").ms, Time("04:44:074").ms, blood, blood),
+	SwatchTiming(Time("02:33:885").ms, Time("03:18:036").ms, eerie, eerie),
+	SwatchTiming(Time("03:18:036").ms, Time("03:19:168").ms, eerie, offwhite),
+	SwatchTiming(Time("03:19:168").ms, Time("04:44:074").ms, offwhite, offwhite),
 	SwatchTiming(Time("04:44:074").ms, Time("05:03:319").ms, blood, blood),
 };
 std::vector<SwatchTiming> Swatch::fgTimings = {
 	SwatchTiming(0, Time("00:27:093").ms, water, water),
 	SwatchTiming(Time("00:27:093").ms, Time("00:35:018").ms, water, offwhite),
-	SwatchTiming(Time("00:35:018").ms, Time("02:29:357").ms, offwhite, offwhite),
+	SwatchTiming(Time("00:35:018").ms, Time("00:54:263").ms, offwhite, offwhite),
+	SwatchTiming(Time("00:54:263").ms, Time("01:03:319").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:03:319").ms, Time("01:03:602").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:03:602").ms, Time("01:05:584").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:05:584").ms, Time("01:05:867").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:05:867").ms, Time("01:07:848").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:07:848").ms, Time("01:08:131").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:08:131").ms, Time("01:10:112").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:10:112").ms, Time("01:10:301").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:10:301").ms, Time("01:10:489").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:10:489").ms, Time("01:10:678").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:10:678").ms, Time("01:10:867").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:10:867").ms, Time("01:11:055").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:11:055").ms, Time("01:11:244").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:11:244").ms, Time("01:11:433").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:11:433").ms, Time("01:11:621").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:11:621").ms, Time("01:11:810").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:11:810").ms, Time("01:11:999").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:11:999").ms, Time("01:12:187").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:12:187").ms, Time("01:12:376").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:12:376").ms, Time("01:12:659").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:12:659").ms, Time("01:14:640").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:14:640").ms, Time("01:14:923").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:14:923").ms, Time("01:16:904").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:16:904").ms, Time("01:17:187").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:17:187").ms, Time("01:19:168").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:19:168").ms, Time("01:19:357").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:19:357").ms, Time("01:19:546").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:19:546").ms, Time("01:19:735").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:19:735").ms, Time("01:19:923").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:19:923").ms, Time("01:20:112").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:20:112").ms, Time("01:20:301").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:20:301").ms, Time("01:20:489").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:20:489").ms, Time("01:20:678").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:20:678").ms, Time("01:20:867").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:20:867").ms, Time("01:21:055").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:21:055").ms, Time("01:21:244").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:21:244").ms, Time("01:21:433").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:21:433").ms, Time("01:21:716").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:21:716").ms, Time("01:23:697").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:23:697").ms, Time("01:23:980").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:23:980").ms, Time("01:25:961").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:25:961").ms, Time("01:26:244").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:26:244").ms, Time("01:28:225").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:28:225").ms, Time("01:28:414").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:28:414").ms, Time("01:28:602").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:28:602").ms, Time("01:28:791").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:28:791").ms, Time("01:28:980").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:28:980").ms, Time("01:29:168").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:29:168").ms, Time("01:29:357").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:29:357").ms, Time("01:29:546").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:29:546").ms, Time("01:29:735").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:29:735").ms, Time("01:29:923").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:29:923").ms, Time("01:30:112").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:30:112").ms, Time("01:30:301").ms, offwhite, offwhite),
+	SwatchTiming(Time("01:30:301").ms, Time("01:30:489").ms, offwhite, offwhite),
+
+	SwatchTiming(Time("01:30:489").ms, Time("02:29:357").ms, offwhite, offwhite),
+
 	SwatchTiming(Time("02:29:357").ms, Time("02:33:885").ms, offwhite, blood),
-	SwatchTiming(Time("02:33:885").ms, Time("04:42:942").ms, blood, blood),
-	SwatchTiming(Time("04:42:942").ms, Time("04:44:074").ms, blood, eerie),
+	SwatchTiming(Time("02:33:885").ms, Time("03:18:036").ms, blood, blood),
+	SwatchTiming(Time("03:18:036").ms, Time("03:19:168").ms, blood, blood),
+	SwatchTiming(Time("03:19:168").ms, Time("04:44:074").ms, blood, blood),
 	SwatchTiming(Time("04:44:074").ms, Time("05:03:319").ms, eerie, eerie),
 };
 void Swatch::init() {
