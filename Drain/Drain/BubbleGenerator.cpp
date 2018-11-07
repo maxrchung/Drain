@@ -73,8 +73,18 @@ void BubbleGenerator::DrawBubble() {
 			bool slowFlag = false;
 			Bubble* sprites = CreateBubbleSprites();
 			ScaleBubbleSize(sprites, moveTimes); // scales based on timing; dont put slowBubble before Scale or you will want to D ie
-			SlowBubbleBeforeSplat(moveTimes[0], moveTimes[1], moveTimes[1] - moveTimes[0], slowFlag);
-			sprites->Color(moveTimes[0], moveTimes[1]);
+			// This some meme shit
+			// For second section, if I don't do this, the bubbles stay too long after when they're supposed to spawn
+			// For first section, if I don't do this, the bubbles are miscolored
+			if (isSecondSection) {
+				sprites->Color(moveTimes[0], moveTimes[1]);
+				SlowBubbleBeforeSplat(moveTimes[0], moveTimes[1], moveTimes[1] - moveTimes[0], slowFlag);
+			}
+			else {
+				SlowBubbleBeforeSplat(moveTimes[0], moveTimes[1], moveTimes[1] - moveTimes[0], slowFlag);
+				sprites->Color(moveTimes[0], moveTimes[1]);
+			}
+
 			TrackAllBubbles(sprites);
 
 			auto easing = Easing::Linear;
