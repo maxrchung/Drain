@@ -28,6 +28,13 @@ std::pair<std::string, std::string> addVariable(const std::string& variable) {
 
 int main() {
 	const auto variables = std::vector<std::pair<std::string, std::string>>({
+		// Sketch
+		addVariable(R"("320,240)"),
+		addVariable(" L,"),
+		addVariable("  F,0,0,566,1"),
+		addVariable("  F,0,566,,1,0"),
+		addVariable("  F,0,1132,,0,1"),
+
 		// General
 		addVariable(R"(Sprite,Foreground,Centre,"a",)"),
 		addVariable(R"(Sprite,Foreground,Centre,"k",)"),
@@ -43,12 +50,12 @@ int main() {
 		addVariable(R"(Sprite,Background,Centre,"j",)"),
 		addVariable(R"(Sprite,Background,CentreLeft,"c",)"),
 		addVariable(R"(Sprite,Background,TopLeft,"b",)"),
-		addVariable("0,0,0"),
-		addVariable("27,27,27"),
-		addVariable("70,101,110"),
-		addVariable("156,184,192"),
-		addVariable("170,0,0"),
-		addVariable("255,255,255"),
+		addVariable(",0,0,0"),
+		addVariable(",27,27,27"),
+		addVariable(",70,101,110"),
+		addVariable(",156,184,192"),
+		addVariable(",170,0,0"),
+		addVariable(",255,255,255"),
 		addVariable(" C,0,"),
 		addVariable(" F,0,"),
 		addVariable(" M,0,"),
@@ -56,6 +63,7 @@ int main() {
 		addVariable(" MX,1,"),
 		addVariable(" MX,15,"),
 		addVariable(" MX,16,"),
+		addVariable(" MY,0,"),
 		addVariable(" MY,15,"),
 		addVariable(" MY,16,"),
 		addVariable(" R,0,"),
@@ -65,13 +73,6 @@ int main() {
 		addVariable(" V,1,"),
 		addVariable(" V,15,"),
 		addVariable(" V,16,"),
-
-		// Sketch
-		addVariable(R"("320,240)"),
-		addVariable(" L,"),
-		addVariable("  F,0,0,566,1"),
-		addVariable("  F,0,566,,1,0"),
-		addVariable("  F,0,1132,,0,1"),
 																			});
 
 	// swag
