@@ -201,191 +201,191 @@ void Text::render() {
 		"atop puddles",
 		  }, "01:53:131", "01:57:659");
 	// Lyric 2
-	draw("pushing aside", "01:58:791", "02:00:489");
-	draw("my pain", "02:01:338", "02:05:584");
-	draw("exchanged body heat", "02:06:338", "02:08:414");
-	draw("again and again", "02:09:475", "02:14:640");
-	draw("suffocating", "02:16:904", "02:18:744");
-	draw("puff of smoke", "02:19:452", "02:21:150");
-	draw("and i saw the world", "02:24:263", "02:27:659");
-	draw("turn red", "02:28:791", "02:32:753");
-	// Poem 2
-	place({
-		"your voice pierced the rain",
-		"singing, screaming in song"
-		  }, "02:33:885", "02:38:414");
-	place({
-		"for a few moments then",
-		"we forgot the sad world",
-		"crying in its sweet dream",
-		  }, "02:38:414", "02:42:949");
-	place({
-		"you and i laughed",
-		"stumbled through alleyways",
-		"exploring every nook"
-		  }, "02:42:949", "02:47:470");
-	place({
-		"clasping tightly",
-		"i dragged us along",
-		"in a frenzied daze",
-		"night after night",
-		  }, "02:47:470", "02:51:999");
-	place({
-		"until a light",
-		"cusping the sky",
-		"signaled us back",
-		"to daily life",
-		  }, "02:51:999", "02:56:527");
-	place({
-		"lost in the morning fog",
-		"we parted ways",
-		"separated by different worlds",
-		  }, "02:56:527", "03:01:055");
-	place({
-		"in hiding we bid our time",
-		"waiting for the next chance",
-		"to drench in the rain",
-		  }, "03:01:055", "03:05:584");
-	place({
-		"night by night",
-		"we met each other",
-		"night by night",
-		"we escaped",
-		  }, "03:05:584", "03:10:112");
-	place({
-		"counting the moons",
-		"from crescent to full",
-		"every adventure",
-		"one to remember",
-		  }, "03:10:112", "03:14:640");
-	place({
-		"through the seasons",
-		"time passed",
-		"the sun rose sooner",
-		"and our time, shorter",
-		  }, "03:14:640", "03:19:168");
-	place({
-		"runs became walks",
-		"laughs became smiles",
-		"now we took shelter",
-		"from the pouring nights",
-		  }, "03:19:168", "03:23:697");
-	place({
-		"a toll, a price to pay",
-		"with your mind and body",
-		"a cost and affordance",
-		"for each trip",
-		  }, "03:23:697", "03:28:225");
-	place({
-		"with exhaustion",
-		"we barely met the night's end",
-		"to catch the day's start",
-		  }, "03:28:225", "03:32:753");
-	place({
-		"until one night",
-		"we failed to return",
-		"lost in the maze",
-		"of winding streets",
-		  }, "03:32:753", "03:37:282");
-	place({
-		"as day broke",
-		"ghosts and demons",
-		"evil of all kind",
-		"spawned from the shadows",
-		  }, "03:37:282", "03:41:810");
-	place({
-		"every dark corner",
-		"hid encroaching fears",
-		"pushing us to escape",
-		"down frantic paths",
-		  }, "03:41:810", "03:46:338");
-	place({
-		"around corners and bends",
-		"a storm of movements",
-		  }, "03:46:338", "03:48:602");
-	place({
-		"with a misstep",
-		"you tumbled to the floor",
-		"where a swarm of shadows",
-		"swallowed you whole",
-		  }, "03:48:602", "03:53:131");
-	place({
-		"a panic, struggle",
-		"pulling you up",
-		"but we broke apart",
-		"lost touch",
-		  }, "03:53:131", "03:57:659");
-	place({
-		"a final scream",
-		"left your lips",
-		"before the void took you",
-		"and i ran, ran away",
-		  }, "03:57:659", "04:04:168");
-	// Lyric 3
-	draw("dripping", "04:04:168", "04:05:805");
-	draw("trickling", "04:06:433", "04:07:211");
-	draw("dribbling", "04:08:697", "04:09:475");
-	draw("a little more", "04:12:942", "04:14:640");
-	draw("give me some more", "04:17:470", "04:19:168");
-	draw("dripping", "04:22:282", "04:23:060");
-	draw("trickling", "04:24:546", "04:25:324");
-	draw("dribbling", "04:26:739", "04:27:588");
-	draw("into my core", "04:31:055", "04:36:574");
-	draw("i don't know", "04:44:074", "04:46:338");
-	draw("when i lost", "04:46:904", "04:48:815");
-	draw("my key", "04:49:239", "04:55:749");
-	draw("take a vow", "04:56:527", "04:59:923");
-	draw("and just", "05:00:560", "05:01:763");
-	draw("kill me", "05:02:187", "05:08:838");
-	draw("i don't know", "05:20:301", "05:22:565");
-	draw("when i lost", "05:23:131", "05:24:970");
-	draw("my key", "05:25:395", "05:31:621");
-	draw("take a vow", "05:32:753", "05:36:150");
-	draw("and just", "05:36:857", "05:37:989");
-	draw("kill me", "05:38:414", "05:49:735");
-	// Poem 3
-	place({
-		"it wasn't until evening",
-		"that i returned to the city",
-		"where your body laid",
-		"was a shard of your soul",
-		  }, "05:57:659", "06:02:187");
-	place({
-		"a memory, of feeling",
-		"of thought and prayer",
-		"a moment of bliss",
-		"that you captured",
-		  }, "06:02:187", "06:06:716");
-	place({
-		"clouds gathered above",
-		"the first drops",
-		"sprinkling the sky",
-		"dotted the landscape",
-		  }, "06:06:716", "06:11:244");
-	place({
-		"more and more",
-		"fragments of you appeared",
-		"twinkling and sparkling",
-		"in the wet glow",
-		  }, "06:11:244", "06:15:772");
-	place({
-		"i reached",
-		"for all the sharp pieces",
-		"pooled them to my cut hands",
-		  }, "06:15:772", "06:20:301");
-	place({
-		"was it right",
-		"was it good",
-		"was it worth it",
-		  }, "06:20:301", "06:24:829");
-	place({
-		"i kissed the fragments",
-		"then consume them all",
-		  }, "06:24:829", "06:31:055");
-	// Lyric 4
-	draw("when the wall broke down", "06:31:055", "06:32:329");
-	draw("you were there", "06:32:895", "06:33:885");
-	draw("but i was on my own", "06:34:735", "06:35:725");
+	//draw("pushing aside", "01:58:791", "02:00:489");
+	//draw("my pain", "02:01:338", "02:05:584");
+	//draw("exchanged body heat", "02:06:338", "02:08:414");
+	//draw("again and again", "02:09:475", "02:14:640");
+	//draw("suffocating", "02:16:904", "02:18:744");
+	//draw("puff of smoke", "02:19:452", "02:21:150");
+	//draw("and i saw the world", "02:24:263", "02:27:659");
+	//draw("turn red", "02:28:791", "02:32:753");
+	//// Poem 2
+	//place({
+	//	"your voice pierced the rain",
+	//	"singing, screaming in song"
+	//	  }, "02:33:885", "02:38:414");
+	//place({
+	//	"for a few moments then",
+	//	"we forgot the sad world",
+	//	"crying in its sweet dream",
+	//	  }, "02:38:414", "02:42:949");
+	//place({
+	//	"you and i laughed",
+	//	"stumbled through alleyways",
+	//	"exploring every nook"
+	//	  }, "02:42:949", "02:47:470");
+	//place({
+	//	"clasping tightly",
+	//	"i dragged us along",
+	//	"in a frenzied daze",
+	//	"night after night",
+	//	  }, "02:47:470", "02:51:999");
+	//place({
+	//	"until a light",
+	//	"cusping the sky",
+	//	"signaled us back",
+	//	"to daily life",
+	//	  }, "02:51:999", "02:56:527");
+	//place({
+	//	"lost in the morning fog",
+	//	"we parted ways",
+	//	"separated by different worlds",
+	//	  }, "02:56:527", "03:01:055");
+	//place({
+	//	"in hiding we bid our time",
+	//	"waiting for the next chance",
+	//	"to drench in the rain",
+	//	  }, "03:01:055", "03:05:584");
+	//place({
+	//	"night by night",
+	//	"we met each other",
+	//	"night by night",
+	//	"we escaped",
+	//	  }, "03:05:584", "03:10:112");
+	//place({
+	//	"counting the moons",
+	//	"from crescent to full",
+	//	"every adventure",
+	//	"one to remember",
+	//	  }, "03:10:112", "03:14:640");
+	//place({
+	//	"through the seasons",
+	//	"time passed",
+	//	"the sun rose sooner",
+	//	"and our time, shorter",
+	//	  }, "03:14:640", "03:19:168");
+	//place({
+	//	"runs became walks",
+	//	"laughs became smiles",
+	//	"now we took shelter",
+	//	"from the pouring nights",
+	//	  }, "03:19:168", "03:23:697");
+	//place({
+	//	"a toll, a price to pay",
+	//	"with your mind and body",
+	//	"a cost and affordance",
+	//	"for each trip",
+	//	  }, "03:23:697", "03:28:225");
+	//place({
+	//	"with exhaustion",
+	//	"we barely met the night's end",
+	//	"to catch the day's start",
+	//	  }, "03:28:225", "03:32:753");
+	//place({
+	//	"until one night",
+	//	"we failed to return",
+	//	"lost in the maze",
+	//	"of winding streets",
+	//	  }, "03:32:753", "03:37:282");
+	//place({
+	//	"as day broke",
+	//	"ghosts and demons",
+	//	"evil of all kind",
+	//	"spawned from the shadows",
+	//	  }, "03:37:282", "03:41:810");
+	//place({
+	//	"every dark corner",
+	//	"hid encroaching fears",
+	//	"pushing us to escape",
+	//	"down frantic paths",
+	//	  }, "03:41:810", "03:46:338");
+	//place({
+	//	"around corners and bends",
+	//	"a storm of movements",
+	//	  }, "03:46:338", "03:48:602");
+	//place({
+	//	"with a misstep",
+	//	"you tumbled to the floor",
+	//	"where a swarm of shadows",
+	//	"swallowed you whole",
+	//	  }, "03:48:602", "03:53:131");
+	//place({
+	//	"a panic, struggle",
+	//	"pulling you up",
+	//	"but we broke apart",
+	//	"lost touch",
+	//	  }, "03:53:131", "03:57:659");
+	//place({
+	//	"a final scream",
+	//	"left your lips",
+	//	"before the void took you",
+	//	"and i ran, ran away",
+	//	  }, "03:57:659", "04:04:168");
+	//// Lyric 3
+	//draw("dripping", "04:04:168", "04:05:805");
+	//draw("trickling", "04:06:433", "04:07:211");
+	//draw("dribbling", "04:08:697", "04:09:475");
+	//draw("a little more", "04:12:942", "04:14:640");
+	//draw("give me some more", "04:17:470", "04:19:168");
+	//draw("dripping", "04:22:282", "04:23:060");
+	//draw("trickling", "04:24:546", "04:25:324");
+	//draw("dribbling", "04:26:739", "04:27:588");
+	//draw("into my core", "04:31:055", "04:36:574");
+	//draw("i don't know", "04:44:074", "04:46:338");
+	//draw("when i lost", "04:46:904", "04:48:815");
+	//draw("my key", "04:49:239", "04:55:749");
+	//draw("take a vow", "04:56:527", "04:59:923");
+	//draw("and just", "05:00:560", "05:01:763");
+	//draw("kill me", "05:02:187", "05:08:838");
+	//draw("i don't know", "05:20:301", "05:22:565");
+	//draw("when i lost", "05:23:131", "05:24:970");
+	//draw("my key", "05:25:395", "05:31:621");
+	//draw("take a vow", "05:32:753", "05:36:150");
+	//draw("and just", "05:36:857", "05:37:989");
+	//draw("kill me", "05:38:414", "05:49:735");
+	//// Poem 3
+	//place({
+	//	"it wasn't until evening",
+	//	"that i returned to the city",
+	//	"where your body laid",
+	//	"was a shard of your soul",
+	//	  }, "05:57:659", "06:02:187");
+	//place({
+	//	"a memory, of feeling",
+	//	"of thought and prayer",
+	//	"a moment of bliss",
+	//	"that you captured",
+	//	  }, "06:02:187", "06:06:716");
+	//place({
+	//	"clouds gathered above",
+	//	"the first drops",
+	//	"sprinkling the sky",
+	//	"dotted the landscape",
+	//	  }, "06:06:716", "06:11:244");
+	//place({
+	//	"more and more",
+	//	"fragments of you appeared",
+	//	"twinkling and sparkling",
+	//	"in the wet glow",
+	//	  }, "06:11:244", "06:15:772");
+	//place({
+	//	"i reached",
+	//	"for all the sharp pieces",
+	//	"pooled them to my cut hands",
+	//	  }, "06:15:772", "06:20:301");
+	//place({
+	//	"was it right",
+	//	"was it good",
+	//	"was it worth it",
+	//	  }, "06:20:301", "06:24:829");
+	//place({
+	//	"i kissed the fragments",
+	//	"then consume them all",
+	//	  }, "06:24:829", "06:31:055");
+	//// Lyric 4
+	//draw("when the wall broke down", "06:31:055", "06:32:329");
+	//draw("you were there", "06:32:895", "06:33:885");
+	//draw("but i was on my own", "06:34:735", "06:35:725");
 }
 
 void Text::renderBanner() {

@@ -32,8 +32,10 @@ void PointStroke::draw(const Vector2& position,
 void PointStroke::place(const Vector2& position,
 						const int startTime,
 						const int endTime,
-						const float scale) {
+						const float scale,
+						const float drift) {
 	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + startPosition * scale, Layer::Background);
 	scalePoints({ startPoint }, startTime, scale);
 	colorFgSprites({ startPoint }, startTime, endTime);
+	placeDrift({ startPoint }, startTime, endTime, drift);
 }

@@ -21,7 +21,8 @@ public:
 	virtual void place(const Vector2& position,
 					   const int startTime,
 					   const int endTime,
-					   const float scale) = 0;
+					   const float scale,
+					   const float drift) = 0;
 protected:
 	const Vector2 center;
 	const Vector2 endPosition;

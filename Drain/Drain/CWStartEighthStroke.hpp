@@ -14,7 +14,8 @@ public:
 	void place(const Vector2& position,
 			   const int startTime,
 			   const int endTime,
-			   const float scale);
+			   const float scale,
+			   const float drift);
 private:
 	const Vector2 offsetPosition;
 };

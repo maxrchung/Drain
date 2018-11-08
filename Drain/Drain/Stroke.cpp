@@ -46,3 +46,9 @@ void Stroke::scalePoints(const std::vector<Sprite*>& points, const int startDraw
 		point->Scale(startDraw, startDraw, thicknessScale, thicknessScale);
 	}
 }
+
+void Stroke::placeDrift(const std::vector<Sprite*>& sprites, const int startDrift, const int endDrift, const float drift) {
+	for (auto const sprite : sprites) {
+		sprite->MoveY(startDrift, endDrift, sprite->position.y, sprite->position.y + drift);
+	}
+}

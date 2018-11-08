@@ -6,6 +6,8 @@
 #include "PointStroke.hpp"
 #include <cmath>
 #include <limits>
+const RandomRange Character::drift = RandomRange(10, 50, 10);
+const RandomRange Character::driftNegative = RandomRange(0, 1);
 Character::Character(const char character)
 	: strokes{ createStrokes(character) } {
 }
@@ -357,7 +359,8 @@ void Character::place(const Vector2& position,
 					 const int startTime,
 					 const int endTime,
 					 const float scale) const {
+	const auto driftAmount = driftNegative.calculate() ? -drift.calculate() : drift.calculate();
 	for (auto stroke = strokes.rbegin(); stroke != strokes.rend(); ++stroke) {
-		stroke->get()->place(position, startTime, endTime, scale);
+		stroke->get()->place(position, startTime, endTime, scale, driftAmount);
 	}
 }

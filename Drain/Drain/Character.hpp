@@ -1,5 +1,6 @@
 #pragma once
 #include "Color.hpp"
+#include "RandomRange.hpp"
 #include "Stroke.hpp"
 #include "Vector2.hpp"
 #include <memory>
@@ -24,6 +25,8 @@ private:
 	static std::vector<std::unique_ptr<Stroke>> createStrokes(const char character);
 	static const int drawBuffer = Timing::half;
 	static const int drainTime = Timing::whole;
+	static const RandomRange drift;
+	static const RandomRange driftNegative;
 	void createPoints(const Vector2& position, const float scale) const;
 	void createSprites(const Vector2& position, const float scale) const;
 	std::vector<std::unique_ptr<Stroke>> strokes;

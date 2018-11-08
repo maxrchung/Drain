@@ -44,7 +44,8 @@ void LineStroke::draw(const Vector2& position,
 void LineStroke::place(const Vector2& position,
 					   const int startTime,
 					   const int endTime,
-					   const float scale) {
+					   const float scale,
+					   const float drift) {
 	line = Storyboard::CreateSprite(getPath(Path::Square), position + startPosition * scale, Layer::Background, Origin::CentreLeft);
 	startPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + startPosition * scale, Layer::Background);
 	endPoint = Storyboard::CreateSprite(getPath(Path::Circle), position + endPosition * scale, Layer::Background);
@@ -57,4 +58,5 @@ void LineStroke::place(const Vector2& position,
 	line->ScaleVector(startTime, startTime, startLineScaleVector, endLineScaleVector);
 	scalePoints({ startPoint, endPoint }, startTime, scale);
 	colorFgSprites({ line, startPoint, endPoint }, startTime, endTime);
+	placeDrift({ startPoint, line, endPoint }, startTime, endTime, drift);
 }

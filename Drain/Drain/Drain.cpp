@@ -59,7 +59,7 @@ int main() {
 
 	// Bubble generation
 	// Moved right above background so that text and sketch can appear normally above them
-	if (1) {
+	if (0) {
 		BubbleGenerator bubGen = BubbleGenerator::BubbleGenerator();
 		BubbleGenerator::renderMouthBubbles();
 		auto splatBubbles = bubGen.GetSplatBubbles();

@@ -52,7 +52,8 @@ void CCWQuarterStroke::draw(const Vector2& position,
 void CCWQuarterStroke::place(const Vector2& position,
 							 const int startTime,
 							 const int endTime,
-							 const float scale) {
+							 const float scale,
+							 const float drift) {
 	const auto centerPosition = position + center * scale;
 	outer = Storyboard::CreateSprite(getPath(Path::QuarterOuter), centerPosition, Layer::Background, Origin::BottomLeft);
 	inner = Storyboard::CreateSprite(getPath(Path::QuarterInner), centerPosition, Layer::Background, Origin::BottomLeft);
@@ -65,4 +66,5 @@ void CCWQuarterStroke::place(const Vector2& position,
 	colorFgSprites({ outer, startPoint, endPoint }, startTime, endTime);
 	const auto rotation = Vector2(1.0f, 0.0f).AngleBetween(startPosition - center);
 	rotateSprites({ outer, inner, }, startTime, rotation);
+	placeDrift({ outer, inner, startPoint, endPoint }, startTime, endTime, drift);
 }

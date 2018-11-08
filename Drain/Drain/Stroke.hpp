@@ -19,7 +19,8 @@ public:
 	virtual void place(const Vector2& position,
 					   const int startTime,
 					   const int endTime,
-					   const float scale) = 0;
+					   const float scale,
+					   const float drift) = 0;
 	// Thickness of Character stroke represented as a factor of scale
 	static constexpr float thickness = 0.14f;
 protected:
@@ -33,6 +34,7 @@ protected:
 	static void scaleInner(const std::vector<Sprite*>& sprites, const int startDraw, const Vector2& startPosition, const Vector2& center, const float scale);
 	static void scaleOuter(const std::vector<Sprite*>& sprites, const int startDraw, const Vector2& startPosition, const Vector2& center, const float scale);
 	static void scalePoints(const std::vector<Sprite*>& points, const int startDraw, const float scale);
+	static void placeDrift(const std::vector<Sprite*>& sprites, const int startDrift, const int endDrift, const float drift);
 	// Size of sprite images in pixels
 	static const int imageSize = 100;
 	static const RandomRange pointScale;

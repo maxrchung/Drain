@@ -25,5 +25,6 @@ void BlankStroke::draw(const Vector2& position,
 void BlankStroke::place(const Vector2& position,
 						const int startTime,
 						const int endTime,
-						const float scale) {
+						const float scale,
+						const float drift) {
 }
