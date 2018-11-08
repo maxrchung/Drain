@@ -5,7 +5,6 @@
 #include <ctime>
 
 std::default_random_engine Splatter::GENERATOR = std::default_random_engine(time(0));
-std::exponential_distribution<double> Splatter::EXPONENTIAL = std::exponential_distribution<double>(3.5);    // mean of the exp distribution = 1 / 3.5
 std::uniform_real_distribution<double> Splatter::UNIFORM_ANGLE = std::uniform_real_distribution<double>(0, 359); // uniform distribution between 0 and 359 (degrees)
 
 // standalone, defined by centerPos Vector2
@@ -72,13 +71,16 @@ SpriteCollection Splatter::make(const Time& startTime, const Time& endTime, cons
 
 // returns number of sprites drawn, going for something like this: http://gifimage.net/splatter-gif-10/
 SpriteCollection Splatter::make() {
+	// For more variety, vary the mean of the exp distribution
+	const auto exponential = std::exponential_distribution<double>(RandomRange::calculate(35, 85, 10));
+
 	// main droplet will grow from 80% to 100% of its size over 1/2 of its lifespan
-	draw(centerPos, 0, sizeFactor, totalDur * 0.5, 0.8, Easing::EasingOut);
+	draw(centerPos, 0, sizeFactor, totalDur * 0.5, 0.8f, Easing::EasingOut);
 	for (int i = 1; i < numDrops; i++) {
 		// offset 'easing' is an exponential exp
-		auto expRandomPoint = EXPONENTIAL(GENERATOR);
+		auto expRandomPoint = exponential(GENERATOR);
 		while (expRandomPoint > 1.0) {  // in the off chance that RNG returns more than 1, roll again
-			expRandomPoint = EXPONENTIAL(GENERATOR);
+			expRandomPoint = exponential(GENERATOR);
 		}
 
 		auto offset = expRandomPoint * satelliteSpawnTime; // satellite droplets will spawn in for 2 seconds
@@ -89,9 +91,10 @@ SpriteCollection Splatter::make() {
 
 		// use polar coordinates and don't have stupid weird ways to calculate stuff
 		auto angle = UNIFORM_ANGLE(GENERATOR);
+		// dist away from centerPoint the satellite will be drawn
 		// Divide by 2.0f to get radius instead of diameter
-		// 0.8f because the center circle starts from 0.8 size then goes to 1.0
-		auto dist = (expRandomPoint + sizeFactor / 2.0f * 0.8f) * SPRITE_SIZE;   // dist away from centerPoint the satellite will be drawn
+		// 0.8f because the center circle starts from 0.8f size then goes to 1.0
+		auto dist = (expRandomPoint + sizeFactor / 2.0f * 0.8f) * SPRITE_SIZE;
 		auto pos = centerPos + Vector2(dist * cosf(angle * DEG_TO_RAD), dist * sinf(angle * DEG_TO_RAD));
 		// size decreases as distance increases
 		auto size = sizeFactor / dist / MAX_SATELLITE_SIZE_FACTOR;

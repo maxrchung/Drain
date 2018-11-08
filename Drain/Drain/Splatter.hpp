@@ -44,7 +44,6 @@ private:
 	static constexpr float SPLATTER_FADE_OUT_TIME = Timing::half;
 
 	static std::default_random_engine GENERATOR;
-	static std::exponential_distribution<double> EXPONENTIAL;    // mean of the exp distribution = 1 / 3.5
 	static std::uniform_real_distribution<double> UNIFORM_ANGLE; // uniform distribution between 0 and 359 (degrees)
 
 	const bool fadeOut;
