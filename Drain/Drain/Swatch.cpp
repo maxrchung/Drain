@@ -153,8 +153,8 @@ std::vector<SwatchTiming> Swatch::bgTimings = {
 	SwatchTiming(Time("02:29:357").ms, Time("02:33:885").ms, water, eerie),
 	SwatchTiming(Time("02:33:885").ms, Time("03:18:036").ms, eerie, eerie),
 	SwatchTiming(Time("03:18:036").ms, Time("03:19:168").ms, eerie, offwhite),
-	SwatchTiming(Time("03:19:168").ms, Time("04:44:074").ms, offwhite, offwhite),
-	SwatchTiming(Time("04:44:074").ms, Time("05:03:319").ms, blood, blood),
+	SwatchTiming(Time("03:19:168").ms, Time("04:42:942").ms, offwhite, offwhite),
+	SwatchTiming(Time("04:42:942").ms, Time("05:03:319").ms, blood, blood),
 };
 std::vector<SwatchTiming> Swatch::fgTimings = {
 	SwatchTiming(0, Time("00:27:093").ms, water, water),
@@ -233,8 +233,8 @@ std::vector<SwatchTiming> Swatch::fgTimings = {
 	SwatchTiming(Time("02:29:357").ms, Time("02:33:885").ms, offwhite, blood),
 	SwatchTiming(Time("02:33:885").ms, Time("03:18:036").ms, blood, blood),
 	SwatchTiming(Time("03:18:036").ms, Time("03:19:168").ms, blood, blood),
-	SwatchTiming(Time("03:19:168").ms, Time("04:44:074").ms, blood, blood),
-	SwatchTiming(Time("04:44:074").ms, Time("05:03:319").ms, eerie, eerie),
+	SwatchTiming(Time("03:19:168").ms, Time("04:42:942").ms, blood, blood),
+	SwatchTiming(Time("04:42:942").ms, Time("05:03:319").ms, eerie, eerie),
 };
 void Swatch::init() {
 	int endTime;
