@@ -73,10 +73,12 @@ SpriteCollection Splatter::make(const Time& startTime, const Time& endTime, cons
 SpriteCollection Splatter::make() {
 	// For more variety, vary the mean of the exp distribution
 	const auto exponential = std::exponential_distribution<double>(RandomRange::calculate(35, 85, 10));
+	const auto satelliteScaleVariance = RandomRange::calculate(100, 250, 100);
+	const auto numDropsDecrease = 1 / satelliteScaleVariance;
 
 	// main droplet will grow from 80% to 100% of its size over 1/2 of its lifespan
 	draw(centerPos, 0, sizeFactor, totalDur * 0.5, 0.8f, Easing::EasingOut);
-	for (int i = 1; i < numDrops; i++) {
+	for (int i = 1; i < numDrops * numDropsDecrease; i++) {
 		// offset 'easing' is an exponential exp
 		auto expRandomPoint = exponential(GENERATOR);
 		while (expRandomPoint > 1.0) {  // in the off chance that RNG returns more than 1, roll again
@@ -107,7 +109,7 @@ SpriteCollection Splatter::make() {
 		}
 
 		// reuse offset for duration of fading in of satellite drops
-		draw(pos, static_cast<int>(offset), size);
+		draw(pos, static_cast<int>(offset), size * satelliteScaleVariance);
 	}
 
 	const auto collection = buildSpriteCollection();
@@ -115,7 +117,7 @@ SpriteCollection Splatter::make() {
 }
 
 SpriteCollection Splatter::makeWalkerSplatter(const Time& startTime, const Vector2& centerPos, const float scale) {
-	const auto collection = Splatter(startTime, startTime, scale, 300, 0, centerPos, false).make();
+	const auto collection = Splatter(startTime, startTime, scale, 250, 0, centerPos, false).make();
 	// Some ppretty extreme hacking to remove the setup Scale command we set to initially position the Splatter
 	// osu! sometimes has a rendering bug that briefly displays this initial position, and we don't want this
 	for (auto& sprite : collection.sprites) {

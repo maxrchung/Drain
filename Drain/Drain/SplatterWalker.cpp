@@ -29,7 +29,7 @@ void SplatterWalker::moveCurrent(const Time& startTime, const Time& endTime) {
 			moveEndTime = endTime.ms;
 		}
 
-		sprite.MoveAndScale(startTime.ms, moveEndTime, startPosition, endPosition, startScale, endScale);
+		specialMove(sprite, startTime.ms, moveEndTime, startPosition, endPosition, startScale, endScale);
 		Swatch::colorFgToFgSprites(sprite.sprites, startTime.ms, moveEndTime);
 	}
 }
@@ -60,9 +60,21 @@ void SplatterWalker::moveSprites(const Time& startTime, const Time& endTime, con
 		auto sprite = create(moveStartTime, startPosition);
 
 		const auto startScale = generateRandomFloat(0.01f, 0.05f);
-		const auto endScale = generateRandomFloat(1.0f, 1.5f);
+		const auto endScale = generateRandomFloat(0.9f, 1.4f);
 
-		sprite.MoveAndScale(moveStartTime, moveEndTime, startPosition, endPosition, startScale, endScale);
+		specialMove(sprite, moveStartTime, moveEndTime, startPosition, endPosition, startScale, endScale);
 		Swatch::colorFgToFgSprites(sprite.sprites, moveStartTime, moveEndTime);
+	}
+}
+
+void SplatterWalker::specialMove(SpriteCollection& collection, const int startTime, const int endTime, const Vector2& startPos, const Vector2& endPos, const float startScale, const float endScale, const Easing& easing, const int precision) {
+	for (int i = 0; i < collection.size; ++i) {
+		auto const sprite = collection.sprites[i];
+		sprite->Scale(startTime, endTime, startScale * collection.scale[i], endScale * collection.scale[i], easing, precision);
+		Vector2 start = collection.location[i] * startScale + startPos;
+		Vector2 end = collection.location[i] * endScale + endPos;
+
+		const auto parallaxTime = i == 0 ? 0 : RandomRange::calculate(0, 0);
+		sprite->Move(startTime + parallaxTime, endTime, start, end);
 	}
 }

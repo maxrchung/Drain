@@ -34,8 +34,8 @@ int main() {
 	// Rendering background image 
 	if (0) {
 		BubbleGenerator::BubbleGenerator();
-		RainGenerator(Time("02:55:580"), Time("03:10:716"));
-		Text::renderBanner();
+		RainGenerator(Time("02:55:580"), Time("03:30:716"));
+		//Text::renderBanner();
 		Sketch::renderBackground();
 		Splatter::renderBackground();
 		Drip::renderBackground();

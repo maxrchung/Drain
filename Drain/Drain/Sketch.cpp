@@ -292,20 +292,10 @@ void Sketch::render() {
 	loop(eyesClosed680, 3);
 	make("677 eyes quarter open", Time("00:03:319"), Time("00:03:885"));
 	make("676 eyes half open", Time("00:03:885"), Time("00:04:452"));
-	make("675 eyes open", Time("00:04:452"), Time("00:05:018"));
-	make("675 eyes open", Time("00:05:018"), Time("00:05:584"), shift);
+	make("675 eyes open", Time("00:04:452"), Time("00:05:584"), shift, true, Path::Taper, 0, 1, Easing::Linear, false, false, false, true);
 
-	//auto eyesClosed000 = std::vector<Sketch>({
-	//	Sketch("000 eyes closed", Time(start), Time("00:00:489")),
-	//	Sketch("000 eyes closed", Time("00:00:489"), Time("00:01:055"), shift)
-	//										 });
-	//loop(eyesClosed000, 3);
-	//make("001 eyes quarter open", Time("00:03:319"), Time("00:03:885"));
-	//make("002 eyes half open", Time("00:03:885"), Time("00:04:452"));
-	//make("005 eyes open", Time("00:04:452"), Time("00:05:018"));
-	//make("005 eyes open", Time("00:05:018"), Time("00:05:584"), shift);
-
-	make("010 su", Time("00:05:584"), Time("00:05:867"));
+	make("010 su", Time("00:04:452"), Time("00:05:584"), shift, true, Path::Taper, 0, 1, Easing::Linear, false, false, true, false);
+	make("010 su", Time("00:05:584"), Time("00:05:867"), shift);
 	make("015 ffo", Time("00:05:867"), Time("00:06:150"));
 	make("020 ca", Time("00:06:150"), Time("00:06:433"));
 	make("025 ting", Time("00:06:433"), Time("00:06:999"));
