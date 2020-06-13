@@ -145,8 +145,10 @@ void Text::render() {
 		"electrocutica"
 		  }, "01:05:584", "01:07:848");
 	place({
-		"mapper:",
-		"fartownik"
+		"mappers:",
+		"melwoine",
+		"haruto",
+		"fartownik",
 		  }, "01:07:848", "01:10:112");
 	place({
 		"storyboarders:",
